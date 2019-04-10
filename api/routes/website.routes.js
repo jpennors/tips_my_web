@@ -12,7 +12,7 @@ router.get('/:id', website_controller.show);
 /* POST a website */
 router.post('/', website_controller.post);
 
-/* PUT update a website listing */
+/* PUT update a website */
 router.put('/:id', website_controller.update);
 
 /* DELETE a website */

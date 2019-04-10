@@ -11,6 +11,7 @@ var http = require('http');
 
 var index = require('./routes/index');
 var website = require('./routes/website.routes');
+var tag = require('./routes/tag.routes');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use(function(req, res, next){
 
 // app.use('/', index);
 app.use('/api/v1/websites', website);
+app.use('/api/v1/tags', tag);
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {

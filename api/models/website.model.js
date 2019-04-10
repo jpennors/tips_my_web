@@ -11,6 +11,9 @@ var Website = function(data){
 }
 
 
+Website.prototype.data = {}
+
+
 /**
 *	Get every website
 *
@@ -96,8 +99,6 @@ Website.destroy =  function(id, callback){
 }
 
 
-Website.prototype.data = {}
-
 /**
 *	Get value of an attribute
 *
@@ -122,7 +123,6 @@ Website.prototype.set = function(name, value){
 */
 Website.prototype.sanitize = function(data){
 
-	// data = data || {};
 	data = data || {};
     schema = website_schema.website;
 	return _.pick(_.defaults(data, schema), _.keys(schema));

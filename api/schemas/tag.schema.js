@@ -3,11 +3,15 @@
 *
 */
 
-tag = {
+schema = {
 
-	id: null,
-	name:  null,
+	tag:{
+		
+		id: null,
+		name:  null,
+	
+	}
 
 }
 
-module.exports = tag.schema;
+module.exports = schema;
