@@ -10,7 +10,7 @@ router.get('/', website_controller.index);
 router.get('/:id', website_controller.show);
 
 /* POST a website */
-router.post('/', website_controller.post);
+router.post('/', website_controller.save);
 
 /* PUT update a website */
 router.put('/:id', website_controller.update);

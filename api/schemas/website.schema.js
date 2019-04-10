@@ -17,7 +17,8 @@ schema = {
 		visitors: null,
 		created_at: null,
 		updated_at: null,
-		deleted_at: null
+		deleted_at: null,
+		tags: null,
 	
 	}
 

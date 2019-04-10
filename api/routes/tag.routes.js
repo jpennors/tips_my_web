@@ -10,7 +10,7 @@ router.get('/', tag_controller.index);
 router.get('/:id', tag_controller.show);
 
 /* POST a tag */
-router.post('/', tag_controller.post);
+router.post('/', tag_controller.save);
 
 /* PUT update a tag */
 router.put('/:id', tag_controller.update);
