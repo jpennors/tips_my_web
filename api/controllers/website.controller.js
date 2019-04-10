@@ -48,9 +48,7 @@ exports.update = function(req, res){
 
 exports.destroy = function(req, res){
 
-	console.log("ici")
 	Website.destroy(req.params.id, function(error, results){
-		console.log(results)
 		if (error) {
 			res.send(JSON.stringify({"status": 500, "error": error, "response": null}));
 		} else {
