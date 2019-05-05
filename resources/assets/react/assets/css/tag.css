@@ -1,0 +1,45 @@
+/*–––––––––––– Categories –––––––––––*/
+
+.btnOne{
+	border:white 2px solid;
+	border-radius: 100px;
+	padding: 0.6em 1.75em;
+	margin-top: 0.8em;
+	color: white;
+	text-decoration: none;
+	font-size: 2vh;
+	float: left;
+	display: inline-block;
+}
+
+.btnOne:focus{
+	background: white;
+	color: #F46E7A;
+}
+
+ul#categories{ /*group categorie*/
+	height: 700px;
+	max-width: 650px;
+	padding-top: 2em;
+	text-align: center;
+	margin-bottom: 10px;
+}
+ul#categories li{
+	display: inline;
+	margin: 3px;
+	white-space: nowrap;
+}
+.ressources1{
+	width: 213px;
+  	height: 100px;
+	object-fit: cover;
+	padding: 3.5px;
+	box-sizing: border-box; /*--padding only inside--*/
+  	filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
+}
+.ressources1:hover{
+	opacity: 0.8;
+}
+.ressources1:focus{
+	opacity: 0.2;
+}
