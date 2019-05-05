@@ -15,6 +15,9 @@ var tag = require('./routes/tag.routes');
 
 var app = express();
 
+var cors = require('cors');
+app.use(cors({origin: 'http://localhost:3000'}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());

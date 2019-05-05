@@ -69,6 +69,11 @@ exports.save = (req, res) => {
 	}).then(tag => {		
 		// Send created customer to client
 		res.send(tag);
+	}).catch(error => {
+		console.log(error['name']);
+		if (error['name'] == 'SequelizeUniqueConstraintError') {
+			res.status(409).send(JSON.stringify({"error" : "Contrainte d'unicité non respectée"}));
+		}
 	});
 };
  

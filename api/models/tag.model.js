@@ -11,6 +11,13 @@ module.exports = (sequelize, Sequelize) => {
 			validate : {
 				len: [0,30],
 			},
+			unique: {
+				args: true,
+				msg: 'Mail already in use!'
+			}
+		},
+		parent_id : {
+			type: Sequelize.INTEGER,
 		},
 
 		// Timestamps

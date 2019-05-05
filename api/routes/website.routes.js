@@ -18,5 +18,8 @@ router.put('/:id', website_controller.update);
 /* DELETE a website */
 router.delete('/:id', website_controller.destroy);
 
+/* SEARCH websites */
+router.post('/search', website_controller.search);
+
 
 module.exports = router;
