@@ -1,0 +1,7 @@
+Migration
+Model 
+Controller
+Seeder
+Validation
+FirstOrFail à checker
+Suppression des resource tags quand suppression tag ou resource
