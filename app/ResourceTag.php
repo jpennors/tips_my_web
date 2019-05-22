@@ -63,6 +63,8 @@ class ResourceTag extends Model
         return $this->belongsTo('App\Tag');
     }
 
+    protected $appends = ['tag'];
+
 
     /**
      * Function for attribute Tag
