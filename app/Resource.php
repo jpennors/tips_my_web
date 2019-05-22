@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Uuids;
+use App\ResourceTag;
+use App\Tag;
 
 class Resource extends Model
 {
@@ -49,7 +51,7 @@ class Resource extends Model
      */
     public function resource_tags()
     {
-        return $this->hasMany('App\ResourceTag');
+        return $this->hasMany(ResourceTag::class);
     }
 
 

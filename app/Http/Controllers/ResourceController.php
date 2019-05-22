@@ -18,7 +18,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        $r = Resource::all();
+        $r = Resource::with('resource_tags')->get();
         return response()->json($r, 200);
     }
 
