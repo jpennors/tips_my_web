@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Resource;
+use App\Http\Requests\ResourceRequest;
+use Validator;
+
 
 class ResourceController extends Controller
 {
@@ -28,6 +31,14 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validator = Validator::make($request->all(), Resource::$rules);
+
+        // Mauvaises données, on retourne les erreurs
+        if($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
         $r = new Resource();
 
         try {

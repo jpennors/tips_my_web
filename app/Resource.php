@@ -52,4 +52,15 @@ class Resource extends Model
         return $this->hasMany('App\ResourceTag');
     }
 
+
+    /**
+    * Rules pour Validator
+    *
+    * @var array
+    */
+    public static $rules = [
+        'name'              =>      'required|unique:resources',
+        'url'               =>      'required|unique:resources'
+    ];
+
 }
