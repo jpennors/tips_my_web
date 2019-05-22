@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
+Route::any('{whatever?}', function () {
     return view('welcome');
 });
