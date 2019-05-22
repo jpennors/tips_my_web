@@ -14,12 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::post('login', 'AdminController@login');
-Route::group(['middleware' => 'admin'], function () {
 
-    Route::get('/test', 'AdminController@test');
-    Route::get('/logout', 'AdminController@logout');
-
-});
 
 Route::apiResources([
     'resources' => 'ResourceController',
@@ -27,3 +22,9 @@ Route::apiResources([
 ]);
 Route::post('resources/search', 'ResourceTagController@search');
 
+Route::group(['middleware' => 'admin'], function () {
+
+    Route::get('/test', 'AdminController@test');
+    Route::get('/logout', 'AdminController@logout');
+
+});
