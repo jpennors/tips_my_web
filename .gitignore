@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 /public/js
+/public/css/semantic/
 /config
 /storage
 .env
