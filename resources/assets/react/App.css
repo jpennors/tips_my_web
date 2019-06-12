@@ -1,138 +1,45 @@
-/* .App {
-  text-align: center;
+/* ------------------------------------ */
+/* ------------------------------------ */
+/* -------------- Client -------------- */
+/* ------------------------------------ */
+/* ------------------------------------ */
+
+#home{
+    color: white;
+    font-family: 'Montserrat-Medium';
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.landing_content{
+    padding-top: 2rem;
+	width: 88%;
+    margin:6vh auto 0 auto;
+	max-width: 650px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-} */
-
-.noselect {
-	-webkit-touch-callout: none; /* iOS Safari */
-	  -webkit-user-select: none; /* Safari */
-	   -khtml-user-select: none; /* Konqueror HTML */
-		 -moz-user-select: none; /* Firefox */
-		  -ms-user-select: none; /* Internet Explorer/Edge */
-			  user-select: none; /* Non-prefixed version, currently
-									supported by Chrome and Opera */
-  }
-
-/*–––––––––––– Global –––––––––––*/
-*{
-	margin:0;
-	padding:0;
-	border:0;
-	outline:0;
-	font-size: 100%;
-	vertical-align: baseline;
-	background: transparent;
-}
-html{
-	font-family: montserrat, sans-serif;
-}
-body{
-	position: relative; /*--keep the footer to the bottom--*/
-}
-.landing{
-	background-image: linear-gradient(-240deg, #F46D7B, #FB9E3A);
-	background-repeat: no-repeat;
-	background-size: cover; /*--Allow responsive--*/
-	background-position: center;
-	height: 100vh;
-	width: 100%;
-	overflow-y:hidden;
-	min-height: 600px;
-	border: 2.5vw solid white;
-	box-sizing: border-box; /*--Border inside (and not outside)--*/
-}
-#admin .landing{
-	background-image: linear-gradient(-240deg, #125170, #1B6796);
-}
-h1{
-	font-size: 4vh;
-	margin-bottom: 15px;
-	text-align: center;
-	color:white;
-	font-weight: 500;
-}
-
-#phase4 h1{
-	text-align: left;
-}
-p{
-	font-size: 2.5vh;
-	margin-bottom: 3%;
-	text-align: center;
-	color:white;
-	font-weight: 100;
-}
-#phase4 p{
-	text-align: left;
-}
-a{ 
-	font-size: 13px; /*--text nav bar--*/
-}
-
-/*–––––––––––– Landing –––––––––––*/
-
-.nav{
+.nav_landing{
 	padding-top: 5vh;
 }
-.pages{
+
+.nav_pages{
 	float: right;
 	text-align: right;
 	margin-top: 4.4vh;
 }
-.pages a{ /*--nav bar*/
+.nav_pages a{ /*--nav bar*/
 	text-decoration: none;
 	color:white;
 	vertical-align:middle;
 	margin-left: 20px;
 }
+
 .logo{
 	width: 12vh;
 	vertical-align: middle;
 }
-.landingWrapper{ /*--page width (logo to nav bar)--*/
-	width: 88%;
-	margin:auto;
-	padding-bottom: 4rem;
-}
-.landingContent{
-	width: 88%;
-	margin:6vh auto 0 auto;
-	max-width: 650px;
-}
-#phase4 .landingContent{
-	width: 100%;
-	max-width: 3000px;
-	margin-left: 0px;
-}
 
-.table{ /*--contain Bar and below--*/
-	display: table;
-	margin:0 auto;
-}
+
+/* ------------- Reaserch ------------- */
+
 .bar{
 	background-color: rgba(255,255,255,0.90);
 	border-radius: 100px;
@@ -140,14 +47,8 @@ a{
 	margin-top: 25px;
 	max-width: 650px;
 }
-.bar2{ /*--only for phase3--*/
-	background-color: rgba(255,255,255,0.90);
-	border-radius: 100px;
-	height: 35px;
-	margin-top: 25px;
-	width: 60vw;
-	max-width: 650px;
-}
+
+
 .arrow{
 	height: 35px;
 	background-size: cover;
@@ -156,62 +57,76 @@ a{
 	cursor: pointer;
 }
 
-/*--
-.box{
-	width:300px;
-	padding:40px;
-	position:absolute;
-	top:50%;
-	left:50%;
-	transform: translate(-50%,-50%);
-	background: #191919;
-	text-align: center;
+
+.research_content{
+	/* width: 100%; */
+	max-width: 3000px;
+    margin-left: 3vh;
+    margin-right: 3vh;
 }
---*/
 
-/*–––––––––––– Recherche phase3 –––––––––––*/
+#research_results{ /*group all website*/
+	overflow-x: scroll;
+    overflow-y: hidden;
+	white-space: nowrap;
+	margin-top: 40px;
+	height:325px;
+}
 
-.bar2 input[type="text"]{
-	width: 450px;
-	height: 35px;
-	position: absolute;
-	margin-left: 10px;
-	outline:none;
-	color: #202121;
+#research_results p{
+	margin: 10px 15px 10px 15px;
+	color: black;
 	font-size: 15px;
-	caret-color: color;
-	
-}
-.bar2 input[type="submit"]{
-	background: none;
-	display: block;
-	margin: 20px auto;
-	text-align: center;
-	border:2px solid #2ecc71;
-	padding: 14px 40px;
-	outline:none;
-	color: white;
-	border-radius: 24px;
+	white-space: pre-wrap;
 }
 
-::placeholder{
-	color: grey;
+.research_resource{ /*group the website img and its description*/
+	background: white;
+	display: inline-block;
+	height: 300px;
+	width: 300px;
+	margin-right: 40px;
+	filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
+    vertical-align: middle;
+    border-radius: 5px;
+    /* position: relative; */
+}
+
+.research_resource a{
+	color: #6F6F6F;
+	font-size: 12px;
+}
+
+.resource_img{ /*only img website*/
+	width: 300px;
+  	height: 150px;
+    object-fit: cover;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.research_results_btn{
+    text-align: center;
+}
+
+.research_results_btn > a {
+    margin: 5px;
 }
 
 
-/*–––––––––––– Categories –––––––––––*/
+/*–––––––––––– Tags –––––––––––*/
 
 .btnOne{
 	border:white 2px solid;
 	border-radius: 100px;
 	padding: 0.6em 1.75em;
-	margin-top: 0.8em;
 	color: white;
 	text-decoration: none;
 	font-size: 2vh;
 	float: left;
 	display: inline-block;
-	cursor: pointer;
+    cursor: pointer;
+    margin:2px;
 }
 
 .btnOneSelected{
@@ -231,44 +146,85 @@ ul#categories li{
 	margin: 3px;
 	white-space: nowrap;
 }
-.ressources1{
-	width: 213px;
-  	height: 100px;
-	object-fit: cover;
-	padding: 3.5px;
-	box-sizing: border-box; /*--padding only inside--*/
-  	filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
+
+
+/* ------------------------------------ */
+/* ------------------------------------ */
+/* -------------- Global -------------- */
+/* ------------------------------------ */
+/* ------------------------------------ */
+
+.landing{
+	background-image: linear-gradient(-240deg, #F46D7B, #FB9E3A);
+	background-repeat: no-repeat;
+	background-size: cover; /*--Allow responsive--*/
+	background-position: center;
+	height: 100vh;
+	width: 100%;
+	overflow-y:hidden;
+	min-height: 600px;
+	border: 2.5vw solid white;
+	box-sizing: border-box; /*--Border inside (and not outside)--*/
 }
-.ressources1:hover{
-	opacity: 0.8;
+
+.landing_wrapper{ /*--page width (logo to nav bar)--*/
+	width: 88%;
+	margin:auto;
+	padding-bottom: 2rem;
 }
-.ressources1:focus{
-	opacity: 0.2;
+
+*{
+	margin:0;
+	padding:0;
+	border:0;
+	outline:0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url("fonts/Montserrat-Black.otf");
+}
+@font-face {
+    font-family: 'Montserrat-Light';
+    src: url("fonts/Montserrat-Light.otf");
+}
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url("fonts/Montserrat-Medium.otf");
+}
+
+body{
+    position: relative; /*--keep the footer to the bottom--*/
+    /* font-family: 'Montserrat-Medium'; */
+}
+
+h1{
+	font-size: 4vh;
+	margin-bottom: 15px;
+	text-align: center;
+	/* color:white; */
+	font-weight: 500;
 }
 
 
-/*–––––––––––– phase4 –––––––––––*/
+p{
+	font-size: 2.5vh;
+	margin-bottom: 3%;
+	text-align: center;
+	/* color:white; */
+	font-weight: 100;
+}
 
-#categories2{ /*group all website*/
-	overflow-x: scroll;
-	overflow-y: hidden;
-	white-space: nowrap;
-	margin-top: 40px;
-	height:325px;
+a{
+	font-size: 13px; /*--text nav bar--*/
 }
-.rDescription{ /*group the website img and its description*/
-	background: white;
-	display: inline-block;
-	height: 300px;
-	width: 300px;
-	margin-right: 40px;
-	filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
-	vertical-align: middle;
-}
-.ressources2{ /*only img website*/
-	width: 300px;
-  	height: 150px;
-	object-fit: cover;
+
+.table{ /*--contain Bar and below--*/
+	display: table;
+	margin:0 auto;
 }
 
 h3{
@@ -276,26 +232,6 @@ h3{
 	white-space: pre-wrap;
 }
 
-#categories2 p{
-	margin: 10px 15px 10px 15px;	
-	color: black;
-	font-size: 15px;
-	white-space: pre-wrap;
-}
-.rDescription a{
-	color: #6F6F6F;
-	font-size: 12px;
-}
-
-
-/*–––––––––––– Admin –––––––––––*/
-.addWebsite{
-	height: 200px;
-	background: white;
-	opacity: 0.8;
-	border-radius: 5px;
-	margin: 15px;
-}
 
 
 /*–––––––––––– Footer –––––––––––*/
@@ -313,11 +249,11 @@ h3{
 	font-size: 13px;
 	margin-right: 15px;
 }
-.pagesRight{ /*--div share icons--*/
+.social_medias{ /*--div share icons--*/
 	float: right;
 }
 
-.share{ /*--each icons--*/
+.social_media_img{ /*--each icons--*/
 	width: 30px;
 	vertical-align: bottom;
 	margin-left: 5px;
@@ -325,12 +261,158 @@ h3{
 }
 
 
+.radius5{
+    border-radius: 5px;
+}
+
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	  -webkit-user-select: none; /* Safari */
+	   -khtml-user-select: none; /* Konqueror HTML */
+		 -moz-user-select: none; /* Firefox */
+		  -ms-user-select: none; /* Internet Explorer/Edge */
+			  user-select: none; /* Non-prefixed version, currently
+									supported by Chrome and Opera */
+  }
 
 
-/*–––––––––––– Responsive –––––––––––*/
+/*–––––––––––– Global tools –––––––––––*/
+
+.left{text-align: left}
+.center{text-align: center}
+.white{background-color: white}
+.right15{padding-right: 15px !important}
+.left7{padding-left: 7px !important}
+.right7{padding-right: 7px !important}
+.rounded{border-radius: 5px}
+.admin-form{margin : 10px;}
+.top150{margin-top:150px}
+.top20{margin-top: 20px}
+
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 10px olivedrab; */
+    /* box-shadow: inset 0 0 10px transparent; */
+    /* border-radius: 10px; */
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    /* background: yellowgreen; */
+    background: transparent;
+    /* box-shadow: inset 0 0 6px rgba(0,0,0,0.5); */
+}
+
+
+
+
+/* ------------------------------------ */
+/* ------------------------------------ */
+/* -------------- Admin --------------- */
+/* ------------------------------------ */
+/* ------------------------------------ */
+
+
+.dashboardFull{
+    height: 75vh;
+    /* height:100%; */
+    background: white;
+    opacity: 0.9;
+    margin: 20px;
+    border-radius: 5px;
+    color: #202121;
+}
+
+.dashboardFull > h1 {
+    text-align: center;
+}
+
+.adminTxt {
+    color: #202121;
+}
+
+#admin{
+    color : #202121;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+
+#sidebar {
+    position: fixed;
+    height: 100vh;
+    background-color: #f5f5f5;
+    padding-top: 68px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#sidebar .ui.menu > a.item {
+    padding: 10px 20px;
+    line-height: 20px;
+    color: #337ab7;
+    border-radius: 0 !important;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#sidebar .ui.menu > a.item.active {
+    background-color: #337ab7;
+    color: white;
+    border: none !important;
+}
+
+#sidebar .ui.menu > a.item:hover {
+    background-color: #eee;
+    color: #23527c;
+}
+
+#content {
+    padding-top: 56px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#content h1 {
+    font-size: 36px;
+}
+
+#content .ui.dividing.header {
+    width: 100%;
+}
+
+.ui.centered.small.circular.image {
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.ui.borderless.menu {
+    box-shadow: none;
+    flex-wrap: wrap;
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.ui.mobile.only.grid .ui.menu .ui.vertical.menu {
+    display: none;
+}
+
+.upload-img{
+    display: none;
+}
+
+
+/* ------------------------------------ */
+/* ------------------------------------ */
+/* ------------ Responsive ------------ */
+/* ------------------------------------ */
+/* ------------------------------------ */
 
 @media only screen and (max-width:585px){
-	
+
 	.landing{
 		background: color;
 	}
@@ -341,18 +423,18 @@ h3{
 		padding: 3px;
 		box-sizing: border-box;
 	}
-	
+
 }
 
 
 @media only screen and (max-height:600px){
-	
+
 	.landing{
 		background: color;
 	}
 	h1{
 		font-size: 21px;
-		
+
 	}
 	p{
 		font-size: 15px;
@@ -360,20 +442,11 @@ h3{
 	a{
 		font-size: 12px;
 	}
-	.pages{
+	.nav_pages{
 		font-size: 16px;
 		margin-top: 3vh;
 	}
 	.btnOne{
 		font-size: 13px;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
