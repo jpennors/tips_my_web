@@ -50,11 +50,28 @@ class AdminTagComponent extends Component {
                     }
                 />
             case "create":
-                return <AdminTagFormComponent/>
+                return <AdminTagFormComponent
+                    onSave={
+                        ()=>{
+                            this.setState({
+                                mode : "index",
+                                title : "Tags",
+                            });
+                        }
+                    }
+                />
             case "edit":
                 return <AdminTagFormComponent
                     tag = {tag}
                     type = "edit"
+                    onSave={
+                        ()=>{
+                            this.setState({
+                                mode : "index",
+                                title : "Tags",
+                            });
+                        }
+                    }
                 />
         }
     }

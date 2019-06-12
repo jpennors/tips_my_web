@@ -79,15 +79,15 @@ class AdminTagFormComponent extends Component {
     async saveTag(){
         this.setState({loading:true})
         ajaxPost('tags', this.state.tag).then(result => {
-            this.setState({
-                loading : false
-            });
+            this.props.onSave()
         })
         .catch((errors) => {
             this.setState({
                 loading:false,
-                savingErrors:errors
+                savingErrors:errors,
+                error : true
             });
+            console.log(errors)
         });
     }
 
@@ -125,7 +125,7 @@ class AdminTagFormComponent extends Component {
                                     </Form.Field>
                                 </Form.Group>
                                 <Divider fitted/>
-                                <Button color='blue' onClick={this.saveTag}>Submit</Button>
+                                <Button color='blue' type='submit' onClick={this.saveTag}>Submit</Button>
                         </Form>
                     </Segment>
                 </div>
