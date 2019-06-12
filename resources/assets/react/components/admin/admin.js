@@ -30,14 +30,14 @@ class Admin extends Component {
                         <p>© 2019 Tips myWeb</p>
                         <a href="#"><p>Terms</p></a>
                         <div className="pagesRight">
-                            <a href="#"><img src="images/Twitter logo.svg" alt="share on twitter logo" class="share" /></a>
-                            <a href="#"><img src="images/Facebook logo.svg" alt="share on facebook logo" class="share" /></a>
-                            <a href="#"><img src="images/share.svg" alt="share logo" class="share" /></a>
+                            <a href="#"><img src="images/Twitter logo.svg" alt="share on twitter logo" className="share" /></a>
+                            <a href="#"><img src="images/Facebook logo.svg" alt="share on facebook logo" className="share" /></a>
+                            <a href="#"><img src="images/share.svg" alt="share logo" className="share" /></a>
                         </div>
                     </div>
                 </div>
             </div>
-        
+
              <p>Tips dmewd</p>
         </div>
       )
