@@ -18,7 +18,11 @@ Route::post('login', 'AdminController@login');
 
 Route::apiResources([
     'resources' => 'ResourceController',
-    'tags' => 'TagController'
+    'tags' => 'TagController',
+]);
+// Route::delete('suggestions/{id}', 'SuggestionController@destroy');
+Route::apiResource('suggestions', 'SuggestionController')->only([
+    'index', 'store', 'destroy'
 ]);
 Route::post('resources/search', 'ResourceTagController@search');
 
