@@ -52,4 +52,14 @@ class Tag extends Model
         return $this->hasMany('App\ResourceTag');
     }
 
+    /**
+    * Rules pour Validator
+    *
+    * @var array
+    */
+    public static $rules = [
+        'name'              =>      'required',
+        'parent_id'         =>      'exists:tags'
+    ];
+
 }
