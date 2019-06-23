@@ -19,7 +19,7 @@ class CreateResourcesTable extends Migration
             $table->uuid('id');
             $table->primary('id');
             $table->string('name', 40)->unique();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('url', 150)->unique();
             $table->string('image', 100)->nullable();
             $table->string('language', 5);
