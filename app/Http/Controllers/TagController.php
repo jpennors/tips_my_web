@@ -94,4 +94,37 @@ class TagController extends Controller
         }
         return response()->json();
     }
+
+    public function importTags(Request $request){
+
+        foreach ($request->data as $tag) {
+
+            $t = Tag::withTrashed()->where('name', $tag['name'])->get()->first();
+
+            $parent_tag_id = null;
+            if(array_key_exists('parent', $tag)){
+                $parent_tag = Tag::withTrashed()->where('name', $tag['parent'])->get()->first();
+                if ($parent_tag) {
+                    $parent_tag_id = $parent_tag->id;
+                }
+            }
+            $tag['parent_id'] = $parent_tag_id;
+
+            // To DO vérification
+
+            if (!$t) {
+                $t = new Tag();
+            } else {
+                if ($t->deleted_at) {
+                    $t->restore();
+                }
+            }
+
+            $t->name = $tag['name'];
+            $t->parent_id = $tag['parent_id'];
+            $t->save();
+        }
+
+        return response()->json();
+    }
 }

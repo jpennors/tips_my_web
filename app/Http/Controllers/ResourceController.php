@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Resource;
+use App\Tag;
 use App\Http\Requests\ResourceRequest;
 use Validator;
 
@@ -99,6 +100,56 @@ class ResourceController extends Controller
             $r->delete();
         } catch(\Exception $e) {
             abort(500, "Can't delete the resource");
+        }
+        return response()->json();
+    }
+
+
+    public function importResources(Request $request){
+
+        foreach ($request->data as $resource) {
+
+            $r = Resource::withTrashed()->where('name', $resource['name'])->get()->first();
+
+            if ($r) {
+                if($r->deleted_at){
+                    $r->restore();
+                }
+            } else {
+                $r = new Resource();
+            }
+
+            // To DO vérification
+
+            $r->name = $resource['name'];
+            $r->url = $resource['url'];
+            $r->language = $resource['language'];
+            $r->score = $resource['score'];
+            $r->save();
+
+            $tags = [];
+            $resource_tags = explode(",", $resource['tag']);
+            foreach ($resource_tags as $resource_tag) {
+                $args = explode("|", $resource_tag);
+                // dd($args);
+                // if ($arguments[0] && arguments[1]) {
+                    $tag_name = trim($args[0]," ");
+                    $tag_score = trim($args[1], " ");
+                    // dd($tag_name);
+                    $t = Tag::withTrashed()->where('name', $tag_name)->get()->first();
+                    if ($t) {
+                        $tag_id = $t->id;
+                        $tag = array(
+                            "tag_id" => $tag_id,
+                            "belonging" =>  $tag_score
+                        );
+                        array_push($tags, $tag);
+                    }
+                // }
+
+            }
+            $r->resource_tags()->createMany($tags);
+
         }
         return response()->json();
     }

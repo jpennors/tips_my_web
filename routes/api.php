@@ -24,7 +24,12 @@ Route::apiResources([
 Route::apiResource('suggestions', 'SuggestionController')->only([
     'index', 'store', 'destroy'
 ]);
+
+Route::post('import/tags', 'TagController@importTags');
+Route::post('import/resources', 'ResourceController@importResources');
 Route::post('resources/search', 'ResourceTagController@search');
+
+
 
 Route::group(['middleware' => 'admin'], function () {
 
