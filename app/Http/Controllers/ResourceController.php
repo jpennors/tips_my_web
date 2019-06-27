@@ -105,6 +105,9 @@ class ResourceController extends Controller
     }
 
 
+    /**
+     * Import array of resource
+     */
     public function importResources(Request $request){
 
         foreach ($request->data as $resource) {
@@ -153,5 +156,29 @@ class ResourceController extends Controller
         }
         return response()->json();
     }
+
+    /**
+     * Upload an image
+     */
+
+    public function uploadImage(Request $request, $id) {
+
+        // Récupération de la machine
+        $resource = Resource::findOrFail($id);
+        // dd($request->file);
+        $file = $request->file;
+
+        return $resource->uploadImage($file);
+  }
+
+    public function getImage(Request $r, $id) {
+
+        // Récupération de la machine
+        $resource = Resource::findOrFail($id);
+
+        return $resource->getImage();
+
+    }
+
 
 }
