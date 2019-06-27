@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AdminResourceComponent from '../components/resources/AdminResourceComponent';
 import CreateResourceComponent from '../components/admin/CreateResourceComponent';
+import AdminSuggestionComponent from '../components/admin/AdminSuggestionComponent';
 
 import AdminTagComponent from '../components/tag/AdminTagComponent';
 import DashboardComponent from '../components/admin/DashboardComponent';
@@ -64,14 +65,24 @@ class AdminScreen extends React.Component {
 
             case 'Tags':
                 return <AdminTagComponent/>
+            case 'Suggestions':
+                return <AdminSuggestionComponent/>
 
         }
     }
 
     render() {
 
-        const { activeItem } = this.state
+        const { activeItem, showErrorModal, admin } = this.state
         const { showErrorModal } = this.state
+        if(!admin){
+            return (
+                <Grid.Row>
+                    <Divider hidden />
+                    <Loader active inline='centered' />
+                </Grid.Row>
+            )
+        }
 
         return (
         <div>
@@ -154,6 +165,12 @@ class AdminScreen extends React.Component {
                         >
                             Tags
                         </Menu.Item>
+                        <Menu.Item
+                            data-tag="Suggestions"
+                            onClick={this.handleItemClick}
+                        >
+                            Suggestions
+                        </Menu.Item>
                         <Divider fitted />
                     </Menu>
                 </Menu>
@@ -189,6 +206,13 @@ class AdminScreen extends React.Component {
                             as="a"
                         >
                             Tags
+                        </Menu.Item>
+                        <Menu.Item
+                            data-tag="Suggestions"
+                            active={activeItem === "Suggestions"}
+                            onClick={this.handleItemClick}
+                        >
+                            Suggestions
                         </Menu.Item>
                     </Menu>
                 </Grid.Column>
