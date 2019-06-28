@@ -23,12 +23,14 @@ class AdminScreen extends React.Component {
 
     constructor(props) {
         super(props);
+
+        let is_admin = false
         let token = sessionStorage.getItem('token')
-        if (!token){
-            window.location.pathname = "/login";
-        }
+        token? is_admin = true : window.location.pathname = "/login"
+
         this.state = {
             activeItem : "Overview",
+            admin: is_admin,
             dropdownMenuStyle: {
             display: "none"
             }
