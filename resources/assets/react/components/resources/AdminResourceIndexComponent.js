@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {ajaxGet} from "../../utils/Ajax";
 import ErrorHandler from "../../utils/Modal";
-import AdminResourceFormComponent from"./AdminResourceFormComponent";
 
 import {
     Button,

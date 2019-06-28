@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AdminResourceComponent from '../components/resources/AdminResourceComponent';
-import CreateResourceComponent from '../components/admin/CreateResourceComponent';
+import AdminImportComponent from '../components/import/AdminImportComponent';
 import AdminSuggestionComponent from '../components/admin/AdminSuggestionComponent';
 
 import AdminTagComponent from '../components/tag/AdminTagComponent';
