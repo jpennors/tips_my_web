@@ -14,6 +14,7 @@
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
     <script src="css/semantic/semantic.min.js"></script>
+    <link rel="icon" href="/images/logo.png">
     <!-- Bootstrap Core CSS -->
     {{-- <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet"> --}}
 
