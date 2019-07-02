@@ -3,6 +3,7 @@ import AdminResourceComponent from '../components/resources/AdminResourceCompone
 import AdminImportComponent from '../components/import/AdminImportComponent';
 import AdminSuggestionComponent from '../components/admin/AdminSuggestionComponent';
 
+
 import AdminTagComponent from '../components/tag/AdminTagComponent';
 import DashboardComponent from '../components/admin/DashboardComponent';
 
@@ -15,6 +16,7 @@ import {
   Input,
   Image,
   Label,
+  Loader,
   Menu,
   Table
 } from "semantic-ui-react";
@@ -67,6 +69,8 @@ class AdminScreen extends React.Component {
 
             case 'Tags':
                 return <AdminTagComponent/>
+            case 'Import':
+                return <AdminImportComponent/>
             case 'Suggestions':
                 return <AdminSuggestionComponent/>
 
@@ -76,7 +80,7 @@ class AdminScreen extends React.Component {
     render() {
 
         const { activeItem, showErrorModal, admin } = this.state
-        const { showErrorModal } = this.state
+        console.log(this.state)
         if(!admin){
             return (
                 <Grid.Row>
@@ -96,9 +100,6 @@ class AdminScreen extends React.Component {
                         TipsMyWeb
                     </Menu.Item>
                     <Menu.Menu position="right">
-                        <Menu.Item>
-                            <Input placeholder="Search..." size="small" />
-                        </Menu.Item>
                         <Menu.Item
                             data-tag="Overview"
                             onClick={this.handleItemClick}
@@ -116,6 +117,12 @@ class AdminScreen extends React.Component {
                             onClick={this.handleItemClick}
                         >
                             Tags
+                        </Menu.Item>
+                        <Menu.Item
+                            data-tag="Import"
+                            onClick={this.handleItemClick}
+                        >
+                            Import
                         </Menu.Item>
                         <Divider fitted />
                         <Menu.Item>
@@ -168,6 +175,12 @@ class AdminScreen extends React.Component {
                             Tags
                         </Menu.Item>
                         <Menu.Item
+                            data-tag="Import"
+                            onClick={this.handleItemClick}
+                        >
+                            Import
+                        </Menu.Item>
+                        <Menu.Item
                             data-tag="Suggestions"
                             onClick={this.handleItemClick}
                         >
@@ -208,6 +221,13 @@ class AdminScreen extends React.Component {
                             as="a"
                         >
                             Tags
+                        </Menu.Item>
+                        <Menu.Item
+                            data-tag="Import"
+                            active={activeItem === "Import"}
+                            onClick={this.handleItemClick}
+                        >
+                            Import
                         </Menu.Item>
                         <Menu.Item
                             data-tag="Suggestions"
