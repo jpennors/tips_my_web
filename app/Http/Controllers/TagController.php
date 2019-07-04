@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tag;
+use Validator;
 
 class TagController extends Controller
 {
@@ -16,6 +17,7 @@ class TagController extends Controller
     {
         // $tag = Tag::All();
         $tag = Tag::with('resource_tags')->get();
+        // $tag = Tag::where('parent_id', null)->with('resource_tags')->get();
         return response()->json($tag, 200);
     }
 
@@ -27,6 +29,13 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), Tag::$rules);
+
+        // Mauvaises données, on retourne les erreurs
+        if($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
         // Instance creation
         $tag = new Tag();
 
