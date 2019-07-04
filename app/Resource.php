@@ -56,6 +56,29 @@ class Resource extends Model
         return $this->hasMany(ResourceTag::class);
     }
 
+    // protected $appends=['tags'];
+    // protected $hidden=['resource_tags'];
+
+    public function getTagsAttribute()
+    {
+        $all_tags = Tag::all()->toArray();
+        $tags = [];
+        foreach ($this->resource_tags as $resource_tag) {
+            $tag_id = $resource_tag->tag_id;
+            $tag = array_filter(
+                $all_tags,
+                function ($t) use (&$tag_id) {
+                    return $t['id'] == $tag_id;
+                }
+            );
+            if (array_key_exists(0, $tag)) {
+                array_push($tags, $tag[0]);
+            }
+
+        }
+        return $tags;
+    }
+
 
     /**
     * Rules pour Validator
