@@ -5,7 +5,6 @@
 /vendor
 /public/js
 /public/css/semantic/
-/config
 /storage
 .env
 .phpunit.result.cache

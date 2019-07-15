@@ -98,21 +98,21 @@ class HomeScreen extends Component {
                             <a href="#">About</a>
                             <a href="#">Contact</a>
                         </div>
+                    </div>
+                </div>
+                <SearchScreen/>
+                <div className="footer">
+                    <p>© 2019 TipsMyWeb</p>
+                    <a href="#"><p>Terms</p></a>
+                    <div className="social_medias">
+                        <a href="#"><img src="/images/Twitter logo.svg" alt="share on twitter logo" className="social_media_img" /></a>
+                        <a href="#"><img src="/images/Facebook logo.svg" alt="share on facebook logo" className="social_media_img" /></a>
+                        <a href="#"><img src="/images/share.svg" alt="share logo" className="social_media_img" /></a>
+                    </div>
                 </div>
             </div>
-            <SearchScreen/>
-            <div className="footer">
-                <p>© 2019 TipsMyWeb</p>
-                <a href="#"><p>Terms</p></a>
-                <div className="social_medias">
-                    <a href="#"><img src="/images/Twitter logo.svg" alt="share on twitter logo" className="social_media_img" /></a>
-                    <a href="#"><img src="/images/Facebook logo.svg" alt="share on facebook logo" className="social_media_img" /></a>
-                    <a href="#"><img src="/images/share.svg" alt="share logo" className="social_media_img" /></a>
-                </div>
-            </div>
-        </div>
-    )
-  }
+        )
+    }
 }
 
 export default HomeScreen;
