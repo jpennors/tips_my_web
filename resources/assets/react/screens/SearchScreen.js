@@ -3,6 +3,7 @@ import {ajaxGet, ajaxPost} from "../utils/Ajax";
 import ErrorHandler from "../utils/Modal";
 
 export default class SearchScreen extends Component {
+
     constructor(props) {
         super(props);
 
@@ -36,7 +37,6 @@ export default class SearchScreen extends Component {
                 loading:false,
                 error:true
             })
-            console.log(this.state.error)
         }
 	}
 

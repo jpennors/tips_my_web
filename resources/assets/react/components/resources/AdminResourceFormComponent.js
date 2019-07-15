@@ -152,6 +152,7 @@ class AdminResourceFormComponent extends Component {
             this.setState({
                 loading : false
             });
+            console.log(this.state.resource)
         })
         .catch((errors) => {
             this.setState({

@@ -80,7 +80,6 @@ class AdminScreen extends React.Component {
     render() {
 
         const { activeItem, showErrorModal, admin } = this.state
-        console.log(this.state)
         if(!admin){
             return (
                 <Grid.Row>
