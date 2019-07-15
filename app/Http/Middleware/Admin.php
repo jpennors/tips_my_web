@@ -28,17 +28,20 @@ class Admin
                     return $next($request);
                 } else {
                     \Log::info("401, unauthorized, token expired");
-                    return response()->json(array("error" => "token expired"));
+                    abort(401, "token expired");
+                    // return response()->json(array("error" => "token expired"));
                 }
             }
             else {
                 \Log::info("401, unauthorized, token not recognized");
-                return response()->json(array("error" => "token not recognized"));
+                abort(401, "token not recognized");
+                // return response()->json(array("error" => "token not recognized"));
             }
         }
         else {
             \Log::info("401, unauthorized, token not provided");
-            return response()->json(array("error" => "token not provided"));
+            abort(401, "token not provided");
+            // return response()->json(array("error" => "token not provided"));
         }
     }
 }
