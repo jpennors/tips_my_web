@@ -6,7 +6,7 @@
  */
 
 
-const API_URL = "http://localhost:8000"
+const API_URL = "http://tipsmyweb.com"
 
 function parseJSON(response) {
     return new Promise((resolve) => response.json()
@@ -19,6 +19,18 @@ function parseJSON(response) {
 }
 
 async function executeRequest(uri, data = {}) {
+
+    const token = sessionStorage.getItem("token");
+    if (data && token){
+
+        if (data.headers){
+            data.headers["Authorization"] = token
+        } else {
+            data.headers = {
+                "Authorization" : token
+            }
+        }
+    }
 
     return new Promise((resolve, reject) => {
         fetch(`${API_URL}/api/${uri}`, data)
