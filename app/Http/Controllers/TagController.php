@@ -13,10 +13,23 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $tag = Tag::All();
-        $tag = Tag::with('resource_tags')->get();
+        // dd();
+
+        $only = $request->input('only', null);
+        if ($only == "parent") {
+            $tag = Tag::all()->where('parent_id', '<>', null)->with('parent_id')->get();
+            // $tag = Tag::where('parent_id', '<>', null)->with('parent_id', 'resource_tags')->get();
+        } else if ($only == "child") {
+            $tag = Tag::with('parent_id', 'resource_tags')->get();
+        } else {
+            $tag = Tag::with('parent_id', 'resource_tags')->get();
+        }
+
+        // $tag = Tag::all();
+
+        // $tag = Tag::with('resource_tags')->get();
         // $tag = Tag::where('parent_id', null)->with('resource_tags')->get();
         return response()->json($tag, 200);
     }
