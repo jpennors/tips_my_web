@@ -53,6 +53,13 @@ class Tag extends Model
     }
 
     /**
+     * The parent tag id
+     */
+    public function parent_id(){
+        return $this->hasOne('App\Tag', 'parent_id');
+    }
+
+    /**
     * Rules pour Validator
     *
     * @var array
