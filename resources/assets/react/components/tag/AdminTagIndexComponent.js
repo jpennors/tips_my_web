@@ -99,7 +99,7 @@ class AdminTagIndexComponent extends Component {
                                 return <Table.Row key={index}>
                                         <Table.Cell>{index}</Table.Cell>
                                         <Table.Cell>{tag.name}</Table.Cell>
-                                        <Table.Cell>{tag.parent_id}</Table.Cell>
+                                        <Table.Cell>{tag.parent_id? tag.parent_id.name : ''}</Table.Cell>
                                         <Table.Cell textAlign="center">
                                             <i className="edit blue link icon" data-tag={tag.id} onClick={this.editResource}></i>
                                             <i className="trash alternate red link icon left7"></i>
