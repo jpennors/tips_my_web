@@ -15,14 +15,11 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'AdminController@login');
 
+Route::apiResource('resources', 'ResourceController')->only(['index']);
+Route::apiResource('tags', 'TagController')->only(['index']);
 
-Route::apiResources([
-    'resources' => 'ResourceController',
-    'tags' => 'TagController',
-]);
-// Route::delete('suggestions/{id}', 'SuggestionController@destroy');
 Route::apiResource('suggestions', 'SuggestionController')->only([
-    'index', 'store', 'destroy'
+    'index', 'store'
 ]);
 
 Route::post('import/tags', 'TagController@importTags');
@@ -34,7 +31,14 @@ Route::post('resources/{id}/image', 'ResourceController@uploadImage');
 
 Route::group(['middleware' => 'admin'], function () {
 
-    Route::get('/test', 'AdminController@test');
+    Route::apiResource('resources', 'ResourceController')->only(['show',
+    'store', 'update', 'destroy']);
+
+    Route::apiResource('tags', 'TagController')->only(['show',
+    'store', 'update', 'destroy']);
+
+    Route::apiResource('suggestions', 'SuggestionController')->only(['destroy']);
+
     Route::get('/logout', 'AdminController@logout');
 
 });
