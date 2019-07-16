@@ -6,7 +6,7 @@
  */
 
 
-const API_URL = "http://tipsmyweb.com"
+const API_URL = "https://tipsmyweb.com"
 
 function parseJSON(response) {
     return new Promise((resolve) => response.json()
