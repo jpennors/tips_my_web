@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SearchScreen from './SearchScreen';
 import {ajaxPost} from "../utils/Ajax";
+import { Button, Modal } from 'semantic-ui-react'
 
 class HomeScreen extends Component {
 
@@ -30,6 +31,21 @@ class HomeScreen extends Component {
         })
     }
 
+    openModal(event){
+        const modal_id = event.target.getAttribute("data-tag")
+        var modal = document.getElementById(modal_id);
+        // modal.style.opacity = 1;
+        modal.style.display = "block";
+    }
+
+    closeModal(event){
+        const modal_id = event.target.getAttribute("data-tag")
+        console.log(modal_id)
+        var modal = document.getElementById(modal_id);
+        // modal.style.opacity = 0;
+        modal.style.display = "none"
+    }
+
     async saveSuggestion(){
         this.setState({loading:true})
         ajaxPost('suggestions', this.state.suggestion).then(result => {
@@ -50,11 +66,11 @@ class HomeScreen extends Component {
             <div className="landing" id="home">
                 {/* Popup */}
 
-                <div className="modal_container" id="modal">
+                <div id="sharing_modal" className="modal_container">
+
                     <div className="modal">
-                        {/* <a href="#" className="close">X</a> */}
                         <span className="modal_heading">Share a website</span>
-                        <form action="#">
+                        <form>
                             <input
                                 type="text"
                                 placeholder="Website name"
@@ -86,17 +102,59 @@ class HomeScreen extends Component {
                                 onChange = {this.handleChange}
                             />
                         </form>
-                        <a href="#" className="close2">Close</a>
-                        <a href="#" className="btnSubmit" onClick={this.saveSuggestion}>Submit</a>
+                        <a data-tag="sharing_modal" className="close2" onClick={this.closeModal}>Close</a>
+                        <a className="btnSubmit" onClick={this.saveSuggestion}>Submit</a>
                     </div>
+
                 </div>
+
+                {/* <div className="modal_container" id="sharing_modal">
+                    
+                    <div className="modal">
+                        <span className="modal_heading">Share a website</span>
+                        <form>
+                            <input
+                                type="text"
+                                placeholder="Website name"
+                                name = "name"
+                                value = {this.state.suggestion.name}
+                                onChange = {this.handleChange}
+                                required
+                            />
+                            <input
+                                type="url"
+                                placeholder="URL"
+                                name = "url"
+                                value = {this.state.suggestion.url}
+                                onChange = {this.handleChange}
+                                required
+                            />
+                            <input
+                                type="text"
+                                placeholder="Main purpose"
+                                name = "main"
+                                value = {this.state.suggestion.main}
+                                onChange = {this.handleChange}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Purpose"
+                                main = "purpose"
+                                value = {this.state.suggestion.purpose}
+                                onChange = {this.handleChange}
+                            />
+                        </form>
+                        <a data-tag="sharing_modal" className="close2" onClick={this.closeModal}>Close</a>
+                        <a className="btnSubmit" onClick={this.saveSuggestion}>Submit</a>
+                    </div>
+                </div> */}
                 <div className="landing_wrapper">
                     <div className="nav_landing">
                         <a href=""><img src="/images/logo.svg" alt="logo" className="logo" /></a>
                         <div className="nav_pages">
-                            <a href="#modal">Share a website</a>
-                            <a href="#">About</a>
-                            <a href="#">Contact</a>
+                            <a data-tag="sharing_modal" onClick={this.openModal}>Share a website</a>
+                            <a data-tag="about_modal">About</a>
+                            <a data-tag="contact_modal">Contact</a>
                         </div>
                     </div>
                 </div>
