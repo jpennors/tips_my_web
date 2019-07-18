@@ -5,8 +5,9 @@
  * @returns {Promise<Object|null>}
  */
 
+import {URL} from './config'
 
-const API_URL = "https://tipsmyweb.com"
+const API_URL = URL
 
 function parseJSON(response) {
     return new Promise((resolve) => response.json()
@@ -62,12 +63,26 @@ function ajaxGet(path) {
  * @param {Object} data - object payload
  * @returns {Promise<Object>}
  */
-function ajaxPost(path, data) {
+function ajaxPost(path, data, config={}) {
+    let headers = {}
+    if (config.length > 0){
+        headers = config
+    } else {
+        headers = { 'Content-Type': 'application/json' }
+    }
 	return executeRequest(path, {
-		headers: { 'Content-Type': 'application/json' },
+		headers: headers,
 		method: 'POST',
 		body: JSON.stringify(data),
 	});
+}
+
+
+function ajaxPostImage(path, data){
+	return executeRequest(path, {
+		method: 'POST',
+		body: data
+	})
 }
 
 /**
@@ -129,4 +144,4 @@ function putFile(file) {
 	});
 }
 
-export { ajaxGet, ajaxPost, ajaxPut, ajaxDelete, putFile };
+export { ajaxGet, ajaxPost, ajaxPut, ajaxDelete, ajaxPostImage, putFile };

@@ -5,6 +5,7 @@
 /vendor
 /public/js
 /public/css/semantic/
+/resources/assets/react/utils/config.js
 /storage
 .env
 .phpunit.result.cache
