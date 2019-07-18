@@ -4,6 +4,7 @@ import {Route} from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import AdminScreen from './screens/AdminScreen';
 import LoginScreen from './screens/LoginScreen';
+import { URL, API_URL } from './utils/config';
 
 class App extends React.Component {
 

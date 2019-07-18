@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {ajaxGet, ajaxPost} from "../utils/Ajax";
 import ErrorHandler from "../utils/Modal";
+import { API_URL } from '../utils/config';
 
 export default class SearchScreen extends Component {
 
@@ -82,19 +83,41 @@ export default class SearchScreen extends Component {
                 { this.state.research?
                     (
                         <div className="research_content">
-                            <h1 className="left">Here are some website to improve your workflow </h1>
+                            <h1 className="left">Here are some website to improve your workflow
+                                {/* <img src="/images/shuffle.svg" /> */}
+                            </h1>
 
                             <ul id="research_results" key>
                                 {
                                     this.state.resources.map((resource, index) => {
                                         return <div className="research_resource" key={index}>
-                                            <a href={resource.url} target="_blank" ><img src={resource.image ? resource.image : '/images/default.jpg'} alt={resource.name} className="resource_img" /></a>
-                                            <h2 className="center">{resource.name}</h2>
-                                            <p>{resource.description}</p>
-                                            <p className="research_results_btn">
-                                                <a>Already know</a>
-                                                <a>Try it !</a>
-                                            </p>
+                                            <div className="resource_header">
+                                                <span class="dot red_dot"></span>
+                                                <span class="dot yellow_dot"></span>
+                                                <span class="dot green_dot"></span>
+                                            </div>
+                                            <a href={resource.url} target="_blank" >
+                                                <img 
+                                                    src={resource.image ? API_URL + "/resources/image/" + resource.id : '/images/default.jpg'} 
+                                                    alt={resource.name} 
+                                                    className="resource_img" 
+                                                />
+                                            </a>
+                                            <div className="resource_content">
+                                                <h4 className="resource_title">{resource.name}</h4>
+                                                <p className="resource_description">{resource.description}</p>
+                                                {/* <p className="research_results_btn">
+                                                    <a>Already know</a>
+                                                    <img src="images/heart.svg" width="15px"/>
+                                                    <a>Try it !</a>
+                                                </p> */}
+                                                <p className="resource_btn">
+                                                    <span className="knowing_resource">I know it</span>
+                                                    <img src="images/heart.svg" height="15px;" />
+                                                    <button className="visit_resource_btn">Visit → </button>
+                                                </p>
+                                            </div>
+                                            
                                         </div>
                                     })
                                 }
