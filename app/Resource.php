@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Response;
 use App\Traits\Uuids;
 use App\ResourceTag;
 use App\Tag;
@@ -129,13 +130,13 @@ class Resource extends Model
                 $this->deleteImage();
 
                 $fileName = $this->id.'.'.$file->guessExtension();
-                Storage::putFileAs('public/resources/'.$this->id.'/', $file, $fileName);
+                Storage::putFileAs('public/resources/', $file, $fileName);
 
                 $this->setImage($fileName);
 
             } catch(\Exception $e) {
 
-                abort(500, "Can't delete the file");
+                abort(500, "Can't save the file");
 
             }
 
@@ -154,7 +155,7 @@ class Resource extends Model
     */
     public function getImage(){
 
-        $path = 'public/resources/'.$this->id.'/'.$this->picture;
+        $path = "public/resources/".$this->image;
 
         try {
 
@@ -181,7 +182,7 @@ class Resource extends Model
 
         if ($this->image) {
 
-            $path = 'public/resources/'.$this->id.'/'.$this->picture;
+            $path = 'public/resources/'.$this->picture;
 
             Storage::delete($path);
 
