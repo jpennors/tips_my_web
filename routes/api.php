@@ -25,7 +25,11 @@ Route::apiResource('suggestions', 'SuggestionController')->only([
 Route::post('import/tags', 'TagController@importTags');
 Route::post('import/resources', 'ResourceController@importResources');
 Route::post('resources/search', 'ResourceTagController@search');
-Route::post('resources/{id}/image', 'ResourceController@uploadImage');
+Route::get('resources/image/{id}', 'ResourceController@getImage');
+Route::post('resources/image/{id}', 'ResourceController@uploadImage');
+
+
+// Route::post('image/test', 'ResourceController@index');
 
 
 
