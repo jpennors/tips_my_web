@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ajaxGet, ajaxPost} from "../../utils/Ajax";
+import {ajaxGet, ajaxPost, ajaxPostImage, ajaxPut} from "../../utils/Ajax";
 import ErrorHandler from "../../utils/Modal";
 
 import {
@@ -28,6 +28,8 @@ class AdminResourceFormComponent extends Component {
             selected_tags : [],
             resource : {
                 'name': '',
+                'file': '',
+                'image': '',
                 'url' : '',
                 'description': '',
                 'language' : 'fr',
@@ -43,6 +45,7 @@ class AdminResourceFormComponent extends Component {
         this.selectTag = this.selectTag.bind(this)
         this.unselectTag = this.unselectTag.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleImageChange = this.handleImageChange.bind(this)
         this.saveResource = this.saveResource.bind(this)
         this.getResource = this.getResource.bind(this)
         this.addBelongingScore = this.addBelongingScore.bind(this)
@@ -114,6 +117,15 @@ class AdminResourceFormComponent extends Component {
         })
     }
 
+    handleImageChange(event){
+        this.setState({
+            resource: {
+                ...this.state.resource,
+                'file': event.target.files[0]
+            }
+        })
+    }
+
     addBelongingScore(event, tag_id){
         let array =  this.state.resource.tags
         const index = array.findIndex(function(elm){
@@ -148,18 +160,59 @@ class AdminResourceFormComponent extends Component {
 
     async saveResource(){
         this.setState({loading:true})
-        ajaxPost('resources', this.state.resource).then(result => {
+        console.log(this.state.type)
+        if (this.props.type == "create"){
+            ajaxPost('resources', this.state.resource).then(result => {
+                if (this.state.resource.file) {
+                    this.fileUpload(this.state.resource.file, result.id)    
+                } else {
+                    this.setState({
+                        loading : false
+                    });
+                    this.props.onSave()
+                }
+            })
+            .catch((errors) => {
+                this.setState({
+                    loading:false,
+                    savingErrors :errors
+                });
+            });
+        } else if (this.props.type == "edit"){
+            ajaxPut('resources/' + this.state.resource.id, this.state.resource).then(result => {
+                if (this.state.resource.file) {
+                    this.fileUpload(this.state.resource.file, this.state.resource.id)    
+                } else {
+                    this.setState({
+                        loading : false
+                    });
+                    this.props.onSave()
+                }
+            })
+            .catch((errors) => {
+                this.setState({
+                    loading:false,
+                    savingErrors :errors
+                });
+            });
+        }
+    }
+
+    async fileUpload(file, id){
+        var fd = new FormData();
+        fd.append('file',file)
+        ajaxPostImage("resources/image/" + id, fd).then(result => {
             this.setState({
                 loading : false
             });
-            console.log(this.state.resource)
+            this.props.onSave()
         })
         .catch((errors) => {
             this.setState({
                 loading:false,
                 savingErrors :errors
             });
-        });
+        })
     }
 
     render() {
@@ -191,8 +244,18 @@ class AdminResourceFormComponent extends Component {
                     <form className="ui form attached fluid segment">
                         <div className="fields">
                             <div className="four wide field">
-                                <img className="rounded ui centered small image" src="/images/default.png" />
-                                <input type="file" accept="image/*" className="upload-img"/>
+                                <img 
+                                    className="rounded ui centered small image"
+                                    src={this.state.resource.image ? 
+                                        "http://localhost:8000/api/resources/image/" + this.state.resource.id 
+                                        : "/images/default.png"} 
+                                />
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={this.handleImageChange}
+                                    // className="upload-img"
+                                />
                             </div>
                             <div className="six wide field">
                                 <div className="field">
@@ -223,7 +286,7 @@ class AdminResourceFormComponent extends Component {
                                     <label>Url</label>
                                     <div className="ui labeled input">
                                         <div className="ui label">
-                                            http://
+                                            https://
                                         </div>
                                         <input
                                             type="text"

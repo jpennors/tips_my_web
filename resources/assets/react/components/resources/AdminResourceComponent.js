@@ -68,12 +68,28 @@ class AdminResourceComponent extends Component {
                 />
             case "create":
                 return <AdminResourceFormComponent
-                    type = "create"
+                    type="create"
+                    onSave={
+                        ()=>{
+                            this.setState({
+                                mode : "index",
+                                title : "Resources",
+                            });
+                        }
+                    }   
                 />
             case "edit":
                 return <AdminResourceFormComponent
                     resource = {resource}
                     type = "edit"
+                    onSave={
+                        ()=>{
+                            this.setState({
+                                mode : "index",
+                                title : "Resources",
+                            });
+                        }
+                    }
                 />
         }
     }
