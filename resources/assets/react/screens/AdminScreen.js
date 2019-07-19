@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AdminResourceComponent from '../components/resources/AdminResourceComponent';
 import AdminImportComponent from '../components/import/AdminImportComponent';
 import AdminSuggestionComponent from '../components/admin/AdminSuggestionComponent';
+import AdminContactComponent from '../components/admin/AdminContactComponent';
 
 
 import AdminTagComponent from '../components/tag/AdminTagComponent';
@@ -73,6 +74,9 @@ class AdminScreen extends React.Component {
                 return <AdminImportComponent/>
             case 'Suggestions':
                 return <AdminSuggestionComponent/>
+
+            case 'Contacts':
+                return <AdminContactComponent/>
 
         }
     }
@@ -185,6 +189,12 @@ class AdminScreen extends React.Component {
                         >
                             Suggestions
                         </Menu.Item>
+                        <Menu.Item
+                            data-tag="Contacts"
+                            onClick={this.handleItemClick}
+                        >
+                            Contacts
+                        </Menu.Item>
                         <Divider fitted />
                     </Menu>
                 </Menu>
@@ -234,6 +244,13 @@ class AdminScreen extends React.Component {
                             onClick={this.handleItemClick}
                         >
                             Suggestions
+                        </Menu.Item>
+                        <Menu.Item
+                            data-tag="Contacts"
+                            active={activeItem === "Contacts"}
+                            onClick={this.handleItemClick}
+                        >
+                            Contacts
                         </Menu.Item>
                     </Menu>
                 </Grid.Column>

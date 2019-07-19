@@ -19,7 +19,7 @@ Route::apiResource('resources', 'ResourceController')->only(['index']);
 Route::apiResource('tags', 'TagController')->only(['index']);
 
 Route::apiResource('suggestions', 'SuggestionController')->only([
-    'index', 'store'
+Route::apiResource('contacts', 'ContactController')->only(['store']);
 ]);
 
 Route::post('import/tags', 'TagController@importTags');
@@ -42,6 +42,7 @@ Route::group(['middleware' => 'admin'], function () {
     'store', 'update', 'destroy']);
 
     Route::apiResource('suggestions', 'SuggestionController')->only(['destroy']);
+    Route::apiResource('contacts', 'ContactController')->only(['index', 'destroy']);
 
     Route::get('/logout', 'AdminController@logout');
 
