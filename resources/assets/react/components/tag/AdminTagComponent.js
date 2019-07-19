@@ -51,6 +51,7 @@ class AdminTagComponent extends Component {
                 />
             case "create":
                 return <AdminTagFormComponent
+                    type = "create"
                     onSave={
                         ()=>{
                             this.setState({

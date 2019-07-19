@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ajaxGet, ajaxPost} from "../../utils/Ajax";
+import {ajaxGet, ajaxPost, ajaxPut} from "../../utils/Ajax";
 import ErrorHandler from "../../utils/Modal";
 
 import {
@@ -12,6 +12,7 @@ import {
     Input,
     Image,
     Label,
+    Loader,
     Menu,
     Table,
     Tab,
@@ -27,7 +28,8 @@ class AdminTagFormComponent extends Component {
         this.state = {
             tags : [],
             tag : {
-                'name' : ''
+                'name' : '',
+                'parent_id' : '',
             },
             loading : true,
             error : false,
@@ -41,10 +43,14 @@ class AdminTagFormComponent extends Component {
 
     getTag(){
         if (this.props.tag) {
+            let tag = this.props.tag
+            if (!tag.parent_id) {
+                tag.parent_id = ""
+            }
             this.setState({
-                tag : this.props.tag
+                tag : tag
             })
-        }
+        }   
     }
 
     async componentDidMount() {
@@ -52,13 +58,13 @@ class AdminTagFormComponent extends Component {
     }
 
     async loadTags() {
+        this.getTag();
 		try {
             const res = await ajaxGet('tags');
 			this.setState({
                 tags: res || [],
                 loading : false
-            });
-            this.getTag();
+            }); 
 		} catch (error) {
             this.setState({
                 loading:false,
@@ -78,17 +84,30 @@ class AdminTagFormComponent extends Component {
 
     async saveTag(){
         this.setState({loading:true})
-        ajaxPost('tags', this.state.tag).then(result => {
-            this.props.onSave()
-        })
-        .catch((errors) => {
-            this.setState({
-                loading:false,
-                savingErrors:errors,
-                error : true
+        if (this.props.type == "create") {
+            ajaxPost('tags', this.state.tag).then(result => {
+                this.props.onSave()
+            })
+            .catch((errors) => {
+                this.setState({
+                    loading:false,
+                    savingErrors:errors,
+                    error : true
+                });
             });
-            console.log(errors)
-        });
+        } else if (this.props.type == "edit") {
+            ajaxPut('tags/' + this.state.tag.id, this.state.tag).then(result => {
+                this.props.onSave()
+            })
+            .catch((errors) => {
+                this.setState({
+                    loading:false,
+                    savingErrors:errors,
+                    error : true
+                });
+            });
+        }
+        
     }
 
     render() {
@@ -100,6 +119,15 @@ class AdminTagFormComponent extends Component {
                 <ErrorHandler
                     open={error}
                 />
+            )
+        }
+
+        if(loading){
+            return (
+                <Grid.Row>
+                    <Divider hidden />
+                    <Loader active inline='centered' />
+                </Grid.Row>
             )
         }
 
@@ -121,7 +149,27 @@ class AdminTagFormComponent extends Component {
 
                                     <Form.Field inline>
                                         <label>Parent</label>
-                                        <input/>
+                                        <select
+                                            name="parent_id"
+                                            value={this.state.tag.parent_id}
+                                            onChange={this.handleChange}
+                                        >
+                                            {/* <option value="" {...this.state.tag.parent_id.length > 0? "": defaultValue}></option> */}
+                                            <option value=" "></option>
+                                            {
+                                                this.state.tags.map((tag, index) => {
+                                                    return <option 
+                                                        value={tag.id} 
+                                                        key={index}
+                                                        defaultValue={this.state.tag.parent_id && this.state.tag.parent_id === tag.id}
+                                                        // {...this.state.tag.parent_id.length>0 && this.state.tag.parent_id === tag.id ? 
+                                                        //     "defaultValue" : ""}
+                                                    >
+                                                        {tag.name}
+                                                    </option>
+                                                })
+                                            }
+                                        </select>
                                     </Form.Field>
                                 </Form.Group>
                                 <Divider fitted/>

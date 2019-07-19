@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ajaxGet} from "../../utils/Ajax";
+import {ajaxGet, ajaxDelete} from "../../utils/Ajax";
 import ErrorHandler from "../../utils/Modal";
 
 import {
@@ -28,7 +28,8 @@ class AdminTagIndexComponent extends Component {
             error : false,
             type : this.props.type
         };
-        this.editResource = this.editResource.bind(this)
+        this.editTag = this.editTag.bind(this)
+        this.deleteTag = this.deleteTag.bind(this)
     }
 
     componentDidMount() {
@@ -50,7 +51,23 @@ class AdminTagIndexComponent extends Component {
 		}
     }
 
-    editResource(e) {
+    async deleteTag(e){
+        
+        const tag_id = e.target.getAttribute("data-tag");
+        ajaxDelete("tags/" + tag_id).then(result => {
+            let array = this.state.tags;
+            array = array.filter((r) => r.id !== tag_id)
+            this.setState({tags: array})
+        })
+        .catch((errors) => {
+            this.setState({
+                loading:false,
+                error :true
+            });
+        });    
+    }
+
+    editTag(e) {
         const tag_id = e.target.getAttribute("data-tag")
         const index = this.state.tags.findIndex(function(elm){
             return elm.id == tag_id
@@ -99,10 +116,10 @@ class AdminTagIndexComponent extends Component {
                                 return <Table.Row key={index}>
                                         <Table.Cell>{index}</Table.Cell>
                                         <Table.Cell>{tag.name}</Table.Cell>
-                                        <Table.Cell>{tag.parent_id? tag.parent_id.name : ''}</Table.Cell>
+                                        <Table.Cell>{tag.parent? tag.parent.name : ''}</Table.Cell>
                                         <Table.Cell textAlign="center">
-                                            <i className="edit blue link icon" data-tag={tag.id} onClick={this.editResource}></i>
-                                            <i className="trash alternate red link icon left7"></i>
+                                            <i className="edit blue link icon" data-tag={tag.id} onClick={this.editTag}></i>
+                                            <i className="trash alternate red link icon left7" data-tag={tag.id} onClick={this.deleteTag}></i>
                                         </Table.Cell>
                                     </Table.Row>
                             })
