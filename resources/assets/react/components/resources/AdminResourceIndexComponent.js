@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ajaxGet} from "../../utils/Ajax";
+import {ajaxGet, ajaxDelete} from "../../utils/Ajax";
 import ErrorHandler from "../../utils/Modal";
 
 import {
@@ -29,6 +29,7 @@ class AdminResourceIndexComponent extends Component {
             type : this.props.type
         };
         this.editResource = this.editResource.bind(this)
+        this.deleteResource = this.deleteResource.bind(this)
     }
 
     componentDidMount() {
@@ -48,7 +49,24 @@ class AdminResourceIndexComponent extends Component {
                 error:true
             });
         });
-	}
+    }
+    
+    async deleteResource(e){
+        
+        const resource_id = e.target.getAttribute("data-tag");
+        ajaxDelete("resources/" + resource_id).then(result => {
+            let array = this.state.resources;
+            array = array.filter((r) => r.id !== resource_id)
+            this.setState({resources: array})
+        })
+        .catch((errors) => {
+            this.setState({
+                loading:false,
+                error :true
+            });
+        });    
+    }
+
 
     editResource(e) {
         const resource_id = e.target.getAttribute("data-tag")
@@ -91,6 +109,7 @@ class AdminResourceIndexComponent extends Component {
                         <Table.HeaderCell>URL</Table.HeaderCell>
                         <Table.HeaderCell>Language</Table.HeaderCell>
                         <Table.HeaderCell>Score</Table.HeaderCell>
+                        <Table.HeaderCell>Like</Table.HeaderCell>
                         <Table.HeaderCell>Tags</Table.HeaderCell>
                         <Table.HeaderCell textAlign="center">Actions</Table.HeaderCell>
                         </Table.Row>
@@ -104,6 +123,7 @@ class AdminResourceIndexComponent extends Component {
                                         <Table.Cell>{resource.url}</Table.Cell>
                                         <Table.Cell>{resource.language}</Table.Cell>
                                         <Table.Cell>{resource.score}</Table.Cell>
+                                        <Table.Cell>{resource.like}</Table.Cell>
                                         <Table.Cell>
                                             {
                                                 resource.resource_tags.map((resource_tag, index)=>{
@@ -115,7 +135,7 @@ class AdminResourceIndexComponent extends Component {
                                         </Table.Cell>
                                         <Table.Cell textAlign="center">
                                             <i className="edit blue link icon" data-tag={resource.id} onClick={this.editResource}></i>
-                                            <i className="trash alternate red link icon left7"></i>
+                                            <i className="trash alternate red link icon left7" data-tag={resource.id} onClick={this.deleteResource}></i>
                                         </Table.Cell>
                                     </Table.Row>
                             })
