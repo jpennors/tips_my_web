@@ -30,7 +30,7 @@ class Resource extends Model
     *
     * @var array
     */
-    protected $fillable = ['name', 'description', 'url', 'image', 'language', 'score', 'visitor'];
+    protected $fillable = ['name', 'description', 'url', 'image', 'language', 'score', 'like'];
 
 
     /**
