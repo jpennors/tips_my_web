@@ -3,12 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Uuids;
 
 class Suggestion extends Model
 {
-    use SoftDeletes;
     use Uuids;
 
 
@@ -25,7 +23,7 @@ class Suggestion extends Model
     *
     * @var array
     */
-    protected $fillable = ['name', 'url', 'main', 'purpose'];
+    protected $fillable = ['url', 'description'];
 
 
     /**
@@ -33,7 +31,7 @@ class Suggestion extends Model
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+    protected $dates = ['created_at', 'updated_at'];
 
 
     /**

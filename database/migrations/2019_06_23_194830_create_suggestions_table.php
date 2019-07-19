@@ -18,12 +18,9 @@ class CreateSuggestionsTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->uuid('id');
             $table->primary('id');
-            $table->string('name', 40)->unique();
-            $table->string('url', 150)->unique();
-            $table->string('main', 150)->nullable();
-            $table->text('purpose')->nullable();
+            $table->string('url', 150);
+            $table->text('description')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

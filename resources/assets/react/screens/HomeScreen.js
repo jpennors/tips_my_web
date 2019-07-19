@@ -21,7 +21,7 @@ class HomeScreen extends Component {
         this.saveSuggestion = this.saveSuggestion.bind(this)
     }
 
-    handleChange(event){
+    handleSuggestionChange(event){
         this.setState({
             suggestion: {
                 ...this.state.suggestion,
@@ -49,7 +49,22 @@ class HomeScreen extends Component {
         this.setState({loading:true})
         ajaxPost('suggestions', this.state.suggestion).then(result => {
             this.setState({
-                loading : false
+                loading : false,
+                suggestion : {
+                    'url' : '',
+                    'description' : '',
+                }
+            });
+            let modal = document.getElementById("sharing_modal");
+            modal.style.display = "none";
+        })
+        .catch((errors) => {
+            this.setState({
+                loading:false,
+            });
+        });
+    }
+    }
             });
         })
         .catch((errors) => {
@@ -79,21 +94,21 @@ class HomeScreen extends Component {
                                     placeholder="https://tipsmyweb.com"
                                     name = "url"
                                     value = {this.state.suggestion.url}
-                                    onChange = {this.handleChange}
+                                    onChange = {this.handleSuggestionChange}
                                     required
                                 />
                                 <textarea 
                                     rows="4"
                                     type="text"
                                     placeholder="description"
-                                    main = "purpose"
-                                    value = {this.state.suggestion.purpose}
-                                    onChange = {this.handleChange}
+                                    name = "description"
+                                    value = {this.state.suggestion.description}
+                                    onChange = {this.handleSuggestionChange}
                                 />
                             </form>
                         </div>
                         <div className="modal_btn">
-                            <a data-tag="sharing_modal" className="close2" onClick={this.closeModal}>Close</a>
+                            <a data-tag="sharing_modal" className="close" onClick={this.closeModal}>Close</a>
                             <a className="btnSubmit" onClick={this.saveSuggestion}>Submit</a>
                         </div>
                     </div>

@@ -18,7 +18,7 @@ Route::post('login', 'AdminController@login');
 Route::apiResource('resources', 'ResourceController')->only(['index']);
 Route::apiResource('tags', 'TagController')->only(['index']);
 
-Route::apiResource('suggestions', 'SuggestionController')->only([
+Route::apiResource('suggestions', 'SuggestionController')->only(['store']);
 Route::apiResource('contacts', 'ContactController')->only(['store']);
 ]);
 
@@ -41,7 +41,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::apiResource('tags', 'TagController')->only(['show',
     'store', 'update', 'destroy']);
 
-    Route::apiResource('suggestions', 'SuggestionController')->only(['destroy']);
+    Route::apiResource('suggestions', 'SuggestionController')->only(['index', 'destroy']);
     Route::apiResource('contacts', 'ContactController')->only(['index', 'destroy']);
 
     Route::get('/logout', 'AdminController@logout');
