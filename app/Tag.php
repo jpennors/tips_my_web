@@ -55,8 +55,8 @@ class Tag extends Model
     /**
      * The parent tag id
      */
-    public function parent_id(){
-        return $this->hasOne('App\Tag', 'parent_id');
+    public function parent(){
+        return $this->belongsTo('App\Tag', 'parent_id');
     }
 
     /**
@@ -66,7 +66,7 @@ class Tag extends Model
     */
     public static $rules = [
         'name'              =>      'required',
-        'parent_id'         =>      'exists:tags'
+        // 'parent_id'         =>      'exists:tags'
     ];
 
 }

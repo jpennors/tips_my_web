@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tag;
+use App\ResourceTag;
 use Validator;
 
 class TagController extends Controller
@@ -19,12 +20,12 @@ class TagController extends Controller
 
         $only = $request->input('only', null);
         if ($only == "parent") {
-            $tag = Tag::all()->where('parent_id', '<>', null)->with('parent_id')->get();
+            $tag = Tag::all()->where('parent_id', '<>', null)->with('parent')->get();
             // $tag = Tag::where('parent_id', '<>', null)->with('parent_id', 'resource_tags')->get();
         } else if ($only == "child") {
-            $tag = Tag::with('parent_id', 'resource_tags')->get();
+            $tag = Tag::with('parent', 'resource_tags')->get();
         } else {
-            $tag = Tag::with('parent_id', 'resource_tags')->get();
+            $tag = Tag::with('parent', 'resource_tags')->get();
         }
 
         // $tag = Tag::all();
