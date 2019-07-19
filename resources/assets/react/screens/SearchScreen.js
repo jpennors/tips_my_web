@@ -21,6 +21,7 @@ export default class SearchScreen extends Component {
         this.selectTag = this.selectTag.bind(this)
         this.searchResources = this.searchResources.bind(this)
         this.likeResource = this.likeResource.bind(this)
+        this.konwnResource = this.konwnResource.bind(this)
     }
 
     async componentDidMount() {
@@ -97,6 +98,17 @@ export default class SearchScreen extends Component {
         }
     }
 
+    konwnResource(event){
+        // Retrieve resource from list and insert it at the end
+        const resource_id = event.target.getAttribute("data-tag");
+        let array = this.state.resources;
+        let resource =  array.filter((r) => r.id == resource_id);
+        array = array.filter((r) => r.id != resource_id);
+        array.push(resource[0])
+        this.setState({resources: array})
+    }
+
+
     render() {
 
         const {error} = this.state
@@ -137,9 +149,13 @@ export default class SearchScreen extends Component {
                                                     <a>Try it !</a>
                                                 </p> */}
                                                 <p className="resource_btn">
-                                                    <span className="knowing_resource">I know it</span>
-                                                    <img src="images/heart.svg" height="15px;" />
-                                                    <button className="visit_resource_btn">Visit → </button>
+                                                    <span 
+                                                        className="knowing_resource cusror_pointer" 
+                                                        data-tag = {resource.id}
+                                                        onClick={this.konwnResource}
+                                                    >
+                                                        I know it
+                                                    </span>
                                                     <img 
                                                         src={
                                                             (this.state.liked_resources.length > 0 && this.state.liked_resources.indexOf(String(resource.id)) !== -1)? 
