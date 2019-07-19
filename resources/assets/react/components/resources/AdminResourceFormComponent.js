@@ -160,7 +160,7 @@ class AdminResourceFormComponent extends Component {
 
     async saveResource(){
         this.setState({loading:true})
-        console.log(this.state.type)
+
         if (this.props.type == "create"){
             ajaxPost('resources', this.state.resource).then(result => {
                 if (this.state.resource.file) {
@@ -247,7 +247,7 @@ class AdminResourceFormComponent extends Component {
                                 <img 
                                     className="rounded ui centered small image"
                                     src={this.state.resource.image ? 
-                                        "http://localhost:8000/api/resources/image/" + this.state.resource.id 
+                                        API_URL + "/resources/image/" + this.state.resource.id 
                                         : "/images/default.png"} 
                                 />
                                 <input
