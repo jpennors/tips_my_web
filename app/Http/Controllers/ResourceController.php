@@ -97,6 +97,12 @@ class ResourceController extends Controller
         $r = Resource::findOrFail($id);
 
         try {
+            $resource_tags = ResourceTag::where('resource_id', $r->id)->get();
+
+            foreach ($resource_tags as $rt) {
+                $rt->delete();
+            }
+
             $r->delete();
         } catch(\Exception $e) {
             abort(500, "Can't delete the resource");

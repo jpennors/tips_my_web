@@ -110,6 +110,12 @@ class TagController extends Controller
 
         // Try to delete
         try {
+
+            $resource_tags = ResourceTag::where('tag_id', $tag->id)->get();
+            foreach ($resource_tags as $rt) {
+                $rt->delete();
+            }
+
             $tag->delete();
         } catch(\Exception $e) {
             abort(500, "Can't delete the resource");
