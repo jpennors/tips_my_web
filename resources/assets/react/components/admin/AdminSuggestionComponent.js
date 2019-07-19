@@ -27,7 +27,6 @@ class AdminSuggestionComponent extends Component {
             error : false,
         };
 
-        this.saveSuggestion = this.saveSuggestion.bind(this)
         this.deleteSuggestion = this.deleteSuggestion.bind(this)
     }
 
@@ -51,16 +50,15 @@ class AdminSuggestionComponent extends Component {
         });
     }
 
-    async saveSuggestion(e){
-        const index = e.target.getAttribute("data-tag")
-        try {
-            const res = await ajaxPost('resources', this.state.suggestions[index]);
-			console.log(res)
-		} catch (error) {
-			console.log(error);
-			alert('Une erreur est survenue.');
-		}
-    }
+    // async saveSuggestion(e){
+    //     const index = e.target.getAttribute("data-tag")
+    //     try {
+    //         const res = await ajaxPost('resources', this.state.suggestions[index]);
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 		alert('Une erreur est survenue.');
+	// 	}
+    // }
 
     async deleteSuggestion(e){
         const index = e.target.getAttribute("data-tag")
@@ -104,11 +102,9 @@ class AdminSuggestionComponent extends Component {
                         <Table.Header>
                             <Table.Row>
                                 <Table.HeaderCell>#</Table.HeaderCell>
-                                <Table.HeaderCell>Nom</Table.HeaderCell>
                                 <Table.HeaderCell>URL</Table.HeaderCell>
-                                <Table.HeaderCell>Main</Table.HeaderCell>
-                                <Table.HeaderCell>Purpose</Table.HeaderCell>
-                                <Table.HeaderCell textAlign="center">Actions</Table.HeaderCell>
+                                <Table.HeaderCell>Description</Table.HeaderCell>
+                                <Table.HeaderCell textAlign="center">Action</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
@@ -116,16 +112,14 @@ class AdminSuggestionComponent extends Component {
                                 this.state.suggestions.map((suggestion, index)=>{
                                     return <Table.Row key={index}>
                                             <Table.Cell>{index+1}</Table.Cell>
-                                            <Table.Cell>{suggestion.name}</Table.Cell>
                                             <Table.Cell>{suggestion.url}</Table.Cell>
-                                            <Table.Cell>{suggestion.main}</Table.Cell>
-                                            <Table.Cell>{suggestion.purpose}</Table.Cell>
+                                            <Table.Cell>{suggestion.description}</Table.Cell>
                                             <Table.Cell textAlign="center">
-                                                <i
+                                                {/* <i
                                                     className="plus blue link icon"
                                                     data-tag={index}
                                                     onClick={this.saveSuggestion}
-                                                ></i>
+                                                ></i> */}
                                                 <i
                                                     className="trash alternate red link icon left7"
                                                     data-tag={index}
