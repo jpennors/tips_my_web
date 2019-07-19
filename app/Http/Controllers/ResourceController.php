@@ -184,4 +184,23 @@ class ResourceController extends Controller
     }
 
 
+    public function addLike(Request $r, $id)
+    {
+        $resource = Resource::findOrFail($id);
+        $resource->like += 1;
+        $resource->save();
+        return response()->json();
+    }
+
+    public function removeLike(Request $r, $id)
+    {
+        $resource = Resource::findOrFail($id);
+        if ($resource->like > 0) {
+            $resource->like -= 1;
+        }
+        $resource->save();
+        return response()->json();
+    }
+
+
 }

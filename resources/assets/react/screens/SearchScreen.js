@@ -20,6 +20,7 @@ export default class SearchScreen extends Component {
 
         this.selectTag = this.selectTag.bind(this)
         this.searchResources = this.searchResources.bind(this)
+        this.likeResource = this.likeResource.bind(this)
     }
 
     async componentDidMount() {
@@ -71,6 +72,30 @@ export default class SearchScreen extends Component {
         }
     }
 
+    async likeResource(event){
+        // Add resource to liked_resources, send Like to API and save user preference in cookies
+
+        // Add resource or retrieve to liked_resources
+        const resource_id = event.target.getAttribute("data-tag");
+        const index = this.state.liked_resources.indexOf(resource_id);
+        if (index !== -1) {
+            // Retrieve resource from liked_resources 
+            this.setState({liked_resources: this.state.liked_resources.filter((_, r) => r !== index)})
+            // API call
+            ajaxGet("resources/like/remove/" + resource_id).then(res => {});
+            // Retrieve from cookies
+
+        } else {
+            // Add resource in liked_resources
+            let array = this.state.liked_resources;
+            array.push(resource_id);
+            this.setState({liked_resources: array});
+            // API call
+            ajaxGet("resources/like/add/" + resource_id).then(res => {});
+            // Add in cookies
+
+        }
+    }
 
     render() {
 
@@ -115,6 +140,15 @@ export default class SearchScreen extends Component {
                                                     <span className="knowing_resource">I know it</span>
                                                     <img src="images/heart.svg" height="15px;" />
                                                     <button className="visit_resource_btn">Visit → </button>
+                                                    <img 
+                                                        src={
+                                                            (this.state.liked_resources.length > 0 && this.state.liked_resources.indexOf(String(resource.id)) !== -1)? 
+                                                            "images/heart_full.svg" : "images/heart.svg"} 
+                                                        height="15px;" 
+                                                        className="cusror_pointer"
+                                                        data-tag = {resource.id}
+                                                        onClick={this.likeResource} 
+                                                    />
                                                 </p>
                                             </div>
                                             

@@ -24,7 +24,7 @@ class CreateResourcesTable extends Migration
             $table->string('image', 100)->nullable();
             $table->string('language', 5);
             $table->smallInteger('score')->nullable();
-            $table->integer('visitor')->nullable();
+            $table->integer('like')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
