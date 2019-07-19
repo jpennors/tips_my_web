@@ -49,7 +49,7 @@ class LoginScreen extends Component {
                     <div className="field">
                         <label>Mot de passe</label>
                         <input
-                            type="text"
+                            type="password"
                             name="password"
                             value={this.state.password}
                             onChange={this.handleChange}
