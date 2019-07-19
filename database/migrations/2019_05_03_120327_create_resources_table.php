@@ -13,6 +13,7 @@ class CreateResourcesTable extends Migration
      */
     public function up()
     {
+
         Schema::create('resources', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
@@ -27,21 +28,7 @@ class CreateResourcesTable extends Migration
             $table->integer('like')->default(0);
             $table->timestamps();
             $table->softDeletes();
-        });
-
-
-        Schema::create('resource_tags', function (Blueprint $table) {
-            $table->charset = 'utf8';
-            $table->collation = 'utf8_unicode_ci';
-            $table->bigIncrements('id');
-            $table->uuid('resource_id');
-            $table->foreign('resource_id')->references('id')->on('resources');
-            $table->uuid('tag_id');
-            $table->foreign('tag_id')->references('id')->on('tags');
-            $table->smallInteger('belonging');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        });        
 
     }
 
@@ -53,6 +40,5 @@ class CreateResourcesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('resources');
-        Schema::dropIfExists('resource_tags');
     }
 }
