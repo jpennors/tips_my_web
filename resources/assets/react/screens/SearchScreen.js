@@ -11,6 +11,7 @@ export default class SearchScreen extends Component {
         this.state = {
             tags: [],
             selected_tags: [],
+            liked_resources: [],
             active: true,
             resources : [],
             research: false,
@@ -63,7 +64,7 @@ export default class SearchScreen extends Component {
 
         const tag_id = event.target.getAttribute("data-tag");
 
-        var index = this.state.selected_tags.indexOf(tag_id)
+        let index = this.state.selected_tags.indexOf(tag_id)
         if (index !== -1) {
             this.setState({selected_tags: this.state.selected_tags.filter((_, t) => t !== index)});
         } else {
@@ -129,9 +130,9 @@ export default class SearchScreen extends Component {
                                     this.state.resources.map((resource, index) => {
                                         return <div className="research_resource" key={index}>
                                             <div className="resource_header">
-                                                <span class="dot red_dot"></span>
-                                                <span class="dot yellow_dot"></span>
-                                                <span class="dot green_dot"></span>
+                                                <span className="dot red_dot"></span>
+                                                <span className="dot yellow_dot"></span>
+                                                <span className="dot green_dot"></span>
                                             </div>
                                             <a href={resource.url} target="_blank" >
                                                 <img 
@@ -165,6 +166,11 @@ export default class SearchScreen extends Component {
                                                         data-tag = {resource.id}
                                                         onClick={this.likeResource} 
                                                     />
+                                                    <button className="visit_resource_btn">
+                                                        <a href={resource.url} target="_blank" className="a_pointer_white">
+                                                            Visit → 
+                                                        </a>
+                                                    </button>
                                                 </p>
                                             </div>
                                             
@@ -194,7 +200,7 @@ export default class SearchScreen extends Component {
                                                 this.state.tags.map((tag, index) => {
                                                     return <li key={index} onClick={this.selectTag}>
                                                         <a data-tag={tag.id} className={`btnOne noselect ${(this.state.selected_tags.length >0
-                                                                                    && this.state.selected_tags.indexOf(String(tag.id)) !== -1)? 'btnOneSelected' : ''}`}>
+                                                                                    && this.state.selected_tags.indexOf(String(tag.id)) !== -1)? 'btnOneSelected' : 'a_pointer_white'}`}>
                                                             {tag.name}
                                                         </a>
                                                     </li>

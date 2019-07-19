@@ -9,16 +9,20 @@ class HomeScreen extends Component {
 
         this.state = {
             suggestion : {
-                'name': '',
                 'url' : '',
-                'main': '',
-                'purpose' : '',
+                'description' : '',
+            },
+            contact : {
+                'email' : '',
+                'message' : '',
             },
             loading : false,
         };
 
-        this.handleChange = this.handleChange.bind(this)
+        this.handleSuggestionChange = this.handleSuggestionChange.bind(this)
+        this.handleContactChange = this.handleContactChange.bind(this)
         this.saveSuggestion = this.saveSuggestion.bind(this)
+        this.saveContact = this.saveContact.bind(this)
     }
 
     handleSuggestionChange(event){
@@ -30,16 +34,24 @@ class HomeScreen extends Component {
         })
     }
 
+    handleContactChange(event){
+        this.setState({
+            contact: {
+                ...this.state.contact,
+                [event.target.name]: event.target.value
+            }
+        })
+    }
+
     openModal(event){
         const modal_id = event.target.getAttribute("data-tag")
-        var modal = document.getElementById(modal_id);
+        let modal = document.getElementById(modal_id);
         modal.style.display = "block";
     }
 
     closeModal(event){
         const modal_id = event.target.getAttribute("data-tag")
-        console.log(modal_id)
-        var modal = document.getElementById(modal_id);
+        let modal = document.getElementById(modal_id);
         if (modal && modal_id){
             modal.style.display = "none"
         }
@@ -64,8 +76,19 @@ class HomeScreen extends Component {
             });
         });
     }
-    }
+
+    async saveContact(){
+        this.setState({loading:true})
+        ajaxPost('contacts', this.state.contact).then(result => {
+            this.setState({
+                loading : false,
+                contact : {
+                    'email' : '',
+                    'message' : '',
+                }
             });
+            let modal = document.getElementById("contact_modal");
+            modal.style.display = "none";
         })
         .catch((errors) => {
             this.setState({
@@ -139,7 +162,7 @@ class HomeScreen extends Component {
                             </p>
                         </div>
                         <div className="modal_btn">
-                            <a data-tag="about_modal" className="close2" onClick={this.closeModal}>Close</a>
+                            <a data-tag="about_modal" className="close" onClick={this.closeModal}>Close</a>
                             <a className="btnSubmit" onClick={this.saveSuggestion}>Support us</a>
                         </div>
                     </div>
@@ -157,23 +180,23 @@ class HomeScreen extends Component {
                                 <input
                                     type="text"
                                     placeholder="your email"
-                                    // name = "url"
-                                    // value = {this.state.suggestion.url}
-                                    // onChange = {this.handleChange}
+                                    name = "email"
+                                    value = {this.state.contact.email}
+                                    onChange = {this.handleContactChange}
                                     required
                                 />
                                 <textarea 
                                     type="text"
                                     placeholder="message"
-                                    // main = "purpose"
-                                    // value = {this.state.suggestion.purpose}
-                                    // onChange = {this.handleChange}
+                                    name = "message"
+                                    value = {this.state.contact.message}
+                                    onChange = {this.handleContactChange}
                                 />
                             </form>
                         </div>
                         <div className="modal_btn">
-                            <a data-tag="contact_modal" className="close2" onClick={this.closeModal}>Close</a>
-                            <a className="btnSubmit">Submit</a>
+                            <a data-tag="contact_modal" className="close" onClick={this.closeModal}>Close</a>
+                            <a className="btnSubmit" onClick={this.saveContact}>Submit</a>
                         </div>
                     </div>
                 </div>

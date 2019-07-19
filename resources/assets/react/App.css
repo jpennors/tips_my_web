@@ -135,7 +135,7 @@
 }
 
 .resource_content{
-	height: 175px;
+	height: 100px;
 }
 
 .resource_title{
@@ -221,6 +221,12 @@
 	background: white;
 	color: #F46E7A;
 }
+
+.btnOneSelected:hover{
+	background: white;
+	color: #F46E7A;
+}
+
 
 ul#categories{ /*group categorie*/
 	/* height: 700px; */
@@ -308,10 +314,12 @@ p{
 
 a{
 	font-size: 13px; /*--text nav bar--*/
+	color:white;
 }
 
 a:hover{
-	color:white;
+	/* color:white; */
+	/* color:transparent; */
 	cursor: pointer;
 }
 
@@ -335,11 +343,15 @@ h3{
 	bottom: 1.5vw;
 	left: 50%;
 	transform: translateX(-50%);
+	/* position: relative; */
+	/* bottom: 10px; */
 }
 .footer p{
 	color: white;
 	display: inline-block;
-	font-size: 13px;
+	/* font-size: 13px; */
+	font-size: 10px;
+	margin-left: 5px;
 	margin-right: 15px;
 }
 .social_medias{ /*--div share icons--*/
@@ -385,6 +397,8 @@ h3{
 .font15{font-size: 15px}
 .font12{font-size: 12px}
 .font10{font-size: 10px}
+.a_pointer_white:hover{color:white}
+.cusror_pointer{cursor: pointer;}
 
 
 /* Scrollbar styles */
@@ -449,7 +463,7 @@ h3{
 #sidebar .ui.menu > a.item {
     padding: 10px 20px;
     line-height: 20px;
-    color: #337ab7;
+    /* color: #337ab7; */
     border-radius: 0 !important;
     margin-top: 0;
     margin-bottom: 0;
@@ -463,7 +477,7 @@ h3{
 
 #sidebar .ui.menu > a.item:hover {
     background-color: #eee;
-    color: #23527c;
+    /* color: #23527c; */
 }
 
 #content {
@@ -508,7 +522,7 @@ h3{
 /* ------------------------------------ */
 /* ------------------------------------ */
 
-@media only screen and (max-width:585px){
+/* @media only screen and (max-width:585px){
 
 	.landing{
 		background: color;
@@ -521,30 +535,84 @@ h3{
 		box-sizing: border-box;
 	}
 
-}
+} */
 
 
-@media only screen and (max-height:600px){
+@media only screen and (max-height:600px) {
+/* @media only screen and (max-width:500px){ */
 
 	.landing{
 		background: color;
 	}
+
+	.landing_content{
+		margin: 1vh auto 0 auto;
+	}
+
+	/* .landing_wrapper{
+		padding-bottom: 10px;
+	} */
+
+	.logo{
+		width: 8vh;
+	}
+
+	#research_results{
+		margin-top: 10px;
+	}
+
 	h1{
-		font-size: 21px;
+		font-size: 18px;
 
 	}
 	p{
 		font-size: 15px;
 	}
 	a{
-		font-size: 12px;
+		font-size: 10px;
 	}
 	.nav_pages{
 		font-size: 16px;
 		margin-top: 3vh;
 	}
+
+	.nav_pages a{
+		margin-left: 10px;
+	}
+
 	.btnOne{
 		font-size: 13px;
+	}
+
+	.footer{
+		bottom:none;
+	}
+
+	.research_resource{
+		height: 270px;
+		width: 200px;
+		margin: 10px;
+	}
+
+	.resource_img{
+		height: 115px;
+		width: 200px;
+	}
+
+	/* .resource_title{
+		height: ;
+	}
+
+	.resource_description{
+		height: 
+	}
+
+	.resource_btn{
+		height:
+	} */
+
+	.resource_content{
+		height: 100px;
 	}
 }
 
@@ -684,7 +752,7 @@ h3{
 	color: white;
 }
 
-.close2{
+.close{
 	color:black;
 	font-weight: 500;
 	display: inline-block;
@@ -696,10 +764,13 @@ h3{
 	vertical-align: middle;
 	margin-left: 40px;
 }
-.close2:hover{
+.close:hover{
 	text-decoration: underline;
+	color:black;
+	cursor: pointer;
+	/* background-color:rgba(237,237,237,0.90); */
 }
-.close{
+/* .close{
 	color:white;
 	position: absolute;
 	border:1px solid white;
@@ -714,9 +785,9 @@ h3{
 	box-shadow: white;
 	transition: background 500ms;
 	box-shadow: 2px 2px 10px 1px rgba(85,85,85,0.20);
-}
-.close:hover{
+} */
+/* .close:hover{
 	background: white;
 	cursor: pointer;
 	color: black;
-} 
+}  */
