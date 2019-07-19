@@ -20,19 +20,15 @@ Route::apiResource('tags', 'TagController')->only(['index']);
 
 Route::apiResource('suggestions', 'SuggestionController')->only(['store']);
 Route::apiResource('contacts', 'ContactController')->only(['store']);
-]);
 
-Route::post('import/tags', 'TagController@importTags');
-Route::post('import/resources', 'ResourceController@importResources');
+
 Route::post('resources/search', 'ResourceTagController@search');
 Route::get('resources/image/{id}', 'ResourceController@getImage');
-Route::post('resources/image/{id}', 'ResourceController@uploadImage');
 
+Route::get('resources/like/add/{id}', 'ResourceController@addLike');
+Route::get('resources/like/remove/{id}', 'ResourceController@removeLike');
 
-// Route::post('image/test', 'ResourceController@index');
-
-
-
+# Admin routes
 Route::group(['middleware' => 'admin'], function () {
 
     Route::apiResource('resources', 'ResourceController')->only(['show',
@@ -44,6 +40,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::apiResource('suggestions', 'SuggestionController')->only(['index', 'destroy']);
     Route::apiResource('contacts', 'ContactController')->only(['index', 'destroy']);
 
-    Route::get('/logout', 'AdminController@logout');
+    Route::post('import/tags', 'TagController@importTags');
+    Route::post('import/resources', 'ResourceController@importResources');
+
+    Route::post('resources/image/{id}', 'ResourceController@uploadImage');
+
+    Route::get('logout', 'AdminController@logout');
 
 });
