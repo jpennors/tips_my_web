@@ -25,7 +25,7 @@ class AdminResourceFormComponent extends Component {
 
         this.state = {
             tags : [],
-            selected_tags : [],
+            // selected_tags : [],
             resource : {
                 'name': '',
                 'file': '',
@@ -58,8 +58,13 @@ class AdminResourceFormComponent extends Component {
 
     getResource(){
         if (this.props.resource) {
+            let resource = this.props.resource
+            if (resource.url.startsWith("https://")) {
+                resource.url = resource.url.replace("https://", "")
+            }
+            console.log(resource)
             this.setState({
-                resource : this.props.resource
+                resource : resource
             })
         }
     }
@@ -161,10 +166,15 @@ class AdminResourceFormComponent extends Component {
     async saveResource(){
         this.setState({loading:true})
 
+        let resource = this.state.resource
+        if (!resource.url.startsWith("https://")){
+            resource.url = "https://" + resource.url
+        }
+
         if (this.props.type == "create"){
-            ajaxPost('resources', this.state.resource).then(result => {
-                if (this.state.resource.file) {
-                    this.fileUpload(this.state.resource.file, result.id)    
+            ajaxPost('resources', resource).then(result => {
+                if (resource.file) {
+                    this.fileUpload(resource.file, result.id)    
                 } else {
                     this.setState({
                         loading : false
@@ -179,9 +189,9 @@ class AdminResourceFormComponent extends Component {
                 });
             });
         } else if (this.props.type == "edit"){
-            ajaxPut('resources/' + this.state.resource.id, this.state.resource).then(result => {
-                if (this.state.resource.file) {
-                    this.fileUpload(this.state.resource.file, this.state.resource.id)    
+            ajaxPut('resources/' + resource.id, resource).then(result => {
+                if (resource.file) {
+                    this.fileUpload(resource.file, resource.id)    
                 } else {
                     this.setState({
                         loading : false
