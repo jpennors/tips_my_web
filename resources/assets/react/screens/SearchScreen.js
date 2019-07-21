@@ -118,22 +118,30 @@ export default class SearchScreen extends Component {
                 <ErrorHandler
                     open={error}
                 />
-                { this.state.research?
+                { 
+                    this.state.research?
                     (
+                        // Research resutlts part
+
                         <div className="research_content">
                             <h1 className="left">Here are some website to improve your workflow
                                 {/* <img src="/images/shuffle.svg" /> */}
                             </h1>
 
                             <ul id="research_results" key>
+
+                                {/* Display every resources for the research */}
+
                                 {
                                     this.state.resources.map((resource, index) => {
                                         return <div className="research_resource" key={index}>
+                                            {/* Header of the resource with red, yellow and green circle */}
                                             <div className="resource_header">
                                                 <span className="dot red_dot"></span>
                                                 <span className="dot yellow_dot"></span>
                                                 <span className="dot green_dot"></span>
                                             </div>
+                                            {/* Resource image */}
                                             <a href={resource.url} target="_blank" >
                                                 <img 
                                                     src={resource.image ? API_URL + "/resources/image/" + resource.id : '/images/default.jpg'} 
@@ -141,14 +149,13 @@ export default class SearchScreen extends Component {
                                                     className="resource_img" 
                                                 />
                                             </a>
+                                            {/* Resource content */}
                                             <div className="resource_content">
+                                                {/* Title */}
                                                 <h4 className="resource_title">{resource.name}</h4>
+                                                {/* Description */}
                                                 <p className="resource_description">{resource.description}</p>
-                                                {/* <p className="research_results_btn">
-                                                    <a>Already know</a>
-                                                    <img src="images/heart.svg" width="15px"/>
-                                                    <a>Try it !</a>
-                                                </p> */}
+                                                {/* Button I know it, like and visit */}
                                                 <p className="resource_btn">
                                                     <span 
                                                         className="knowing_resource cusror_pointer" 
@@ -182,6 +189,7 @@ export default class SearchScreen extends Component {
 
                     ) :
                     (
+                        // Research part
                         <div className="landing_content">
                             <h1>What are your centers of interest?</h1>
                             <p>Let’s find your most useful websites</p>
@@ -192,10 +200,12 @@ export default class SearchScreen extends Component {
                                         <div className="ui active inverted loader"></div>
                                     ) : (
                                         <div className="table">
+                                            {/* Search bar */}
                                             <div className="bar">
                                                 <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selected_tags.length ? this.searchResources : null} /></a>
                                             </div>
                                             <ul id="categories" key>
+                                            {/* Display every tags available */}
                                             {
                                                 this.state.tags.map((tag, index) => {
                                                     return <li key={index} onClick={this.selectTag}>

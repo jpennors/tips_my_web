@@ -101,8 +101,11 @@ class HomeScreen extends Component {
     render() {
         return (
             <div className="landing" id="home">
-                {/* Popup */}
 
+
+                {/* Modals */}
+
+                {/* Sharing modal */}
                 <div data-tag="sharing_modal" id="sharing_modal" className="modal_container" onClick={this.closeModal}>
 
                     <div className="modal">
@@ -138,6 +141,7 @@ class HomeScreen extends Component {
 
                 </div>
 
+                {/* About modal  */}
                 <div data-tag="about_modal" id="about_modal" className="modal_container" onClick={this.closeModal}>
 
                     <div className="modal">
@@ -169,6 +173,7 @@ class HomeScreen extends Component {
 
                 </div>
                 
+                {/* Contact modal */}
                 <div data-tag="contact_modal" id="contact_modal" className="modal_container" onClick={this.closeModal}>
                     <div className="modal">
                         <span className="modal_heading">contact</span>
@@ -201,9 +206,12 @@ class HomeScreen extends Component {
                     </div>
                 </div>
 
+                {/* Header */}
                 <div className="landing_wrapper">
                     <div className="nav_landing">
+                        {/* Logo */}
                         <a href=""><img src="/images/logo.svg" alt="logo" className="logo" /></a>
+                        {/* Lien pour les modals */}
                         <div className="nav_pages">
                             <a data-tag="sharing_modal" onClick={this.openModal}>Share a website</a>
                             <a data-tag="about_modal" onClick={this.openModal}>About</a>
@@ -211,10 +219,16 @@ class HomeScreen extends Component {
                         </div>
                     </div>
                 </div>
+
+                {/* Home page content, research part */}
                 <SearchScreen/>
+
+                {/* Footer */}
                 <div className="footer">
+                    {/* On left  */}
                     <p>© 2019 TipsMyWeb</p>
                     <a href="#"><p>Terms</p></a>
+                    {/* On right */}
                     <div className="social_medias">
                         <a href="#"><img src="/images/Twitter logo.svg" alt="share on twitter logo" className="social_media_img" /></a>
                         <a href="#"><img src="/images/Facebook logo.svg" alt="share on facebook logo" className="social_media_img" /></a>
