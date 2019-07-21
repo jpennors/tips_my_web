@@ -25,6 +25,7 @@ class CreateResourcesTable extends Migration
             $table->string('image', 100)->nullable();
             $table->string('language', 5);
             $table->smallInteger('score')->nullable();
+            $table->smallInteger('interface')->nullable();
             $table->uuid('price_id');
             $table->foreign('price_id')->references('id')->on('prices');
             $table->uuid('type_id');

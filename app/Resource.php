@@ -105,7 +105,8 @@ class Resource extends Model
     public static $rules = [
         'name'              =>      'required|unique:resources',
         'url'               =>      'required|unique:resources',
-        'score'             =>      'required|integer'
+        'score'             =>      'required|integer',
+        'interface'         =>      'required|integer',
         'type_id'           =>      'required',
         'price_id'          =>      'required'
     ];

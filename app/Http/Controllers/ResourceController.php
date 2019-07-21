@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Resource;
+use App\ResourceTag;
 use App\Tag;
-use App\Http\Requests\ResourceRequest;
 use Validator;
 
 
@@ -19,7 +19,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        $r = Resource::with('resource_tags')->get();
+        $r = Resource::with('resource_tags', 'price', 'type')->get();
         return response()->json($r, 200);
     }
 
@@ -61,7 +61,7 @@ class ResourceController extends Controller
      */
     public function show($id)
     {
-        $r = Resource::findOrFail($id)->with('resource_tags')->get();
+        $r = Resource::findOrFail($id)->with('resource_tags', 'price')->get();
         return response()->json($r, 200);
     }
 
