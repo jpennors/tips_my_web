@@ -14,7 +14,9 @@ import {
     Loader,
     Menu,
     Table,
-    Tab
+    Tab,
+    TableHeaderCell,
+    TableCell
   } from "semantic-ui-react";
 
 class AdminResourceIndexComponent extends Component {
@@ -107,8 +109,10 @@ class AdminResourceIndexComponent extends Component {
                         <Table.HeaderCell>#</Table.HeaderCell>
                         <Table.HeaderCell>Nom</Table.HeaderCell>
                         <Table.HeaderCell>URL</Table.HeaderCell>
-                        <Table.HeaderCell>Language</Table.HeaderCell>
-                        <Table.HeaderCell>Score</Table.HeaderCell>
+                        <Table.HeaderCell>Prix</Table.HeaderCell>
+                        {/* <Table.HeaderCell>Language</Table.HeaderCell> */}
+                        {/* <Table.HeaderCell>Score</Table.HeaderCell> */}
+                        {/* <TableHeaderCell>Interface</TableHeaderCell> */}
                         <Table.HeaderCell>Like</Table.HeaderCell>
                         <Table.HeaderCell>Tags</Table.HeaderCell>
                         <Table.HeaderCell textAlign="center">Actions</Table.HeaderCell>
@@ -121,8 +125,10 @@ class AdminResourceIndexComponent extends Component {
                                         <Table.Cell>{index}</Table.Cell>
                                         <Table.Cell>{resource.name}</Table.Cell>
                                         <Table.Cell>{resource.url}</Table.Cell>
-                                        <Table.Cell>{resource.language}</Table.Cell>
-                                        <Table.Cell>{resource.score}</Table.Cell>
+                                        <TableCell>{resource.price.name}</TableCell>
+                                        {/* <Table.Cell>{resource.language}</Table.Cell> */}
+                                        {/* <Table.Cell>{resource.score}</Table.Cell> */}
+                                        {/* <TableCell>{resource.interface}</TableCell> */}
                                         <Table.Cell>{resource.like}</Table.Cell>
                                         <Table.Cell>
                                             {
