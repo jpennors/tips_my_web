@@ -25,6 +25,8 @@ class AdminResourceFormComponent extends Component {
 
         this.state = {
             tags : [],
+            prices : [],
+            types : [],
             // selected_tags : [],
             resource : {
                 'name': '',
@@ -34,6 +36,9 @@ class AdminResourceFormComponent extends Component {
                 'description': '',
                 'language' : 'fr',
                 'score' : '',
+                'price_id' : '',
+                'type_id' : '',
+                'interface': '',
                 'tags' : [],
             },
             loading : true,
@@ -62,7 +67,6 @@ class AdminResourceFormComponent extends Component {
             if (resource.url.startsWith("https://")) {
                 resource.url = resource.url.replace("https://", "")
             }
-            console.log(resource)
             this.setState({
                 resource : resource
             })
@@ -74,9 +78,8 @@ class AdminResourceFormComponent extends Component {
             const res = await ajaxGet('tags');
 			this.setState({
                 tags: res || [],
-                loading : false
             });
-            this.getResource();
+            this.loadPrices();
 		} catch (error) {
             this.setState({
                 loading:false,
@@ -84,6 +87,42 @@ class AdminResourceFormComponent extends Component {
             });
 		}
     }
+
+
+    async loadPrices() {
+		try {
+            const res = await ajaxGet('prices');
+			this.setState({
+                prices: res || [],
+            });
+            this.loadTypes();
+		} catch (error) {
+            this.setState({
+                error:true
+            });
+		}
+    }
+
+    async loadTypes(){
+        try {
+            const res = await ajaxGet('types');
+			this.setState({
+                types: res || [],
+                loading: false,
+                // resource: {
+                //     ...this.state.resource,
+                //     // price_id: this.state.prices[0].id,
+                //     type_id: types[0].id
+                // }
+            });
+            this.getResource();
+		} catch (error) {
+            this.setState({
+                error:true
+            });
+		}
+    }
+
 
     selectTag(event,tag){
         let array =  this.state.resource.tags
@@ -290,6 +329,48 @@ class AdminResourceFormComponent extends Component {
                                         <option value="en">Anglais</option>
                                     </select>
                                 </div>
+                                <div className="field">
+                                    <label>Prix</label>
+                                    <select
+                                        name="price_id"
+                                        value={this.state.resource.price_id}
+                                        onChange={this.handleChange}
+                                    >
+                                        <option value=" "></option>
+                                        {
+                                            this.state.prices.map((price, index) => {
+                                                return <option 
+                                                    value={price.id} 
+                                                    key={index}
+                                                    defaultValue={this.state.resource.price_id && this.state.resource.price_id === price.id}
+                                                >
+                                                    {price.name}
+                                                </option>
+                                            })
+                                        }
+                                    </select>
+                                </div>
+                                <div className="field">
+                                    <label>Type</label>
+                                    <select
+                                        name="type_id"
+                                        value={this.state.resource.type_id}
+                                        onChange={this.handleChange}
+                                    >
+                                        <option value=" "></option>
+                                        {
+                                            this.state.types.map((type, index) => {
+                                                return <option 
+                                                    value={type.id} 
+                                                    key={index}
+                                                    defaultValue={this.state.resource.type_id && this.state.resource.type_id === type.id}
+                                                >
+                                                    {type.name}
+                                                </option>
+                                            })
+                                        }
+                                    </select>
+                                </div>
                             </div>
                             <div className="six wide field">
                                 <div className="field">
@@ -316,7 +397,17 @@ class AdminResourceFormComponent extends Component {
                                         onChange={this.handleChange}
                                     />
                                 </div>
+                                <div className="field">
+                                    <label>Interface</label>
+                                    <input
+                                        type="number"
+                                        name="interface"
+                                        value={this.state.resource.interface || ''}
+                                        onChange={this.handleChange}
+                                    />
+                                </div>
                             </div>
+                            
                         </div>
                         <div className="field">
                             <label>Description</label>
