@@ -41,6 +41,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::apiResource('contacts', 'ContactController')->only(['index', 'destroy']);
 
     Route::apiResource('prices', 'PriceController')->only(['index']);
+    Route::apiResource('types', 'TypeController')->only(['index']);
+
     Route::post('import/tags', 'TagController@importTags');
     Route::post('import/resources', 'ResourceController@importResources');
 

@@ -56,6 +56,12 @@ class Resource extends Model
         return $this->belongsTo('App\Price');
     }
 
+
+    /**
+     * The price relationship
+     */
+    public function type(){
+        return $this->belongsTo('App\Type');
     }
 
 
@@ -100,6 +106,7 @@ class Resource extends Model
         'name'              =>      'required|unique:resources',
         'url'               =>      'required|unique:resources',
         'score'             =>      'required|integer'
+        'type_id'           =>      'required',
         'price_id'          =>      'required'
     ];
 
