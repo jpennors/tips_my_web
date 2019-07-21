@@ -66,11 +66,6 @@
 }
 
 #research_results{ /*group all website*/
-	/* overflow-x: scroll;
-    overflow-y: hidden;
-	white-space: nowrap;
-	margin-top: 40px;
-	height:325px; */
 	overflow-x: scroll;
 	margin-top: 20px;
 	overflow-y: hidden;
@@ -82,13 +77,6 @@
     display: none;
 }
 
-/* #research_results p, h3, h4{
-	margin: 10px 15px 10px 15px;
-	color: black;
-	font-family: 'Montserrat-Medium';
-	font-size: 15px;
-	white-space: pre-wrap;
-} */
 
 .research_resource{ /*group the website img and its description*/
 	background: white;
@@ -98,14 +86,8 @@
 	margin: 20px;
 	filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
     vertical-align: middle;
-    /* border-radius: 5px; */
-    /* position: relative; */
 }
 
-/* .research_resource a{
-	color: #6F6F6F;
-	font-size: 12px;
-} */
 
 .resource_header{
 	height: 15px !important;
@@ -189,18 +171,7 @@
 	width: 300px;
   	height: 175px;
     object-fit: cover;
-    /* border-top-right-radius: 5px; */
-    /* border-top-left-radius: 5px; */
 }
-
-/* .research_results_btn{
-    text-align: center;
-}
-
-.research_results_btn > a {
-    margin: 5px;
-} */
-
 
 /*–––––––––––– Tags –––––––––––*/
 
@@ -229,7 +200,6 @@
 
 
 ul#categories{ /*group categorie*/
-	/* height: 700px; */
 	max-width: 650px;
 	padding-top: 2em;
 	text-align: center;
@@ -292,7 +262,6 @@ ul#categories li{
 
 body{
     position: relative; /*--keep the footer to the bottom--*/
-    /* font-family: 'Montserrat-Medium'; */
 }
 
 h1{
@@ -318,8 +287,6 @@ a{
 }
 
 a:hover{
-	/* color:white; */
-	/* color:transparent; */
 	cursor: pointer;
 }
 
@@ -343,9 +310,8 @@ h3{
 	bottom: 1.5vw;
 	left: 50%;
 	transform: translateX(-50%);
-	/* position: relative; */
-	/* bottom: 10px; */
 }
+
 .footer p{
 	color: white;
 	display: inline-block;
@@ -768,26 +734,5 @@ h3{
 	text-decoration: underline;
 	color:black;
 	cursor: pointer;
-	/* background-color:rgba(237,237,237,0.90); */
 }
-/* .close{
-	color:white;
-	position: absolute;
-	border:1px solid white;
-	width: 30px;
-	height: 24px;
-	text-align: center;
-	padding-top: 6px;
-	text-decoration: none;
-	top:-50px;
-	right:10px;
-	border-radius: 100px;
-	box-shadow: white;
-	transition: background 500ms;
-	box-shadow: 2px 2px 10px 1px rgba(85,85,85,0.20);
-} */
-/* .close:hover{
-	background: white;
-	cursor: pointer;
-	color: black;
-}  */
+
