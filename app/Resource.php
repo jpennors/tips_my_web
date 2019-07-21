@@ -30,7 +30,7 @@ class Resource extends Model
     *
     * @var array
     */
-    protected $fillable = ['name', 'description', 'url', 'image', 'language', 'score', 'like'];
+    protected $fillable = ['name', 'description', 'url', 'image', 'language', 'score', 'price_id', 'type_id', 'interface', 'like'];
 
 
     /**
@@ -47,6 +47,16 @@ class Resource extends Model
      * @var bool
      */
     public $incrementing = false;
+
+
+    /**
+     * The price relationship
+     */
+    public function price(){
+        return $this->belongsTo('App\Price');
+    }
+
+    }
 
 
     /**
@@ -90,6 +100,7 @@ class Resource extends Model
         'name'              =>      'required|unique:resources',
         'url'               =>      'required|unique:resources',
         'score'             =>      'required|integer'
+        'price_id'          =>      'required'
     ];
 
 
