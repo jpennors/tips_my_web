@@ -5,10 +5,6 @@
  * @returns {Promise<Object|null>}
  */
 
-import {URL} from './config'
-
-const API_URL = URL
-
 function parseJSON(response) {
     return new Promise((resolve) => response.json()
         .then((json) => resolve({
@@ -34,7 +30,7 @@ async function executeRequest(uri, data = {}) {
     }
 
     return new Promise((resolve, reject) => {
-        fetch(`${API_URL}/api/${uri}`, data)
+        fetch(`/api/${uri}`, data)
           .then(parseJSON)
           .then((response) => {
             if (response.ok) {

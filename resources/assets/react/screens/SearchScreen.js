@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {ajaxGet, ajaxPost} from "../utils/Ajax";
 import ErrorHandler from "../utils/Modal";
-import { API_URL } from '../utils/config';
 
 export default class SearchScreen extends Component {
 
@@ -144,7 +143,7 @@ export default class SearchScreen extends Component {
                                             {/* Resource image */}
                                             <a href={resource.url} target="_blank" >
                                                 <img 
-                                                    src={resource.image ? API_URL + "/resources/image/" + resource.id : '/images/default.jpg'} 
+                                                    src={resource.image ? "/resources/image/" + resource.id : '/images/default.jpg'}
                                                     alt={resource.name} 
                                                     className="resource_img" 
                                                 />

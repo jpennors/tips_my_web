@@ -296,7 +296,7 @@ class AdminResourceFormComponent extends Component {
                                 <img 
                                     className="rounded ui centered small image"
                                     src={this.state.resource.image ? 
-                                        API_URL + "/resources/image/" + this.state.resource.id 
+                                        "/resources/image/" + this.state.resource.id
                                         : "/images/default.png"} 
                                 />
                                 <input
