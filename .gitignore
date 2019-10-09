@@ -4,7 +4,6 @@
 /storage/*.key
 /vendor
 /public/js
-/public/css/semantic/
 /storage
 .env
 .phpunit.result.cache

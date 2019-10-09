@@ -17,8 +17,6 @@
     <link rel="icon" href="/images/logo.png">
     <!-- Bootstrap Core CSS -->
     {{-- <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet"> --}}
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 </head>
 <body>
 
