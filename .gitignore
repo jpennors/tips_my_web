@@ -1,12 +1,10 @@
 /node_modules
 /public/hot
 /public/storage
-/storage/*.key
-/vendor
-/storage
 /public/js
 /public/images
 /public/fonts
+/vendor
 .env
 .phpunit.result.cache
 Homestead.json
