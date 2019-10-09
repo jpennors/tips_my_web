@@ -19,12 +19,6 @@
     {{-- <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet"> --}}
 </head>
 <body>
-
-
-    {{-- <div id="app"></div>
-    <h1>Coucou</h1>
-    <script src="{{mix('js/index.js')}}"></script> --}}
-    {{-- React Root & Scripts --}}
 	<div id="root"></div>
 	<script src="{{ asset('js/index.js') }}"></script>
 </body>
