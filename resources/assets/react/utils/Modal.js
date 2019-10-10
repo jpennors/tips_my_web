@@ -22,8 +22,8 @@ class ErrorHandler extends Component {
     const { open } = this.state
 
     return (
-      <div>
-        <Modal size="tiny" open={open} onClose={this.close}>
+      <div className="modal_container">
+        <Modal className="modal" size="tiny" open={open} onClose={this.close}>
           <Modal.Header>Erreur</Modal.Header>
           <Modal.Content>
             <p>{this.props.message?(this.props.message):"Une erreur est survenue, veuillez réessayer."}</p>
