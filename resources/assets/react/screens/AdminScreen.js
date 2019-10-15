@@ -3,7 +3,7 @@ import AdminResourceComponent from '../components/resources/AdminResourceCompone
 import AdminImportComponent from '../components/import/AdminImportComponent';
 import AdminSuggestionComponent from '../components/admin/AdminSuggestionComponent';
 import AdminContactComponent from '../components/admin/AdminContactComponent';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import ProtectedRoute from '../utils/ProtectedRoute';
 import Error404 from './Error404';
 import AdminTagComponent from '../components/tag/AdminTagComponent';
@@ -93,9 +93,11 @@ class AdminScreen extends React.Component {
                     <Menu.Menu position="right">
                         {nav_items.map((item, index) => (
                             item.role == "primary" &&
-                            <Menu.Item href={item.path} key={index}>
-                                {item.name}
-                            </Menu.Item>
+                            <Link to={item.path} key={index}>
+                                <Menu.Item>
+                                    {item.name}
+                                </Menu.Item>
+                            </Link>
                         ))}
                         <Divider fitted />
                         <Menu.Item>
@@ -130,9 +132,11 @@ class AdminScreen extends React.Component {
                         style={this.state.dropdownMenuStyle}
                     >
                         {nav_items.map((item, index) => (
-                            <Menu.Item href={item.path} key={index}>
-                                {item.name}
-                            </Menu.Item>
+                            <Link to={item.path} key={index}>
+                                <Menu.Item>
+                                    {item.name}
+                                </Menu.Item>
+                            </Link>
                         ))}
                         <Divider fitted />
                     </Menu>
@@ -147,13 +151,11 @@ class AdminScreen extends React.Component {
                 >
                     <Menu vertical borderless fluid text>
                         {nav_items.map((item, index) => (
-                            <Menu.Item 
-                                href={item.path} 
-                                key={index}
-                                active={window.location.pathname == item.path}
-                            >
-                                {item.name}
-                            </Menu.Item>
+                            <Link to={item.path} key={index}>
+                                <Menu.Item active={window.location.pathname == item.path}>
+                                    {item.name}
+                                </Menu.Item>
+                            </Link>
                         ))}
                     </Menu>
                 </Grid.Column>
