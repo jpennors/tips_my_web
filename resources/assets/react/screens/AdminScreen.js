@@ -86,10 +86,14 @@ class AdminScreen extends React.Component {
 
             <Grid padded className="tablet computer only">
                 <Menu borderless inverted fluid fixed="top">
-                    <Menu.Item header as="a">
-                        <img src="/images/logo.svg" width="15px" className="right7"/>
-                        TipsMyWeb
-                    </Menu.Item>
+                    <Link to="/">
+                        <Menu.Item header>
+                        
+                            <img src="/images/logo.svg" width="15px" className="right7"/>
+                            TipsMyWeb
+                        
+                        </Menu.Item>
+                    </Link>
                     <Menu.Menu position="right">
                         {nav_items.map((item, index) => (
                             item.role == "primary" &&
