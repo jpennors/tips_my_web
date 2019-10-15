@@ -3,8 +3,9 @@ import AdminResourceComponent from '../components/resources/AdminResourceCompone
 import AdminImportComponent from '../components/import/AdminImportComponent';
 import AdminSuggestionComponent from '../components/admin/AdminSuggestionComponent';
 import AdminContactComponent from '../components/admin/AdminContactComponent';
-
-
+import { Route, Switch } from 'react-router-dom';
+import ProtectedRoute from '../utils/ProtectedRoute';
+import Error404 from './Error404';
 import AdminTagComponent from '../components/tag/AdminTagComponent';
 import DashboardComponent from '../components/admin/DashboardComponent';
 
@@ -12,14 +13,9 @@ import {
   Button,
   Divider,
   Grid,
-  Header,
   Icon,
   Input,
-  Image,
-  Label,
-  Loader,
   Menu,
-  Table
 } from "semantic-ui-react";
 
 class AdminScreen extends React.Component {
@@ -27,22 +23,13 @@ class AdminScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        let is_admin = false
-        let token = sessionStorage.getItem('token')
-        token? is_admin = true : window.location.pathname = "/login"
-
         this.state = {
-            activeItem : "Overview",
-            admin: is_admin,
             dropdownMenuStyle: {
-            display: "none"
+                display: "none"
             }
         };
 
         this.handleToggleDropdownMenu = this.handleToggleDropdownMenu.bind(this)
-        this.handleItemClick = this.handleItemClick.bind(this)
-        this.getActiveComponent = this.getActiveComponent.bind(this)
-
       }
 
       handleToggleDropdownMenu(){
@@ -52,46 +39,47 @@ class AdminScreen extends React.Component {
         } else {
           newState.dropdownMenuStyle = { display: "none" };
         }
-
         this.setState(newState);
       };
 
-    handleItemClick(e){
-        this.setState({ activeItem: e.target.getAttribute("data-tag") })
-    }
-
-    getActiveComponent(){
-        switch(this.state.activeItem){
-            case 'Overview':
-                return <DashboardComponent/>
-
-            case 'Ressources':
-                return <AdminResourceComponent/>
-
-            case 'Tags':
-                return <AdminTagComponent/>
-            case 'Import':
-                return <AdminImportComponent/>
-            case 'Suggestions':
-                return <AdminSuggestionComponent/>
-
-            case 'Contacts':
-                return <AdminContactComponent/>
-
-        }
-    }
 
     render() {
 
-        const { activeItem, showErrorModal, admin } = this.state
-        if(!admin){
-            return (
-                <Grid.Row>
-                    <Divider hidden />
-                    <Loader active inline='centered' />
-                </Grid.Row>
-            )
-        }
+        const base_url = this.props.match.url;
+
+        const nav_items = [
+            {
+                name : 'Overview',
+                path: '/admin/',
+                role: 'primary'
+            },
+            {
+                name : 'Ressources',
+                path: '/admin/resources',
+                role: 'primary'
+            },
+            {
+                name : 'Tags',
+                path: '/admin/tags',
+                role: 'primary'
+            },
+            {
+                name : 'Import',
+                path: '/admin/import',
+                role: 'second'
+            },
+            {
+                name : 'Suggestions',
+                path: '/admin/suggestions',
+                role: 'second'
+            },
+            {
+                name : 'Contacts',
+                path: '/admin/contacts',
+                role: 'second'
+            }
+        ]
+        
 
         return (
         <div>
@@ -103,30 +91,12 @@ class AdminScreen extends React.Component {
                         TipsMyWeb
                     </Menu.Item>
                     <Menu.Menu position="right">
-                        <Menu.Item
-                            data-tag="Overview"
-                            onClick={this.handleItemClick}
-                        >
-                            Dashboard
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Ressources"
-                            onClick={this.handleItemClick}
-                        >
-                            Ressources
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Tags"
-                            onClick={this.handleItemClick}
-                        >
-                            Tags
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Import"
-                            onClick={this.handleItemClick}
-                        >
-                            Import
-                        </Menu.Item>
+                        {nav_items.map((item, index) => (
+                            item.role == "primary" &&
+                            <Menu.Item href={item.path} key={index}>
+                                {item.name}
+                            </Menu.Item>
+                        ))}
                         <Divider fitted />
                         <Menu.Item>
                             <Input placeholder="Search..." size="small" />
@@ -142,59 +112,28 @@ class AdminScreen extends React.Component {
                     <Menu.Menu position="right">
                         <Menu.Item>
                             <Button
-                            basic
-                            inverted
-                            icon
-                            toggle
-                            onClick={this.handleToggleDropdownMenu}
+                                basic
+                                inverted
+                                icon
+                                toggle
+                                onClick={this.handleToggleDropdownMenu}
                             >
                             <Icon name="content" />
                             </Button>
                         </Menu.Item>
                     </Menu.Menu>
                     <Menu
-                    borderless
-                    fluid
-                    inverted
-                    vertical
-                    style={this.state.dropdownMenuStyle}
+                        borderless
+                        fluid
+                        inverted
+                        vertical
+                        style={this.state.dropdownMenuStyle}
                     >
-                        <Menu.Item
-                            data-tag="Overview"
-                            onClick={this.handleItemClick}
-                        >
-                            Dashboard
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Ressources"
-                            onClick={this.handleItemClick}
-                        >
-                            Ressources
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Tags"
-                            onClick={this.handleItemClick}
-                        >
-                            Tags
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Import"
-                            onClick={this.handleItemClick}
-                        >
-                            Import
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Suggestions"
-                            onClick={this.handleItemClick}
-                        >
-                            Suggestions
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Contacts"
-                            onClick={this.handleItemClick}
-                        >
-                            Contacts
-                        </Menu.Item>
+                        {nav_items.map((item, index) => (
+                            <Menu.Item href={item.path} key={index}>
+                                {item.name}
+                            </Menu.Item>
+                        ))}
                         <Divider fitted />
                     </Menu>
                 </Menu>
@@ -207,51 +146,15 @@ class AdminScreen extends React.Component {
                     id="sidebar"
                 >
                     <Menu vertical borderless fluid text>
-                        <Menu.Item
-                            data-tag="Overview"
-                            active={activeItem === "Overview"}
-                            onClick={this.handleItemClick}
-                            as="a"
-                        >
-                            Dashboard
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Ressources"
-                            active={activeItem === "Ressources"}
-                            onClick={this.handleItemClick}
-                            as="a"
-                        >
-                            Ressources
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Tags"
-                            active={activeItem === "Tags"}
-                            onClick={this.handleItemClick}
-                            as="a"
-                        >
-                            Tags
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Import"
-                            active={activeItem === "Import"}
-                            onClick={this.handleItemClick}
-                        >
-                            Import
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Suggestions"
-                            active={activeItem === "Suggestions"}
-                            onClick={this.handleItemClick}
-                        >
-                            Suggestions
-                        </Menu.Item>
-                        <Menu.Item
-                            data-tag="Contacts"
-                            active={activeItem === "Contacts"}
-                            onClick={this.handleItemClick}
-                        >
-                            Contacts
-                        </Menu.Item>
+                        {nav_items.map((item, index) => (
+                            <Menu.Item 
+                                href={item.path} 
+                                key={index}
+                                active={window.location.pathname == item.path}
+                            >
+                                {item.name}
+                            </Menu.Item>
+                        ))}
                     </Menu>
                 </Grid.Column>
                 <Grid.Column
@@ -262,9 +165,17 @@ class AdminScreen extends React.Component {
                     id="content"
                 >
                     <Grid padded>
-                        {
-                            this.getActiveComponent()
-                        }
+                        <main>
+                            <Switch>
+                                <ProtectedRoute path={`${base_url}/`} exact component={DashboardComponent}/>
+                                <ProtectedRoute path={`${base_url}/tags`} exact component={AdminTagComponent}/>
+                                <ProtectedRoute path={`${base_url}/import`} exact component={AdminImportComponent}/>
+                                <ProtectedRoute path={`${base_url}/suggestions`} exact component={AdminSuggestionComponent}/>
+                                <ProtectedRoute path={`${base_url}/contacts`} exact component={AdminContactComponent}/>
+                                <ProtectedRoute path={`${base_url}/resources`} exact component={AdminResourceComponent}/>
+                                <Route component={Error404}/>
+                            </Switch>
+                        </main>
                     </Grid>
                 </Grid.Column>
             </Grid>
