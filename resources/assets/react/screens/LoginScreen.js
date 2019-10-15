@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {ajaxPost} from "../utils/Ajax";
+import Auth from "../utils/Auth";
 
 class LoginScreen extends Component {
 
@@ -15,16 +16,11 @@ class LoginScreen extends Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
+
     async login(){
-        try {
-            const res = await ajaxPost('login', {"username": this.state.username, "password": this.state.password});
-            // localStorage.setItem('token', res.token);
-            sessionStorage.setItem('token', res.token);
-            window.location.pathname = "/admin";
-		} catch (error) {
-            window.location.pathname = "/";
-        }
+        Auth.login({"username": this.state.username, "password": this.state.password});
     }
+
 
     handleChange(event){
         this.setState({
@@ -32,6 +28,7 @@ class LoginScreen extends Component {
         })
     }
 
+    
     render() {
         return (
             <div className="body-admin">
@@ -56,7 +53,6 @@ class LoginScreen extends Component {
                         />
                     </div>
                     <a className="ui button" onClick={this.login}>Se connecter</a>
-                    {/* <button className="ui button" onClick={this.login}>Se connecter</button> */}
                 </form>
                 </div>
             </div>
