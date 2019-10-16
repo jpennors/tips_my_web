@@ -1,143 +1,43 @@
-/**
- * Sends an HTTP request to the API.
- * @param {string} uri - API path
- * @param {Object} data - request params
- * @returns {Promise<Object|null>}
- */
+import axios from 'axios';
 
-function parseJSON(response) {
-    return new Promise((resolve) => response.json()
-        .then((json) => resolve({
-            status: response.status,
-            ok: response.ok,
-            json,
-        }))
-    );
+const token = localStorage.getItem('token');
+const defaultConfig = {headers: {ContentType: 'application/json'}}
+if (token) {
+    defaultConfig.headers.Authorization = token;
 }
 
-async function executeRequest(uri, data = {}) {
-
-    const token = sessionStorage.getItem("token");
-    if (data && token){
-
-        if (data.headers){
-            data.headers["Authorization"] = token
-        } else {
-            data.headers = {
-                "Authorization" : token
-            }
-        }
-    }
-
-    return new Promise((resolve, reject) => {
-        fetch(`/api/${uri}`, data)
-          .then(parseJSON)
-          .then((response) => {
-            if (response.ok) {
-              return resolve(response.json);
-            }
-            return reject(response.json);
-          })
-          .catch((error) => reject({
-            networkError: error.message,
-          }));
-      });
-}
-
-/**
- * Requests the API for all objects at the given path.
- * @param {string} path - API path
- * @returns {Promise<Object>}
- */
 function ajaxGet(path) {
-	return executeRequest(path);
+    return axios.get('/api/' + path, defaultConfig);
 }
 
-/**
- * Creates a new object in the API at the given path.
- * @param {string} path - API path
- * @param {Object} data - object payload
- * @returns {Promise<Object>}
- */
-function ajaxPost(path, data, config={}) {
-    let headers = {}
-    if (config.length > 0){
-        headers = config
-    } else {
-        headers = { 'Content-Type': 'application/json' }
-    }
-	return executeRequest(path, {
-		headers: headers,
-		method: 'POST',
-		body: JSON.stringify(data),
-	});
+function ajaxPost(path, data) {
+    return axios.post('/api/' + path, data, defaultConfig);
 }
 
+function ajaxPut(path, data) {
+    return axios.put('/api/' + path, data, defaultConfig);
+}
+
+function ajaxDelete(path) {
+    return axios.delete('/api/' + path, defaultConfig);
+}
 
 function ajaxPostImage(path, data){
-	return executeRequest(path, {
-		method: 'POST',
-		body: data
-	})
+    let config = {}
+    if (token) {
+        config = {headers: {Authorization : token}};
+    }
+    return axios.post('/api/' + path, data, config);
 }
 
-/**
- * Updates an API object at the given path.
- * @param {string} path - API path
- * @param {string} id - object id or slug
- * @param {Object} data - object payload
- * @returns {Promise<Object>}
- */
-function ajaxPut(path, data) {
-	return executeRequest(path, {
-		headers: { 'Content-Type': 'application/json' },
-		method: 'PUT',
-		body: JSON.stringify(data),
-	});
-}
 
-/**
- * Deletes a API object at the given path.
- * @param {string} path - API path
- * @param {string} id - object id or slug
- * @returns {Promise<null>}
- */
-function ajaxDelete(path) {
-	return executeRequest(path, {
-		method: 'DELETE',
-	});
-}
-
-/**
- * Uploads a file to the API.
- * @param {File} file - file to be uploaded
- * @returns {Promise<Object>}
- */
 function putFile(file) {
-	return new Promise((resolve, reject) => {
-		if (file) {
-			const fileReader = new FileReader();
-			fileReader.onload = async e => {
-				try {
-					const res = await executeRequest('file', {
-						method: 'POST',
-						headers: {
-							'Content-Type': file.type,
-							'Content-Length': file.size,
-						},
-						body: e.target.result,
-					});
-					resolve(res);
-				} catch (e) {
-					console.error(e);
-					reject();
-				}
-			};
-			fileReader.readAsArrayBuffer(file);
-		} else {
-			reject();
-		}
-	});
+
+    const fileReader = new FileReader();
+    fileReader.onload = async e => {
+        const config = {headers: {ContentType: file.type, ContentLength: file.size, Authorization: toke}}
+        return axios.post('/api/file', e.target.result, config)
+    }
 }
 
 export { ajaxGet, ajaxPost, ajaxPut, ajaxDelete, ajaxPostImage, putFile };
