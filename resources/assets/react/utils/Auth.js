@@ -11,8 +11,7 @@ class Auth {
 
     static async login(data){
         this.emptyLocalStorage();
-        const token = Auth.getToken();
-        axios.post("/api/login", data, {Authorization: token}).then(res => {
+        ajaxPost("login", data).then(res => {
             Auth.authenticateUser(res.data);
             Auth.redirectUser();
         })
@@ -25,11 +24,6 @@ class Auth {
 
     static getToken(){
         return localStorage.getItem('token');
-    }
-
-
-    static async checkAuth(){
-        return ajaxGet('auth/me');
     }
 
     
