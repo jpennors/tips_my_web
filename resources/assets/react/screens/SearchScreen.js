@@ -24,39 +24,41 @@ export default class SearchScreen extends Component {
         this.konwnResource = this.konwnResource.bind(this)
     }
 
-    async componentDidMount() {
-        await this.loadTags();
+    componentDidMount() {
+        this.loadTags();
     }
 
-    async loadTags() {
-		try {
-            const res = await ajaxGet('tags');
-			this.setState({
-                tags: res || [],
+    loadTags() {
+        ajaxGet('tags').then(res => {
+            this.setState({
+                tags: res.data || [],
                 loading : false
 			});
-		} catch (error) {
+        })
+        .catch(error => {
             this.setState({
                 loading:false,
                 error:true
             })
-        }
+        })
 	}
 
 
-    async searchResources(){
+    searchResources(){
         this.setState({loading:true});
-        try {
-            const res = await ajaxPost('resources/search', {'tags' : this.state.selected_tags});
-			this.setState({
-                resources: res || [],
+        ajaxPost('resources/search', {'tags' : this.state.selected_tags}).then(res => {
+            this.setState({
+                resources: res.data || [],
                 research : true,
                 loading : false
 			});
-		} catch (error) {
-            this.setState({loading:false})
-			this.setState({error:true})
-		}
+        })
+        .catch(error => {
+            this.setState({
+                loading: false,
+                research: true,
+            })
+        })
     }
 
     selectTag(event) {
@@ -83,7 +85,7 @@ export default class SearchScreen extends Component {
             // Retrieve resource from liked_resources 
             this.setState({liked_resources: this.state.liked_resources.filter((_, r) => r !== index)})
             // API call
-            ajaxGet("resources/like/remove/" + resource_id).then(res => {});
+            ajaxGet("resources/like/remove/" + resource_id);
             // Retrieve from cookies
 
         } else {
@@ -92,7 +94,7 @@ export default class SearchScreen extends Component {
             array.push(resource_id);
             this.setState({liked_resources: array});
             // API call
-            ajaxGet("resources/like/add/" + resource_id).then(res => {});
+            ajaxGet("resources/like/add/" + resource_id);
             // Add in cookies
 
         }

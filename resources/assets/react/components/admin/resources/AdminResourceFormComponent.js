@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {ajaxGet, ajaxPost, ajaxPostImage, ajaxPut} from "../../utils/Ajax";
-import ErrorHandler from "../../utils/Modal";
+import {ajaxGet, ajaxPost, ajaxPostImage, ajaxPut} from "../../../utils/Ajax";
+import ErrorHandler from "../../../utils/Modal";
 
 import {
     Button,
@@ -57,8 +57,8 @@ class AdminResourceFormComponent extends Component {
         this.removeBelongingScore = this.removeBelongingScore.bind(this)
     }
 
-    async componentDidMount() {
-        await this.loadTags();
+    componentDidMount() {
+        this.loadTags();
     }
 
     getResource(){
@@ -73,54 +73,50 @@ class AdminResourceFormComponent extends Component {
         }
     }
 
-    async loadTags() {
-		try {
-            const res = await ajaxGet('tags');
-			this.setState({
-                tags: res || [],
+    loadTags() {
+        ajaxGet('tags').then(res => {
+            this.setState({
+                tags: res.data || [],
             });
             this.loadPrices();
-		} catch (error) {
+        })
+        .catch(error => {
             this.setState({
                 loading:false,
                 error:true
             });
-		}
+        })
     }
 
 
-    async loadPrices() {
-		try {
-            const res = await ajaxGet('prices');
-			this.setState({
-                prices: res || [],
+    loadPrices() {
+        ajaxGet('prices').then(res => {
+            this.setState({
+                prices: res.data || [],
             });
             this.loadTypes();
-		} catch (error) {
+        })
+        .catch(error => {
             this.setState({
+                loading:false,
                 error:true
             });
-		}
+        })
     }
 
-    async loadTypes(){
-        try {
-            const res = await ajaxGet('types');
-			this.setState({
-                types: res || [],
-                loading: false,
-                // resource: {
-                //     ...this.state.resource,
-                //     // price_id: this.state.prices[0].id,
-                //     type_id: types[0].id
-                // }
-            });
-            this.getResource();
-		} catch (error) {
+    loadTypes(){
+        ajaxGet('types').then(res => {
             this.setState({
+                types: res.data || [],
+                loading: false,
+            });
+        })
+        .catch(error => {
+            this.setState({
+                loading: false,
                 error:true
             });
-		}
+        })
     }
 
 
@@ -211,9 +207,9 @@ class AdminResourceFormComponent extends Component {
         }
 
         if (this.props.type == "create"){
-            ajaxPost('resources', resource).then(result => {
+            ajaxPost('resources', resource).then(res => {
                 if (resource.file) {
-                    this.fileUpload(resource.file, result.id)    
+                    this.fileUpload(resource.file, res.data.id)    
                 } else {
                     this.setState({
                         loading : false
@@ -228,7 +224,7 @@ class AdminResourceFormComponent extends Component {
                 });
             });
         } else if (this.props.type == "edit"){
-            ajaxPut('resources/' + resource.id, resource).then(result => {
+            ajaxPut('resources/' + resource.id, resource).then(() => {
                 if (resource.file) {
                     this.fileUpload(resource.file, resource.id)    
                 } else {
@@ -250,7 +246,7 @@ class AdminResourceFormComponent extends Component {
     async fileUpload(file, id){
         var fd = new FormData();
         fd.append('file',file)
-        ajaxPostImage("resources/image/" + id, fd).then(result => {
+        ajaxPostImage("resources/image/" + id, fd).then(() => {
             this.setState({
                 loading : false
             });

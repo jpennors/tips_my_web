@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {ajaxGet, ajaxPost, ajaxPut} from "../../utils/Ajax";
-import ErrorHandler from "../../utils/Modal";
+import {ajaxGet, ajaxPost, ajaxPut} from "../../../utils/Ajax";
+import ErrorHandler from "../../../utils/Modal";
 
 import {
     Button,
@@ -53,24 +53,24 @@ class AdminTagFormComponent extends Component {
         }   
     }
 
-    async componentDidMount() {
-        await this.loadTags();
+    componentDidMount() {
+        this.loadTags();
     }
 
-    async loadTags() {
+    loadTags() {
         this.getTag();
-		try {
-            const res = await ajaxGet('tags');
-			this.setState({
-                tags: res || [],
+        ajaxGet('tags').then(res => {
+            this.setState({
+                tags: res.data || [],
                 loading : false
             }); 
-		} catch (error) {
+        })
+        .catch(() => {
             this.setState({
                 loading:false,
                 error:true
             });
-		}
+        })
     }
 
     handleChange(event){
@@ -82,7 +82,7 @@ class AdminTagFormComponent extends Component {
         })
     }
 
-    async saveTag(){
+    saveTag(){
         this.setState({loading:true})
         if (this.props.type == "create") {
             ajaxPost('tags', this.state.tag).then(result => {
@@ -96,7 +96,7 @@ class AdminTagFormComponent extends Component {
                 });
             });
         } else if (this.props.type == "edit") {
-            ajaxPut('tags/' + this.state.tag.id, this.state.tag).then(result => {
+            ajaxPut('tags/' + this.state.tag.id, this.state.tag).then(() => {
                 this.props.onSave()
             })
             .catch((errors) => {

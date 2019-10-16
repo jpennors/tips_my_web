@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import XLSX, { stream } from 'xlsx';
-import {ajaxGet, ajaxPost} from "../../utils/Ajax";
+import {ajaxGet, ajaxPost} from "../../../utils/Ajax";
 
 
 import {
@@ -69,27 +69,13 @@ class AdminImportComponent extends Component {
             /* Convert array of arrays */
             const data = XLSX.utils.sheet_to_json(ws);
             /* Update state */
-            console.log(data)
+
             if (this.state.type == "tags") {
                 this.checkTagsValidity(data)
             } else if (this.state.type == "resources"){
                 this.checkResourcesValidity(data)
             }
-
-            // ajaxPost('import/' + this.state.type, {data: data}).then(result => {
-            //     console.log(result)
-            // })
-            // .catch((errors) => {
-            //     this.setState({
-            //         loading:false,
-            //         savingErrors:errors,
-            //         error : true
-            //     });
-            //     console.log(errors)
-            // });
-
         };
-        console.log(this.state.file)
         if(this.state.file){
             if (rABS) {
             reader.readAsBinaryString(this.state.file);
@@ -151,13 +137,12 @@ class AdminImportComponent extends Component {
     }
 
     importData(data){
-        ajaxPost('import/' + this.state.type, {data: data}).then(result => {
-                console.log(result)
-                this.setState({success: "Données importées avec succès"})
-            })
-            .catch((errors) => {
-                console.log(errors)
-            });
+        ajaxPost('import/' + this.state.type, {data: data}).then(() => {
+            this.setState({success: "Données importées avec succès"})
+        })
+        .catch((errors) => {
+            console.log(errors)
+        });
     }
 
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {ajaxGet, ajaxDelete} from "../../utils/Ajax";
-import ErrorHandler from "../../utils/Modal";
+import {ajaxGet, ajaxDelete} from "../../../utils/Ajax";
+import ErrorHandler from "../../../utils/Modal";
 
 import {
     Button,
@@ -36,30 +36,30 @@ class AdminTagIndexComponent extends Component {
         this.loadTags();
     }
 
-    async loadTags() {
-		try {
-            const res = await ajaxGet('tags');
-			this.setState({
-                tags: res || [],
+    loadTags() {
+        ajaxGet('tags').then(res => {
+            this.setState({
+                tags: res.data || [],
                 loading : false
 			});
-		} catch (error) {
+        })
+		.catch (() => {
             this.setState({
                 loading:false,
                 error : true
             });
-		}
+		})
     }
 
-    async deleteTag(e){
+    deleteTag(e){
         
         const tag_id = e.target.getAttribute("data-tag");
-        ajaxDelete("tags/" + tag_id).then(result => {
+        ajaxDelete("tags/" + tag_id).then(() => {
             let array = this.state.tags;
             array = array.filter((r) => r.id !== tag_id)
             this.setState({tags: array})
         })
-        .catch((errors) => {
+        .catch(() => {
             this.setState({
                 loading:false,
                 error :true

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {ajaxGet, ajaxDelete} from "../../utils/Ajax";
-import ErrorHandler from "../../utils/Modal";
+import {ajaxGet, ajaxDelete} from "../../../utils/Ajax";
+import ErrorHandler from "../../../utils/Modal";
 
 import {
     Button,
@@ -38,14 +38,14 @@ class AdminResourceIndexComponent extends Component {
         this.loadResources();
     }
 
-    async loadResources() {
-        ajaxGet('resources').then(result => {
+    loadResources() {
+        ajaxGet('resources').then(res => {
             this.setState({
-                resources: result || [],
+                resources: res.data || [],
                 loading : false
             });
         })
-        .catch((status, err) => {
+        .catch(() => {
             this.setState({
                 loading:false,
                 error:true
@@ -56,12 +56,12 @@ class AdminResourceIndexComponent extends Component {
     async deleteResource(e){
         
         const resource_id = e.target.getAttribute("data-tag");
-        ajaxDelete("resources/" + resource_id).then(result => {
+        ajaxDelete("resources/" + resource_id).then(() => {
             let array = this.state.resources;
             array = array.filter((r) => r.id !== resource_id)
             this.setState({resources: array})
         })
-        .catch((errors) => {
+        .catch(() => {
             this.setState({
                 loading:false,
                 error :true

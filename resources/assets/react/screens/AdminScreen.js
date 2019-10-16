@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import AdminResourceComponent from '../components/resources/AdminResourceComponent';
-import AdminImportComponent from '../components/import/AdminImportComponent';
+import AdminResourceComponent from '../components/admin/resources/AdminResourceComponent';
+import AdminImportComponent from '../components/admin/import/AdminImportComponent';
 import AdminSuggestionComponent from '../components/admin/AdminSuggestionComponent';
 import AdminContactComponent from '../components/admin/AdminContactComponent';
 import { Route, Switch, Link } from 'react-router-dom';
 import ProtectedRoute from '../utils/ProtectedRoute';
 import Error404 from './Error404';
-import AdminTagComponent from '../components/tag/AdminTagComponent';
+import AdminTagComponent from '../components/admin/tag/AdminTagComponent';
 import DashboardComponent from '../components/admin/DashboardComponent';
 
 import {

@@ -36,13 +36,13 @@ class AdminContactComponent extends Component {
 
 
     async loadContacts() {
-        ajaxGet('contacts').then(result => {
+        ajaxGet('contacts').then(res => {
             this.setState({
-                contacts: result || [],
+                contacts: res.data || [],
                 loading : false
             });
         })
-        .catch((status, err) => {
+        .catch(() => {
             this.setState({
                 loading:false,
                 error:true
@@ -50,24 +50,14 @@ class AdminContactComponent extends Component {
         });
     }
 
-    // async saveSuggestion(e){
-    //     const index = e.target.getAttribute("data-tag")
-    //     try {
-    //         const res = await ajaxPost('resources', this.state.suggestions[index]);
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 		alert('Une erreur est survenue.');
-	// 	}
-    // }
-
     async deleteContact(e){
         const index = e.target.getAttribute("data-tag")
-        try{
-            const res = await ajaxDelete('contacts/' + this.state.contacts[index].id);
+        ajaxDelete('contacts/' + this.state.contacts[index].id).then(()=> {
             this.loadContacts();
-        } catch(error){
-            console.log(error)
-        }
+        })
+        .catch(() => {
+
+        })
     }
 
 

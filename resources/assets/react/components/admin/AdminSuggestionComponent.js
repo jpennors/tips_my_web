@@ -35,14 +35,14 @@ class AdminSuggestionComponent extends Component {
     }
 
 
-    async loadSuggestions() {
-        ajaxGet('suggestions').then(result => {
+    loadSuggestions() {
+        ajaxGet('suggestions').then(res => {
             this.setState({
-                suggestions: result || [],
+                suggestions: res.data || [],
                 loading : false
             });
         })
-        .catch((status, err) => {
+        .catch(() => {
             this.setState({
                 loading:false,
                 error:true
@@ -50,24 +50,14 @@ class AdminSuggestionComponent extends Component {
         });
     }
 
-    // async saveSuggestion(e){
-    //     const index = e.target.getAttribute("data-tag")
-    //     try {
-    //         const res = await ajaxPost('resources', this.state.suggestions[index]);
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 		alert('Une erreur est survenue.');
-	// 	}
-    // }
-
-    async deleteSuggestion(e){
+    deleteSuggestion(e){
         const index = e.target.getAttribute("data-tag")
-        try{
-            const res = await ajaxDelete('suggestions/' + this.state.suggestions[index].id);
+        ajaxDelete('suggestions/' + this.state.suggestions[index].id).then(() => {
             this.loadSuggestions();
-        } catch(error){
-            console.log(error)
-        }
+        })
+        .catch(() => {
+
+        })
     }
 
 
