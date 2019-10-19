@@ -29,12 +29,16 @@
         "react/jsx-indent-props": ["error", 4],
         "arrow-parens": ["error", "as-needed"],
         "comma-dangle": ["error", "never"],
+        "react/jsx-props-no-spreading": "off",
+
 
         // TODO: Remove these temporary rules
         "react/no-unused-state": "off",
         "react/destructuring-assignment": "off",
         "max-len": "off",
         "react/prop-types": "off",
+        "react/no-did-update-set-state": "off",
+
 
         // TODO: Re-enable these accessibility rules
         "jsx-a11y/anchor-is-valid": "off",
