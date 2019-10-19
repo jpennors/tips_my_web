@@ -7,6 +7,7 @@
     "extends": [
         "airbnb"
     ],
+    "parser": "babel-eslint",
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -24,6 +25,21 @@
     "rules": {
         "indent": "off",
         "react/jsx-indent": ["error", 4],
-        "react/jsx-indent-props": ["error", 4]
+        "react/jsx-indent-props": ["error", 4],
+        "arrow-parens": ["error", "as-needed"],
+        "comma-dangle": ["error", "never"],
+
+        // TODO: Remove these temporary rules
+        "jsx-a11y/anchor-is-valid": "off",
+        "react/no-unused-state": "off",
+        "react/destructuring-assignment": "off",
+        "max-len": "off",
+
+
+        // TODO: Re-enable these accessibility rules
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/interactive-supports-focus": "off"
+
     }
 }

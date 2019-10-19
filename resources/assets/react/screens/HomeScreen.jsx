@@ -1,101 +1,95 @@
 import React, { Component } from 'react';
 import SearchScreen from './SearchScreen';
-import {ajaxPost} from "../utils/Ajax";
+import { ajaxPost } from '../utils/Ajax';
 
 class HomeScreen extends Component {
-
     constructor(props) {
         super(props);
 
         this.state = {
-            suggestion : {
-                'url' : '',
-                'description' : '',
-            },
-            contact : {
-                'email' : '',
-                'message' : '',
-            },
-            loading : false,
-        };
-
-        this.handleSuggestionChange = this.handleSuggestionChange.bind(this)
-        this.handleContactChange = this.handleContactChange.bind(this)
-        this.saveSuggestion = this.saveSuggestion.bind(this)
-        this.saveContact = this.saveContact.bind(this)
-    }
-
-    handleSuggestionChange(event){
-        this.setState({
             suggestion: {
-                ...this.state.suggestion,
-                [event.target.name]: event.target.value
-            }
-        })
-    }
-
-    handleContactChange(event){
-        this.setState({
+                url: '',
+                description: ''
+            },
             contact: {
-                ...this.state.contact,
+                email: '',
+                message: ''
+            },
+            loading: false
+        };
+    }
+
+    handleSuggestionChange = event => {
+        this.setState(previousState => ({
+            suggestion: {
+                ...previousState.suggestion,
                 [event.target.name]: event.target.value
             }
-        })
-    }
+        }));
+    };
 
-    openModal(event){
-        const modal_id = event.target.getAttribute("data-tag")
-        let modal = document.getElementById(modal_id);
-        modal.style.display = "block";
-    }
+    handleContactChange = event => {
+        this.setState(previousState => ({
+            contact: {
+                ...previousState.contact,
+                [event.target.name]: event.target.value
+            }
+        }));
+    };
 
-    closeModal(event){
-        const modal_id = event.target.getAttribute("data-tag")
-        let modal = document.getElementById(modal_id);
-        if (modal && modal_id){
-            modal.style.display = "none"
+    openModal = event => {
+        const modalId = event.target.getAttribute('data-tag');
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'block';
+    };
+
+    closeModal = event => {
+        const modalId = event.target.getAttribute('data-tag');
+        const modal = document.getElementById(modalId);
+        if (modal && modalId) {
+            modal.style.display = 'none';
         }
-    }
+    };
 
-    async saveSuggestion(){
-        this.setState({loading:true})
-        ajaxPost('suggestions', this.state.suggestion).then(result => {
+    saveSuggestion = async () => {
+        this.setState({ loading: true });
+        ajaxPost('suggestions', this.state.suggestion).then(() => {
             this.setState({
-                loading : false,
-                suggestion : {
-                    'url' : '',
-                    'description' : '',
+                loading: false,
+                suggestion: {
+                    url: '',
+                    description: ''
                 }
             });
-            let modal = document.getElementById("sharing_modal");
-            modal.style.display = "none";
+            const modal = document.getElementById('sharing_modal');
+            modal.style.display = 'none';
         })
-        .catch((errors) => {
+        .catch(() => {
             this.setState({
-                loading:false,
+                loading: false
             });
         });
-    }
+    };
 
-    async saveContact(){
-        this.setState({loading:true})
-        ajaxPost('contacts', this.state.contact).then(result => {
+    saveContact = async () => {
+        this.setState({ loading: true });
+        ajaxPost('contacts', this.state.contact).then(() => {
             this.setState({
-                loading : false,
-                contact : {
-                    'email' : '',
-                    'message' : '',
+                loading: false,
+                contact: {
+                    email: '',
+                    message: ''
                 }
             });
-            let modal = document.getElementById("contact_modal");
-            modal.style.display = "none";
+            const modal = document.getElementById('contact_modal');
+            modal.style.display = 'none';
         })
-        .catch((errors) => {
+        .catch(() => {
             this.setState({
-                loading:false,
+                loading: false
             });
         });
-    }
+    };
 
 
     render() {
@@ -118,23 +112,22 @@ class HomeScreen extends Component {
                                 <input
                                     type="url"
                                     placeholder="https://tipsmyweb.com"
-                                    name = "url"
-                                    value = {this.state.suggestion.url}
-                                    onChange = {this.handleSuggestionChange}
+                                    name="url"
+                                    value={this.state.suggestion.url}
+                                    onChange={this.handleSuggestionChange}
                                     required
                                 />
-                                <textarea 
+                                <textarea
                                     rows="4"
-                                    type="text"
                                     placeholder="description"
-                                    name = "description"
-                                    value = {this.state.suggestion.description}
-                                    onChange = {this.handleSuggestionChange}
+                                    name="description"
+                                    value={this.state.suggestion.description}
+                                    onChange={this.handleSuggestionChange}
                                 />
                             </form>
                         </div>
                         <div className="modal_btn">
-                            <a data-tag="sharing_modal" className="close" onClick={this.closeModal}>Close</a>
+                            <a data-tag="sharing_modal" className="close" role="button" onClick={this.closeModal}>Close</a>
                             <a className="btnSubmit" onClick={this.saveSuggestion}>Submit</a>
                         </div>
                     </div>
@@ -147,20 +140,20 @@ class HomeScreen extends Component {
                     <div className="modal">
                         <span className="modal_heading">
                             about – tips myWeb
-                            <br/>
-                            <span className="font15">ressources to improve your workflow</span> 
+                            <br />
+                            <span className="font15">ressources to improve your workflow</span>
                         </span>
                         <div className="modal_content black_color">
                             <p className="font15">
-                                tips myWeb is giving you the best resources in a specific field. 
+                                tips myWeb is giving you the best resources in a specific field.
                                 These websites that you normally discover after 2 years in a specific domain
                             </p>
                             <p className="font12">
-                                This project has been created by two students after seeing that too many people 
-                                are struggling in their daily workflow, and they don’t imagine how much developer 
+                                This project has been created by two students after seeing that too many people
+                                are struggling in their daily workflow, and they don’t imagine how much developer
                                 have created awesome websites to help them.
                             </p>
-                            <br/>
+                            <br />
                             <p className="font10">
                                 Created by Josselin Pennors & Hugo Jouffre
                             </p>
@@ -172,7 +165,7 @@ class HomeScreen extends Component {
                     </div>
 
                 </div>
-                
+
                 {/* Contact modal */}
                 <div data-tag="contact_modal" id="contact_modal" className="modal_container" onClick={this.closeModal}>
                     <div className="modal">
@@ -185,17 +178,16 @@ class HomeScreen extends Component {
                                 <input
                                     type="text"
                                     placeholder="your email"
-                                    name = "email"
-                                    value = {this.state.contact.email}
-                                    onChange = {this.handleContactChange}
+                                    name="email"
+                                    value={this.state.contact.email}
+                                    onChange={this.handleContactChange}
                                     required
                                 />
-                                <textarea 
-                                    type="text"
+                                <textarea
                                     placeholder="message"
-                                    name = "message"
-                                    value = {this.state.contact.message}
-                                    onChange = {this.handleContactChange}
+                                    name="message"
+                                    value={this.state.contact.message}
+                                    onChange={this.handleContactChange}
                                 />
                             </form>
                         </div>
@@ -221,7 +213,7 @@ class HomeScreen extends Component {
                 </div>
 
                 {/* Home page content, research part */}
-                <SearchScreen/>
+                <SearchScreen />
 
                 {/* Footer */}
                 <div className="footer">
@@ -236,7 +228,7 @@ class HomeScreen extends Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
