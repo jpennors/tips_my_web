@@ -84,7 +84,7 @@ export default class SearchScreen extends Component {
         }
     };
 
-    konwnResource = event => {
+    knownResource = event => {
         // Retrieve resource from list and insert it at the end
         const resourceId = event.target.getAttribute('data-tag');
         this.setState(previousState => {
@@ -145,9 +145,9 @@ Here are some website to improve your workflow
                                                 {/* Button I know it, like and visit */}
                                                 <p className="resource_btn">
                                                     <span
-                                                        className="knowing_resource cusror_pointer"
+                                                        className="knowing_resource cursor_pointer"
                                                         data-tag={resource.id}
-                                                        onClick={this.konwnResource}
+                                                        onClick={this.knownResource}
                                                     >
                                                         I know it
                                                     </span>
@@ -158,7 +158,7 @@ Here are some website to improve your workflow
                                                         }
                                                         alt="Heart Icon"
                                                         height="15px"
-                                                        className="cusror_pointer"
+                                                        className="cursor_pointer"
                                                         data-tag={resource.id}
                                                         onClick={this.likeResource}
                                                     />

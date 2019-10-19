@@ -141,7 +141,7 @@ class HomeScreen extends Component {
                         <span className="modal_heading">
                             about – tips myWeb
                             <br />
-                            <span className="font15">ressources to improve your workflow</span>
+                            <span className="font15">resources to improve your workflow</span>
                         </span>
                         <div className="modal_content black_color">
                             <p className="font15">
