@@ -1,299 +1,271 @@
 import React, { Component } from 'react';
-import {ajaxGet, ajaxPost, ajaxPostImage, ajaxPut} from "../../../utils/Ajax";
-import ErrorHandler from "../../../utils/Modal";
-
 import {
-    Button,
     Divider,
     Grid,
-    Header,
-    Icon,
-    Input,
-    Image,
-    Label,
     Loader,
-    Menu,
-    Message,
-    Table,
-    Tab
-  } from "semantic-ui-react";
+    Message
+  } from 'semantic-ui-react';
+import {
+ ajaxGet, ajaxPost, ajaxPostImage, ajaxPut
+} from '../../../utils/Ajax';
+import ErrorHandler from '../../../utils/Modal';
+
 
 class AdminResourceFormComponent extends Component {
-
     constructor(props) {
         super(props);
 
         this.state = {
-            tags : [],
-            prices : [],
-            types : [],
+            tags: [],
+            prices: [],
+            types: [],
             // selected_tags : [],
-            resource : {
-                'name': '',
-                'file': '',
-                'image': '',
-                'url' : '',
-                'description': '',
-                'language' : 'fr',
-                'score' : '',
-                'price_id' : '',
-                'type_id' : '',
-                'interface': '',
-                'tags' : [],
+            resource: {
+                name: '',
+                file: '',
+                image: '',
+                url: '',
+                description: '',
+                language: 'fr',
+                score: '',
+                price_id: '',
+                type_id: '',
+                interface: '',
+                tags: []
             },
-            loading : true,
-            error : false,
-            savingErrors : [],
+            loading: true,
+            error: false,
+            savingErrors: []
         };
-
-
-        this.selectTag = this.selectTag.bind(this)
-        this.unselectTag = this.unselectTag.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.handleImageChange = this.handleImageChange.bind(this)
-        this.saveResource = this.saveResource.bind(this)
-        this.getResource = this.getResource.bind(this)
-        this.addBelongingScore = this.addBelongingScore.bind(this)
-        this.removeBelongingScore = this.removeBelongingScore.bind(this)
     }
 
     componentDidMount() {
         this.loadTags();
     }
 
-    getResource(){
+    getResource = () => {
         if (this.props.resource) {
-            let resource = this.props.resource
-            if (resource.url.startsWith("https://")) {
-                resource.url = resource.url.replace("https://", "")
+            const { resource } = this.props;
+            if (resource.url.startsWith('https://')) {
+                resource.url = resource.url.replace('https://', '');
             }
             this.setState({
-                resource : resource
-            })
+                resource
+            });
         }
-    }
+    };
 
-    loadTags() {
+    loadTags = () => {
         ajaxGet('tags').then(res => {
             this.setState({
-                tags: res.data || [],
+                tags: res.data || []
             });
             this.loadPrices();
         })
-        .catch(error => {
+        .catch(() => {
             this.setState({
-                loading:false,
-                error:true
+                loading: false,
+                error: true
             });
-        })
-    }
+        });
+    };
 
-
-    loadPrices() {
+    loadPrices = () => {
         ajaxGet('prices').then(res => {
             this.setState({
-                prices: res.data || [],
+                prices: res.data || []
             });
             this.loadTypes();
         })
-        .catch(error => {
+        .catch(() => {
             this.setState({
-                loading:false,
-                error:true
+                loading: false,
+                error: true
             });
-        })
-    }
+        });
+    };
 
-    loadTypes(){
+    loadTypes = () => {
         ajaxGet('types').then(res => {
             this.setState({
                 types: res.data || [],
-                loading: false,
+                loading: false
             });
         })
-        .catch(error => {
+        .catch(() => {
             this.setState({
                 loading: false,
-                error:true
+                error: true
             });
-        })
-    }
+        });
+    };
 
-
-    selectTag(event,tag){
-        let array =  this.state.resource.tags
-        tag = {
-            tag_id : tag.id,
-            belonging : 5,
-        }
+    selectTag = (event, selectedTag) => {
+        const array = this.state.resource.tags;
+        const tag = {
+            tag_id: selectedTag.id,
+            belonging: 5
+        };
         array.push(tag);
-        this.setState({
+        this.setState(previousState => ({
             resource: {
-                ...this.state.resource,
+                ...previousState.resource,
                 tags: array
             }
-        })
-    }
+        }));
+    };
 
-    unselectTag(event, tag_id){
-        let array =  this.state.resource.tags
-        array = array.filter(function(elm){
-            return elm.tag_id !== tag_id
-        })
-        this.setState({
+    unselectTag = (event, tag_id) => {
+        let array = this.state.resource.tags;
+        array = array.filter(elm => elm.tag_id !== tag_id);
+        this.setState(previousState => ({
             resource: {
-                ...this.state.resource,
+                ...previousState.resource,
                 tags: array
             }
-        })
-    }
+        }));
+    };
 
-    handleChange(event){
-        this.setState({
+    handleChange = event => {
+        this.setState(previousState => ({
             resource: {
-                ...this.state.resource,
+                ...previousState.resource,
                 [event.target.name]: event.target.value
             }
-        })
-    }
+        }));
+    };
 
-    handleImageChange(event){
-        this.setState({
+    handleImageChange= event => {
+        this.setState(previousState => ({
             resource: {
-                ...this.state.resource,
-                'file': event.target.files[0]
+                ...previousState.resource,
+                file: event.target.files[0]
             }
-        })
-    }
+        }));
+    };
 
-    addBelongingScore(event, tag_id){
-        let array =  this.state.resource.tags
-        const index = array.findIndex(function(elm){
-            return elm.tag_id == tag_id
-        })
-        if (index !== -1 && array[index].belonging < 10){
-            array[index].belonging += 1
+    addBelongingScore = (event, tag_id) => {
+        const array = this.state.resource.tags;
+        const index = array.findIndex(elm => elm.tag_id === tag_id);
+        if (index !== -1 && array[index].belonging < 10) {
+            array[index].belonging += 1;
         }
-        this.setState({
+        this.setState(previousState => ({
             resource: {
-                ...this.state.resource,
+                ...previousState.resource,
                 tags: array
             }
-        })
-    }
+        }));
+    };
 
-    removeBelongingScore(event, tag_id){
-        let array =  this.state.resource.tags
-        const index = array.findIndex(function(elm){
-            return elm.tag_id == tag_id
-        })
-        if (index !== -1 && array[index].belonging > 1){
-            array[index].belonging -= 1
+    removeBelongingScore = (event, tag_id) => {
+        const array = this.state.resource.tags;
+        const index = array.findIndex(elm => elm.tag_id === tag_id);
+        if (index !== -1 && array[index].belonging > 1) {
+            array[index].belonging -= 1;
         }
-        this.setState({
+        this.setState(previousState => ({
             resource: {
-                ...this.state.resource,
+                ...previousState.resource,
                 tags: array
             }
-        })
-    }
+        }));
+    };
 
-    async saveResource(){
-        this.setState({loading:true})
+    saveResource = async () => {
+        this.setState({ loading: true });
 
-        let resource = this.state.resource
-        if (!resource.url.startsWith("https://")){
-            resource.url = "https://" + resource.url
+        const { resource } = this.state;
+        if (!resource.url.startsWith('https://')) {
+            resource.url = `https://${resource.url}`;
         }
 
-        if (this.props.type == "create"){
+        if (this.props.type === 'create') {
             ajaxPost('resources', resource).then(res => {
                 if (resource.file) {
-                    this.fileUpload(resource.file, res.data.id)    
+                    this.fileUpload(resource.file, res.data.id);
                 } else {
                     this.setState({
-                        loading : false
+                        loading: false
                     });
-                    this.props.onSave()
+                    this.props.onSave();
                 }
             })
-            .catch((errors) => {
+            .catch(errors => {
                 this.setState({
-                    loading:false,
-                    savingErrors :errors
+                    loading: false,
+                    savingErrors: errors
                 });
             });
-        } else if (this.props.type == "edit"){
-            ajaxPut('resources/' + resource.id, resource).then(() => {
+        } else if (this.props.type === 'edit') {
+            ajaxPut(`resources/${resource.id}`, resource).then(() => {
                 if (resource.file) {
-                    this.fileUpload(resource.file, resource.id)    
+                    this.fileUpload(resource.file, resource.id);
                 } else {
                     this.setState({
-                        loading : false
+                        loading: false
                     });
-                    this.props.onSave()
+                    this.props.onSave();
                 }
             })
-            .catch((errors) => {
+            .catch(errors => {
                 this.setState({
-                    loading:false,
-                    savingErrors :errors
+                    loading: false,
+                    savingErrors: errors
                 });
             });
         }
-    }
+    };
 
-    async fileUpload(file, id){
-        var fd = new FormData();
-        fd.append('file',file)
-        ajaxPostImage("resources/image/" + id, fd).then(() => {
+    fileUpload = async (file, id) => {
+        const fd = new FormData();
+        fd.append('file', file);
+        ajaxPostImage(`resources/image/${id}`, fd).then(() => {
             this.setState({
-                loading : false
+                loading: false
             });
-            this.props.onSave()
+            this.props.onSave();
         })
-        .catch((errors) => {
+        .catch(errors => {
             this.setState({
-                loading:false,
-                savingErrors :errors
+                loading: false,
+                savingErrors: errors
             });
-        })
-    }
+        });
+    };
 
     render() {
+        const { loading, error, savingErrors } = this.state;
 
-        const {loading, error, savingErrors} = this.state
-
-        if(error){
-            return(
+        if (error) {
+            return (
                 <ErrorHandler
                     open={error}
                 />
-            )
+            );
         }
 
-        if(loading){
+        if (loading) {
             return (
                 <Grid.Row>
                     <Divider hidden />
-                    <Loader active inline='centered' />
+                    <Loader active inline="centered" />
                 </Grid.Row>
-            )
+            );
         }
 
         return (
-
-
             <Grid.Column mobile={16} tablet={16} computer={16}>
                 <div className="admin-form">
                     <form className="ui form attached fluid segment">
                         <div className="fields">
                             <div className="four wide field">
-                                <img 
+                                <img
+                                    alt="Resource Icon"
                                     className="rounded ui centered small image"
-                                    src={this.state.resource.image ? 
-                                        "/resources/image/" + this.state.resource.id
-                                        : "/images/default.png"} 
+                                    src={this.state.resource.image
+                                        ? `/resources/image/${this.state.resource.id}`
+                                        : '/images/default.png'}
                                 />
                                 <input
                                     type="file"
@@ -332,17 +304,17 @@ class AdminResourceFormComponent extends Component {
                                         value={this.state.resource.price_id}
                                         onChange={this.handleChange}
                                     >
-                                        <option value=" "></option>
+                                        <option value=" " />
                                         {
-                                            this.state.prices.map((price, index) => {
-                                                return <option 
-                                                    value={price.id} 
-                                                    key={index}
+                                            this.state.prices.map(price => (
+                                                <option
+                                                    value={price.id}
+                                                    key={price.id}
                                                     defaultValue={this.state.resource.price_id && this.state.resource.price_id === price.id}
                                                 >
                                                     {price.name}
                                                 </option>
-                                            })
+                                            ))
                                         }
                                     </select>
                                 </div>
@@ -353,17 +325,17 @@ class AdminResourceFormComponent extends Component {
                                         value={this.state.resource.type_id}
                                         onChange={this.handleChange}
                                     >
-                                        <option value=" "></option>
+                                        <option value=" " />
                                         {
-                                            this.state.types.map((type, index) => {
-                                                return <option 
-                                                    value={type.id} 
-                                                    key={index}
+                                            this.state.types.map(type => (
+                                                <option
+                                                    value={type.id}
+                                                    key={type.id}
                                                     defaultValue={this.state.resource.type_id && this.state.resource.type_id === type.id}
                                                 >
                                                     {type.name}
                                                 </option>
-                                            })
+                                            ))
                                         }
                                     </select>
                                 </div>
@@ -403,7 +375,7 @@ class AdminResourceFormComponent extends Component {
                                     />
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div className="field">
                             <label>Description</label>
@@ -412,29 +384,28 @@ class AdminResourceFormComponent extends Component {
                                 name="description"
                                 value={this.state.resource.description}
                                 onChange={this.handleChange}
-                            >
-                            </textarea>
+                            />
                         </div>
                         <h4 className="ui dividing header">Tags sélectionnées</h4>
                         <div className="fields">
                             {
-                                this.state.resource.tags.map((selected_tag, index) => {
-                                    let tag = this.state.tags.find(function(elm){
-                                        return elm.id == selected_tag.tag_id;
-                                    });
-                                    return <div className="ui blue label" key={index}>
-                                            <a onClick={((e) => this.addBelongingScore(e, tag.id))}>
-                                                <i className="plus icon"></i>
+                                this.state.resource.tags.map(selected_tag => {
+                                    const tag = this.state.tags.find(elm => elm.id === selected_tag.tag_id);
+                                    return (
+                                        <div className="ui blue label" key={tag.id}>
+                                            <a onClick={(e => this.addBelongingScore(e, tag.id))}>
+                                                <i className="plus icon" />
                                             </a>
                                             <span className="right7 left7">{selected_tag.belonging}</span>
-                                            <a className="right7" onClick={((e) => this.removeBelongingScore(e, tag.id))}>
-                                                <i className="minus icon"></i>
+                                            <a className="right7" onClick={(e => this.removeBelongingScore(e, tag.id))}>
+                                                <i className="minus icon" />
                                             </a>
                                             <span className="right15">{tag.name}</span>
-                                            <a onClick={((e) => this.unselectTag(e, tag.id))}>
-                                                <i className="delete icon"></i>
+                                            <a onClick={(e => this.unselectTag(e, tag.id))}>
+                                                <i className="delete icon" />
                                             </a>
                                         </div>
+                                    );
                                 })
                             }
 
@@ -442,42 +413,49 @@ class AdminResourceFormComponent extends Component {
                         <h4 className="ui dividing header">Autre tags</h4>
                         <div className="fields">
                             {
-                                this.state.tags.map((tag, index) => {
-                                    return <div  className={`ui grey label ${(this.state.resource.tags.find(function(
-                                            selected_tag){return selected_tag.tag_id == tag.id}
-                                        ))? 'hidden' : ''}`} key={index}>
+                                this.state.tags.map(tag => (
+                                    <div
+                                        className={`ui grey label ${(this.state.resource.tags.find(selected_tag => selected_tag.tag_id === tag.id)) ? 'hidden' : ''}`}
+                                        key={tag.id}
+                                    >
                                         <span className="right15">
                                             {tag.name}
                                         </span>
-                                        <a onClick={((e) => this.selectTag(e, tag))}>
-                                            <i className="plus icon"></i>
+                                        <a onClick={(e => this.selectTag(e, tag))}>
+                                            <i className="plus icon" />
                                         </a>
                                     </div>
-                                })
+                                ))
                             }
                         </div>
-                        <Divider fitted/>
+                        <Divider fitted />
                         <div className="ui blue submit button" onClick={this.saveResource}>
                             Ajouter
                         </div>
                         {
-                            (Object.keys(savingErrors).length > 0)?(
+                            (Object.keys(savingErrors).length > 0) ? (
                                 <Message negative>
                                     <Message.Header>Erreur lors de l'ajout</Message.Header>
                                     <Message.List>
-                                    {
-                                        Object.keys(savingErrors).map(function(input, idx) {
-                                            return <Message.Item key={idx}><strong>{input}</strong> : {savingErrors[input][0]}</Message.Item>
-                                        }.bind(this))
+                                        {
+                                        Object.keys(savingErrors).map(input => (
+                                            <Message.Item key={input}>
+                                                <strong>{input}</strong>
+                                                {' '}
+                            :
+                                                {' '}
+                                                {savingErrors[input][0]}
+                                            </Message.Item>
+                                        ))
                                     }
                                     </Message.List>
                                 </Message>
-                            ):(null)
+                            ) : null
                         }
                     </form>
                 </div>
             </Grid.Column>
-            )
+        );
     }
 }
 

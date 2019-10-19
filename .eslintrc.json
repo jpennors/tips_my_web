@@ -37,6 +37,8 @@
         "max-len": "off",
         "react/prop-types": "off",
         "react/no-did-update-set-state": "off",
+        "camelcase": "off",
+        "react/no-unescaped-entities": "off",
 
         // TODO: Re-enable these accessibility rules
         "jsx-a11y/anchor-is-valid": "off",
