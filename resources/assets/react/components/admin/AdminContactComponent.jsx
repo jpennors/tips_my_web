@@ -1,33 +1,24 @@
 import React, { Component } from 'react';
-import {ajaxGet, ajaxPost, ajaxDelete} from "../../utils/Ajax";
-
 import {
-    Button,
     Divider,
     Grid,
     Header,
-    Icon,
-    Input,
-    Image,
-    Label,
     Loader,
-    Menu,
-    Table,
-    Tab
-} from "semantic-ui-react";
+    Table
+} from 'semantic-ui-react';
+import ErrorHandler from '../../utils/Modal';
+import { ajaxGet, ajaxDelete } from '../../utils/Ajax';
+
 
 class AdminContactComponent extends Component {
-
     constructor(props) {
         super(props);
 
         this.state = {
-            contacts : [],
-            loading : true,
-            error : false,
+            contacts: [],
+            loading: true,
+            error: false
         };
-
-        this.deleteContact = this.deleteContact.bind(this)
     }
 
     componentDidMount() {
@@ -35,51 +26,49 @@ class AdminContactComponent extends Component {
     }
 
 
-    async loadContacts() {
+    loadContacts = async () => {
         ajaxGet('contacts').then(res => {
             this.setState({
                 contacts: res.data || [],
-                loading : false
+                loading: false
             });
         })
         .catch(() => {
             this.setState({
-                loading:false,
-                error:true
+                loading: false,
+                error: true
             });
         });
-    }
+    };
 
-    async deleteContact(e){
-        const index = e.target.getAttribute("data-tag")
-        ajaxDelete('contacts/' + this.state.contacts[index].id).then(()=> {
+    deleteContact = async e => {
+        const index = e.target.getAttribute('data-tag');
+        ajaxDelete(`contacts/${this.state.contacts[index].id}`).then(() => {
             this.loadContacts();
         })
         .catch(() => {
-
-        })
-    }
+        });
+    };
 
 
     render() {
+        const { loading, error } = this.state;
 
-        const {loading, error} = this.state
-
-        if(error){
-            return(
+        if (error) {
+            return (
                 <ErrorHandler
                     open={error}
                 />
-            )
+            );
         }
 
-        if(loading){
+        if (loading) {
             return (
                 <Grid.Row>
                     <Divider hidden />
-                    <Loader active inline='centered' />
+                    <Loader active inline="centered" />
                 </Grid.Row>
-            )
+            );
         }
 
         return (
@@ -99,31 +88,31 @@ class AdminContactComponent extends Component {
                         </Table.Header>
                         <Table.Body>
                             {
-                                this.state.contacts.map((contact, index)=>{
-                                    return <Table.Row key={index}>
-                                            <Table.Cell>{index+1}</Table.Cell>
-                                            <Table.Cell>{contact.email}</Table.Cell>
-                                            <Table.Cell>{contact.message}</Table.Cell>
-                                            <Table.Cell textAlign="center">
-                                                {/* <i
+                                this.state.contacts.map((contact, index) => (
+                                    <Table.Row key={contact.email}>
+                                        <Table.Cell>{index + 1}</Table.Cell>
+                                        <Table.Cell>{contact.email}</Table.Cell>
+                                        <Table.Cell>{contact.message}</Table.Cell>
+                                        <Table.Cell textAlign="center">
+                                            {/* <i
                                                     className="plus blue link icon"
                                                     data-tag={index}
                                                     onClick={this.saveSuggestion}
                                                 ></i> */}
-                                                <i
-                                                    className="trash alternate red link icon left7"
-                                                    data-tag={index}
-                                                    onClick={this.deleteContact}
-                                                ></i>
-                                            </Table.Cell>
-                                        </Table.Row>
-                                })
+                                            <i
+                                                className="trash alternate red link icon left7"
+                                                data-tag={index}
+                                                onClick={this.deleteContact}
+                                            />
+                                        </Table.Cell>
+                                    </Table.Row>
+                                ))
                             }
                         </Table.Body>
                     </Table>
                 </Grid.Row>
             </Grid.Row>
-            )
+        );
     }
 }
 
