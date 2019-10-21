@@ -8,8 +8,8 @@ export default class SearchScreen extends Component {
 
         this.state = {
             tags: [],
-            selectedTags: [],
-            likedResources: [],
+            selected_tags: [],
+            liked_resources: [],
             active: true,
             resources: [],
             research: false,
@@ -38,7 +38,7 @@ export default class SearchScreen extends Component {
 
     searchResources = () => {
         this.setState({ loading: true });
-        ajaxPost('resources/search', { tags: this.state.selectedTags }).then(res => {
+        ajaxPost('resources/search', { tags: this.state.selected_tags }).then(res => {
             this.setState({
                 resources: res.data || [],
                 research: true,
@@ -53,44 +53,44 @@ export default class SearchScreen extends Component {
     };
 
     selectTag = event => {
-        const tagId = event.target.getAttribute('data-tag');
+        const tag_id = event.target.getAttribute('data-tag');
 
-        const index = this.state.selectedTags.indexOf(tagId);
+        const index = this.state.selected_tags.indexOf(tag_id);
         if (index !== -1) {
-            this.setState(previousState => ({ selectedTags: previousState.selectedTags.filter((_, t) => t !== index) }));
+            this.setState(previousState => ({ selected_tags: previousState.selected_tags.filter((_, t) => t !== index) }));
         } else {
-            this.setState(previousState => ({ selectedTags: previousState.selectedTags.push(tagId) }));
+            this.setState(previousState => ({ selected_tags: previousState.selected_tags.push(tag_id) }));
         }
     };
 
     likeResource = async event => {
-        // Add resource to likedResources, send Like to API and save user preference in cookies
+        // Add resource to liked_resources, send Like to API and save user preference in cookies
 
-        // Add resource or retrieve to likedResources
-        const resourceId = event.target.getAttribute('data-tag');
-        const index = this.state.likedResources.indexOf(resourceId);
+        // Add resource or retrieve to liked_resources
+        const resource_id = event.target.getAttribute('data-tag');
+        const index = this.state.liked_resources.indexOf(resource_id);
         if (index !== -1) {
-            // Retrieve resource from likedResources
-            this.setState(previousState => ({ likedResources: previousState.likedResources.filter((_, r) => r !== index) }));
+            // Retrieve resource from liked_resources
+            this.setState(previousState => ({ liked_resources: previousState.liked_resources.filter((_, r) => r !== index) }));
             // API call
-            ajaxGet(`resources/like/remove/${resourceId}`);
+            ajaxGet(`resources/like/remove/${resource_id}`);
             // Retrieve from cookies
         } else {
-            // Add resource in likedResources
-            this.setState(previousState => ({ likedResources: previousState.likedResources.push(resourceId) }));
+            // Add resource in liked_resources
+            this.setState(previousState => ({ liked_resources: previousState.liked_resources.push(resource_id) }));
             // API call
-            ajaxGet(`resources/like/add/${resourceId}`);
+            ajaxGet(`resources/like/add/${resource_id}`);
             // Add in cookies
         }
     };
 
     knownResource = event => {
         // Retrieve resource from list and insert it at the end
-        const resourceId = event.target.getAttribute('data-tag');
+        const resource_id = event.target.getAttribute('data-tag');
         this.setState(previousState => {
             let array = previousState.resources;
-            const resource = array.filter(r => r.id === resourceId);
-            array = array.filter(r => r.id !== resourceId);
+            const resource = array.filter(r => r.id === resource_id);
+            array = array.filter(r => r.id !== resource_id);
             array.push(resource[0]);
             return { resources: array };
         });
@@ -107,18 +107,15 @@ export default class SearchScreen extends Component {
                 {
                     this.state.research
                     ? (
-                        // Research resutlts part
-
+                        // Research results part
                         <div className="research_content">
                             <h1 className="left">
-Here are some website to improve your workflow
+                                Here are some website to improve your workflow
                                 {/* <img src="/images/shuffle.svg" /> */}
                             </h1>
 
                             <ul id="research_results" key>
-
                                 {/* Display every resources for the research */}
-
                                 {
                                     this.state.resources.map(resource => (
                                         <div className="research_resource" key={resource.id}>
@@ -153,7 +150,7 @@ Here are some website to improve your workflow
                                                     </span>
                                                     <img
                                                         src={
-                                                            (this.state.likedResources.length > 0 && this.state.likedResources.indexOf(String(resource.id)) !== -1)
+                                                            (this.state.liked_resources.length > 0 && this.state.liked_resources.indexOf(String(resource.id)) !== -1)
                                                             ? 'images/heart_full.svg' : 'images/heart.svg'
                                                         }
                                                         alt="Heart Icon"
@@ -171,7 +168,7 @@ Here are some website to improve your workflow
                                             </div>
 
                                         </div>
-))
+                                    ))
                                 }
                             </ul>
                         </div>
@@ -191,7 +188,7 @@ Here are some website to improve your workflow
                                         <div className="table">
                                             {/* Search bar */}
                                             <div className="bar">
-                                                <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selectedTags.length ? this.searchResources : null} /></a>
+                                                <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selected_tags.length ? this.searchResources : null} /></a>
                                             </div>
                                             <ul id="categories" key>
                                                 {/* Display every tags available */}
@@ -200,13 +197,13 @@ Here are some website to improve your workflow
                                                     <li key={tag.id} onClick={this.selectTag}>
                                                         <a
                                                             data-tag={tag.id}
-                                                            className={`btnOne noselect ${(this.state.selectedTags.length > 0
-                                                                                    && this.state.selectedTags.indexOf(String(tag.id)) !== -1) ? 'btnOneSelected' : 'a_pointer_white'}`}
+                                                            className={`btnOne noselect ${(this.state.selected_tags.length > 0
+                                                                                    && this.state.selected_tags.indexOf(String(tag.id)) !== -1) ? 'btnOneSelected' : 'a_pointer_white'}`}
                                                         >
                                                             {tag.name}
                                                         </a>
                                                     </li>
-))
+                                                ))
                                             }
                                             </ul>
                                         </div>

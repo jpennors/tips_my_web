@@ -40,9 +40,9 @@ class AdminTagIndexComponent extends Component {
     };
 
     deleteTag = e => {
-        const tagId = e.target.getAttribute('data-tag');
-        ajaxDelete(`tags/${tagId}`).then(() => {
-            this.setState(previousState => ({ tags: previousState.tags.filter(r => r.id !== tagId) }));
+        const tag_id = e.target.getAttribute('data-tag');
+        ajaxDelete(`tags/${tag_id}`).then(() => {
+            this.setState(previousState => ({ tags: previousState.tags.filter(r => r.id !== tag_id) }));
         })
         .catch(() => {
             this.setState({
@@ -53,8 +53,8 @@ class AdminTagIndexComponent extends Component {
     };
 
     editTag = e => {
-        const tagId = e.target.getAttribute('data-tag');
-        const index = this.state.tags.findIndex(elm => elm.id === tagId);
+        const tag_id = e.target.getAttribute('data-tag');
+        const index = this.state.tags.findIndex(elm => elm.id === tag_id);
         if (index !== -1) {
             this.props.onEdit(this.state.tags[index]);
         }

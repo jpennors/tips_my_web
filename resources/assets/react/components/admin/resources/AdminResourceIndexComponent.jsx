@@ -42,9 +42,9 @@ class AdminResourceIndexComponent extends Component {
     };
 
     deleteResource = async e => {
-        const resourceId = e.target.getAttribute('data-tag');
-        ajaxDelete(`resources/${resourceId}`).then(() => {
-            this.setState(previousState => ({ resources: previousState.resources.filter(r => r.id !== resourceId) }));
+        const resource_id = e.target.getAttribute('data-tag');
+        ajaxDelete(`resources/${resource_id}`).then(() => {
+            this.setState(previousState => ({ resources: previousState.resources.filter(r => r.id !== resource_id) }));
         })
         .catch(() => {
             this.setState({
@@ -55,8 +55,8 @@ class AdminResourceIndexComponent extends Component {
     };
 
     editResource = e => {
-        const resourceId = e.target.getAttribute('data-tag');
-        const index = this.state.resources.findIndex(elm => elm.id === resourceId);
+        const resource_id = e.target.getAttribute('data-tag');
+        const index = this.state.resources.findIndex(elm => elm.id === resource_id);
         if (index !== -1) {
             this.props.onEdit(this.state.resources[index]);
         }
