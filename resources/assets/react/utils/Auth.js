@@ -1,51 +1,47 @@
-import {ajaxGet, ajaxPost} from './Ajax';
-import axios from 'axios';
+import { ajaxPost } from './Ajax';
 
-    
+
 class Auth {
-
-    static isUserAdmin(){
+    static isUserAdmin() {
         return localStorage.getItem('admin');
     }
 
 
-    static async login(data){
+    static async login(data) {
         this.emptyLocalStorage();
-        ajaxPost("login", data).then(res => {
+        ajaxPost('login', data).then(res => {
             Auth.authenticateUser(res.data);
             Auth.redirectUser();
         })
         .catch(() => {
             Auth.redirectUser();
-        })
-        
+        });
     }
 
 
-    static getToken(){
+    static getToken() {
         return localStorage.getItem('token');
     }
 
-    
-    static authenticateUser(data){
+
+    static authenticateUser(data) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('admin', true);
     }
 
 
-    static redirectUser(){
+    static redirectUser() {
         if (Auth.isUserAdmin()) {
             window.location = '/admin';
         } else {
             window.location = '/login';
-        } 
+        }
     }
 
 
-    static emptyLocalStorage(){
-        localStorage.clear()
+    static emptyLocalStorage() {
+        localStorage.clear();
     }
-
 }
 
 export default Auth;
