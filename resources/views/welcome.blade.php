@@ -8,12 +8,10 @@
     <meta name="author" content="">
     <title>TipsMyWeb</title>
 
-
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <link rel="icon" href="/images/logo.png">
     <!-- Bootstrap Core CSS -->
     {{-- <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet"> --}}
