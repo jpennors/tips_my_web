@@ -54,12 +54,11 @@ export default class SearchScreen extends Component {
 
     selectTag = event => {
         const tag_id = event.target.getAttribute('data-tag');
-
         const index = this.state.selected_tags.indexOf(tag_id);
         if (index !== -1) {
             this.setState(previousState => ({ selected_tags: previousState.selected_tags.filter((_, t) => t !== index) }));
         } else {
-            this.setState(previousState => ({ selected_tags: previousState.selected_tags.push(tag_id) }));
+            this.setState(previousState => ({ selected_tags: previousState.selected_tags.concat([tag_id]) }));
         }
     };
 
@@ -77,7 +76,7 @@ export default class SearchScreen extends Component {
             // Retrieve from cookies
         } else {
             // Add resource in liked_resources
-            this.setState(previousState => ({ liked_resources: previousState.liked_resources.push(resource_id) }));
+            this.setState(previousState => ({ liked_resources: previousState.liked_resources.concat([resource_id]) }));
             // API call
             ajaxGet(`resources/like/add/${resource_id}`);
             // Add in cookies
