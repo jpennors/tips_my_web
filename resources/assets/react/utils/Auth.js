@@ -26,7 +26,7 @@ class Auth {
 
     static authenticateUser(data) {
         localStorage.setItem('token', data.token);
-        localStorage.setItem('admin', true);
+        localStorage.setItem('admin', 'true');
     }
 
 

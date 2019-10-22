@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import Auth from './Auth';
 
 class ProtectedRoute extends React.Component {
-    isAuthorized = () => Auth.isUserAdmin() === true;
+    isAuthorized = () => !!(Auth.isUserAdmin());
 
     render() {
         const {
