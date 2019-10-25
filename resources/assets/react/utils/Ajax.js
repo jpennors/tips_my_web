@@ -34,8 +34,9 @@ function ajaxPostImage(path, data) {
 function putFile(file) {
     const fileReader = new FileReader();
     fileReader.onload = async e => {
+        const { result } = e.target;
         const config = { headers: { ContentType: file.type, ContentLength: file.size, Authorization: token } };
-        return axios.post('/api/file', e.target.result, config);
+        return axios.post('/api/file', result, config);
     };
 }
 

@@ -20,19 +20,21 @@ class HomeScreen extends Component {
     }
 
     handleSuggestionChange = event => {
+        const { name, value } = event.target;
         this.setState(previousState => ({
             suggestion: {
                 ...previousState.suggestion,
-                [event.target.name]: event.target.value
+                [name]: value
             }
         }));
     };
 
     handleContactChange = event => {
+        const { name, value } = event.target;
         this.setState(previousState => ({
             contact: {
                 ...previousState.contact,
-                [event.target.name]: event.target.value
+                [name]: value
             }
         }));
     };

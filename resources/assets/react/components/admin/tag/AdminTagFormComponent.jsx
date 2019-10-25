@@ -19,7 +19,7 @@ class AdminTagFormComponent extends Component {
             tags: [],
             tag: {
                 name: '',
-                parentId: ''
+                parent_id: ''
             },
             loading: true,
             error: false,
@@ -34,8 +34,8 @@ class AdminTagFormComponent extends Component {
     getTag = () => {
         if (this.props.tag) {
             const { tag } = this.props;
-            if (!tag.parentId) {
-                tag.parentId = '';
+            if (!tag.parent_id) {
+                tag.parent_id = '';
             }
             this.setState({
                 tag
@@ -60,10 +60,11 @@ class AdminTagFormComponent extends Component {
     };
 
     handleChange = event => {
+        const { name, value } = event.target;
         this.setState(previousState => ({
             tag: {
                 ...previousState.tag,
-                [event.target.name]: event.target.value
+                [name]: value
             }
         }));
     };
@@ -134,18 +135,18 @@ class AdminTagFormComponent extends Component {
                                 <Form.Field inline>
                                     <label>Parent</label>
                                     <select
-                                        name="parentId"
-                                        value={this.state.tag.parentId}
+                                        name="parent_id"
+                                        value={this.state.tag.parent_id}
                                         onChange={this.handleChange}
                                     >
-                                        {/* <option value="" {...this.state.tag.parentId.length > 0? "": defaultValue}></option> */}
+                                        {/* <option value="" {...this.state.tag.parent_id.length > 0? "": defaultValue}></option> */}
                                         <option value=" " />
                                         {
                                             this.state.tags.map(tag => (
                                                 <option
                                                     value={tag.id}
                                                     key={tag.id}
-                                                    defaultValue={this.state.tag.parentId && this.state.tag.parentId === tag.id}
+                                                    defaultValue={this.state.tag.parent_id && this.state.tag.parent_id === tag.id}
                                                 >
                                                     {tag.name}
                                                 </option>

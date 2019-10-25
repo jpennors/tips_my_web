@@ -21,6 +21,7 @@ class AdminResourceFormComponent extends Component {
             types: [],
             // selected_tags : [],
             resource: {
+                id: '',
                 name: '',
                 file: '',
                 image: '',
@@ -41,6 +42,7 @@ class AdminResourceFormComponent extends Component {
 
     componentDidMount() {
         this.loadTags();
+        this.getResource();
     }
 
     getResource = () => {
@@ -127,19 +129,21 @@ class AdminResourceFormComponent extends Component {
     };
 
     handleChange = event => {
+        const { name, value } = event.target;
         this.setState(previousState => ({
             resource: {
                 ...previousState.resource,
-                [event.target.name]: event.target.value
+                [name]: value
             }
         }));
     };
 
-    handleImageChange= event => {
+    handleImageChange = event => {
+        const file = event.target.files[0];
         this.setState(previousState => ({
             resource: {
                 ...previousState.resource,
-                file: event.target.files[0]
+                file
             }
         }));
     };
