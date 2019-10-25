@@ -39,6 +39,7 @@
         "react/no-did-update-set-state": "off",
         "camelcase": "off",
         "react/no-unescaped-entities": "off",
+        "template-curly-spacing" : "off", // Prevents ESLint TypeError bug
 
         // TODO: Re-enable these accessibility rules
         "jsx-a11y/anchor-is-valid": "off",
