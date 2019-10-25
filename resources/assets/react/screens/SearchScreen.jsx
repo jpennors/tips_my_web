@@ -165,49 +165,44 @@ export default class SearchScreen extends Component {
                                                     </button>
                                                 </p>
                                             </div>
-
                                         </div>
                                     ))
                                 }
                             </ul>
                         </div>
-
-                    )
-                    : (
+                    ) : (
                         // Research part
                         <div className="landing_content">
                             <h1>What are your centers of interest?</h1>
                             <p>Let’s find your most useful websites</p>
-
-
                             {
-                                    this.state.loading ? (
-                                        <div className="ui active inverted loader" />
-                                    ) : (
-                                        <div className="table">
-                                            {/* Search bar */}
-                                            <div className="bar">
-                                                <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selected_tags.length ? this.searchResources : null} /></a>
-                                            </div>
-                                            <ul id="categories" key>
-                                                {/* Display every tags available */}
-                                                {
-                                                this.state.tags.map(tag => (
-                                                    <li key={tag.id} onClick={this.selectTag}>
-                                                        <a
-                                                            data-tag={tag.id}
-                                                            className={`btnOne noselect ${(this.state.selected_tags.length > 0
-                                                                                    && this.state.selected_tags.indexOf(String(tag.id)) !== -1) ? 'btnOneSelected' : 'a_pointer_white'}`}
-                                                        >
-                                                            {tag.name}
-                                                        </a>
-                                                    </li>
-                                                ))
-                                            }
-                                            </ul>
+                                this.state.loading ? (
+                                    <div className="ui active inverted loader" />
+                                ) : (
+                                    <div className="table">
+                                        {/* Search bar */}
+                                        <div className="bar">
+                                            <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selected_tags.length ? this.searchResources : null} /></a>
                                         </div>
-                                    )
-                                }
+                                        <ul id="categories" key>
+                                            {/* Display every tags available */}
+                                            {
+                                            this.state.tags.map(tag => (
+                                                <li key={tag.id} onClick={this.selectTag}>
+                                                    <a
+                                                        data-tag={tag.id}
+                                                        className={`btnOne noselect ${(this.state.selected_tags.length > 0
+                                                                                && this.state.selected_tags.indexOf(String(tag.id)) !== -1) ? 'btnOneSelected' : 'a_pointer_white'}`}
+                                                    >
+                                                        {tag.name}
+                                                    </a>
+                                                </li>
+                                            ))
+                                        }
+                                        </ul>
+                                    </div>
+                                )
+                            }
                         </div>
                     )
                 }
