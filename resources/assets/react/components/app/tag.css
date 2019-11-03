@@ -1,14 +1,13 @@
 .tag {
     border: white 2px solid;
     border-radius: 100px;
-    padding: 0.6em 1.75em;
     color: white;
     text-decoration: none;
-    font-size: 2vh;
-    float: left;
+    font-size: 1.8vh;
     display: inline-block;
     cursor: pointer;
-    margin: 2px;
+    padding: 0.4em 1.3em;
+    margin: 5px;
 }
 
 .tag:hover {
