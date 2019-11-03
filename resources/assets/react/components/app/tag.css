@@ -13,12 +13,10 @@
 
 .tag:hover {
     background: white;
-    color: #F46E7A;
+    color: #f46e7a;
 }
 
 .tag--selected {
     background: white;
-    color: #F46E7A;
+    color: #f46e7a;
 }
-
-

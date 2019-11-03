@@ -9,10 +9,17 @@ interface TagProps {
     onClickCallback?: () => void;
 }
 
-const Tag: React.FunctionComponent<TagProps> = ({ content, isSelected, onClickCallback }) => (
+const Tag: React.FunctionComponent<TagProps> = ({
+    content,
+    isSelected,
+    onClickCallback,
+}) => (
     <div onClick={onClickCallback}>
         <a
-            className={classNames('tag', 'noselect', { 'tag--selected' : isSelected, 'a_pointer_white': !isSelected})}
+            className={classNames('tag', 'noselect', {
+                'tag--selected': isSelected,
+                'a_pointer_white': !isSelected,
+            })}
         >
             {content}
         </a>
