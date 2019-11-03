@@ -15,14 +15,13 @@ const Tag: React.FunctionComponent<TagProps> = ({
     onClickCallback,
 }) => (
     <div onClick={onClickCallback}>
-        <a
+        <button
             className={classNames('tag', 'noselect', {
                 'tag--selected': isSelected,
-                'a_pointer_white': !isSelected,
             })}
         >
             {content}
-        </a>
+        </button>
     </div>
 );
 

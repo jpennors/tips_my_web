@@ -1,4 +1,7 @@
+@import '../../constants/ui-constants.css';
+
 .tag {
+    font-family: var(--app-font-medium);
     border: white 2px solid;
     border-radius: 100px;
     color: white;
@@ -11,11 +14,12 @@
 }
 
 .tag:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: #f46e7a;
+}
+
+.tag--selected, .tag--selected:hover {
     background: white;
     color: #f46e7a;
 }
 
-.tag--selected {
-    background: white;
-    color: #f46e7a;
-}
