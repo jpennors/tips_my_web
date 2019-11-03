@@ -16,7 +16,7 @@ export const Tag: React.FunctionComponent<TagProps> = ({
 }) => (
     <div onClick={onClickCallback}>
         <button
-            className={classNames('tag', 'noselect', {
+            className={classNames('tag', {
                 'tag--selected': isSelected,
             })}
         >

@@ -11,6 +11,7 @@
     cursor: pointer;
     padding: 0.4em 1.3em;
     margin: 5px;
+    user-select: none;
 }
 
 .tag:hover {
