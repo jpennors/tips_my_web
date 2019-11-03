@@ -1,9 +1,15 @@
-.tags-selector {
+.tags-selector__container {
     max-width: 650px;
     padding-top: 2em;
     text-align: center;
     margin-bottom: 10px;
+}
 
+.tags-selector__selected-primary-tag {
+    margin-bottom: 10px;
+}
+
+.tags-selector__tag-options {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

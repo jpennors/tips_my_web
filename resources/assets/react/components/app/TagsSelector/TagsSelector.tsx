@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Loader } from 'semantic-ui-react';
 import { serializeTagsFromAPI } from 'tmw/utils/api-serialize';
-import { TagsMap } from 'tmw/constants/app-types';
+import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw/constants/app-types';
 import { ajaxGet } from 'tmw/utils/Ajax';
 import { Tag } from 'tmw/components/app/Tag';
 
@@ -13,7 +13,8 @@ interface TagsSelectorProps {
 
 interface TagsSelectorState {
     tagsMap: TagsMap;
-    selectedTags: string[];
+    primaryTag: PrimaryTag | null;
+    secondaryTags: SecondaryTag[];
     requestLoading: boolean;
 }
 
@@ -26,7 +27,8 @@ export class TagsSelector extends React.Component<
 
         this.state = {
             tagsMap: {},
-            selectedTags: [],
+            primaryTag: null,
+            secondaryTags: [],
             requestLoading: true,
         };
     }
@@ -46,27 +48,36 @@ export class TagsSelector extends React.Component<
             });
     };
 
-    addTag = (selectedTagId: string): void => {
+    addSecondaryTag = (selectedTag: SecondaryTag): void => {
         this.setState(previousState => ({
-            selectedTags: previousState.selectedTags.concat([selectedTagId]),
+            secondaryTags: previousState.secondaryTags.concat([selectedTag]),
         }));
     };
 
-    removeTag = (selectedTagId: string): void => {
+    removeSecondaryTag = (selectedTag: SecondaryTag): void => {
         this.setState(previousState => ({
-            selectedTags: previousState.selectedTags.filter(
-                tagId => tagId !== selectedTagId,
+            secondaryTags: previousState.secondaryTags.filter(
+                tag => tag.id !== selectedTag.id,
             ),
         }));
     };
 
-    selectTag = (selectedTagId: string): void => {
-        const index = this.state.selectedTags.indexOf(selectedTagId);
+    selectSecondaryTag = (selectedTag: SecondaryTag): void => {
+        const index = this.state.secondaryTags
+            .map(tag => tag.id)
+            .indexOf(selectedTag.id);
         if (index === -1) {
-            this.addTag(selectedTagId);
+            this.addSecondaryTag(selectedTag);
         } else {
-            this.removeTag(selectedTagId);
+            this.removeSecondaryTag(selectedTag);
         }
+    };
+
+    selectPrimaryTag = (selectedTag: PrimaryTag): void => {
+        this.setState(previousState => ({
+            primaryTag: previousState.primaryTag ? null : selectedTag,
+            secondaryTags: previousState.primaryTag ? [] : previousState.secondaryTags,
+        }));
     };
 
     componentDidMount() {
@@ -74,26 +85,48 @@ export class TagsSelector extends React.Component<
     }
 
     render() {
-        const { tagsMap, selectedTags, requestLoading } = this.state;
+        const { tagsMap, primaryTag, secondaryTags, requestLoading } = this.state;
 
         return (
             <div className="tags-selector">
                 {requestLoading ? (
                     <Loader />
                 ) : (
-                    <>
-                        {Object.keys(tagsMap).map((tagId: string) => {
-                            const tag = tagsMap[tagId];
-                            return (
+                    <div className="tags-selector__container">
+                        {primaryTag && (
+                            <div className="tags-selector__selected-primary-tag">
                                 <Tag
-                                    key={tag.id}
-                                    content={tag.name}
-                                    isSelected={selectedTags.includes(tag.id)}
-                                    onClickCallback={() => this.selectTag(tag.id)}
+                                    content={primaryTag.name}
+                                    isSelected={false}
+                                    onClickCallback={() => this.selectPrimaryTag(primaryTag)}
                                 />
-                            );
-                        })}
-                    </>
+                            </div>
+                        )}
+                        <div className="tags-selector__tag-options">
+                            {primaryTag
+                                ? primaryTag.secondaryTags.map((tag: SecondaryTag) => {
+                                    return (
+                                        <Tag
+                                            key={tag.id}
+                                            content={tag.name}
+                                            isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
+                                            onClickCallback={() => this.selectSecondaryTag(tag)}
+                                        />
+                                    );
+                                })
+                                : Object.keys(tagsMap).map((tagId: string) => {
+                                    const tag = tagsMap[tagId];
+                                    return (
+                                        <Tag
+                                            key={tag.id}
+                                            content={tag.name}
+                                            isSelected={false}
+                                            onClickCallback={() => this.selectPrimaryTag(tag)}
+                                        />
+                                    );
+                                })}
+                        </div>
+                    </div>
                 )}
             </div>
         );
