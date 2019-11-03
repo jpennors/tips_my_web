@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Loader } from 'semantic-ui-react';
+import { SIZES } from 'tmw/constants/ui-constants';
 import { serializeTagsFromAPI } from 'tmw/utils/api-serialize';
 import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw/constants/app-types';
 import { ajaxGet } from 'tmw/utils/Ajax';
@@ -99,6 +100,7 @@ export class TagsSelector extends React.Component<
                                     content={primaryTag.name}
                                     isSelected={false}
                                     onClickCallback={() => this.selectPrimaryTag(primaryTag)}
+                                    size={SIZES.LARGE}
                                 />
                             </div>
                         )}
@@ -111,6 +113,7 @@ export class TagsSelector extends React.Component<
                                             content={tag.name}
                                             isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
                                             onClickCallback={() => this.selectSecondaryTag(tag)}
+                                            size={SIZES.MEDIUM}
                                         />
                                     );
                                 })
@@ -122,6 +125,7 @@ export class TagsSelector extends React.Component<
                                             content={tag.name}
                                             isSelected={false}
                                             onClickCallback={() => this.selectPrimaryTag(tag)}
+                                            size={SIZES.MEDIUM}
                                         />
                                     );
                                 })}
