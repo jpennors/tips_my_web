@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Loader } from 'semantic-ui-react';
 import { APITag } from '../../../constants/api-types';
 import { ajaxGet } from '../../../utils/Ajax';
 
@@ -73,18 +74,24 @@ export class TagsSelector extends React.Component<
     }
 
     render() {
-        const { tagOptions, selectedTags } = this.state;
+        const { tagOptions, selectedTags, requestLoading } = this.state;
 
         return (
             <div className="tags-selector">
-                {tagOptions.map((tag: APITag) => (
-                    <Tag
-                        key={tag.id}
-                        content={tag.name}
-                        isSelected={selectedTags.includes(tag.id)}
-                        onClickCallback={() => this.selectTag(tag.id)}
-                    />
-                ))}
+                {requestLoading ? (
+                    <Loader />
+                ) : (
+                    <>
+                        {tagOptions.map((tag: APITag) => (
+                            <Tag
+                                key={tag.id}
+                                content={tag.name}
+                                isSelected={selectedTags.includes(tag.id)}
+                                onClickCallback={() => this.selectTag(tag.id)}
+                            />
+                        ))}
+                    </>
+                )}
             </div>
         );
     }
