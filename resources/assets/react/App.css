@@ -173,21 +173,21 @@
     object-fit: cover;
 }
 
-/*–––––––––––– Tags –––––––––––*/
+/*–––––––––––– Tags Container –––––––––––*/
 
-
-ul#categories{ /*group categorie*/
+div#categories {
 	max-width: 650px;
 	padding-top: 2em;
 	text-align: center;
 	margin-bottom: 10px;
-}
-ul#categories li{
-	display: inline;
-	margin: 3px;
-	white-space: nowrap;
-}
 
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: flex-start;
+	align-items: flex-start;
+}
 
 /* ------------------------------------ */
 /* ------------------------------------ */

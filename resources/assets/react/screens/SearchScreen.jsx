@@ -184,7 +184,7 @@ export default class SearchScreen extends Component {
                                         <div className="bar">
                                             <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selected_tags.length ? this.searchResources : null} /></a>
                                         </div>
-                                        <ul id="categories">
+                                        <div id="categories">
                                             {/* Display every tags available */}
                                             {
                                                 this.state.tags.map(tag => (
@@ -196,7 +196,7 @@ export default class SearchScreen extends Component {
                                                     />
                                                 ))
                                             }
-                                        </ul>
+                                        </div>
                                     </div>
                                 )
                             }
