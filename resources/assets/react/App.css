@@ -175,29 +175,6 @@
 
 /*–––––––––––– Tags –––––––––––*/
 
-.btnOne{
-	border:white 2px solid;
-	border-radius: 100px;
-	padding: 0.6em 1.75em;
-	color: white;
-	text-decoration: none;
-	font-size: 2vh;
-	float: left;
-	display: inline-block;
-    cursor: pointer;
-    margin:2px;
-}
-
-.btnOneSelected{
-	background: white;
-	color: #F46E7A;
-}
-
-.btnOneSelected:hover{
-	background: white;
-	color: #F46E7A;
-}
-
 
 ul#categories{ /*group categorie*/
 	max-width: 650px;

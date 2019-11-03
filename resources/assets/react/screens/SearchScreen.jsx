@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ajaxGet, ajaxPost } from '../utils/Ajax';
 import ErrorHandler from '../utils/Modal';
+import Tag from '../components/app/Tag.tsx';
 
 export default class SearchScreen extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ export default class SearchScreen extends Component {
             resources: [],
             research: false,
             loading: true,
-            error: false
+            error: false,
         };
     }
 
@@ -26,12 +27,12 @@ export default class SearchScreen extends Component {
         ajaxGet('tags').then(res => {
             this.setState({
                 tags: res.data || [],
-                loading: false
+                loading: false,
             });
         }).catch(() => {
             this.setState({
                 loading: false,
-                error: true
+                error: true,
             });
         });
     };
@@ -42,23 +43,22 @@ export default class SearchScreen extends Component {
             this.setState({
                 resources: res.data || [],
                 research: true,
-                loading: false
+                loading: false,
             });
         }).catch(() => {
             this.setState({
                 loading: false,
-                research: true
+                research: true,
             });
         });
     };
 
-    selectTag = event => {
-        const tag_id = event.target.getAttribute('data-tag');
-        const index = this.state.selected_tags.indexOf(tag_id);
+    selectTag = selectedTagId => {
+        const index = this.state.selected_tags.indexOf(selectedTagId);
         if (index !== -1) {
-            this.setState(previousState => ({ selected_tags: previousState.selected_tags.filter((_, t) => t !== index) }));
+            this.setState(previousState => ({ selected_tags: previousState.selected_tags.filter(tagId => tagId !== selectedTagId)}));
         } else {
-            this.setState(previousState => ({ selected_tags: previousState.selected_tags.concat([tag_id]) }));
+            this.setState(previousState => ({ selected_tags: previousState.selected_tags.concat([selectedTagId]) }));
         }
     };
 
@@ -184,21 +184,18 @@ export default class SearchScreen extends Component {
                                         <div className="bar">
                                             <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selected_tags.length ? this.searchResources : null} /></a>
                                         </div>
-                                        <ul id="categories" key>
+                                        <ul id="categories">
                                             {/* Display every tags available */}
                                             {
-                                            this.state.tags.map(tag => (
-                                                <li key={tag.id} onClick={this.selectTag}>
-                                                    <a
-                                                        data-tag={tag.id}
-                                                        className={`btnOne noselect ${(this.state.selected_tags.length > 0
-                                                                                && this.state.selected_tags.indexOf(String(tag.id)) !== -1) ? 'btnOneSelected' : 'a_pointer_white'}`}
-                                                    >
-                                                        {tag.name}
-                                                    </a>
-                                                </li>
-                                            ))
-                                        }
+                                                this.state.tags.map(tag => (
+                                                    <Tag
+                                                        key={tag.id}
+                                                        content={tag.name}
+                                                        isSelected={this.state.selected_tags.includes(tag.id)}
+                                                        onClickCallback={() => this.selectTag(tag.id)}
+                                                    />
+                                                ))
+                                            }
                                         </ul>
                                     </div>
                                 )
