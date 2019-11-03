@@ -26,6 +26,7 @@
         "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
         "semi": ["error", "always"],
         "arrow-parens": ["error", "as-needed"],
+        "object-curly-spacing": ["error", "always"],
 
         // TODO: Remove these temporary rules
         "react/no-unused-state": "off",
@@ -79,7 +80,10 @@
                 "@typescript-eslint/no-explicit-any": 0,
                 "semi": ["error", "always"],
                 "arrow-parens": ["error", "as-needed"],
-                "react/prop-types": "off"
+                "react/prop-types": "off",
+                "camelcase": "off",
+                "@typescript-eslint/camelcase": ["error", { "properties": "always" }],
+                "object-curly-spacing": ["error", "always"]
             },
             "settings": { "react": { "version": "detect" } }
         }
