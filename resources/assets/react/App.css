@@ -1,3 +1,5 @@
+@import './constants/ui-constants.css';
+
 /* ------------------------------------ */
 /* ------------------------------------ */
 /* -------------- Client -------------- */
@@ -6,7 +8,7 @@
 
 #home{
     color: white;
-    font-family: 'Montserrat-Medium';
+    font-family: var(--app-font-regular);
 }
 
 .landing_content{
@@ -124,7 +126,7 @@
 	margin: 10px;
 	height: 15px;
 	color: black;
-	font-family: 'Montserrat-Medium';
+	font-family: var(--app-font-medium);
 }
 
 .resource_description{
@@ -140,7 +142,7 @@
 	margin:5px;
 	text-align: right;
 	color: black;
-	font-family: 'Montserrat-Medium';
+	font-family: var(--app-font-medium);
 }
 
 .knowing_resource{
@@ -163,7 +165,7 @@
 	padding-bottom: 5px;
 	padding-right: 20px;
 	padding-left: 20px;
-	font-family: 'Montserrat-Medium'
+	font-family: var(--app-font-medium);
 }
 
 
@@ -222,19 +224,6 @@ div#categories {
 	font-size: 100%;
 	vertical-align: baseline;
 	background: transparent;
-}
-
-@font-face {
-    font-family: 'Montserrat';
-    src: url("fonts/Montserrat-Black.otf");
-}
-@font-face {
-    font-family: 'Montserrat-Light';
-    src: url("fonts/Montserrat-Light.otf");
-}
-@font-face {
-    font-family: 'Montserrat-Medium';
-    src: url("fonts/Montserrat-Medium.otf");
 }
 
 body{
