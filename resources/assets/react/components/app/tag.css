@@ -11,12 +11,14 @@
     margin: 2px;
 }
 
+.tag:hover {
+    background: white;
+    color: #F46E7A;
+}
+
 .tag--selected {
     background: white;
     color: #F46E7A;
 }
 
-.tag--selected:hover {
-    background: white;
-    color: #F46E7A;
-}
+
