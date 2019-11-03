@@ -79,26 +79,7 @@
                 "@typescript-eslint/no-explicit-any": 0,
                 "semi": ["error", "always"],
                 "arrow-parens": ["error", "as-needed"],
-
-                // TODO: Remove these temporary rules
-                "react/no-unused-state": "off",
-                "react/destructuring-assignment": "off",
-                "max-len": "off",
-                "react/prop-types": "off",
-                "react/no-did-update-set-state": "off",
-                "typescript-eslint/camelcase": "off",
-                "camelcase": "off",
-                "react/no-unescaped-entities": "off",
-                "template-curly-spacing" : "off", // Prevents ESLint TypeError bug
-
-                // TODO: Re-enable these accessibility rules
-                "jsx-a11y/anchor-is-valid": "off",
-                "jsx-a11y/no-static-element-interactions": "off",
-                "jsx-a11y/click-events-have-key-events": "off",
-                "jsx-a11y/interactive-supports-focus": "off",
-                "jsx-a11y/label-has-associated-control": "off",
-                "jsx-a11y/no-noninteractive-element-interactions": "off",
-                "jsx-a11y/control-has-associated-label": "off"
+                "react/prop-types": "off"
             },
             "settings": { "react": { "version": "detect" } }
         }
