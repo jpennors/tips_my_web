@@ -1,4 +1,4 @@
-@import '../../constants/ui-constants.css';
+@import '../../../constants/ui-constants.css';
 
 .tag {
     font-family: var(--app-font-medium);

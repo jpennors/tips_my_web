@@ -9,7 +9,7 @@ interface TagProps {
     onClickCallback?: () => void;
 }
 
-const Tag: React.FunctionComponent<TagProps> = ({
+export const Tag: React.FunctionComponent<TagProps> = ({
     content,
     isSelected,
     onClickCallback,
@@ -24,5 +24,3 @@ const Tag: React.FunctionComponent<TagProps> = ({
         </button>
     </div>
 );
-
-export default Tag;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ajaxGet, ajaxPost } from '../utils/Ajax';
 import ErrorHandler from '../utils/Modal';
-import Tag from '../components/app/Tag.tsx';
+import { Tag } from '../components/app/Tag';
 
 export default class SearchScreen extends Component {
     constructor(props) {
