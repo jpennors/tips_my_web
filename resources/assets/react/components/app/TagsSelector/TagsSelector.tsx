@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Loader } from 'semantic-ui-react';
-import { serializeTagsFromAPI } from '../../..//utils/api-serialize';
-import { TagsMap } from '../../../constants/app-types';
-import { ajaxGet } from '../../../utils/Ajax';
-
-import { Tag } from '../Tag';
+import { serializeTagsFromAPI } from 'tmw/utils/api-serialize';
+import { TagsMap } from 'tmw/constants/app-types';
+import { ajaxGet } from 'tmw/utils/Ajax';
+import { Tag } from 'tmw/components/app/Tag';
 
 import './tags-selector.css';
 

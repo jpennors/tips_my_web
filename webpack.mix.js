@@ -23,7 +23,10 @@ mix.react('resources/assets/react/index.jsx', 'public/js')
         ]
     },
     resolve: {
-        extensions: ["*", ".js", ".jsx", ".vue", ".ts", ".tsx"]
+        extensions: ["*", ".js", ".jsx", ".vue", ".ts", ".tsx"],
+        alias: {
+            "tmw": __dirname + "/resources/assets/react"
+        }
     }
 });
 mix.copyDirectory('resources/assets/react/images', 'public/images');

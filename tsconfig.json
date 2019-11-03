@@ -4,6 +4,10 @@
     "module": "commonjs",
     "target": "es5",
     "lib": ["es6", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "tmw/*": ["resources/assets/react/*"]
+    },
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
