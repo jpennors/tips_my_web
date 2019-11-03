@@ -11,6 +11,20 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/assets/react/index.jsx', 'public/js');
+mix.react('resources/assets/react/index.jsx', 'public/js')
+    .webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                loader: "ts-loader",
+                exclude: /node_modules/
+            }
+        ]
+    },
+    resolve: {
+        extensions: ["*", ".js", ".jsx", ".vue", ".ts", ".tsx"]
+    }
+});
 mix.copyDirectory('resources/assets/react/images', 'public/images');
 mix.copyDirectory('resources/assets/react/fonts', 'public/fonts');
