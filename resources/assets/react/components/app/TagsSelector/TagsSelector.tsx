@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Loader } from 'semantic-ui-react';
-import { APITag } from '../../../constants/api-types';
+import { serializeTagsFromAPI } from '../../..//utils/api-serialize';
+import { TagsMap } from '../../../constants/app-types';
 import { ajaxGet } from '../../../utils/Ajax';
 
 import { Tag } from '../Tag';
@@ -12,7 +13,7 @@ interface TagsSelectorProps {
 }
 
 interface TagsSelectorState {
-    tagOptions: APITag[];
+    tagsMap: TagsMap;
     selectedTags: string[];
     requestLoading: boolean;
 }
@@ -25,7 +26,7 @@ export class TagsSelector extends React.Component<
         super(props);
 
         this.state = {
-            tagOptions: [],
+            tagsMap: {},
             selectedTags: [],
             requestLoading: true,
         };
@@ -35,7 +36,7 @@ export class TagsSelector extends React.Component<
         ajaxGet('tags')
             .then(res => {
                 this.setState({
-                    tagOptions: res.data || [],
+                    tagsMap: serializeTagsFromAPI(res.data || []),
                     requestLoading: false,
                 });
             })
@@ -74,7 +75,7 @@ export class TagsSelector extends React.Component<
     }
 
     render() {
-        const { tagOptions, selectedTags, requestLoading } = this.state;
+        const { tagsMap, selectedTags, requestLoading } = this.state;
 
         return (
             <div className="tags-selector">
@@ -82,14 +83,17 @@ export class TagsSelector extends React.Component<
                     <Loader />
                 ) : (
                     <>
-                        {tagOptions.map((tag: APITag) => (
-                            <Tag
-                                key={tag.id}
-                                content={tag.name}
-                                isSelected={selectedTags.includes(tag.id)}
-                                onClickCallback={() => this.selectTag(tag.id)}
-                            />
-                        ))}
+                        {Object.keys(tagsMap).map((tagId: string) => {
+                            const tag = tagsMap[tagId];
+                            return (
+                                <Tag
+                                    key={tag.id}
+                                    content={tag.name}
+                                    isSelected={selectedTags.includes(tag.id)}
+                                    onClickCallback={() => this.selectTag(tag.id)}
+                                />
+                            );
+                        })}
                     </>
                 )}
             </div>
