@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Montserrat';
+    font-family: 'Montserrat-Black';
     src: url("../fonts/Montserrat-Black.otf");
 }
 @font-face {
@@ -12,7 +12,7 @@
 }
 
 :root {
-    --app-font-regular: 'Montserrat';
     --app-font-light: 'Montserrat-Light';
     --app-font-medium: 'Montserrat-Medium';
+    --app-font-black: 'Montserrat-Black';
 }
