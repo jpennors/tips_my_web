@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ajaxGet, ajaxPost } from '../utils/Ajax';
 import ErrorHandler from '../utils/Modal';
-import { Tag } from '../components/app/Tag';
+import { TagsSelector } from '../components/app/TagsSelector';
 
 export default class SearchScreen extends Component {
     constructor(props) {
@@ -14,28 +14,10 @@ export default class SearchScreen extends Component {
             active: true,
             resources: [],
             research: false,
-            loading: true,
+            loading: false,
             error: false,
         };
     }
-
-    componentDidMount() {
-        this.loadTags();
-    }
-
-    loadTags = () => {
-        ajaxGet('tags').then(res => {
-            this.setState({
-                tags: res.data || [],
-                loading: false,
-            });
-        }).catch(() => {
-            this.setState({
-                loading: false,
-                error: true,
-            });
-        });
-    };
 
     searchResources = () => {
         this.setState({ loading: true });
@@ -51,15 +33,6 @@ export default class SearchScreen extends Component {
                 research: true,
             });
         });
-    };
-
-    selectTag = selectedTagId => {
-        const index = this.state.selected_tags.indexOf(selectedTagId);
-        if (index !== -1) {
-            this.setState(previousState => ({ selected_tags: previousState.selected_tags.filter(tagId => tagId !== selectedTagId)}));
-        } else {
-            this.setState(previousState => ({ selected_tags: previousState.selected_tags.concat([selectedTagId]) }));
-        }
     };
 
     likeResource = async event => {
@@ -184,19 +157,7 @@ export default class SearchScreen extends Component {
                                         <div className="bar">
                                             <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selected_tags.length ? this.searchResources : null} /></a>
                                         </div>
-                                        <div id="categories">
-                                            {/* Display every tags available */}
-                                            {
-                                                this.state.tags.map(tag => (
-                                                    <Tag
-                                                        key={tag.id}
-                                                        content={tag.name}
-                                                        isSelected={this.state.selected_tags.includes(tag.id)}
-                                                        onClickCallback={() => this.selectTag(tag.id)}
-                                                    />
-                                                ))
-                                            }
-                                        </div>
+                                        <TagsSelector onSearchStart={this.searchResources}/>
                                     </div>
                                 )
                             }

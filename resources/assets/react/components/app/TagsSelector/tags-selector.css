@@ -1,0 +1,13 @@
+.tags-selector {
+    max-width: 650px;
+    padding-top: 2em;
+    text-align: center;
+    margin-bottom: 10px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: flex-start;
+}
