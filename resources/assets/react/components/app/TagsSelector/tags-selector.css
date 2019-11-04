@@ -15,6 +15,10 @@
     align-items: center;
 }
 
+.tags-selector__selected-primary-tag-arrow {
+    cursor: pointer
+}
+
 .tags-selector__tag-options {
     display: flex;
     flex-direction: row;

@@ -98,7 +98,11 @@ export class TagsSelector extends React.Component<
                     <div className="tags-selector__container">
                         {primaryTag && (
                             <div className="tags-selector__selected-primary-tag">
-                                <Icon name='arrow left' size="large" onClick={() => this.selectPrimaryTag(primaryTag)} />
+                                <Icon
+                                    name='arrow left'
+                                    size="large"
+                                    className="tags-selector__selected-primary-tag-arrow"
+                                    onClick={() => this.selectPrimaryTag(primaryTag)} />
                                 <Tag
                                     content={primaryTag.name}
                                     isSelected={false}
