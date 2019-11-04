@@ -3,7 +3,7 @@ import * as React from 'react';
 import './tags-launch-bar.css';
 
 const MAX_BAR_WIDTH = 600;
-const SEARCH_BUTTON_WIDTH = 35;
+const SEARCH_BUTTON_WIDTH = 45;
 
 interface TagsLaunchBarProps {
     /* Bar width in % */
