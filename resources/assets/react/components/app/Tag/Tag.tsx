@@ -9,6 +9,7 @@ interface TagProps {
     isSelected: boolean;
     onClickCallback?: () => void;
     size?: SIZES.MEDIUM | SIZES.LARGE;
+    clickable?: boolean;
 }
 
 export const Tag: React.FunctionComponent<TagProps> = ({
@@ -16,6 +17,7 @@ export const Tag: React.FunctionComponent<TagProps> = ({
     isSelected,
     onClickCallback,
     size = SIZES.MEDIUM,
+    clickable = true,
 }) => (
     <div onClick={onClickCallback}>
         <button
@@ -23,6 +25,7 @@ export const Tag: React.FunctionComponent<TagProps> = ({
                 'tag--selected': isSelected,
                 'tag--medium': size === SIZES.MEDIUM,
                 'tag--large': size === SIZES.LARGE,
+                'tag--clickable': clickable,
             })}
         >
             {content}

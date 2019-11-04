@@ -5,17 +5,20 @@
     border: white 2px solid;
     color: white;
     display: inline-block;
-    cursor: pointer;
     text-decoration: none;
     user-select: none;
 }
 
-.tag:hover {
+.tag--clickable {
+    cursor: pointer;
+}
+
+.tag--clickable:hover {
     background: rgba(255, 255, 255, 0.8);
     color: #f46e7a;
 }
 
-.tag--selected, .tag--selected:hover {
+.tag--clickable.tag--selected, .tag--clickable.tag--selected:hover {
     background: white;
     color: #f46e7a;
 }

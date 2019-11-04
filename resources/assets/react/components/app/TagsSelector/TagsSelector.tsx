@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Loader } from 'semantic-ui-react';
+import { Icon, Loader } from 'semantic-ui-react';
 import { SIZES } from 'tmw/constants/ui-constants';
 import { serializeTagsFromAPI } from 'tmw/utils/api-serialize';
 import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw/constants/app-types';
@@ -96,27 +96,26 @@ export class TagsSelector extends React.Component<
                     <div className="tags-selector__container">
                         {primaryTag && (
                             <div className="tags-selector__selected-primary-tag">
+                                <Icon name='arrow left' size="large" onClick={() => this.selectPrimaryTag(primaryTag)} />
                                 <Tag
                                     content={primaryTag.name}
                                     isSelected={false}
-                                    onClickCallback={() => this.selectPrimaryTag(primaryTag)}
                                     size={SIZES.LARGE}
+                                    clickable={false}
                                 />
                             </div>
                         )}
                         <div className="tags-selector__tag-options">
                             {primaryTag
-                                ? primaryTag.secondaryTags.map((tag: SecondaryTag) => {
-                                    return (
-                                        <Tag
-                                            key={tag.id}
-                                            content={tag.name}
-                                            isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
-                                            onClickCallback={() => this.selectSecondaryTag(tag)}
-                                            size={SIZES.MEDIUM}
-                                        />
-                                    );
-                                })
+                                ? primaryTag.secondaryTags.map((tag: SecondaryTag) => (
+                                    <Tag
+                                        key={tag.id}
+                                        content={tag.name}
+                                        isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
+                                        onClickCallback={() => this.selectSecondaryTag(tag)}
+                                        size={SIZES.MEDIUM}
+                                    />
+                                ))
                                 : Object.keys(tagsMap).map((tagId: string) => {
                                     const tag = tagsMap[tagId];
                                     return (
