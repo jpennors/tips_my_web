@@ -6,7 +6,9 @@
 }
 
 .resource-search__results-title {
-
+    text-align: left;
+    margin-left: 20px;
+    font-family: var(--app-font-medium);
 }
 
 .resource-search__results-list {
@@ -26,6 +28,14 @@
     width: 88%;
     margin:6vh auto 0 auto;
     max-width: 650px;
+}
+
+.resource-search__landing-title {
+    font-family: var(--app-font-medium);
+}
+
+.resource-search__landing-subtitle {
+    font-family: var(--app-font-regular);
 }
 
 @media only screen and (max-height:600px) {

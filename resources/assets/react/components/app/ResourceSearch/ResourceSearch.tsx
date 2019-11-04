@@ -75,8 +75,8 @@ export class ResourceSearch extends React.Component<
                     </div>
                 ) : (
                     <div className="resource-search__landing">
-                        <h1>What are your centers of interest?</h1>
-                        <p>Let’s find your most useful websites</p>
+                        <h1 className="resource-search__landing-title">What are your centers of interest?</h1>
+                        <p className="resource-search__landing-subtitle">Let’s find your most useful websites</p>
                         <TagsSelector onSearchStart={this.searchResources} />
                     </div>
                 )}
