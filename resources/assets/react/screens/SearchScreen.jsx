@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ajaxGet, ajaxPost } from '../utils/Ajax';
 import ErrorHandler from '../utils/Modal';
+import { TagsSelector } from '../components/app/TagsSelector';
 
 export default class SearchScreen extends Component {
     constructor(props) {
@@ -13,53 +14,25 @@ export default class SearchScreen extends Component {
             active: true,
             resources: [],
             research: false,
-            loading: true,
-            error: false
+            loading: false,
+            error: false,
         };
     }
 
-    componentDidMount() {
-        this.loadTags();
-    }
-
-    loadTags = () => {
-        ajaxGet('tags').then(res => {
-            this.setState({
-                tags: res.data || [],
-                loading: false
-            });
-        }).catch(() => {
-            this.setState({
-                loading: false,
-                error: true
-            });
-        });
-    };
-
-    searchResources = () => {
+    searchResources = selectedTags => {
         this.setState({ loading: true });
-        ajaxPost('resources/search', { tags: this.state.selected_tags }).then(res => {
+        ajaxPost('resources/search', { tags: selectedTags }).then(res => {
             this.setState({
                 resources: res.data || [],
                 research: true,
-                loading: false
+                loading: false,
             });
         }).catch(() => {
             this.setState({
                 loading: false,
-                research: true
+                research: true,
             });
         });
-    };
-
-    selectTag = event => {
-        const tag_id = event.target.getAttribute('data-tag');
-        const index = this.state.selected_tags.indexOf(tag_id);
-        if (index !== -1) {
-            this.setState(previousState => ({ selected_tags: previousState.selected_tags.filter((_, t) => t !== index) }));
-        } else {
-            this.setState(previousState => ({ selected_tags: previousState.selected_tags.concat([tag_id]) }));
-        }
     };
 
     likeResource = async event => {
@@ -179,28 +152,7 @@ export default class SearchScreen extends Component {
                                 this.state.loading ? (
                                     <div className="ui active inverted loader" />
                                 ) : (
-                                    <div className="table">
-                                        {/* Search bar */}
-                                        <div className="bar">
-                                            <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selected_tags.length ? this.searchResources : null} /></a>
-                                        </div>
-                                        <ul id="categories" key>
-                                            {/* Display every tags available */}
-                                            {
-                                            this.state.tags.map(tag => (
-                                                <li key={tag.id} onClick={this.selectTag}>
-                                                    <a
-                                                        data-tag={tag.id}
-                                                        className={`btnOne noselect ${(this.state.selected_tags.length > 0
-                                                                                && this.state.selected_tags.indexOf(String(tag.id)) !== -1) ? 'btnOneSelected' : 'a_pointer_white'}`}
-                                                    >
-                                                        {tag.name}
-                                                    </a>
-                                                </li>
-                                            ))
-                                        }
-                                        </ul>
-                                    </div>
+                                    <TagsSelector onSearchStart={this.searchResources}/>
                                 )
                             }
                         </div>

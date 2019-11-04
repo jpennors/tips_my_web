@@ -1,3 +1,5 @@
+@import './constants/ui-constants.css';
+
 /* ------------------------------------ */
 /* ------------------------------------ */
 /* -------------- Client -------------- */
@@ -6,7 +8,7 @@
 
 #home{
     color: white;
-    font-family: 'Montserrat-Medium';
+    font-family: var(--app-font-medium);
 }
 
 .landing_content{
@@ -39,24 +41,6 @@
 
 
 /* ------------- Reaserch ------------- */
-
-.bar{
-	background-color: rgba(255,255,255,0.90);
-	border-radius: 100px;
-	height: 35px;
-	margin-top: 25px;
-	max-width: 650px;
-}
-
-
-.arrow{
-	height: 35px;
-	background-size: cover;
-	-webkit-filter: drop-shadow(2px 2px 2px rgba(175,175,175,0.56));
-	  filter: drop-shadow(2px 2px 2px rgba(175,175,175,0.56));
-	cursor: pointer;
-}
-
 
 .research_content{
 	/* width: 100%; */
@@ -124,7 +108,7 @@
 	margin: 10px;
 	height: 15px;
 	color: black;
-	font-family: 'Montserrat-Medium';
+	font-family: var(--app-font-medium);
 }
 
 .resource_description{
@@ -140,7 +124,7 @@
 	margin:5px;
 	text-align: right;
 	color: black;
-	font-family: 'Montserrat-Medium';
+	font-family: var(--app-font-medium);
 }
 
 .knowing_resource{
@@ -163,7 +147,7 @@
 	padding-bottom: 5px;
 	padding-right: 20px;
 	padding-left: 20px;
-	font-family: 'Montserrat-Medium'
+	font-family: var(--app-font-medium);
 }
 
 
@@ -172,45 +156,6 @@
   	height: 175px;
     object-fit: cover;
 }
-
-/*–––––––––––– Tags –––––––––––*/
-
-.btnOne{
-	border:white 2px solid;
-	border-radius: 100px;
-	padding: 0.6em 1.75em;
-	color: white;
-	text-decoration: none;
-	font-size: 2vh;
-	float: left;
-	display: inline-block;
-    cursor: pointer;
-    margin:2px;
-}
-
-.btnOneSelected{
-	background: white;
-	color: #F46E7A;
-}
-
-.btnOneSelected:hover{
-	background: white;
-	color: #F46E7A;
-}
-
-
-ul#categories{ /*group categorie*/
-	max-width: 650px;
-	padding-top: 2em;
-	text-align: center;
-	margin-bottom: 10px;
-}
-ul#categories li{
-	display: inline;
-	margin: 3px;
-	white-space: nowrap;
-}
-
 
 /* ------------------------------------ */
 /* ------------------------------------ */
@@ -247,19 +192,6 @@ ul#categories li{
 	background: transparent;
 }
 
-@font-face {
-    font-family: 'Montserrat';
-    src: url("fonts/Montserrat-Black.otf");
-}
-@font-face {
-    font-family: 'Montserrat-Light';
-    src: url("fonts/Montserrat-Light.otf");
-}
-@font-face {
-    font-family: 'Montserrat-Medium';
-    src: url("fonts/Montserrat-Medium.otf");
-}
-
 body{
     position: relative; /*--keep the footer to the bottom--*/
 }
@@ -288,11 +220,6 @@ a{
 
 a:hover{
 	cursor: pointer;
-}
-
-.table{ /*--contain Bar and below--*/
-	display: table;
-	margin:0 auto;
 }
 
 h3{
