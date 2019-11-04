@@ -1,0 +1,1 @@
+export { ResourceSearch } from './ResourceSearch';
