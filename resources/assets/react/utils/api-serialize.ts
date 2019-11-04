@@ -1,6 +1,6 @@
-import { TagsMap } from '../constants/app-types';
-import { APITag } from '../constants/api-types';
-
+import { ResourcesMap, TagsMap } from 'tmw/constants/app-types';
+import { APIResource, APITag } from 'tmw/constants/api-types';
+import { LOCALES } from 'tmw/constants/ui-constants';
 
 export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
     const tagsMap: TagsMap = {};
@@ -9,8 +9,7 @@ export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
     tagsFromAPI.forEach((tag: APITag) => {
         if (tag.id in tagsMap) {
             console.error('Some tags have the same ID!');
-        }
-        if (tag.parent_id) {
+        } else if (tag.parent_id) {
             secondaryTags.push(tag);
         } else {
             tagsMap[tag.id] = {
@@ -31,4 +30,28 @@ export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
     });
 
     return tagsMap;
+};
+
+export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): ResourcesMap => {
+    const resourcesMap: ResourcesMap = {};
+
+    resourcesFromAPI.forEach((resource: APIResource) => {
+        if (resource.id in resourcesMap) {
+            console.error('Some resources have the same ID!');
+        } else {
+            resourcesMap[resource.id] = {
+                id: resource.id,
+                name: resource.name,
+                description: resource.description,
+                url: resource.url,
+                iconFilename: resource.image,
+                locale: resource.language as LOCALES,
+                score: resource.score,
+                like: resource.like,
+                searchScore: resource.search_score,
+            };
+        }
+    });
+
+    return resourcesMap;
 };

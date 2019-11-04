@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ResourceTile } from 'tmw/components/app/ResourceTile';
+import { serializeResourcesFromAPI } from 'tmw/utils/api-serialize';
 import { ajaxGet, ajaxPost } from '../utils/Ajax';
 import ErrorHandler from '../utils/Modal';
 import { TagsSelector } from '../components/app/TagsSelector';
@@ -23,7 +25,7 @@ export default class SearchScreen extends Component {
         this.setState({ loading: true });
         ajaxPost('resources/search', { tags: selectedTags }).then(res => {
             this.setState({
-                resources: res.data || [],
+                resources: serializeResourcesFromAPI(res.data || []),
                 research: true,
                 loading: false,
             });
@@ -89,57 +91,12 @@ export default class SearchScreen extends Component {
                             <ul id="research_results" key>
                                 {/* Display every resources for the research */}
                                 {
-                                    this.state.resources.map(resource => (
-                                        <div className="research_resource" key={resource.id}>
-                                            {/* Header of the resource with red, yellow and green circle */}
-                                            <div className="resource_header">
-                                                <span className="dot red_dot" />
-                                                <span className="dot yellow_dot" />
-                                                <span className="dot green_dot" />
-                                            </div>
-                                            {/* Resource image */}
-                                            <a href={resource.url} target="_blank" rel="noopener noreferrer">
-                                                <img
-                                                    src={resource.image ? `/resources/image/${resource.id}` : '/images/default.jpg'}
-                                                    alt={resource.name}
-                                                    className="resource_img"
-                                                />
-                                            </a>
-                                            {/* Resource content */}
-                                            <div className="resource_content">
-                                                {/* Title */}
-                                                <h4 className="resource_title">{resource.name}</h4>
-                                                {/* Description */}
-                                                <p className="resource_description">{resource.description}</p>
-                                                {/* Button I know it, like and visit */}
-                                                <p className="resource_btn">
-                                                    <span
-                                                        className="knowing_resource cursor_pointer"
-                                                        data-tag={resource.id}
-                                                        onClick={this.knownResource}
-                                                    >
-                                                        I know it
-                                                    </span>
-                                                    <img
-                                                        src={
-                                                            (this.state.liked_resources.length > 0 && this.state.liked_resources.indexOf(String(resource.id)) !== -1)
-                                                            ? 'images/heart_full.svg' : 'images/heart.svg'
-                                                        }
-                                                        alt="Heart Icon"
-                                                        height="15px"
-                                                        className="cursor_pointer"
-                                                        data-tag={resource.id}
-                                                        onClick={this.likeResource}
-                                                    />
-                                                    <button className="visit_resource_btn" type="button">
-                                                        <a href={resource.url} target="_blank" rel="noopener noreferrer" className="a_pointer_white">
-                                                            Visit →
-                                                        </a>
-                                                    </button>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ))
+                                    Object.keys(this.state.resources).map(resourceId => {
+                                        const resource = this.state.resources[resourceId];
+                                        return (
+                                            <ResourceTile key={resource.id} resource={resource} />
+                                        );
+                                    })
                                 }
                             </ul>
                         </div>
