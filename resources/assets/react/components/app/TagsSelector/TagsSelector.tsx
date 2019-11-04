@@ -10,7 +10,7 @@ import { Tag } from 'tmw/components/app/Tag';
 import './tags-selector.css';
 
 interface TagsSelectorProps {
-    onSearchStart: () => void;
+    onSearchStart: (selectedTagIds: string[]) => void;
 }
 
 interface TagsSelectorState {
@@ -35,7 +35,7 @@ export class TagsSelector extends React.Component<
         };
     }
 
-    loadTags = (): void => {
+    fetchTags = (): void => {
         ajaxGet('tags')
             .then(res => {
                 this.setState({
@@ -82,8 +82,19 @@ export class TagsSelector extends React.Component<
         }));
     };
 
+    launchSearch = (): void => {
+        const { onSearchStart } = this.props;
+        const { primaryTag, secondaryTags } = this.state;
+
+        if (primaryTag) {
+            const selectedTags = [primaryTag, ...secondaryTags];
+            const selectedTagIds = selectedTags.map(tag => tag.id);
+            onSearchStart(selectedTagIds);
+        }
+    };
+
     componentDidMount() {
-        this.loadTags();
+        this.fetchTags();
     }
 
     render() {
@@ -96,7 +107,7 @@ export class TagsSelector extends React.Component<
         return (
             <div className="tags-selector">
                 <TagsLaunchBar
-                    onClickCallback={() => {}}
+                    onClickCallback={this.launchSearch}
                     completionPercentage={barPercentage}
                 />
                 {requestLoading ? (

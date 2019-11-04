@@ -19,9 +19,9 @@ export default class SearchScreen extends Component {
         };
     }
 
-    searchResources = () => {
+    searchResources = selectedTags => {
         this.setState({ loading: true });
-        ajaxPost('resources/search', { tags: this.state.selected_tags }).then(res => {
+        ajaxPost('resources/search', { tags: selectedTags }).then(res => {
             this.setState({
                 resources: res.data || [],
                 research: true,
