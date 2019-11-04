@@ -89,9 +89,16 @@ export class TagsSelector extends React.Component<
     render() {
         const { tagsMap, primaryTag, secondaryTags, requestLoading } = this.state;
 
+        let barPercentage = 0;
+        barPercentage += primaryTag ? 40 : 0;
+        barPercentage += secondaryTags.length * 20;
+
         return (
             <div className="tags-selector">
-                <TagsLaunchBar onClickCallback={() => {}}/>
+                <TagsLaunchBar
+                    onClickCallback={() => {}}
+                    completionPercentage={barPercentage}
+                />
                 {requestLoading ? (
                     <Loader />
                 ) : (
