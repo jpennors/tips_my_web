@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ResourceTile } from 'tmw/components/app/ResourceTile';
 import { serializeResourcesFromAPI } from 'tmw/utils/api-serialize';
-import { ajaxGet, ajaxPost } from '../utils/Ajax';
+import { ajaxPost } from '../utils/Ajax';
 import ErrorHandler from '../utils/Modal';
 import { TagsSelector } from '../components/app/TagsSelector';
 
@@ -35,27 +35,6 @@ export default class SearchScreen extends Component {
                 research: true,
             });
         });
-    };
-
-    likeResource = async event => {
-        // Add resource to liked_resources, send Like to API and save user preference in cookies
-
-        // Add resource or retrieve to liked_resources
-        const resource_id = event.target.getAttribute('data-tag');
-        const index = this.state.liked_resources.indexOf(resource_id);
-        if (index !== -1) {
-            // Retrieve resource from liked_resources
-            this.setState(previousState => ({ liked_resources: previousState.liked_resources.filter((_, r) => r !== index) }));
-            // API call
-            ajaxGet(`resources/like/remove/${resource_id}`);
-            // Retrieve from cookies
-        } else {
-            // Add resource in liked_resources
-            this.setState(previousState => ({ liked_resources: previousState.liked_resources.concat([resource_id]) }));
-            // API call
-            ajaxGet(`resources/like/add/${resource_id}`);
-            // Add in cookies
-        }
     };
 
     knownResource = event => {
