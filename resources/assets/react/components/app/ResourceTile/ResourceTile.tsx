@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {DEFAULT_RESOURCE_URL, RESOURCES_BASE_URL} from "tmw/constants/ui-constants";
 import { ajaxGet } from 'tmw/utils/Ajax';
 import { Resource } from 'tmw/constants/app-types';
 
@@ -24,6 +25,8 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
         }
     };
 
+    const iconUrl = resource.iconFilename ? RESOURCES_BASE_URL + resource.id : DEFAULT_RESOURCE_URL;
+
     return (
         <div className="resource-tile">
             <div className="resource-tile__header">
@@ -33,7 +36,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
             </div>
             <a href={resource.url} target="_blank" rel="noopener noreferrer">
                 <img
-                    src={resource.iconFilename ? `/resources/images/${resource.iconFilename}` : '/images/default.jpg'}
+                    src={iconUrl}
                     alt={resource.name}
                     className="resource-tile__icon"
                 />
