@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Icon, Loader } from 'semantic-ui-react';
+import { TagsLaunchBar } from 'tmw/components/app/TagsLaunchBar';
 import { SIZES } from 'tmw/constants/ui-constants';
 import { serializeTagsFromAPI } from 'tmw/utils/api-serialize';
 import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw/constants/app-types';
@@ -90,6 +91,7 @@ export class TagsSelector extends React.Component<
 
         return (
             <div className="tags-selector">
+                <TagsLaunchBar onClickCallback={() => {}}/>
                 {requestLoading ? (
                     <Loader />
                 ) : (

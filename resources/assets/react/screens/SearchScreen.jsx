@@ -152,13 +152,7 @@ export default class SearchScreen extends Component {
                                 this.state.loading ? (
                                     <div className="ui active inverted loader" />
                                 ) : (
-                                    <div className="table">
-                                        {/* Search bar */}
-                                        <div className="bar">
-                                            <a title="Launch search"><img src="/images/Arrow.svg" alt="arrow" className="arrow" onClick={this.state.selected_tags.length ? this.searchResources : null} /></a>
-                                        </div>
-                                        <TagsSelector onSearchStart={this.searchResources}/>
-                                    </div>
+                                    <TagsSelector onSearchStart={this.searchResources}/>
                                 )
                             }
                         </div>
