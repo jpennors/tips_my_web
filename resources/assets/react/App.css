@@ -11,13 +11,6 @@
     font-family: var(--app-font-medium);
 }
 
-.landing_content{
-    padding-top: 2rem;
-	width: 88%;
-    margin:6vh auto 0 auto;
-	max-width: 650px;
-}
-
 .nav_landing{
 	padding-top: 5vh;
 }
@@ -39,27 +32,6 @@
 	vertical-align: middle;
 }
 
-
-/* ------------- Reaserch ------------- */
-
-.research_content{
-	/* width: 100%; */
-	max-width: 3000px;
-    margin-left: 3vh;
-    margin-right: 3vh;
-}
-
-#research_results{ /*group all website*/
-	overflow-x: scroll;
-	margin-top: 20px;
-	overflow-y: hidden;
-	white-space: nowrap;
-	scrollbar-width: none;
-}
-
-#research_results::-webkit-scrollbar {
-    display: none;
-}
 
 /* ------------------------------------ */
 /* ------------------------------------ */
@@ -342,20 +314,12 @@ h3{
 		background: color;
 	}
 
-	.landing_content{
-		margin: 1vh auto 0 auto;
-	}
-
 	/* .landing_wrapper{
 		padding-bottom: 10px;
 	} */
 
 	.logo{
 		width: 8vh;
-	}
-
-	#research_results{
-		margin-top: 10px;
 	}
 
 	h1{

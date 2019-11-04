@@ -57,24 +57,24 @@ export class ResourceSearch extends React.Component<
         const hasResources = resources.length > 0;
 
         return (
-            <div>
+            <div className="resource-search">
                 {loadingResults ? (
                     <div className="ui active inverted loader" />
                 ) : hasResources ? (
-                    <div className="research_content">
-                        <h1 className="left">Here are some websites to improve your workflow</h1>
-                        <div id="research_results">
+                    <div className="resource-search__results">
+                        <h1 className="resource-search__results-title">Here are some websites to improve your workflow</h1>
+                        <div className="resource-search__results-list">
                             {this.state.resources.map(resource => (
                                 <ResourceTile
                                     key={resource.id}
                                     resource={resource}
                                     knowResourceAction={() => this.knownResource(resource.id)}
-                                />),
-                            )}
+                                />
+                            ))}
                         </div>
                     </div>
                 ) : (
-                    <div className="landing_content">
+                    <div className="resource-search__landing">
                         <h1>What are your centers of interest?</h1>
                         <p>Let’s find your most useful websites</p>
                         <TagsSelector onSearchStart={this.searchResources} />

@@ -1,0 +1,40 @@
+.resource-search__results {
+    /* width: 100%; */
+    max-width: 3000px;
+    margin-left: 3vh;
+    margin-right: 3vh;
+}
+
+.resource-search__results-title {
+
+}
+
+.resource-search__results-list {
+    overflow-x: scroll;
+    margin-top: 20px;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.resource-search__results-list::-webkit-scrollbar {
+    display: none;
+}
+
+.resource-search__landing {
+    padding-top: 2rem;
+    width: 88%;
+    margin:6vh auto 0 auto;
+    max-width: 650px;
+}
+
+@media only screen and (max-height:600px) {
+
+    .resource-search__landing {
+        margin: 1vh auto 0 auto;
+    }
+
+    .resource-search__results-list {
+        margin-top: 10px;
+    }
+}
