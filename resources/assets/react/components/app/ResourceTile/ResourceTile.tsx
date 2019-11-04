@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {DEFAULT_RESOURCE_URL, RESOURCES_BASE_URL} from "tmw/constants/ui-constants";
+import { DEFAULT_RESOURCE_URL, RESOURCES_BASE_URL } from 'tmw/constants/ui-constants';
 import { ajaxGet } from 'tmw/utils/Ajax';
 import { Resource } from 'tmw/constants/app-types';
 
@@ -44,37 +44,41 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
             <div className="resource-tile__content">
                 <h4 className="resource-tile__title">{resource.name}</h4>
                 <p className="resource-tile__description">{resource.description}</p>
-                <p className="resource-tile__actions">
-                    <span
-                        className="resource-tile__know-resource-button"
-                        onClick={() => {}}
-                    >
-                        I know it
-                    </span>
-                    <a role="button" className="resource-tile__like-resource-button">
-                        {isLiked ? (
-                            <img
-                                src={'images/heart_full.svg'}
-                                alt="Unlike"
-                                height="15px"
-                                onClick={likeResource}
-                            />
-                        ) : (
-                            <img
-                                src={'images/heart.svg'}
-                                alt="Like"
-                                height="15px"
-                                onClick={likeResource}
-                            />
-                        )}
+            </div>
+            <div className="resource-tile__actions">
+                <a
+                    role="button"
+                    className="resource-tile__know-resource-button"
+                    onClick={() => {}}
+                >
+                    I know it
+                </a>
+                <a role="button" className="resource-tile__like-resource-button">
+                    {isLiked ? (
+                        <img
+                            src={'images/heart_full.svg'}
+                            alt="Unlike"
+                            height="15px"
+                            onClick={likeResource}
+                        />
+                    ) : (
+                        <img
+                            src={'images/heart.svg'}
+                            alt="Like"
+                            height="15px"
+                            onClick={likeResource}
+                        />
+                    )}
 
-                    </a>
-                    <button className="resource-tile__visit-resource-button" type="button">
-                        <a href={resource.url} target="_blank" rel="noopener noreferrer" className="a_pointer_white">
-                            Visit →
-                        </a>
-                    </button>
-                </p>
+                </a>
+                <a
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="resource-tile__visit-resource-button"
+                >
+                    Visit →
+                </a>
             </div>
         </div>
     );

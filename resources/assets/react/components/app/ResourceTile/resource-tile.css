@@ -3,15 +3,16 @@
 .resource-tile {
     background: white;
     display: inline-block;
-    height: 325px;
-    width: 300px;
+    width: 350px;
     margin: 20px;
     filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
     vertical-align: middle;
+    border-radius: 3px;
+    overflow: hidden;
 }
 
 .resource-tile__header {
-    height: 15px !important;
+    height: 18px !important;
     width: 100%;
     background-color: #E8E5E5;
 }
@@ -19,7 +20,8 @@
 .resource-tile__header-dot {
     height: 10px;
     width: 10px;
-    margin-bottom:2px;
+    margin-top: 4px;
+    margin-bottom: 2px;
     margin-left: 5px;
     border-radius: 50%;
     display: inline-block;
@@ -38,47 +40,62 @@
 }
 
 .resource-tile__icon {
-    width: 300px;
+    width: 100%;
     height: 175px;
     object-fit: cover;
 }
 
 .resource-tile__content {
-    height: 100px;
+    height: 120px;
 }
 
 .resource-tile__title {
-    margin: 10px;
-    height: 15px;
+    margin-top: 12px !important;
+    margin-left: 15px;
     color: black;
+    font-size: 15px;
     font-family: var(--app-font-medium);
 }
 
 .resource-tile__description {
     height: 65px;
     text-align: left;
-    margin-right: 10px;
-    margin-left: 10px;
-    color: black
+    margin-right: 15px;
+    margin-left: 15px;
+    color: #575757;
+    font-size: 13px;
+    font-family: var(--app-font-regular);
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
 }
 
 .resource-tile__actions {
-    height: 20px;
-    margin:5px;
-    text-align: right;
-    color: black;
-    font-family: var(--app-font-medium);
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-content: stretch;
+    align-items: center;
 }
 
 .resource-tile__know-resource-button {
+    color: black;
     font-size: 10px;
     margin-right: 15px;
     text-decoration: underline;
     cursor: pointer;
+    font-family: var(--app-font-regular);
  }
 
+.resource-tile__know-resource-button:hover {
+    color: #222222;
+    text-decoration: underline;
+}
+
 .resource-tile__like-resource-button {
-    margin-top: 3px;
 }
 
 .resource-tile__visit-resource-button {
@@ -87,6 +104,11 @@
     background-color: #1EBF74;
     border-radius: 2px;
     margin-left: 15px;
-    padding: 5px 20px;
-    font-family: var(--app-font-medium);
+    padding: 3px 20px;
+    font-family: var(--app-font-regular);
+}
+
+.resource-tile__visit-resource-button:hover {
+    color: white;
+    background-color: #1fa549;
 }
