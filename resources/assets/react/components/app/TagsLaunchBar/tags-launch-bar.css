@@ -4,7 +4,8 @@
     margin-top: 25px;
     margin-left: auto;
     margin-right: auto;
-    transition: width 0.2s ease-in-out
+    transition: width 0.2s ease-in-out;
+    box-shadow: 0 1px 4px 0 rgba(50,50,50,0.5);
 }
 
 .tags-launch-bar__launch-tick-icon{
@@ -18,5 +19,6 @@
     background-size: cover;
     -webkit-filter: drop-shadow(2px 2px 2px rgba(175,175,175,0.56));
     filter: drop-shadow(2px 2px 2px rgba(175,175,175,0.56));
+    cursor: default;
 }
 
