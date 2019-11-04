@@ -37,13 +37,11 @@ export default class SearchScreen extends Component {
         });
     };
 
-    knownResource = event => {
-        // Retrieve resource from list and insert it at the end
-        const resource_id = event.target.getAttribute('data-tag');
+    knownResource = resourceId => {
         this.setState(previousState => {
             let array = previousState.resources;
-            const resource = array.filter(r => r.id === resource_id);
-            array = array.filter(r => r.id !== resource_id);
+            const resource = array.filter(r => r.id === resourceId);
+            array = array.filter(r => r.id !== resourceId);
             array.push(resource[0]);
             return { resources: array };
         });
@@ -70,12 +68,13 @@ export default class SearchScreen extends Component {
                             <ul id="research_results" key>
                                 {/* Display every resources for the research */}
                                 {
-                                    Object.keys(this.state.resources).map(resourceId => {
-                                        const resource = this.state.resources[resourceId];
-                                        return (
-                                            <ResourceTile key={resource.id} resource={resource} />
-                                        );
-                                    })
+                                    this.state.resources.map(resource => (
+                                        <ResourceTile
+                                            key={resource.id}
+                                            resource={resource}
+                                            knowResourceAction={() => this.knownResource(resource.id)}
+                                        />),
+                                    )
                                 }
                             </ul>
                         </div>

@@ -7,10 +7,12 @@ import './resource-tile.css';
 
 interface ResourceTileProps {
     resource: Resource;
+    knowResourceAction: () => void;
 }
 
 export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
     resource,
+    knowResourceAction,
 }) => {
     // TODO: store this in cookies !
     const [isLiked, setIsLiked] = React.useState<boolean>(false);
@@ -49,7 +51,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
                 <a
                     role="button"
                     className="resource-tile__know-resource-button"
-                    onClick={() => {}}
+                    onClick={knowResourceAction}
                 >
                     I know it
                 </a>

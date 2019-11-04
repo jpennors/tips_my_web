@@ -24,7 +24,3 @@ export interface Resource {
     like: number;
     searchScore: number;
 }
-
-export interface ResourcesMap {
-    [id: string]: Resource;
-}
