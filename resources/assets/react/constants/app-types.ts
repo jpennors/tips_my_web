@@ -21,6 +21,6 @@ export interface Resource {
     iconFilename: string;
     locale: LOCALES;
     score: number;
-    like: number;
+    likes: number;
     searchScore: number;
 }

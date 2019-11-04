@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useCookies } from 'react-cookie';
 import { DEFAULT_RESOURCE_URL, RESOURCES_BASE_URL } from 'tmw/constants/ui-constants';
 import { ajaxGet } from 'tmw/utils/Ajax';
 import { Resource } from 'tmw/constants/app-types';
@@ -14,15 +15,15 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
     resource,
     knowResourceAction,
 }) => {
-    // TODO: store this in cookies !
-    const [isLiked, setIsLiked] = React.useState<boolean>(false);
+    const [cookies, setCookie] = useCookies([resource.id]);
+    const isLiked = cookies[resource.id] === 'true';
 
     const likeResource = async (): Promise<void> => {
         if (isLiked) {
-            setIsLiked(false);
+            setCookie(resource.id, 'false', { path: '/' });
             await ajaxGet(`resources/like/remove/${resource.id}`);
         } else {
-            setIsLiked(true);
+            setCookie(resource.id, 'true', { path: '/' });
             await ajaxGet(`resources/like/add/${resource.id}`);
         }
     };

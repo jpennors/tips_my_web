@@ -44,7 +44,7 @@ export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Reso
             iconFilename: resource.image,
             locale: resource.language as LOCALES,
             score: resource.score,
-            like: resource.like,
+            likes: resource.like,
             searchScore: resource.search_score,
         });
     });
