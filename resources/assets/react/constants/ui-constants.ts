@@ -3,3 +3,10 @@ export enum SIZES {
     MEDIUM = 'medium',
     LARGE = 'large'
 }
+
+export enum LOCALES {
+    FRENCH = 'fr'
+}
+
+export const RESOURCES_BASE_URL = '/api/resources/image/';
+export const DEFAULT_RESOURCE_URL = '/images/default.jpg';

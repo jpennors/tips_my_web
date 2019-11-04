@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SearchScreen from './SearchScreen';
-import { ajaxPost } from '../utils/Ajax';
+import { ResourceSearch } from 'tmw/components/app/ResourceSearch';
+import { ajaxPost } from 'tmw/utils/Ajax';
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -9,13 +9,13 @@ class HomeScreen extends Component {
         this.state = {
             suggestion: {
                 url: '',
-                description: ''
+                description: '',
             },
             contact: {
                 email: '',
-                message: ''
+                message: '',
             },
-            loading: false
+            loading: false,
         };
     }
 
@@ -24,8 +24,8 @@ class HomeScreen extends Component {
         this.setState(previousState => ({
             suggestion: {
                 ...previousState.suggestion,
-                [name]: value
-            }
+                [name]: value,
+            },
         }));
     };
 
@@ -34,8 +34,8 @@ class HomeScreen extends Component {
         this.setState(previousState => ({
             contact: {
                 ...previousState.contact,
-                [name]: value
-            }
+                [name]: value,
+            },
         }));
     };
 
@@ -60,15 +60,15 @@ class HomeScreen extends Component {
                 loading: false,
                 suggestion: {
                     url: '',
-                    description: ''
-                }
+                    description: '',
+                },
             });
             const modal = document.getElementById('sharing_modal');
             modal.style.display = 'none';
         })
         .catch(() => {
             this.setState({
-                loading: false
+                loading: false,
             });
         });
     };
@@ -80,15 +80,15 @@ class HomeScreen extends Component {
                 loading: false,
                 contact: {
                     email: '',
-                    message: ''
-                }
+                    message: '',
+                },
             });
             const modal = document.getElementById('contact_modal');
             modal.style.display = 'none';
         })
         .catch(() => {
             this.setState({
-                loading: false
+                loading: false,
             });
         });
     };
@@ -215,7 +215,7 @@ class HomeScreen extends Component {
                 </div>
 
                 {/* Home page content, research part */}
-                <SearchScreen />
+                <ResourceSearch />
 
                 {/* Footer */}
                 <div className="footer">
