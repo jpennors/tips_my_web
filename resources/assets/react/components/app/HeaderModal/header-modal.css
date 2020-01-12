@@ -4,10 +4,11 @@
 }
 
 .header-modal__container {
-    width: 200px;
+    max-width: 400px;
+    margin-top: 15px;
     padding: 20px;
     background: rgba(237,237,237,0.90);
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 4px 4px 10px 1px rgba(85,85,85,0.46);
 }
 
