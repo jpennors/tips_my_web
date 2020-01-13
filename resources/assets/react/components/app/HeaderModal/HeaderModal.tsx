@@ -26,11 +26,12 @@ export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({
             </Reference>
             {isOpen ? (
                 <Popper placement="bottom" modifiers={{ preventOverflow: { padding: 20 } }}>
-                    {({ ref, style, placement }): React.ReactNode => (
+                    {({ ref, style, placement, arrowProps }): React.ReactNode => (
                         <div ref={ref} style={style} data-placement={placement} className="header-modal">
                             <div className="header-modal__container">
                                 {content}
                             </div>
+                            <div ref={arrowProps.ref} style={arrowProps.style} className="header-modal__arrow"/>
                         </div>
                     )}
                 </Popper>) : null}
