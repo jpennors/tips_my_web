@@ -1,0 +1,15 @@
+@import '../../constants/ui-constants.css';
+
+.main-app {
+    background-image: linear-gradient(-240deg, #F46D7B, #FB9E3A);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+    overflow-y: auto;
+    min-height: 600px;
+
+    font-family: var(--app-font-medium);
+    color: white;
+}

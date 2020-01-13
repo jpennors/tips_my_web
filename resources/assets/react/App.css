@@ -2,33 +2,9 @@
 
 /* ------------------------------------ */
 /* ------------------------------------ */
-/* -------------- Client -------------- */
-/* ------------------------------------ */
-/* ------------------------------------ */
-
-#home{
-    color: white;
-    font-family: var(--app-font-medium);
-}
-
-/* ------------------------------------ */
-/* ------------------------------------ */
 /* -------------- Global -------------- */
 /* ------------------------------------ */
 /* ------------------------------------ */
-
-.landing{
-	background-image: linear-gradient(-240deg, #F46D7B, #FB9E3A);
-	background-repeat: no-repeat;
-	background-size: cover; /*--Allow responsive--*/
-	background-position: center;
-	height: 100vh;
-	width: 100%;
-	overflow-y:auto;
-	min-height: 600px;
-	border: 2.5vw solid white;
-	box-sizing: border-box; /*--Border inside (and not outside)--*/
-}
 
 *{
 	margin:0;
