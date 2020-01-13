@@ -3,19 +3,19 @@ import * as React from 'react';
 import './suggestion-modal-content.css';
 
 export const SuggestionModalContent: React.FunctionComponent = () => {
-    const [inputAddressValue, setInputAddressValue] = React.useState<string>('');
-    const [inputDescriptionValue, setInputDescriptionValue] = React.useState<string>('');
+    const [addressInputValue, setAddressInputValue] = React.useState<string>('');
+    const [descriptionInputValue, setDescriptionInputValue] = React.useState<string>('');
 
     const handleAddressInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { value } = event.target;
         // TODO: Add validation
-        setInputAddressValue(value);
+        setAddressInputValue(value);
     };
 
     const handleDescriptionInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const { value } = event.target;
         // TODO: Add validation
-        setInputDescriptionValue(value);
+        setDescriptionInputValue(value);
     };
 
     return (
@@ -29,7 +29,7 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                         type="text"
                         placeholder="The website's address"
                         name="address-input"
-                        value={inputAddressValue}
+                        value={addressInputValue}
                         required
                         onChange={handleAddressInputChange}
                     />
@@ -37,7 +37,7 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                         className="suggestion-modal-content__description-input"
                         placeholder="A short description"
                         name="description-input"
-                        value={inputDescriptionValue}
+                        value={descriptionInputValue}
                         required
                         onChange={handleDescriptionInputChange}
                     />

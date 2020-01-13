@@ -3,19 +3,19 @@ import * as React from 'react';
 import './contact-modal-content.css';
 
 export const ContactModalContent: React.FunctionComponent = () => {
-    const [inputEmailValue, setInputEmailValue] = React.useState<string>('');
-    const [inputMessageValue, setInputMessageValue] = React.useState<string>('');
+    const [emailInputValue, setEmailInputValue] = React.useState<string>('');
+    const [messageInputValue, setMessageInputValue] = React.useState<string>('');
 
     const handleEmailInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { value } = event.target;
         // TODO: Add validation
-        setInputEmailValue(value);
+        setEmailInputValue(value);
     };
 
     const handleMessageInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const { value } = event.target;
         // TODO: Add validation
-        setInputMessageValue(value);
+        setMessageInputValue(value);
     };
 
     return (
@@ -29,7 +29,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         type="text"
                         placeholder="Your email"
                         name="email-input"
-                        value={inputEmailValue}
+                        value={emailInputValue}
                         required
                         onChange={handleEmailInputChange}
                     />
@@ -37,7 +37,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         className="contact-modal-content__message-input"
                         placeholder="Tell us what you think"
                         name="messageInput"
-                        value={inputMessageValue}
+                        value={messageInputValue}
                         required
                         onChange={handleMessageInputChange}
                     />
