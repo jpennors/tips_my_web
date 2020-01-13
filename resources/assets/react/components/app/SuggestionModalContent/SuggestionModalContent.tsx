@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import './suggestion-modal-content.css';
+import { ajaxPost } from 'tmw/utils/Ajax';
 
 export const SuggestionModalContent: React.FunctionComponent = () => {
     const [addressInputValue, setAddressInputValue] = React.useState<string>('');
@@ -16,6 +17,21 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
         const { value } = event.target;
         // TODO: Add validation
         setDescriptionInputValue(value);
+    };
+
+    const submitSuggestionForm = async (): Promise<void> => {
+        // TODO: Add validation
+        const payload = {
+            url: addressInputValue,
+            description: descriptionInputValue,
+        };
+
+        ajaxPost('suggestions', payload).then(() => {
+            setAddressInputValue('');
+            setDescriptionInputValue('');
+        });
+
+        // TODO: Handle ajax errors
     };
 
     return (
@@ -44,7 +60,7 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                 </form>
             </div>
             <div className="suggestion-modal-content__buttons">
-                <a className="suggestion-modal-content__submit-button">SUBMIT</a>
+                <a className="suggestion-modal-content__submit-button" onClick={submitSuggestionForm}>SUBMIT</a>
             </div>
         </div>
     );

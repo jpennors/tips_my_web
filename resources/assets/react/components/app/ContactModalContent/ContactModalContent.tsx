@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ajaxPost } from 'tmw/utils/Ajax';
 
 import './contact-modal-content.css';
 
@@ -16,6 +17,21 @@ export const ContactModalContent: React.FunctionComponent = () => {
         const { value } = event.target;
         // TODO: Add validation
         setMessageInputValue(value);
+    };
+
+    const submitContactForm = async (): Promise<void> => {
+        // TODO: Add validation
+        const payload = {
+            email: emailInputValue,
+            message: messageInputValue,
+        };
+
+        ajaxPost('contacts', payload).then(() => {
+            setEmailInputValue('');
+            setMessageInputValue('');
+        });
+
+        // TODO: Handle ajax errors
     };
 
     return (
@@ -44,7 +60,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                 </form>
             </div>
             <div className="contact-modal-content__buttons">
-                <a className="contact-modal-content__submit-button">SUBMIT</a>
+                <a className="contact-modal-content__submit-button" onClick={submitContactForm}>SUBMIT</a>
             </div>
         </div>
     );
