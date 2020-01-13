@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { AboutModalContent } from 'tmw/components/app/AboutModalContent';
+import { ContactModalContent } from 'tmw/components/app/ContactModalContent';
 import { HeaderModal } from 'tmw/components/app/HeaderModal';
 import { ResourceSearch } from 'tmw/components/app/ResourceSearch';
 import { ajaxPost } from 'tmw/utils/Ajax';
@@ -211,7 +212,7 @@ class HomeScreen extends Component {
                         <div className="nav_pages">
                             <a data-tag="sharing_modal" onClick={this.openModal}>Share a website</a>
                             <HeaderModal content={<AboutModalContent/>} target={<a>About</a>}/>
-                            <a data-tag="contact_modal" onClick={this.openModal}>Contact</a>
+                            <HeaderModal content={<ContactModalContent/>} target={<a>Contact</a>}/>
                         </div>
                     </div>
                 </div>
