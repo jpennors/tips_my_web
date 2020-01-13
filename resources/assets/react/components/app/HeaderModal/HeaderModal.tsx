@@ -15,6 +15,21 @@ export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const toggleIsOpen = (): void => { setIsOpen(!isOpen); };
 
+    const modalRef = React.useRef(null);
+
+    const handleClickOutside = (event: any): void => {
+        if (modalRef.current && !modalRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    };
+
+    React.useEffect(()  => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return (): void => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    });
+
     return (
         <Manager>
             <Reference>
@@ -28,7 +43,7 @@ export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({
                 <Popper placement="bottom" modifiers={{ preventOverflow: { padding: 20 } }}>
                     {({ ref, style, placement, arrowProps }): React.ReactNode => (
                         <div ref={ref} style={style} data-placement={placement} className="header-modal">
-                            <div className="header-modal__container">
+                            <div ref={modalRef} className="header-modal__container">
                                 {content}
                             </div>
                             <div ref={arrowProps.ref} style={arrowProps.style} className="header-modal__arrow"/>
