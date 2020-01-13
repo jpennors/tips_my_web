@@ -3,6 +3,7 @@ import { AboutModalContent } from 'tmw/components/app/AboutModalContent';
 import { ContactModalContent } from 'tmw/components/app/ContactModalContent';
 import { HeaderModal } from 'tmw/components/app/HeaderModal';
 import { ResourceSearch } from 'tmw/components/app/ResourceSearch';
+import { SuggestionModalContent } from 'tmw/components/app/SuggestionModalContent';
 import { ajaxPost } from 'tmw/utils/Ajax';
 
 class HomeScreen extends Component {
@@ -210,7 +211,7 @@ class HomeScreen extends Component {
                         <a href=""><img src="/images/logo.svg" alt="logo" className="logo" /></a>
                         {/* Lien pour les modals */}
                         <div className="nav_pages">
-                            <a data-tag="sharing_modal" onClick={this.openModal}>Share a website</a>
+                            <HeaderModal content={<SuggestionModalContent/>} target={<a>Share a website</a>}/>
                             <HeaderModal content={<AboutModalContent/>} target={<a>About</a>}/>
                             <HeaderModal content={<ContactModalContent/>} target={<a>Contact</a>}/>
                         </div>
