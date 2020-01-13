@@ -15,10 +15,11 @@ export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const toggleIsOpen = (): void => { setIsOpen(!isOpen); };
 
-    const modalRef = React.useRef(null);
+    const modalRef = React.useRef<HTMLDivElement>(null);
 
-    const handleClickOutside = (event: any): void => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent): void => {
+        // NOTE: 'as Node' is a hacky workaround as TS can't infer that event.target is necessarily a Node here.
+        if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
             setIsOpen(false);
         }
     };
