@@ -3,6 +3,8 @@
     padding-top: 2em;
     text-align: center;
     margin-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .tags-selector__selected-primary-tag {
