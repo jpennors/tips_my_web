@@ -1,0 +1,35 @@
+@import '../../../constants/ui-constants.css';
+
+.layout-header {
+    width: 88%;
+    margin: auto;
+    padding-bottom: 2rem;
+    padding-top: 5vh;
+}
+
+.layout-header__logo {
+    width: 12vh;
+    vertical-align: middle;
+}
+
+.layout-header__links {
+    float: right;
+    text-align: right;
+    margin-top: 4.4vh;
+}
+
+.layout-header__link {
+    font-family: var(--app-font-medium);
+    font-size: 13px;
+    text-decoration: none;
+    color: white;
+    vertical-align: middle;
+    margin-left: 20px;
+}
+
+.layout-header__link:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+

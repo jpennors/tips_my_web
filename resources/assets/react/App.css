@@ -11,28 +11,6 @@
     font-family: var(--app-font-medium);
 }
 
-.nav_landing{
-	padding-top: 5vh;
-}
-
-.nav_pages{
-	float: right;
-	text-align: right;
-	margin-top: 4.4vh;
-}
-.nav_pages a{ /*--nav bar*/
-	text-decoration: none;
-	color:white;
-	vertical-align:middle;
-	margin-left: 20px;
-}
-
-.logo{
-	width: 12vh;
-	vertical-align: middle;
-}
-
-
 /* ------------------------------------ */
 /* ------------------------------------ */
 /* -------------- Global -------------- */
@@ -50,12 +28,6 @@
 	min-height: 600px;
 	border: 2.5vw solid white;
 	box-sizing: border-box; /*--Border inside (and not outside)--*/
-}
-
-.landing_wrapper{ /*--page width (logo to nav bar)--*/
-	width: 88%;
-	margin:auto;
-	padding-bottom: 2rem;
 }
 
 *{
