@@ -12,6 +12,6 @@
 	<noscript>
         You need to enable JavaScript to run this app.
     </noscript>
-	<script src="{{ asset('js/index.js') }}"></script>
+	<script src="{{ asset('js/app-main.js') }}"></script>
 </body>
 </html>

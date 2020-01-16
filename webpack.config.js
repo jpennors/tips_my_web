@@ -10,13 +10,12 @@ const buildEntryPoint = entryPoint => ([
 
 module.exports = {
     entry: {
-        main: buildEntryPoint('./resources/assets/react/index.jsx'),
-        admin: buildEntryPoint('./resources/assets/react/index.jsx'),
+        main: buildEntryPoint('./react/app-main/app-main-entry.tsx'),
+        admin: buildEntryPoint('./react/app-admin/app-admin-entry.jsx'),
     },
     output: {
         path: path.resolve(__dirname, 'public'),
-        filename: 'js/[name].js',
-        // publicPath: '/public/',
+        filename: 'js/app-[name].js',
     },
     module: {
         rules: [
@@ -51,12 +50,14 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
         alias: {
-            'tmw': __dirname + '/resources/assets/react',
+            'tmw-main': path.resolve(__dirname, 'react/app-main/'),
+            'tmw-admin': path.resolve(__dirname, 'react/app-admin/'),
+            'tmw-common': path.resolve(__dirname, 'react/common/'),
         },
     },
     plugins: [
         new CopyWebpackPlugin([
-            { from: 'resources/assets/react/images', to: 'images' },
+            { from: 'react/common/images', to: 'images' },
         ]),
         new webpack.HotModuleReplacementPlugin(),
     ],

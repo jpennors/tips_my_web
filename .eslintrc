@@ -141,7 +141,9 @@
                 "import/resolver":{
                     "alias": {
                         "map": [
-                            ["tmw", "./resources/assets/react"]
+                            ["tmw-main", "./react/app-main"],
+                            ["tmw-admin", "./react/app-admin"],
+                            ["tmw-common", "./react/common"]
                         ],
                         "extensions": [
                             ".ts", ".js", ".jsx", ".tsx"
