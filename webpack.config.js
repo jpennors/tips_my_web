@@ -15,7 +15,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'public'),
-        filename: '[name].js',
+        filename: 'js/[name].js',
         // publicPath: '/public/',
     },
     module: {
@@ -23,7 +23,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /(node_modules|bower_components)/,
-                use: ['babel-loader', 'react-hot-loader'],
+                use: ['react-hot-loader/webpack', 'babel-loader'],
             },
             {
                 test: /\.tsx?$/,
