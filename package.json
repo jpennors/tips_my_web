@@ -2,8 +2,7 @@
 	"private": true,
 	"scripts": {
 		"build": "NODE_ENV=production webpack --mode production",
-		"dev": "NODE_ENV=developement webpack-dev-server --mode development",
-		"lint": "eslint src/**/*.js src/**/*.jsx --fix"
+		"dev": "NODE_ENV=developement webpack-dev-server --mode development"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.1.0",
