@@ -1,8 +1,13 @@
 const path = require("path");
+const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: "./resources/assets/react/index.jsx",
+    entry: [
+        "webpack-dev-server/client?http://localhost:3000",
+        "webpack/hot/only-dev-server",
+        "./resources/assets/react/index.jsx",
+    ],
     module: {
         rules: [
             {
@@ -48,5 +53,16 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: 'resources/assets/react/images', to: 'images' },
         ]),
+        new webpack.HotModuleReplacementPlugin(),
     ],
+    devServer: {
+        contentBase: path.join(__dirname, "public"),
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        port: 3000,
+        hot: true,
+        historyApiFallback: true,
+        proxy: {
+            "*": 'http://localhost:8888',
+        },
+    },
 };
