@@ -8,7 +8,7 @@ import {
 import {
  ajaxGet, ajaxPost, ajaxPostImage, ajaxPut
 } from 'tmw-common/utils/Ajax';
-import ErrorHandler from 'tmw-common/utils/Modal';
+import ErrorHandler from 'tmw-admin/utils/Modal';
 
 
 class AdminResourceFormComponent extends Component {
@@ -269,7 +269,7 @@ class AdminResourceFormComponent extends Component {
                                     className="rounded ui centered small image"
                                     src={this.state.resource.image
                                         ? `/resources/image/${this.state.resource.id}`
-                                        : '/images/default.png'}
+                                        : '/images/admin-default-resource-image.png'}
                                 />
                                 <input
                                     type="file"

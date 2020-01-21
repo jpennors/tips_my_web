@@ -9,4 +9,4 @@ export enum LOCALES {
 }
 
 export const RESOURCES_BASE_URL = '/api/resources/image/';
-export const DEFAULT_RESOURCE_URL = '/images/default.jpg';
+export const DEFAULT_RESOURCE_URL = '/images/default-resource-img.jpg';

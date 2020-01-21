@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import Auth from 'tmw-common/utils/Auth';
+import Auth from 'tmw-admin/utils/Auth';
 
 class ProtectedRoute extends React.Component {
     isAuthorized = () => !!(Auth.isUserAdmin());

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Auth from 'tmw-common/utils/Auth';
+import Auth from 'tmw-admin/utils/Auth';
 
 class LoginScreen extends Component {
     constructor(props) {

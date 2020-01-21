@@ -58,6 +58,8 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             { from: 'react/common/images', to: 'images' },
+            { from: 'react/app-main/assets/images', to: 'images' },
+            { from: 'react/app-admin/assets/images', to: 'images' },
         ]),
         new webpack.HotModuleReplacementPlugin(),
     ],

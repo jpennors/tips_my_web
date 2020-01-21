@@ -6,7 +6,7 @@ import {
     Loader,
     Table
 } from 'semantic-ui-react';
-import ErrorHandler from 'tmw-common/utils/Modal';
+import ErrorHandler from 'tmw-admin/utils/Modal';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/Ajax';
 
 

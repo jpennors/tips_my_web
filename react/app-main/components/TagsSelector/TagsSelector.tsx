@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon, Loader } from 'semantic-ui-react';
 import { TagsLaunchBar } from 'tmw-main/components/TagsLaunchBar';
 import { SIZES } from 'tmw-main/constants/ui-constants';
-import { serializeTagsFromAPI } from 'tmw-common/utils/api-serialize';
+import { serializeTagsFromAPI } from 'tmw-main/utils/api-serialize';
 import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw-main/constants/app-types';
 import { ajaxGet } from 'tmw-common/utils/Ajax';
 import { Tag } from 'tmw-main/components/Tag';

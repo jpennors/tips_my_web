@@ -7,7 +7,7 @@ import {
     TableCell
   } from 'semantic-ui-react';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/Ajax';
-import ErrorHandler from 'tmw-common/utils/Modal';
+import ErrorHandler from 'tmw-admin/utils/Modal';
 
 
 class AdminResourceIndexComponent extends Component {

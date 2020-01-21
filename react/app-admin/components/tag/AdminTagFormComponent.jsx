@@ -8,7 +8,7 @@ import {
     Segment
   } from 'semantic-ui-react';
 import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/Ajax';
-import ErrorHandler from 'tmw-common/utils/Modal';
+import ErrorHandler from 'tmw-admin/utils/Modal';
 
 
 class AdminTagFormComponent extends Component {

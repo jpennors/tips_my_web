@@ -12,7 +12,7 @@ import AdminResourceComponent from 'tmw-admin/components/resources/AdminResource
 import AdminImportComponent from 'tmw-admin/components/import/AdminImportComponent';
 import AdminSuggestionComponent from 'tmw-admin/components/AdminSuggestionComponent';
 import AdminContactComponent from 'tmw-admin/components/AdminContactComponent';
-import ProtectedRoute from 'tmw-common/utils/ProtectedRoute';
+import ProtectedRoute from 'tmw-admin/utils/ProtectedRoute';
 import Error404 from 'tmw-admin/screens/Error404';
 import AdminTagComponent from 'tmw-admin/components/tag/AdminTagComponent';
 import DashboardComponent from 'tmw-admin/components/DashboardComponent';
