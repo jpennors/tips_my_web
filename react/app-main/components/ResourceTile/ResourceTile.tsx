@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { DEFAULT_RESOURCE_URL, RESOURCES_BASE_URL } from 'tmw-main/constants/ui-constants';
-import { ajaxGet } from 'tmw-common/utils/Ajax';
+import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 
 import './resource-tile.css';

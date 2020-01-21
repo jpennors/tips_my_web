@@ -4,7 +4,7 @@ import { TagsLaunchBar } from 'tmw-main/components/TagsLaunchBar';
 import { SIZES } from 'tmw-main/constants/ui-constants';
 import { serializeTagsFromAPI } from 'tmw-main/utils/api-serialize';
 import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw-main/constants/app-types';
-import { ajaxGet } from 'tmw-common/utils/Ajax';
+import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Tag } from 'tmw-main/components/Tag';
 
 import './tags-selector.css';

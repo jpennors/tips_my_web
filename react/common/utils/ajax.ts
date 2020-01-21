@@ -1,45 +1,42 @@
 import axios from 'axios';
 
 const token = localStorage.getItem('token');
-const defaultConfig = { headers: { ContentType: 'application/json' } };
+const defaultConfig = { headers: { ContentType: 'application/json', Authorization: '' } };
+
 if (token) {
     defaultConfig.headers.Authorization = token;
 }
 
-function ajaxGet(path) {
+export const ajaxGet = (path: string): Promise<any> => {
     return axios.get(`/api/${path}`, defaultConfig);
-}
+};
 
-function ajaxPost(path, data) {
+export const ajaxPost = (path: string, data: object): Promise<any> => {
     return axios.post(`/api/${path}`, data, defaultConfig);
-}
+};
 
-function ajaxPut(path, data) {
+export const ajaxPut = (path: string, data: object): Promise<any> => {
     return axios.put(`/api/${path}`, data, defaultConfig);
-}
+};
 
-function ajaxDelete(path) {
+export const ajaxDelete = (path: string): Promise<any> => {
     return axios.delete(`/api/${path}`, defaultConfig);
-}
+};
 
-function ajaxPostImage(path, data) {
+export const ajaxPostImage = (path: string, data: object): Promise<any> => {
     let config = {};
     if (token) {
         config = { headers: { Authorization: token } };
     }
     return axios.post(`/api/${path}`, data, config);
-}
+};
 
-
-function putFile(file) {
+export const putFile = (file: any): void => {
     const fileReader = new FileReader();
-    fileReader.onload = async e => {
-        const { result } = e.target;
+    fileReader.onload = async (e): Promise<any> => {
+        // @ts-ignore
+        const { result } = e.target; //TODO: Fix type error
         const config = { headers: { ContentType: file.type, ContentLength: file.size, Authorization: token } };
         return axios.post('/api/file', result, config);
     };
-}
-
-export {
- ajaxGet, ajaxPost, ajaxPut, ajaxDelete, ajaxPostImage, putFile
 };

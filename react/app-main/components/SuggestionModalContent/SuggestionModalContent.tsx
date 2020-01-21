@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { ModalSubmitButton } from 'tmw-main/components/ModalSubmitButton';
-import { ajaxPost } from 'tmw-common/utils/Ajax';
+import { ajaxPost } from 'tmw-common/utils/ajax';
 
 
 import './suggestion-modal-content.css';

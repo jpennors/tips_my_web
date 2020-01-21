@@ -8,7 +8,7 @@ import {
     Header,
     Message
   } from 'semantic-ui-react';
-import { ajaxPost } from 'tmw-common/utils/Ajax';
+import { ajaxPost } from 'tmw-common/utils/ajax';
 
 
 class AdminImportComponent extends Component {

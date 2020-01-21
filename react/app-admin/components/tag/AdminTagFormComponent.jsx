@@ -7,7 +7,7 @@ import {
     Loader,
     Segment
   } from 'semantic-ui-react';
-import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/Ajax';
+import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/ajax';
 import ErrorHandler from 'tmw-admin/utils/Modal';
 
 

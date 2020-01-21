@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ajaxPost } from 'tmw-common/utils/Ajax';
+import { ajaxPost } from 'tmw-common/utils/ajax';
 import { ModalSubmitButton } from 'tmw-main/components/ModalSubmitButton';
 
 

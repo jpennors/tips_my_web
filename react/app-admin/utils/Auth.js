@@ -1,4 +1,4 @@
-import { ajaxPost } from 'tmw-common/utils/Ajax';
+import { ajaxPost } from 'tmw-common/utils/ajax';
 
 
 class Auth {

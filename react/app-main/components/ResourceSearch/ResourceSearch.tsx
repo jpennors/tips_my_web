@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ResourceTile } from 'tmw-main/components/ResourceTile';
 import { TagsSelector } from 'tmw-main/components/TagsSelector';
 import { Resource } from 'tmw-main/constants/app-types';
-import { ajaxPost } from 'tmw-common/utils/Ajax';
+import { ajaxPost } from 'tmw-common/utils/ajax';
 import { serializeResourcesFromAPI } from 'tmw-main/utils/api-serialize';
 
 import './resource-search.css';

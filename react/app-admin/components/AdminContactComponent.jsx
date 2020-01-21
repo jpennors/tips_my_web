@@ -7,7 +7,7 @@ import {
     Table
 } from 'semantic-ui-react';
 import ErrorHandler from 'tmw-admin/utils/Modal';
-import { ajaxGet, ajaxDelete } from 'tmw-common/utils/Ajax';
+import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
 
 
 class AdminContactComponent extends Component {
