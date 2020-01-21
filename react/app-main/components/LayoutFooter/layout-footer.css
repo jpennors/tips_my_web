@@ -3,7 +3,7 @@
 .layout-footer {
     width: 88%;
     position: absolute;
-    bottom: 3vw;
+    bottom: 3vh;
     left: 50%;
     transform: translateX(-50%);
 
@@ -27,6 +27,7 @@
     font-family: var(--app-font-medium);
     color: white;
     font-size: 10px;
+    text-decoration: none;
 }
 
 .layout-footer__left-side a:hover {

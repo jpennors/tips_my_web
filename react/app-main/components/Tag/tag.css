@@ -3,10 +3,12 @@
 .tag {
     font-family: var(--app-font-regular);
     border: white 2px solid;
+    background: transparent;
     color: white;
     display: inline-block;
     text-decoration: none;
     user-select: none;
+    outline: none;
 }
 
 .tag--clickable {

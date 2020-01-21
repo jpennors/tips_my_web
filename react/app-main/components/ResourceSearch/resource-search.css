@@ -1,14 +1,14 @@
 .resource-search__results {
-    /* width: 100%; */
-    max-width: 3000px;
-    margin-left: 3vh;
-    margin-right: 3vh;
+    width: 88%;
+    margin: auto;
 }
 
 .resource-search__results-title {
     text-align: left;
-    margin-left: 20px;
     font-family: var(--app-font-medium);
+    font-size: 4vh;
+    margin-bottom: 15px;
+    margin-top: 0;
 }
 
 .resource-search__results-list {
@@ -32,19 +32,13 @@
 
 .resource-search__landing-title {
     font-family: var(--app-font-medium);
+    text-align: center;
+    font-size: 4vh;
+    margin-bottom: 15px;
 }
 
 .resource-search__landing-subtitle {
     font-family: var(--app-font-regular);
-}
-
-@media only screen and (max-height:600px) {
-
-    .resource-search__landing {
-        margin: 1vh auto 0 auto;
-    }
-
-    .resource-search__results-list {
-        margin-top: 10px;
-    }
+    text-align: center;
+    font-size: 2.5vh;
 }

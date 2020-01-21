@@ -2,6 +2,7 @@
 
 .header-modal {
     margin-top: 20px;
+    z-index: 1000;
 }
 
 .header-modal__container {
@@ -14,7 +15,7 @@
 
 .header-modal__arrow {
     position: absolute;
-    top: 4px;
+    top: 6px;
     left: 0;
     margin-left: 20px; /* To compensate Popper's preventOverflow padding */
     margin-top: -1em;

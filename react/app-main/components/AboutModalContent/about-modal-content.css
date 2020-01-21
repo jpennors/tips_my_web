@@ -45,6 +45,7 @@
     text-align: center;
     margin: 0 10px;
     transition: all .15s ease-in-out;
+    cursor: pointer;
 }
 
 .about-modal-content__support-button:hover {

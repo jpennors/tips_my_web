@@ -25,6 +25,7 @@
     color: white;
     vertical-align: middle;
     margin-left: 20px;
+    cursor: pointer;
 }
 
 .layout-header__link:hover {

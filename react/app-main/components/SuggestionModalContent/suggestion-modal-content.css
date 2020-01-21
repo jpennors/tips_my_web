@@ -30,6 +30,9 @@
     box-sizing: border-box;
     border-radius: 10px;
     border: 0;
+    outline: none;
+    font-size: 13px;
+    font-family: var(--app-font-light);
 }
 
 .suggestion-modal-content__description-input {
@@ -41,6 +44,9 @@
     border-radius: 10px;
     border: 0;
     resize: none;
+    outline: none;
+    font-size: 13px;
+    font-family: var(--app-font-light);
 }
 
 .suggestion-modal-content__buttons {
@@ -67,6 +73,7 @@
     text-align: center;
     margin: 0 10px;
     transition: all .15s ease-in-out;
+    cursor: pointer;
 }
 
 .suggestion-modal-content__submit-button:hover {

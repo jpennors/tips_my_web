@@ -4,7 +4,7 @@
     background: white;
     display: inline-block;
     width: 350px;
-    margin: 20px;
+    margin: 20px 20px 20px 0;
     filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
     vertical-align: middle;
     border-radius: 3px;
@@ -96,6 +96,7 @@
 }
 
 .resource-tile__like-resource-button {
+    cursor: pointer;
 }
 
 .resource-tile__visit-resource-button {
@@ -106,6 +107,7 @@
     margin-left: 15px;
     padding: 3px 20px;
     font-family: var(--app-font-regular);
+    text-decoration: none;
 }
 
 .resource-tile__visit-resource-button:hover {
