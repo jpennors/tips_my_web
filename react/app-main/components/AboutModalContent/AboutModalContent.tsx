@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ModalSubmitButton } from 'tmw-main/components/ModalSubmitButton';
 
 import './about-modal-content.css';
 
@@ -23,7 +24,7 @@ export const AboutModalContent: React.FunctionComponent = () => {
                 </p>
             </div>
             <div className="about-modal-content__buttons">
-                <a className="about-modal-content__support-button">SUPPORT US</a>
+                <ModalSubmitButton content="SUPPORT US"/>
             </div>
         </div>
     );

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { ajaxPost } from 'tmw-common/utils/Ajax';
+import { ModalSubmitButton } from 'tmw-main/components/ModalSubmitButton';
+
 
 import './contact-modal-content.css';
 
@@ -60,7 +62,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                 </form>
             </div>
             <div className="contact-modal-content__buttons">
-                <a className="contact-modal-content__submit-button" onClick={submitContactForm}>SUBMIT</a>
+                <ModalSubmitButton content="SUBMIT" onClick={submitContactForm}/>
             </div>
         </div>
     );
