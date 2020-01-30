@@ -18,7 +18,9 @@
 }
 
 .tags-selector__selected-primary-tag-arrow {
-    cursor: pointer
+    cursor: pointer;
+    margin-right: 10px;
+    height: 20px;
 }
 
 .tags-selector__tag-options {

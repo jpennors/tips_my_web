@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Icon, Loader } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import { TagsLaunchBar } from 'tmw-main/components/TagsLaunchBar';
 import { SIZES } from 'tmw-main/constants/ui-constants';
 import { serializeTagsFromAPI } from 'tmw-main/utils/api-serialize';
 import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw-main/constants/app-types';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Tag } from 'tmw-main/components/Tag';
+import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
 
 import './tags-selector.css';
 
@@ -116,12 +117,14 @@ export class TagsSelector extends React.Component<
                     <div className="tags-selector__container">
                         {primaryTag && (
                             <div className="tags-selector__selected-primary-tag">
-                                <Icon
-                                    name='arrow left'
-                                    size="large"
+                                <span
                                     className="tags-selector__selected-primary-tag-arrow"
                                     onClick={() => this.selectPrimaryTag(primaryTag)}
-                                />
+                                >
+                                    <ArrowIcon
+                                        width={20}
+                                    />
+                                </span>
                                 <Tag
                                     content={primaryTag.name}
                                     isSelected={false}
