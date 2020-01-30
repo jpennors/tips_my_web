@@ -50,7 +50,7 @@
 }
 
 .resource-tile__title {
-    margin-top: 12px !important;
+    margin-top: 12px;
     margin-left: 15px;
     color: black;
     font-size: 15px;

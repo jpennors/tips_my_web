@@ -45,7 +45,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
                 />
             </a>
             <div className="resource-tile__content">
-                <h4 className="resource-tile__title">{resource.name}</h4>
+                <p className="resource-tile__title">{resource.name}</p>
                 <p className="resource-tile__description">{resource.description}</p>
             </div>
             <div className="resource-tile__actions">
