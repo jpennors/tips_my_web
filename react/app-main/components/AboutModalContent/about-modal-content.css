@@ -1,0 +1,35 @@
+@import '../../constants/ui-constants.css';
+
+.about-modal-content {
+    font-family: var(--app-font-regular);
+    text-align: center;
+    color: black;
+}
+
+.about-modal-content__title {
+    font-family: var(--app-font-medium);
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+
+.about-modal-content__subtitle {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.about-modal-content__text p {
+    font-size: 13px;
+}
+
+.about-modal-content__buttons {
+    margin-top: 15px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: stretch;
+    align-items: center;
+}
+
+

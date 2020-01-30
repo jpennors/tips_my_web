@@ -5,7 +5,9 @@
     "lib": ["es6", "dom"],
     "baseUrl": ".",
     "paths": {
-      "tmw/*": ["resources/assets/react/*"]
+      "tmw-main/*": ["react/app-main/*"],
+      "tmw-admin/*": ["react/app-admin/*"],
+      "tmw-common/*": ["react/common/*"]
     },
     "sourceMap": true,
     "allowJs": true,
@@ -15,5 +17,5 @@
     "noImplicitAny": true,
     "strictNullChecks": true
   },
-  "include": ["resources/assets/react/**/*"]
+  "include": ["react/**/*"]
 }

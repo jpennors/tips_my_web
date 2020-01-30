@@ -1,0 +1,61 @@
+@import '../../constants/ui-constants.css';
+
+.contact-modal-content {
+    font-family: var(--app-font-regular);
+    text-align: center;
+    color: black;
+}
+
+.contact-modal-content__title {
+    font-family: var(--app-font-medium);
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+
+.contact-modal-content__subtitle {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.contact-modal-content__body {
+    font-size: 13px;
+}
+
+.contact-modal-content__email-input {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    height: 40px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 0;
+    outline: none;
+    font-size: 13px;
+    font-family: var(--app-font-light);
+}
+
+.contact-modal-content__message-input {
+    padding: 10px;
+    width: 100%;
+    height: 120px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 0;
+    resize: none;
+    outline: none;
+    font-size: 13px;
+    font-family: var(--app-font-light);
+}
+
+.contact-modal-content__buttons {
+    margin-top: 15px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: stretch;
+    align-items: center;
+}

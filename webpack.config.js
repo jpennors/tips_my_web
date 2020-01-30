@@ -1,29 +1,37 @@
-const path = require("path");
+const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const buildEntryPoint = entryPoint => ([
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    entryPoint,
+]);
+
 module.exports = {
-    entry: [
-        "webpack-dev-server/client?http://localhost:3000",
-        "webpack/hot/only-dev-server",
-        "./resources/assets/react/index.jsx",
-    ],
+    entry: {
+        main: buildEntryPoint('./react/app-main/app-main-entry.tsx'),
+        admin: buildEntryPoint('./react/app-admin/app-admin-entry.jsx'),
+    },
+    output: {
+        path: path.resolve(__dirname, 'public'),
+        filename: 'js/app-[name].js',
+    },
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: "babel-loader",
-                options: { presets: ["@babel/preset-env"] },
+                use: ['react-hot-loader/webpack', 'babel-loader'],
             },
             {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
-                loader: "ts-loader",
+                use: ['ts-loader'],
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"],
+                use: ['style-loader', 'css-loader'],
             },
             {
                 test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,
@@ -40,29 +48,29 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+        extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
         alias: {
-            "tmw": __dirname + "/resources/assets/react",
+            'tmw-main': path.resolve(__dirname, 'react/app-main/'),
+            'tmw-admin': path.resolve(__dirname, 'react/app-admin/'),
+            'tmw-common': path.resolve(__dirname, 'react/common/'),
         },
-    },
-    output: {
-        path: path.resolve(__dirname, "public"),
-        filename: "js/index.js",
     },
     plugins: [
         new CopyWebpackPlugin([
-            { from: 'resources/assets/react/images', to: 'images' },
+            { from: 'react/common/images', to: 'images' },
+            { from: 'react/app-main/assets/images', to: 'images' },
+            { from: 'react/app-admin/assets/images', to: 'images' },
         ]),
         new webpack.HotModuleReplacementPlugin(),
     ],
     devServer: {
-        contentBase: path.join(__dirname, "public"),
+        contentBase: path.join(__dirname, 'public'),
         headers: { 'Access-Control-Allow-Origin': '*' },
         port: 3000,
         hot: true,
         historyApiFallback: true,
         proxy: {
-            "*": 'http://localhost:8888',
+            '*': 'http://localhost:8888',
         },
     },
 };

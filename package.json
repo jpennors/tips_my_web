@@ -2,8 +2,7 @@
 	"private": true,
 	"scripts": {
 		"build": "NODE_ENV=production webpack --mode production",
-		"dev": "NODE_ENV=developement webpack-dev-server --mode development",
-		"lint": "eslint src/**/*.js src/**/*.jsx --fix"
+		"dev": "NODE_ENV=developement webpack-dev-server --mode development"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.1.0",
@@ -37,7 +36,7 @@
 		"resolve-url-loader": "3.1.0",
 		"sass": "^1.23.0",
 		"sass-loader": "8.*",
-		"style-loader": "^0.23.0",
+		"style-loader": "^0.23.1",
 		"ts-loader": "^6.2.1",
 		"webpack": "^4.19.1",
 		"webpack-cli": "^3.1.1",
