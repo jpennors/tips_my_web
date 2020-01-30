@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Loader } from 'semantic-ui-react';
+import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { TagsLaunchBar } from 'tmw-main/components/TagsLaunchBar';
 import { SIZES } from 'tmw-main/constants/ui-constants';
 import { serializeTagsFromAPI } from 'tmw-main/utils/api-serialize';
@@ -112,7 +112,10 @@ export class TagsSelector extends React.Component<
                     completionPercentage={barPercentage}
                 />
                 {requestLoading ? (
-                    <Loader />
+                    <div className="tags-selector__loading-spinner">
+                        <LoadingSpinner /><br/>
+                        Loading Tags
+                    </div>
                 ) : (
                     <div className="tags-selector__container">
                         {primaryTag && (

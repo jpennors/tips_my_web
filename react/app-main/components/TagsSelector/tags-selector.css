@@ -1,3 +1,9 @@
+.tags-selector__loading-spinner {
+    text-align: center;
+    margin-top: 40px;
+    font-family: var(--app-font-light);
+}
+
 .tags-selector__container {
     max-width: 650px;
     padding-top: 2em;
