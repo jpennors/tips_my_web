@@ -94,11 +94,11 @@ export class TagsSelector extends React.Component<
         }
     };
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.fetchTags();
     }
 
-    render() {
+    render(): React.ReactNode {
         const { tagsMap, primaryTag, secondaryTags, requestLoading } = this.state;
 
         let barPercentage = 0;
@@ -119,7 +119,7 @@ export class TagsSelector extends React.Component<
                             <div className="tags-selector__selected-primary-tag">
                                 <span
                                     className="tags-selector__selected-primary-tag-arrow"
-                                    onClick={() => this.selectPrimaryTag(primaryTag)}
+                                    onClick={(): void => this.selectPrimaryTag(primaryTag)}
                                 >
                                     <ArrowIcon
                                         width={20}
@@ -140,7 +140,7 @@ export class TagsSelector extends React.Component<
                                         key={tag.id}
                                         content={tag.name}
                                         isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
-                                        onClickCallback={() => this.selectSecondaryTag(tag)}
+                                        onClickCallback={(): void => this.selectSecondaryTag(tag)}
                                         size={SIZES.MEDIUM}
                                     />
                                 ))
@@ -151,7 +151,7 @@ export class TagsSelector extends React.Component<
                                             key={tag.id}
                                             content={tag.name}
                                             isSelected={false}
-                                            onClickCallback={() => this.selectPrimaryTag(tag)}
+                                            onClickCallback={(): void => this.selectPrimaryTag(tag)}
                                             size={SIZES.MEDIUM}
                                         />
                                     );
