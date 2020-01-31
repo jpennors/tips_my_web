@@ -6,6 +6,7 @@ import LoginScreen from 'tmw-admin/screens/LoginScreen';
 import Error404 from 'tmw-admin/screens/Error404';
 import 'tmw-admin/utils/Interceptor';
 
+import 'semantic-ui-css/semantic.min.css';
 import './app-admin.css';
 
 const AppAdmin = () => (
