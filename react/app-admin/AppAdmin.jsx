@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from 'tmw-admin/utils/ProtectedRoute';
 import AdminScreen from 'tmw-admin/screens/AdminScreen';
-import LoginScreen from 'tmw-admin/screens/LoginScreen';
+import { LoginPage } from 'tmw-admin/screens/LoginPage';
 import Error404 from 'tmw-admin/screens/Error404';
 import 'tmw-admin/utils/Interceptor';
 
@@ -11,8 +11,8 @@ import './app-admin.css';
 const AppAdmin = () => (
     <BrowserRouter>
         <Switch>
+            <Route path="/admin/login" exact component={LoginPage} />
             <ProtectedRoute path="/admin" component={AdminScreen} />
-            <Route path="/login" exact component={LoginScreen} />
             <Route component={Error404} />
         </Switch>
     </BrowserRouter>

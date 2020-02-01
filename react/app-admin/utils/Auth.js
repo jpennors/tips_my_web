@@ -34,7 +34,7 @@ class Auth {
         if (Auth.isUserAdmin()) {
             window.location = '/admin';
         } else {
-            window.location = '/login';
+            window.location = '/admin/login';
         }
     }
 

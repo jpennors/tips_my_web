@@ -22,7 +22,7 @@ class ProtectedRoute extends React.Component {
 }
 
 ProtectedRoute.defaultProps = {
-    redirection: '/login'
+    redirection: '/admin/login'
 };
 
 export default ProtectedRoute;
