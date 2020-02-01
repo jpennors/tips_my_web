@@ -1,9 +1,8 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import Auth from 'tmw-admin/utils/Auth';
+import { isUserAdmin } from 'tmw-admin/utils/auth-module';
 
 class ProtectedRoute extends React.Component {
-    isAuthorized = () => !!(Auth.isUserAdmin());
 
     render() {
         const {
@@ -12,7 +11,7 @@ class ProtectedRoute extends React.Component {
         return (
             <Route
                 {...routeProps}
-                render={props => (this.isAuthorized()
+                render={props => (isUserAdmin()
                         ? <Component {...props} />
                         : <Redirect to={redirection} />
                 )}

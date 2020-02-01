@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
-import Auth from 'tmw-admin/utils/Auth';
+import { login } from 'tmw-admin/utils/auth-module';
 
 export const LoginPage: React.FunctionComponent = () => {
     const [username, setUsername] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
 
     const onFormSubmit = async (): Promise<void> => {
-        await Auth.login({ username, password });
+        await login({ username, password });
     };
 
     const onUsernameInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
