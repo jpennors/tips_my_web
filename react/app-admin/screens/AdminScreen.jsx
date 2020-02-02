@@ -12,7 +12,7 @@ import AdminResourceComponent from 'tmw-admin/components/resources/AdminResource
 import AdminImportComponent from 'tmw-admin/components/import/AdminImportComponent';
 import AdminSuggestionComponent from 'tmw-admin/components/AdminSuggestionComponent';
 import AdminContactComponent from 'tmw-admin/components/AdminContactComponent';
-import { LoggedInRoute } from 'tmw-admin/utils/LoggedInRoute';
+import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute.tsx';
 import Error404 from 'tmw-admin/screens/Error404';
 import AdminTagComponent from 'tmw-admin/components/tag/AdminTagComponent';
 import DashboardComponent from 'tmw-admin/components/DashboardComponent';
@@ -170,12 +170,12 @@ class AdminScreen extends React.Component {
                         <Grid padded>
                             <main>
                                 <Switch>
-                                    <LoggedInRoute path={`${baseUrl}/`} exact component={DashboardComponent} />
-                                    <LoggedInRoute path={`${baseUrl}/tags`} exact component={AdminTagComponent} />
-                                    <LoggedInRoute path={`${baseUrl}/import`} exact component={AdminImportComponent} />
-                                    <LoggedInRoute path={`${baseUrl}/suggestions`} exact component={AdminSuggestionComponent} />
-                                    <LoggedInRoute path={`${baseUrl}/contacts`} exact component={AdminContactComponent} />
-                                    <LoggedInRoute path={`${baseUrl}/resources`} exact component={AdminResourceComponent} />
+                                    <ProtectedRoute path={`${baseUrl}/`} exact component={DashboardComponent} />
+                                    <ProtectedRoute path={`${baseUrl}/tags`} exact component={AdminTagComponent} />
+                                    <ProtectedRoute path={`${baseUrl}/import`} exact component={AdminImportComponent} />
+                                    <ProtectedRoute path={`${baseUrl}/suggestions`} exact component={AdminSuggestionComponent} />
+                                    <ProtectedRoute path={`${baseUrl}/contacts`} exact component={AdminContactComponent} />
+                                    <ProtectedRoute path={`${baseUrl}/resources`} exact component={AdminResourceComponent} />
                                     <Route component={Error404} />
                                 </Switch>
                             </main>
