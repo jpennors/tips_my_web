@@ -4,7 +4,6 @@ import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute.tsx';
 import { LoginPage } from 'tmw-admin/screens/LoginPage';
 import AdminScreen from 'tmw-admin/screens/AdminScreen';
 import Error404 from 'tmw-admin/screens/Error404';
-import 'tmw-admin/utils/Interceptor';
 
 import './app-admin.css';
 

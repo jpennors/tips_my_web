@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
-import { isUserAdmin } from 'tmw-admin/utils/auth-module';
+import { checkAuthentication } from 'tmw-admin/utils/auth-module';
 
 interface ProtectedRouteProps extends RouteProps {
     component: React.ComponentType;
@@ -15,7 +15,7 @@ export const ProtectedRoute: React.FunctionComponent<ProtectedRouteProps> = ({
     ...routeProps
 }) => {
 
-    const isAuthenticated = isUserAdmin();
+    const isAuthenticated = checkAuthentication();
 
     const renderedComponent = (props: any): React.ReactNode => {
         if ((isAuthenticated && !shouldBeLoggedOut) || (!isAuthenticated && shouldBeLoggedOut)) {

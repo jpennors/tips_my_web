@@ -4,17 +4,18 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Log;
+use \Illuminate\Http\Request;
 
 class Admin
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if($request->header("Authorization"))
         {
@@ -28,19 +29,19 @@ class Admin
                     return $next($request);
                 } else {
                     \Log::info("401, unauthorized, token expired");
-                    abort(401, "token expired");
+                    abort(401, "expired_token");
                     // return response()->json(array("error" => "token expired"));
                 }
             }
             else {
                 \Log::info("401, unauthorized, token not recognized");
-                abort(401, "token not recognized");
+                abort(401, "unknown_token");
                 // return response()->json(array("error" => "token not recognized"));
             }
         }
         else {
             \Log::info("401, unauthorized, token not provided");
-            abort(401, "token not provided");
+            abort(401, "undefined_token");
             // return response()->json(array("error" => "token not provided"));
         }
     }
