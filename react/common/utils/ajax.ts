@@ -7,6 +7,10 @@ interface RequestConfigOptions {
     contentLength?: string | null;
 }
 
+/*
+ * Build request headers by adding the authentication token and some
+ * additional information about the content that is sent.
+ */
 const buildRequestConfig = ({
     contentLength= null,
     contentType = 'application/json',
@@ -20,6 +24,10 @@ const buildRequestConfig = ({
     }
 );
 
+/*
+ * Intercept all axios error and redirect users to the login page
+ * if they try to access an api that requires to be logged in.
+ */
 const catchAuthError = (error: AxiosError): Promise<AxiosError> => {
     if (error.response) {
         const response = error.response;

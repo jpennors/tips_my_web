@@ -14,9 +14,8 @@ export const getLocalToken = (): string | null => {
         if (authToken.expiration > Date.now() && authToken.expiration <= Date.now() + TOKEN_VALIDITY_TIME) {
             return authToken.token;
         }
+        removeLocalToken(); // Remove token if it's not valid anymore
     }
-
-    removeLocalToken();
     return null;
 };
 
