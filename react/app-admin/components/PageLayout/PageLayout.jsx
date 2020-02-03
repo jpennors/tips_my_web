@@ -22,7 +22,7 @@ export class PageLayout extends React.Component {
         return (
             <>
                 <TopNavMenu />
-                <Container style={{ marginTop: '5em' }}>
+                <Container>
                     <Grid padded>
                         <Grid.Row centered columns={1} only='mobile'>
                             <SideNavMenu horizontalDisplay />

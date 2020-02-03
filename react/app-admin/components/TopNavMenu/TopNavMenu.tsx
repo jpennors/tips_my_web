@@ -5,7 +5,7 @@ import { logout } from 'tmw-admin/utils/auth-module';
 
 export const TopNavMenu: React.FunctionComponent = () => {
     return (
-        <Menu inverted fixed="top">
+        <Menu inverted>
             <Container>
                 <Menu.Item href={ADMIN_APP_MAIN_URL} header>
                     <Image size='mini' src='/images/logo.png' style={{ marginRight: '5px' }} />
