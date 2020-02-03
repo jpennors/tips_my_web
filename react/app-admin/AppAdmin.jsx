@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ADMIN_APP_LOGIN_URL, ADMIN_APP_MAIN_URL } from 'tmw-admin/constants/app-constants';
 import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute.tsx';
-import { LoginPage } from 'tmw-admin/screens/LoginPage';
+import { LoginPage } from 'tmw-admin/components/LoginPage';
 import AdminScreen from 'tmw-admin/screens/AdminScreen';
 import Error404 from 'tmw-admin/screens/Error404';
 
