@@ -1,13 +1,32 @@
 import { LoginAPIResponse } from 'tmw-admin/constants/api-types';
+import { TOKEN_VALIDITY_TIME } from 'tmw-admin/constants/app-constants';
+import { AuthToken } from 'tmw-admin/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 
 export const emptyLocalStorage = (): void => localStorage.clear();
 
-export const getLocalToken = (): string | null => localStorage.getItem('token');
-
-export const setLocalToken = (token: string): void => localStorage.setItem('token', token);
-
 export const removeLocalToken = (): void => localStorage.removeItem('token');
+
+export const getLocalToken = (): string | null => {
+    const rawAuthToken = localStorage.getItem('token');
+    if (rawAuthToken) {
+        const authToken: AuthToken = JSON.parse(rawAuthToken);
+        if (authToken.expiration > Date.now() && authToken.expiration <= Date.now() + TOKEN_VALIDITY_TIME) {
+            return authToken.token;
+        }
+    }
+
+    removeLocalToken();
+    return null;
+};
+
+export const setLocalToken = (token: string): void => {
+    const authToken: AuthToken = {
+        token,
+        expiration: Date.now() + TOKEN_VALIDITY_TIME,
+    };
+    localStorage.setItem('token', JSON.stringify(authToken));
+};
 
 export const checkAuthentication = (): boolean => !!getLocalToken();
 
