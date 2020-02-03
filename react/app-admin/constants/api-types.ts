@@ -7,3 +7,7 @@ export enum APIAuthenticationErrors {
     UNKNOWN_TOKEN = 'unknown_token',
     UNDEFINED_TOKEN = 'undefined_token'
 }
+
+export enum APILoginErrors {
+    BAD_CREDENTIALS = 'bad_credentials',
+}

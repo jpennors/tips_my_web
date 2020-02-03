@@ -20,7 +20,7 @@ const buildRequestConfig = ({
     }
 );
 
-const catchAuthError = (error: AxiosError): void => {
+const catchAuthError = (error: AxiosError): Promise<AxiosError> => {
     if (error.response) {
         const response = error.response;
         if (response.status == 403 || response.status == 401) {
@@ -30,6 +30,7 @@ const catchAuthError = (error: AxiosError): void => {
             }
         }
     }
+    return Promise.reject(error);
 };
 
 axios.interceptors.response.use(response => response, catchAuthError);

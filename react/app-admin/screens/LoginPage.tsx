@@ -1,24 +1,35 @@
 import * as React from 'react';
-import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
+import { AxiosError } from 'axios';
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
+import { APILoginErrors } from 'tmw-admin/constants/api-types';
 import { login } from 'tmw-admin/utils/auth-module';
 
 export const LoginPage: React.FunctionComponent = () => {
     const [username, setUsername] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
+    const [errorMessage, setErrorMessage] = React.useState<string>('');
+
+    const hasError = errorMessage.length > 0;
+    const isReadyToLogin = username.length > 0 && password.length > 0;
 
     const onFormSubmit = async (): Promise<void> => {
-        await login({ username, password });
+        await login({ username, password }).catch((error: AxiosError) => {
+            if (error.response && error.response.data.error == APILoginErrors.BAD_CREDENTIALS) {
+                setErrorMessage('Your username and password don\'t match !');
+            }
+            else {
+                setErrorMessage('Unknown error');
+            }
+        });
     };
 
     const onUsernameInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { value } = event.target;
-        // TODO: Add validation
         setUsername(value);
     };
 
     const onPasswordInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { value } = event.target;
-        // TODO: Add validation
         setPassword(value);
     };
 
@@ -29,7 +40,7 @@ export const LoginPage: React.FunctionComponent = () => {
                 <Header as='h2' color='orange' textAlign='center'>
                     TipsMyWeb Admin
                 </Header>
-                <Form size='large'>
+                <Form size='large' error={hasError} >
                     <Segment stacked>
                         <Form.Input
                             fluid
@@ -48,7 +59,13 @@ export const LoginPage: React.FunctionComponent = () => {
                             value={password}
                             onChange={onPasswordInputChange}
                         />
+                        {hasError ? (
+                            <Message error>
+                                { errorMessage }
+                            </Message>
+                        ) : null}
                         <Button
+                            disabled={!isReadyToLogin}
                             color='orange'
                             fluid
                             size='large'

@@ -21,7 +21,7 @@ export const redirectUser = (): void => {
 
 export const login = async (data: any): Promise<void | string> => {
     emptyLocalStorage();
-    ajaxPost('login', data).then((res: {data: LoginAPIResponse}) => {
+    return ajaxPost('login', data).then((res: {data: LoginAPIResponse}) => {
         setLocalToken(res.data.token);
         redirectUser();
     });
