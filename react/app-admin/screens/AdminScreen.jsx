@@ -12,6 +12,7 @@ import AdminResourceComponent from 'tmw-admin/components/resources/AdminResource
 import AdminImportComponent from 'tmw-admin/components/import/AdminImportComponent';
 import AdminSuggestionComponent from 'tmw-admin/components/AdminSuggestionComponent';
 import AdminContactComponent from 'tmw-admin/components/AdminContactComponent';
+import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
 import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute.tsx';
 import Error404 from 'tmw-admin/screens/Error404';
 import AdminTagComponent from 'tmw-admin/components/tag/AdminTagComponent';
@@ -79,34 +80,7 @@ class AdminScreen extends React.Component {
 
         return (
             <div>
-
-                <Grid padded className="tablet computer only">
-                    <Menu borderless inverted fluid fixed="top">
-                        <Link to="/">
-                            <Menu.Item header>
-
-                                <img src="/images/logo.svg" alt="Logo" width="15px" className="right7" />
-                            TipsMyWeb
-
-                            </Menu.Item>
-                        </Link>
-                        <Menu.Menu position="right">
-                            {navItems.map(item => (
-                            item.role === 'primary' && (
-                            <Link to={item.path} key={item.path}>
-                                <Menu.Item>
-                                    {item.name}
-                                </Menu.Item>
-                            </Link>
-                          )
-                        ))}
-                            <Divider fitted />
-                            <Menu.Item>
-                                <Input placeholder="Search..." size="small" />
-                            </Menu.Item>
-                        </Menu.Menu>
-                    </Menu>
-                </Grid>
+                <TopNavMenu />
                 <Grid padded className="mobile only">
                     <Menu borderless inverted fluid fixed="top">
                         <Menu.Item header as="a">
