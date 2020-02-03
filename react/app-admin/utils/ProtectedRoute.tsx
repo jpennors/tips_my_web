@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { ADMIN_APP_LOGIN_URL } from 'tmw-admin/constants/app-constants';
 import { checkAuthentication } from 'tmw-admin/utils/auth-module';
 
 interface ProtectedRouteProps extends RouteProps {
@@ -11,7 +12,7 @@ interface ProtectedRouteProps extends RouteProps {
 export const ProtectedRoute: React.FunctionComponent<ProtectedRouteProps> = ({
     component: Component,
     shouldBeLoggedOut,
-    redirection = '/admin/login',
+    redirection = ADMIN_APP_LOGIN_URL,
     ...routeProps
 }) => {
 

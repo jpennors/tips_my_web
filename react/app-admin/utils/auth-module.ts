@@ -1,5 +1,5 @@
 import { LoginAPIResponse } from 'tmw-admin/constants/api-types';
-import { TOKEN_VALIDITY_TIME } from 'tmw-admin/constants/app-constants';
+import { ADMIN_APP_LOGIN_URL, ADMIN_APP_MAIN_URL, TOKEN_VALIDITY_TIME } from 'tmw-admin/constants/app-constants';
 import { AuthToken } from 'tmw-admin/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 
@@ -31,9 +31,9 @@ export const checkAuthentication = (): boolean => !!getLocalToken();
 
 export const redirectUser = (): void => {
     if (checkAuthentication()) {
-        window.location.href = '/admin';
+        window.location.href = ADMIN_APP_MAIN_URL;
     } else {
-        window.location.href = '/admin/login';
+        window.location.href = ADMIN_APP_LOGIN_URL;
     }
 };
 
