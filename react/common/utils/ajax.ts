@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { APIAuthenticationErrors } from 'tmw-admin/constants/api-types';
-import { getLocalToken, redirectUser, removeLocalToken } from 'tmw-admin/utils/auth-module';
+import { getLocalToken, logout } from 'tmw-admin/utils/auth-module';
 
 interface RequestConfigOptions {
     contentType?: string | null;
@@ -33,8 +33,7 @@ const catchAuthError = (error: AxiosError): Promise<AxiosError> => {
         const response = error.response;
         if (response.status == 403 || response.status == 401) {
             if (Object.values(APIAuthenticationErrors).includes(response.data.message)) {
-                removeLocalToken();
-                redirectUser();
+                logout();
             }
         }
     }

@@ -44,3 +44,8 @@ export const login = async (data: any): Promise<void | string> => {
         redirectUser();
     });
 };
+
+export const logout = (): void => {
+    removeLocalToken();
+    redirectUser();
+};
