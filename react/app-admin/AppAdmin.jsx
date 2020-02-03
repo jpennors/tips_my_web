@@ -6,7 +6,7 @@ import { LoginPage } from 'tmw-admin/components/LoginPage';
 import AdminScreen from 'tmw-admin/screens/AdminScreen';
 import Error404 from 'tmw-admin/screens/Error404';
 
-import './app-admin.css';
+// import './app-admin.css';
 
 const AppAdmin = () => (
     <BrowserRouter>
