@@ -1,4 +1,4 @@
-.admin-screen__content-container {
+.page-layout__content-container {
     width: 100%;
 
     display: flex;
@@ -9,6 +9,6 @@
     align-items: flex-start;
 }
 
-.admin-screen__main-content {
+.page-layout__main-content {
     flex-grow: 1;
 }

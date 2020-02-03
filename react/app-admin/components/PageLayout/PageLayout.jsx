@@ -7,20 +7,20 @@ import AdminSuggestionComponent from 'tmw-admin/components/AdminSuggestionCompon
 import AdminContactComponent from 'tmw-admin/components/AdminContactComponent';
 import { SideNavMenu } from 'tmw-admin/components/SideNavMenu';
 import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
-import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute.tsx';
+import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute';
 import Error404 from 'tmw-admin/screens/Error404';
 import AdminTagComponent from 'tmw-admin/components/tag/AdminTagComponent';
 import DashboardComponent from 'tmw-admin/components/DashboardComponent';
 
-import './admin-screen.css';
+import './page-layout.css';
 
-class AdminScreen extends React.Component {
+export class PageLayout extends React.Component {
 
     render() {
         const baseUrl = this.props.match.url;
 
         return (
-            <div>
+            <>
                 <TopNavMenu />
                 <Container style={{ marginTop: '5em' }}>
                     <Grid padded>
@@ -28,13 +28,13 @@ class AdminScreen extends React.Component {
                             <SideNavMenu horizontalDisplay />
                         </Grid.Row>
                         <Grid.Row>
-                            <div className="admin-screen__content-container">
+                            <div className="page-layout__content-container">
                                 <Grid padded className='tablet computer only'>
                                     <div>
                                         <SideNavMenu />
                                     </div>
                                 </Grid>
-                                <div className="admin-screen__main-content">
+                                <div className="page-layout__main-content">
                                     <Switch>
                                         <ProtectedRoute path={`${baseUrl}/`} exact component={DashboardComponent} />
                                         <ProtectedRoute path={`${baseUrl}/tags`} exact component={AdminTagComponent} />
@@ -49,9 +49,7 @@ class AdminScreen extends React.Component {
                         </Grid.Row>
                     </Grid>
                 </Container>
-            </div>
+            </>
         );
     }
 }
-
-export default AdminScreen;
