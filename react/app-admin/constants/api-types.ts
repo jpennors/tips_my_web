@@ -21,3 +21,11 @@ export interface APIContact {
     created_at: Date;
     updated_at: Date;
 }
+
+export interface APIWebsiteSuggestion {
+    id: string;
+    url: string;
+    description: string;
+    created_at: Date;
+    updated_at: Date;
+}

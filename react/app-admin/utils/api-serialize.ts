@@ -1,5 +1,5 @@
-import { APIContact } from 'tmw-admin/constants/api-types';
-import { Contact } from 'tmw-admin/constants/app-types';
+import { APIContact, APIWebsiteSuggestion } from 'tmw-admin/constants/api-types';
+import { Contact, WebsiteSuggestion } from 'tmw-admin/constants/app-types';
 
 export const serializeContactsFromAPI = (contactsFromAPI: APIContact[]): Contact[] => {
     const contacts: Contact[] = [];
@@ -14,4 +14,19 @@ export const serializeContactsFromAPI = (contactsFromAPI: APIContact[]): Contact
     });
 
     return contacts;
+};
+
+export const serializeSuggestionsFromAPI = (suggestionsFromAPI: APIWebsiteSuggestion[]): WebsiteSuggestion[] => {
+    const suggestions: WebsiteSuggestion[] = [];
+
+    suggestionsFromAPI.forEach((suggestion: APIWebsiteSuggestion) => {
+        suggestions.push({
+            id: suggestion.id,
+            url: suggestion.url,
+            description: suggestion.description,
+            createdAt: suggestion.created_at,
+        });
+    });
+
+    return suggestions;
 };

@@ -9,3 +9,10 @@ export interface Contact {
     message: string;
     createdAt: Date;
 }
+
+export interface WebsiteSuggestion {
+    id: string;
+    url: string;
+    description: string;
+    createdAt: Date;
+}
