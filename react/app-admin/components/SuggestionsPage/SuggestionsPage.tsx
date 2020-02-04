@@ -53,6 +53,7 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                 <Table celled striped selectable unstackable>
                     <Table.Header>
                         <Table.Row>
+                            <Table.HeaderCell>Date</Table.HeaderCell>
                             <Table.HeaderCell>URL</Table.HeaderCell>
                             <Table.HeaderCell>Description</Table.HeaderCell>
                             <Table.HeaderCell collapsing textAlign="center">Action</Table.HeaderCell>
@@ -62,6 +63,7 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                         {
                             suggestions.map(suggestion => (
                                 <Table.Row key={suggestion.id}>
+                                    <Table.Cell>{suggestion.createdAt}</Table.Cell>
                                     <Table.Cell>{suggestion.url}</Table.Cell>
                                     <Table.Cell>{suggestion.description}</Table.Cell>
                                     <Table.Cell textAlign="center">

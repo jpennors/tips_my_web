@@ -37,7 +37,7 @@ export const ContactPage: React.FunctionComponent = () => {
     return (
         <div>
             <Header dividing size="huge" as="h1">
-                Contacts messages
+                Contact messages
             </Header>
             {isLoading ? <Loader active inline="centered" /> : hasError ? (
                 <Message negative>
@@ -53,6 +53,7 @@ export const ContactPage: React.FunctionComponent = () => {
                 <Table celled striped selectable unstackable>
                     <Table.Header>
                         <Table.Row>
+                            <Table.HeaderCell>Date</Table.HeaderCell>
                             <Table.HeaderCell>Email</Table.HeaderCell>
                             <Table.HeaderCell>Message</Table.HeaderCell>
                             <Table.HeaderCell textAlign="center">Action</Table.HeaderCell>
@@ -62,6 +63,7 @@ export const ContactPage: React.FunctionComponent = () => {
                         {
                             contacts.map(contact => (
                                 <Table.Row key={contact.id}>
+                                    <Table.Cell>{contact.createdAt}</Table.Cell>
                                     <Table.Cell>{contact.email}</Table.Cell>
                                     <Table.Cell>{contact.message}</Table.Cell>
                                     <Table.Cell collapsing textAlign="center">
