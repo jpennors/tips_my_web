@@ -6,8 +6,6 @@ import { LoginPage } from 'tmw-admin/components/LoginPage';
 import { PageLayout } from 'tmw-admin/components/PageLayout';
 import Error404 from 'tmw-admin/screens/Error404';
 
-// import './app-admin.css';
-
 const AppAdmin = () => (
     <BrowserRouter>
         <Switch>
