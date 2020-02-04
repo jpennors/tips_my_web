@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
+import { OverviewPage } from 'tmw-admin/components/OverviewPage';
 import AdminResourceComponent from 'tmw-admin/components/resources/AdminResourceComponent';
 import AdminImportComponent from 'tmw-admin/components/import/AdminImportComponent';
 import { ContactPage } from 'tmw-admin/components/ContactPage';
@@ -10,7 +11,6 @@ import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
 import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute';
 import Error404 from 'tmw-admin/screens/Error404';
 import AdminTagComponent from 'tmw-admin/components/tag/AdminTagComponent';
-import DashboardComponent from 'tmw-admin/components/DashboardComponent';
 import {
     ADMIN_APP_CONTACT_URL,
     ADMIN_APP_IMPORT_URL,
@@ -42,7 +42,7 @@ export class PageLayout extends React.Component {
                                 </Grid>
                                 <div className="page-layout__main-content">
                                     <Switch>
-                                        <ProtectedRoute path={ADMIN_APP_MAIN_URL} exact component={DashboardComponent} />
+                                        <ProtectedRoute path={ADMIN_APP_MAIN_URL} exact component={OverviewPage} />
                                         <ProtectedRoute path={ADMIN_APP_TAGS_URL} exact component={AdminTagComponent} />
                                         <ProtectedRoute path={ADMIN_APP_IMPORT_URL} exact component={AdminImportComponent} />
                                         <ProtectedRoute path={ADMIN_APP_SUGGESTIONS_URL} exact component={SuggestionsPage} />
