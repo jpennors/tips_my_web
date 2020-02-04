@@ -64,7 +64,7 @@ export const ContactPage: React.FunctionComponent = () => {
                                 <Table.Row key={contact.id}>
                                     <Table.Cell>{contact.email}</Table.Cell>
                                     <Table.Cell>{contact.message}</Table.Cell>
-                                    <Table.Cell textAlign="center">
+                                    <Table.Cell collapsing textAlign="center">
                                         <Button icon color='red' onClick={(): void => {deleteContact(contact.id);}}>
                                             <Icon name='trash alternate' />
                                         </Button>

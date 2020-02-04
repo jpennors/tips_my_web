@@ -55,7 +55,7 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                         <Table.Row>
                             <Table.HeaderCell>URL</Table.HeaderCell>
                             <Table.HeaderCell>Description</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="center">Action</Table.HeaderCell>
+                            <Table.HeaderCell collapsing textAlign="center">Action</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
