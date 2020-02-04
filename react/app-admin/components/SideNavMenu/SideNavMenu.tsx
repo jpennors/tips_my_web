@@ -2,6 +2,14 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Icon, Menu, StrictMenuProps } from 'semantic-ui-react';
 import { SemanticWIDTHS } from 'semantic-ui-react/dist/commonjs/generic';
+import {
+    ADMIN_APP_CONTACT_URL,
+    ADMIN_APP_IMPORT_URL,
+    ADMIN_APP_MAIN_URL,
+    ADMIN_APP_RESOURCES_URL,
+    ADMIN_APP_SUGGESTIONS_URL,
+    ADMIN_APP_TAGS_URL,
+} from 'tmw-admin/constants/app-constants';
 
 interface SideNavMenuProps {
     horizontalDisplay?: boolean;
@@ -15,32 +23,32 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
     const navItems = [
         {
             name: 'Overview',
-            path: '/admin',
+            path: ADMIN_APP_MAIN_URL,
             iconName: 'newspaper',
         },
         {
             name: 'Resources',
-            path: '/admin/resources',
+            path: ADMIN_APP_RESOURCES_URL,
             iconName: 'rocket',
         },
         {
             name: 'Tags',
-            path: '/admin/tags',
+            path: ADMIN_APP_TAGS_URL,
             iconName: 'tags',
         },
         {
             name: 'Import',
-            path: '/admin/import',
+            path: ADMIN_APP_IMPORT_URL,
             iconName: 'plus circle',
         },
         {
             name: 'Suggestions',
-            path: '/admin/suggestions',
+            path: ADMIN_APP_SUGGESTIONS_URL,
             iconName: 'thumbs up',
         },
         {
             name: 'Contact',
-            path: '/admin/contact',
+            path: ADMIN_APP_CONTACT_URL,
             iconName: 'question circle',
         },
     ];

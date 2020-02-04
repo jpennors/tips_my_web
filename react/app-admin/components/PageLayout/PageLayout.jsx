@@ -11,14 +11,20 @@ import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute';
 import Error404 from 'tmw-admin/screens/Error404';
 import AdminTagComponent from 'tmw-admin/components/tag/AdminTagComponent';
 import DashboardComponent from 'tmw-admin/components/DashboardComponent';
+import {
+    ADMIN_APP_CONTACT_URL,
+    ADMIN_APP_IMPORT_URL,
+    ADMIN_APP_MAIN_URL,
+    ADMIN_APP_RESOURCES_URL,
+    ADMIN_APP_SUGGESTIONS_URL,
+    ADMIN_APP_TAGS_URL,
+} from 'tmw-admin/constants/app-constants';
 
 import './page-layout.css';
 
 export class PageLayout extends React.Component {
 
     render() {
-        const baseUrl = this.props.match.url;
-
         return (
             <>
                 <TopNavMenu />
@@ -36,12 +42,12 @@ export class PageLayout extends React.Component {
                                 </Grid>
                                 <div className="page-layout__main-content">
                                     <Switch>
-                                        <ProtectedRoute path={`${baseUrl}/`} exact component={DashboardComponent} />
-                                        <ProtectedRoute path={`${baseUrl}/tags`} exact component={AdminTagComponent} />
-                                        <ProtectedRoute path={`${baseUrl}/import`} exact component={AdminImportComponent} />
-                                        <ProtectedRoute path={`${baseUrl}/suggestions`} exact component={AdminSuggestionComponent} />
-                                        <ProtectedRoute path={`${baseUrl}/contacts`} exact component={AdminContactComponent} />
-                                        <ProtectedRoute path={`${baseUrl}/resources`} exact component={AdminResourceComponent} />
+                                        <ProtectedRoute path={ADMIN_APP_MAIN_URL} exact component={DashboardComponent} />
+                                        <ProtectedRoute path={ADMIN_APP_TAGS_URL} exact component={AdminTagComponent} />
+                                        <ProtectedRoute path={ADMIN_APP_IMPORT_URL} exact component={AdminImportComponent} />
+                                        <ProtectedRoute path={ADMIN_APP_SUGGESTIONS_URL} exact component={AdminSuggestionComponent} />
+                                        <ProtectedRoute path={ADMIN_APP_CONTACT_URL} exact component={AdminContactComponent} />
+                                        <ProtectedRoute path={ADMIN_APP_RESOURCES_URL} exact component={AdminResourceComponent} />
                                         <Route component={Error404} />
                                     </Switch>
                                 </div>
