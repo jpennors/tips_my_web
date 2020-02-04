@@ -4,7 +4,7 @@ import { Container, Grid } from 'semantic-ui-react';
 import AdminResourceComponent from 'tmw-admin/components/resources/AdminResourceComponent';
 import AdminImportComponent from 'tmw-admin/components/import/AdminImportComponent';
 import AdminSuggestionComponent from 'tmw-admin/components/AdminSuggestionComponent';
-import AdminContactComponent from 'tmw-admin/components/AdminContactComponent';
+import { ContactPage } from 'tmw-admin/components/ContactPage';
 import { SideNavMenu } from 'tmw-admin/components/SideNavMenu';
 import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
 import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute';
@@ -46,7 +46,7 @@ export class PageLayout extends React.Component {
                                         <ProtectedRoute path={ADMIN_APP_TAGS_URL} exact component={AdminTagComponent} />
                                         <ProtectedRoute path={ADMIN_APP_IMPORT_URL} exact component={AdminImportComponent} />
                                         <ProtectedRoute path={ADMIN_APP_SUGGESTIONS_URL} exact component={AdminSuggestionComponent} />
-                                        <ProtectedRoute path={ADMIN_APP_CONTACT_URL} exact component={AdminContactComponent} />
+                                        <ProtectedRoute path={ADMIN_APP_CONTACT_URL} exact component={ContactPage} />
                                         <ProtectedRoute path={ADMIN_APP_RESOURCES_URL} exact component={AdminResourceComponent} />
                                         <Route component={Error404} />
                                     </Switch>

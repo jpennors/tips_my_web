@@ -10,5 +10,6 @@
 }
 
 .page-layout__main-content {
+    overflow: auto;
     flex-grow: 1;
 }

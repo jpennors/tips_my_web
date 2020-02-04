@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 export interface LoginAPIResponse {
     token: string;
 }
@@ -10,4 +12,12 @@ export enum APIAuthenticationErrors {
 
 export enum APILoginErrors {
     BAD_CREDENTIALS = 'bad_credentials',
+}
+
+export interface APIContact {
+    id: string;
+    email: string;
+    message: string;
+    created_at: Date;
+    updated_at: Date;
 }
