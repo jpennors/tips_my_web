@@ -16,3 +16,9 @@ export interface WebsiteSuggestion {
     description: string;
     createdAt: Date;
 }
+
+export interface Tag {
+    id: string;
+    name: string;
+    parentName: string | null;
+}

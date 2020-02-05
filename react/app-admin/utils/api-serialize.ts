@@ -1,5 +1,5 @@
-import { APIContact, APIWebsiteSuggestion } from 'tmw-admin/constants/api-types';
-import { Contact, WebsiteSuggestion } from 'tmw-admin/constants/app-types';
+import { APIContact, APITag, APIWebsiteSuggestion } from 'tmw-admin/constants/api-types';
+import { Contact, Tag, WebsiteSuggestion } from 'tmw-admin/constants/app-types';
 
 export const serializeContactsFromAPI = (contactsFromAPI: APIContact[]): Contact[] => {
     const contacts: Contact[] = [];
@@ -29,4 +29,12 @@ export const serializeSuggestionsFromAPI = (suggestionsFromAPI: APIWebsiteSugges
     });
 
     return suggestions;
+};
+
+export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): Tag[] => {
+    return tagsFromAPI.map((tag: APITag) => ({
+        id: tag.id,
+        name: tag.name,
+        parentName: tag.parent ? tag.parent.name : null,
+    }));
 };

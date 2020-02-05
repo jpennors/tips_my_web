@@ -7,10 +7,10 @@ import AdminImportComponent from 'tmw-admin/components/import/AdminImportCompone
 import { ContactPage } from 'tmw-admin/components/ContactPage';
 import { SideNavMenu } from 'tmw-admin/components/SideNavMenu';
 import { SuggestionsPage } from 'tmw-admin/components/SuggestionsPage';
+import { TagsPage } from 'tmw-admin/components/TagsPage';
 import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
 import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute';
 import Error404 from 'tmw-admin/screens/Error404';
-import AdminTagComponent from 'tmw-admin/components/tag/AdminTagComponent';
 import {
     ADMIN_APP_CONTACT_URL,
     ADMIN_APP_IMPORT_URL,
@@ -43,7 +43,7 @@ export class PageLayout extends React.Component {
                                 <div className="page-layout__main-content">
                                     <Switch>
                                         <ProtectedRoute path={ADMIN_APP_MAIN_URL} exact component={OverviewPage} />
-                                        <ProtectedRoute path={ADMIN_APP_TAGS_URL} exact component={AdminTagComponent} />
+                                        <ProtectedRoute path={ADMIN_APP_TAGS_URL} exact component={TagsPage} />
                                         <ProtectedRoute path={ADMIN_APP_IMPORT_URL} exact component={AdminImportComponent} />
                                         <ProtectedRoute path={ADMIN_APP_SUGGESTIONS_URL} exact component={SuggestionsPage} />
                                         <ProtectedRoute path={ADMIN_APP_CONTACT_URL} exact component={ContactPage} />
