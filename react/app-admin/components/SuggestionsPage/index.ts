@@ -1,1 +1,1 @@
-export { SuggestionsPage } from './SuggestionPage';
+export { SuggestionsPage } from './SuggestionsPage';

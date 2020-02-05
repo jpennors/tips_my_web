@@ -6,7 +6,7 @@ import AdminResourceComponent from 'tmw-admin/components/resources/AdminResource
 import AdminImportComponent from 'tmw-admin/components/import/AdminImportComponent';
 import { ContactPage } from 'tmw-admin/components/ContactPage';
 import { SideNavMenu } from 'tmw-admin/components/SideNavMenu';
-import { SuggestionsPage } from 'tmw-admin/components/SuggestionsPage/SuggestionsPage';
+import { SuggestionsPage } from 'tmw-admin/components/SuggestionsPage';
 import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
 import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute';
 import Error404 from 'tmw-admin/screens/Error404';
