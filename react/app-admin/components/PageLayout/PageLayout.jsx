@@ -7,6 +7,7 @@ import AdminImportComponent from 'tmw-admin/components/import/AdminImportCompone
 import { ContactPage } from 'tmw-admin/components/ContactPage';
 import { SideNavMenu } from 'tmw-admin/components/SideNavMenu';
 import { SuggestionsPage } from 'tmw-admin/components/SuggestionsPage';
+import { TagsAddPage } from 'tmw-admin/components/TagsAddPage';
 import { TagsPage } from 'tmw-admin/components/TagsPage';
 import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
 import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute';
@@ -18,6 +19,7 @@ import {
     ADMIN_APP_RESOURCES_URL,
     ADMIN_APP_SUGGESTIONS_URL,
     ADMIN_APP_TAGS_URL,
+    ADMIN_APP_TAGS_ADD_URL,
 } from 'tmw-admin/constants/app-constants';
 
 import './page-layout.css';
@@ -44,6 +46,7 @@ export class PageLayout extends React.Component {
                                     <Switch>
                                         <ProtectedRoute path={ADMIN_APP_MAIN_URL} exact component={OverviewPage} />
                                         <ProtectedRoute path={ADMIN_APP_TAGS_URL} exact component={TagsPage} />
+                                        <ProtectedRoute path={ADMIN_APP_TAGS_ADD_URL} exact component={TagsAddPage} />
                                         <ProtectedRoute path={ADMIN_APP_IMPORT_URL} exact component={AdminImportComponent} />
                                         <ProtectedRoute path={ADMIN_APP_SUGGESTIONS_URL} exact component={SuggestionsPage} />
                                         <ProtectedRoute path={ADMIN_APP_CONTACT_URL} exact component={ContactPage} />
