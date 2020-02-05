@@ -36,9 +36,12 @@ export const TagsPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing size="huge" as="h1">
+            <Header dividing as="h1">
                 Tags
             </Header>
+            <Button fluid icon>
+                Add Tag
+            </Button>
             {isLoading ? <Loader active inline="centered" /> : hasError ? (
                 <Message negative>
                     <Message.Header>Something wrong happened...</Message.Header>
