@@ -27,3 +27,19 @@ export interface Tag {
 export interface TagsMap {
     [id: string]: Tag;
 }
+
+export interface Resource {
+    id: string;
+    name: string;
+    description: string;
+    url: string;
+    iconFilename: string;
+    locale: string;
+    score: number;
+    interfaceScore: number;
+    priceId: string;
+    typeId: string;
+    likes: number;
+    createdAt: Date;
+    tags: Tag[];
+}

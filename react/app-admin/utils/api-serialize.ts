@@ -1,41 +1,48 @@
-import { APIContact, APITag, APIWebsiteSuggestion } from 'tmw-admin/constants/api-types';
-import { Contact, Tag, WebsiteSuggestion } from 'tmw-admin/constants/app-types';
+import { APIContact, APITag, APIWebsiteSuggestion, APIResource, APIBasicTag } from 'tmw-admin/constants/api-types';
+import { Contact, Tag, WebsiteSuggestion , Resource } from 'tmw-admin/constants/app-types';
+import { LOCALES } from 'tmw-admin/constants/app-constants';
 
 export const serializeContactsFromAPI = (contactsFromAPI: APIContact[]): Contact[] => {
-    const contacts: Contact[] = [];
-
-    contactsFromAPI.forEach((contact: APIContact) => {
-        contacts.push({
-            id: contact.id,
-            email: contact.email,
-            message: contact.message,
-            createdAt: contact.created_at,
-        });
-    });
-
-    return contacts;
+    return contactsFromAPI.map(contact => ({
+        id: contact.id,
+        email: contact.email,
+        message: contact.message,
+        createdAt: contact.created_at,
+    }));
 };
 
 export const serializeSuggestionsFromAPI = (suggestionsFromAPI: APIWebsiteSuggestion[]): WebsiteSuggestion[] => {
-    const suggestions: WebsiteSuggestion[] = [];
-
-    suggestionsFromAPI.forEach((suggestion: APIWebsiteSuggestion) => {
-        suggestions.push({
-            id: suggestion.id,
-            url: suggestion.url,
-            description: suggestion.description,
-            createdAt: suggestion.created_at,
-        });
-    });
-
-    return suggestions;
+    return suggestionsFromAPI.map(suggestion => ({
+        id: suggestion.id,
+        url: suggestion.url,
+        description: suggestion.description,
+        createdAt: suggestion.created_at,
+    }));
 };
 
-export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): Tag[] => {
-    return tagsFromAPI.map((tag: APITag) => ({
+export const serializeTagsFromAPI = (tagsFromAPI: Array<APITag | APIBasicTag>): Tag[] => {
+    return tagsFromAPI.map(tag => ({
         id: tag.id,
         name: tag.name,
-        parentId: tag.parent ? tag.parent.id : null,
-        parentName: tag.parent ? tag.parent.name : null,
+        parentId: 'parent' in tag && tag.parent ? tag.parent.id : null,
+        parentName: 'parent' in tag && tag.parent ? tag.parent.name : null,
+    }));
+};
+
+export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Resource[] => {
+    return resourcesFromAPI.map(resource => ({
+        id: resource.id,
+        name: resource.name,
+        description: resource.description,
+        url: resource.url,
+        iconFilename: resource.image,
+        locale: resource.language as LOCALES,
+        score: resource.score,
+        interfaceScore: resource.interface,
+        likes: resource.like,
+        priceId: resource.price_id,
+        typeId: resource.price_id,
+        createdAt: resource.created_at,
+        tags: serializeTagsFromAPI(resource.resource_tags.map(({ tag }) => tag)),
     }));
 };
