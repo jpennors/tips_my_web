@@ -8,6 +8,7 @@ import {
     ADMIN_APP_MAIN_URL,
     ADMIN_APP_RESOURCES_URL,
     ADMIN_APP_SUGGESTIONS_URL,
+    ADMIN_APP_TAGS_ADD_URL,
     ADMIN_APP_TAGS_URL,
 } from 'tmw-admin/constants/app-constants';
 
@@ -35,6 +36,16 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
             name: 'Tags',
             path: ADMIN_APP_TAGS_URL,
             iconName: 'tags',
+            subMenu: [
+                {
+                    name: 'List',
+                    path: ADMIN_APP_TAGS_URL,
+                },
+                {
+                    name: 'Add',
+                    path: ADMIN_APP_TAGS_ADD_URL,
+                },
+            ],
         },
         {
             name: 'Import',
@@ -66,16 +77,36 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
 
     return (
         <Menu {...(horizontalDisplay ? horizontalDisplayProps : verticalDisplayProps)}>
-            {navItems.map(item => (
-                <Menu.Item
-                    key={item.path}
-                    active={activePath === item.path}
-                    onClick={(): void => history.push(item.path)}
-                >
-                    <Icon className={item.iconName} />
-                    {item.name}
-                </Menu.Item>
-            ))}
+            {navItems.map(item => {
+                const onClick = !item.subMenu ? (): void => history.push(item.path) : undefined;
+                const allPaths = !item.subMenu ? [item.path] : item.subMenu.map(subItem => subItem.path);
+
+                return (
+                    <Menu.Item
+                        name={item.name}
+                        key={item.path}
+                        active={allPaths.includes(activePath)}
+                        onClick={onClick}
+                    >
+                        <Icon className={item.iconName} />
+                        {item.name}
+                        {item.subMenu && (
+                            <Menu.Menu>
+                                {item.subMenu.map(subItem => (
+                                    <Menu.Item
+                                        name={subItem.name}
+                                        key={subItem.path}
+                                        active={activePath === subItem.path}
+                                        onClick={(): void => history.push(subItem.path)}
+                                    >
+                                        {subItem.name}
+                                    </Menu.Item>
+                                ))}
+                            </Menu.Menu>
+                        )}
+                    </Menu.Item>
+                );
+            })}
         </Menu>
     );
 };
