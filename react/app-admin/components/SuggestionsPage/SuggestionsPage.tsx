@@ -8,7 +8,9 @@ export const SuggestionsPage: React.FunctionComponent = () => {
     const [suggestions, setSuggestions] = React.useState<WebsiteSuggestion[]>([]);
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
+    const [successMessage, setSuccessMessage] = React.useState<string>('');
     const hasError = errorMessage.length > 0;
+    const hasSuccess = successMessage.length > 0;
     const isEmpty = suggestions.length == 0;
 
     const fetchWebsiteSuggestions = async (): Promise<void> => {
@@ -22,11 +24,14 @@ export const SuggestionsPage: React.FunctionComponent = () => {
         });
     };
 
-    const deleteSuggestion = async (suggestionId: string): Promise<void> => {
+    const deleteSuggestion = async (suggestionId: string, suggestionName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
         ajaxDelete(`suggestions/${suggestionId}`).then(() => {
+            setSuccessMessage('The suggestion for "' + suggestionName + '" was successfully deleted.');
             fetchWebsiteSuggestions();
         }).catch(() => {
-            setErrorMessage('Error while deleting suggestion.');
+            setErrorMessage('Error while trying to delete suggestion.');
         });
     };
 
@@ -39,6 +44,12 @@ export const SuggestionsPage: React.FunctionComponent = () => {
             <Header dividing size="huge" as="h1">
                 Websites suggestions
             </Header>
+            {hasSuccess ? (
+                <Message positive>
+                    <Message.Header>Success!</Message.Header>
+                    <p>{successMessage}</p>
+                </Message>
+            ) : null}
             {isLoading ? <Loader active inline="centered" /> : hasError ? (
                 <Message negative>
                     <Message.Header>Something wrong happened...</Message.Header>
@@ -67,7 +78,7 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                                     <Table.Cell>{suggestion.url}</Table.Cell>
                                     <Table.Cell>{suggestion.description}</Table.Cell>
                                     <Table.Cell textAlign="center">
-                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteSuggestion(suggestion.id);}} />
+                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteSuggestion(suggestion.id, suggestion.url);}} />
                                     </Table.Cell>
                                 </Table.Row>
                             ))

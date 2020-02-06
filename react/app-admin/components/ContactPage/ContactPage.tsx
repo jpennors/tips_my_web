@@ -8,7 +8,9 @@ export const ContactPage: React.FunctionComponent = () => {
     const [contacts, setContacts] = React.useState<Contact[]>([]);
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
+    const [successMessage, setSuccessMessage] = React.useState<string>('');
     const hasError = errorMessage.length > 0;
+    const hasSuccess = successMessage.length > 0;
     const isEmpty = contacts.length == 0;
 
     const fetchContactMessages = async (): Promise<void> => {
@@ -23,10 +25,13 @@ export const ContactPage: React.FunctionComponent = () => {
     };
 
     const deleteContact = async (contactId: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
         ajaxDelete(`contacts/${contactId}`).then(() => {
+            setSuccessMessage('The message was successfully deleted.');
             fetchContactMessages();
         }).catch(() => {
-            setErrorMessage('Error while deleting contact.');
+            setErrorMessage('Error while trying to delete contact message.');
         });
     };
 
@@ -39,6 +44,12 @@ export const ContactPage: React.FunctionComponent = () => {
             <Header dividing size="huge" as="h1">
                 Contact messages
             </Header>
+            {hasSuccess ? (
+                <Message positive>
+                    <Message.Header>Success!</Message.Header>
+                    <p>{successMessage}</p>
+                </Message>
+            ) : null}
             {isLoading ? <Loader active inline="centered" /> : hasError ? (
                 <Message negative>
                     <Message.Header>Something wrong happened...</Message.Header>

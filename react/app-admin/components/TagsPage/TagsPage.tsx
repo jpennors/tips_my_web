@@ -10,7 +10,9 @@ export const TagsPage: React.FunctionComponent = () => {
     const [tags, setTags] = React.useState<Tag[]>([]);
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
+    const [successMessage, setSuccessMessage] = React.useState<string>('');
     const hasError = errorMessage.length > 0;
+    const hasSuccess = successMessage.length > 0;
     const isEmpty = tags.length == 0;
 
     const fetchTags = async (): Promise<void> => {
@@ -24,11 +26,14 @@ export const TagsPage: React.FunctionComponent = () => {
         });
     };
 
-    const deleteTag = async (tagId: string): Promise<void> => {
+    const deleteTag = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
         ajaxDelete(`tags/${tagId}`).then(() => {
+            setSuccessMessage('The tag "' + tagName + '" was successfully deleted.');
             fetchTags();
         }).catch(() => {
-            setErrorMessage('Error while deleting tag.');
+            setErrorMessage('Error while trying to delete the tag "' + tagName + '".');
         });
     };
 
@@ -46,6 +51,12 @@ export const TagsPage: React.FunctionComponent = () => {
                     Add Tag
                 </Button>
             </Link>
+            {hasSuccess ? (
+                <Message positive>
+                    <Message.Header>Success!</Message.Header>
+                    <p>{successMessage}</p>
+                </Message>
+            ) : null}
             {isLoading ? <Loader active inline="centered" /> : hasError ? (
                 <Message negative>
                     <Message.Header>Something wrong happened...</Message.Header>
@@ -78,7 +89,7 @@ export const TagsPage: React.FunctionComponent = () => {
                                         </Link>
                                     </Table.Cell>
                                     <Table.Cell textAlign="center">
-                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteTag(tag.id);}} />
+                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteTag(tag.id, tag.name);}} />
                                     </Table.Cell>
                                 </Table.Row>
                             ))
