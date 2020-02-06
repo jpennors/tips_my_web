@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Header, Icon, Loader, Message, Table } from 'semantic-ui-react';
+import { Header, Icon, Loader, Message, Table } from 'semantic-ui-react';
 import { Contact } from 'tmw-admin/constants/app-types';
 import { serializeContactsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
@@ -56,7 +56,7 @@ export const ContactPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>Date</Table.HeaderCell>
                             <Table.HeaderCell>Email</Table.HeaderCell>
                             <Table.HeaderCell>Message</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="center">Action</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="center">Delete</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -67,9 +67,7 @@ export const ContactPage: React.FunctionComponent = () => {
                                     <Table.Cell>{contact.email}</Table.Cell>
                                     <Table.Cell>{contact.message}</Table.Cell>
                                     <Table.Cell collapsing textAlign="center">
-                                        <Button icon color='red' onClick={(): void => {deleteContact(contact.id);}}>
-                                            <Icon name='trash alternate' />
-                                        </Button>
+                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteContact(contact.id);}}/>
                                     </Table.Cell>
                                 </Table.Row>
                             ))

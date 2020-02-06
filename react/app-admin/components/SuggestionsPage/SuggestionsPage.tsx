@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Header, Icon, Loader, Message, Table } from 'semantic-ui-react';
+import { Header, Icon, Loader, Message, Table } from 'semantic-ui-react';
 import { WebsiteSuggestion } from 'tmw-admin/constants/app-types';
 import { serializeSuggestionsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
@@ -56,7 +56,7 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>Date</Table.HeaderCell>
                             <Table.HeaderCell>URL</Table.HeaderCell>
                             <Table.HeaderCell>Description</Table.HeaderCell>
-                            <Table.HeaderCell collapsing textAlign="center">Action</Table.HeaderCell>
+                            <Table.HeaderCell collapsing textAlign="center">Delete</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -67,9 +67,7 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                                     <Table.Cell>{suggestion.url}</Table.Cell>
                                     <Table.Cell>{suggestion.description}</Table.Cell>
                                     <Table.Cell textAlign="center">
-                                        <Button icon color='red' onClick={(): void => {deleteSuggestion(suggestion.id);}}>
-                                            <Icon name='trash alternate' />
-                                        </Button>
+                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteSuggestion(suggestion.id);}} />
                                     </Table.Cell>
                                 </Table.Row>
                             ))

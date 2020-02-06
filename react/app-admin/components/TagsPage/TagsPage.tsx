@@ -71,16 +71,12 @@ export const TagsPage: React.FunctionComponent = () => {
                             tags.map(tag => (
                                 <Table.Row key={tag.id}>
                                     <Table.Cell>{tag.name}</Table.Cell>
-                                    <Table.Cell>{tag.parentName && (<Label>{tag.parentName}</Label>)}</Table.Cell>
+                                    <Table.Cell>{tag.parentName && (<Label size="small">{tag.parentName}</Label>)}</Table.Cell>
                                     <Table.Cell textAlign="center">
-                                        <Button icon color='blue' onClick={(): void => {alert('EDIT');}}>
-                                            <Icon name='edit' />
-                                        </Button>
+                                        <Icon name='edit' color='blue' link onClick={(): void => {alert('EDIT');}}/>
                                     </Table.Cell>
                                     <Table.Cell textAlign="center">
-                                        <Button icon color='red' onClick={(): void => {deleteTag(tag.id);}}>
-                                            <Icon name='trash alternate' />
-                                        </Button>
+                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteTag(tag.id);}} />
                                     </Table.Cell>
                                 </Table.Row>
                             ))
