@@ -41,8 +41,12 @@ export const ContactPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing size="huge" as="h1">
-                Contact messages
+            <Header dividing as="h3">
+                <Icon name='comment' />
+                <Header.Content>
+                    Contact Messages
+                    <Header.Subheader>Messages sent through the &quot;Contact&quot; form</Header.Subheader>
+                </Header.Content>
             </Header>
             {hasSuccess ? (
                 <Message positive>

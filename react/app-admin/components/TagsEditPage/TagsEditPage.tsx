@@ -93,8 +93,12 @@ export const TagsEditPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing as="h1">
-                Edit Tag
+            <Header dividing as="h3">
+                <Icon name='tags' />
+                <Header.Content>
+                    Edit Tag
+                    <Header.Subheader>Edit an existing tag</Header.Subheader>
+                </Header.Content>
             </Header>
             {hasError ? (
                 <Message negative>

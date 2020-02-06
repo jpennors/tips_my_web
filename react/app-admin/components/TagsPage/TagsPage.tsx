@@ -43,8 +43,12 @@ export const TagsPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing as="h1">
-                Tags
+            <Header dividing as="h3">
+                <Icon name='tags' />
+                <Header.Content>
+                    Tags
+                    <Header.Subheader>Tags proposed to search for a type of resources</Header.Subheader>
+                </Header.Content>
             </Header>
             <Link to={ADMIN_APP_TAGS_ADD_URL}>
                 <Button fluid icon>

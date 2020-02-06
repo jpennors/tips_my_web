@@ -41,8 +41,12 @@ export const SuggestionsPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing size="huge" as="h1">
-                Websites suggestions
+            <Header dividing as="h3">
+                <Icon name='world' />
+                <Header.Content>
+                    Resources Suggestions
+                    <Header.Subheader>Websites suggestions sent through the &quot;Share a website&quot; form</Header.Subheader>
+                </Header.Content>
             </Header>
             {hasSuccess ? (
                 <Message positive>

@@ -64,8 +64,12 @@ export const TagsAddPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing as="h1">
-                Add Tag
+            <Header dividing as="h3">
+                <Icon name='tags' />
+                <Header.Content>
+                    Add Tag
+                    <Header.Subheader>Add a tag to be used to search for resources</Header.Subheader>
+                </Header.Content>
             </Header>
             {hasError ? (
                 <Message negative>

@@ -25,7 +25,7 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
         {
             name: 'Overview',
             path: ADMIN_APP_MAIN_URL,
-            iconName: 'newspaper',
+            iconName: 'list alternate',
         },
         {
             name: 'Resources',
@@ -55,12 +55,12 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
         {
             name: 'Suggestions',
             path: ADMIN_APP_SUGGESTIONS_URL,
-            iconName: 'thumbs up',
+            iconName: 'world',
         },
         {
-            name: 'Contact',
+            name: 'Messages',
             path: ADMIN_APP_CONTACT_URL,
-            iconName: 'question circle',
+            iconName: 'comment',
         },
     ];
 
