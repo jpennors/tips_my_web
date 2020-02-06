@@ -69,7 +69,7 @@ export const TagsPage: React.FunctionComponent = () => {
             ) : isEmpty ? (
                 <Message warning>
                     <Message.Header>No tags for now...</Message.Header>
-                    <p>Click on the &quot;Add Tags&quot; button to add your first tag!</p>
+                    <p>Click on the &quot;Add Tag&quot; button to add your first tag!</p>
                 </Message>
             ) : (
                 <Table celled striped selectable unstackable>
