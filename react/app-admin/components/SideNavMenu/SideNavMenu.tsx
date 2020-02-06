@@ -6,6 +6,7 @@ import {
     ADMIN_APP_CONTACT_URL,
     ADMIN_APP_IMPORT_URL,
     ADMIN_APP_MAIN_URL,
+    ADMIN_APP_RESOURCES_ADD_URL,
     ADMIN_APP_RESOURCES_URL,
     ADMIN_APP_SUGGESTIONS_URL,
     ADMIN_APP_TAGS_ADD_URL,
@@ -30,7 +31,17 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
         {
             name: 'Resources',
             path: ADMIN_APP_RESOURCES_URL,
-            iconName: 'rocket',
+            iconName: 'world',
+            subMenu: [
+                {
+                    name: 'List',
+                    path: ADMIN_APP_RESOURCES_URL,
+                },
+                {
+                    name: 'Add',
+                    path: ADMIN_APP_RESOURCES_ADD_URL,
+                },
+            ],
         },
         {
             name: 'Tags',
@@ -55,7 +66,7 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
         {
             name: 'Suggestions',
             path: ADMIN_APP_SUGGESTIONS_URL,
-            iconName: 'world',
+            iconName: 'lightbulb',
         },
         {
             name: 'Messages',

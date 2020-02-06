@@ -44,7 +44,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
     return (
         <div>
             <Header dividing as="h3">
-                <Icon name='rocket' />
+                <Icon name='world' />
                 <Header.Content>
                     Resources
                     <Header.Subheader>Websites that can be searched through TipsMyWeb</Header.Subheader>
