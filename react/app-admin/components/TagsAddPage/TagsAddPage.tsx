@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Button, Form, Header, Message, StrictDropdownItemProps } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Button, Form, Header, Icon, Message, StrictDropdownItemProps } from 'semantic-ui-react';
+import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
 import { serializeTagsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
 
@@ -38,6 +40,8 @@ export const TagsAddPage: React.FunctionComponent = () => {
     };
 
     const saveTag = (): void => {
+        setSuccessMessage('');
+        setErrorMessage('');
         setIsLoading(true);
         const newTag = {
             name: tagName,
@@ -103,13 +107,22 @@ export const TagsAddPage: React.FunctionComponent = () => {
                             onChange={onTagParentIdInputChange}
                         />
                     </Form.Group>
+                    <Link to={ADMIN_APP_TAGS_URL}>
+                        <Button icon labelPosition='left'>
+                            <Icon name='arrow left' />
+                            Cancel
+                        </Button>
+                    </Link>
                     <Button
+                        icon
+                        labelPosition='right'
                         color="blue"
-                        type="submit"
                         onClick={saveTag}
                         disabled={!isReadyToSubmit}
+                        floated="right"
                     >
-                            Submit
+                        Submit
+                        <Icon name='upload' />
                     </Button>
                 </Form>
             </>

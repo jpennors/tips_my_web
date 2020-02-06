@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Header, Icon, Label, Loader, Message, Table } from 'semantic-ui-react';
+import { ADMIN_APP_TAGS_ADD_URL } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
@@ -39,9 +41,11 @@ export const TagsPage: React.FunctionComponent = () => {
             <Header dividing as="h1">
                 Tags
             </Header>
-            <Button fluid icon>
-                Add Tag
-            </Button>
+            <Link to={ADMIN_APP_TAGS_ADD_URL}>
+                <Button fluid icon>
+                    Add Tag
+                </Button>
+            </Link>
             {isLoading ? <Loader active inline="centered" /> : hasError ? (
                 <Message negative>
                     <Message.Header>Something wrong happened...</Message.Header>
