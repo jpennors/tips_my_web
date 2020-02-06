@@ -50,7 +50,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
                 setCanEdit(false);
             }
 
-            setTagOptions(tags.map(tag => ({ key: tag.id, value: tag.id, text: tag.name })));
+            setTagOptions(tags.filter(tag => tag.id != id).map(tag => ({ key: tag.id, value: tag.id, text: tag.name })));
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while trying to fetch tag data from the API.');
