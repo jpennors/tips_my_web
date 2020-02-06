@@ -23,13 +23,11 @@ export const LoginPage: React.FunctionComponent = () => {
         });
     };
 
-    const onUsernameInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const { value } = event.target;
+    const onUsernameInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
         setUsername(value);
     };
 
-    const onPasswordInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const { value } = event.target;
+    const onPasswordInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
         setPassword(value);
     };
 

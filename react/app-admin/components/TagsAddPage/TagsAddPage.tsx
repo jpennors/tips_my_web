@@ -29,13 +29,11 @@ export const TagsAddPage: React.FunctionComponent = () => {
         });
     };
 
-    const onTagNameInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const { value } = event.target;
+    const onTagNameInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
         setTagName(value);
     };
 
-    const onTagParentIdInputChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        const { value } = event.target;
+    const onTagParentIdInputChange = (event: React.SyntheticEvent<HTMLElement>, { value }: { value: string}): void => {
         setTagParentId(value);
     };
 
