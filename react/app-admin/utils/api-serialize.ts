@@ -35,6 +35,7 @@ export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): Tag[] => {
     return tagsFromAPI.map((tag: APITag) => ({
         id: tag.id,
         name: tag.name,
+        parentId: tag.parent ? tag.parent.id : null,
         parentName: tag.parent ? tag.parent.name : null,
     }));
 };
