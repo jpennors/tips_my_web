@@ -78,7 +78,7 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
     return (
         <Menu {...(horizontalDisplay ? horizontalDisplayProps : verticalDisplayProps)}>
             {navItems.map(item => {
-                const onClick = !item.subMenu ? (): void => history.push(item.path) : undefined;
+                const onClick = !item.subMenu || horizontalDisplay ? (): void => history.push(item.path) : undefined;
                 const allPaths = !item.subMenu ? [item.path] : item.subMenu.map(subItem => subItem.path);
 
                 return (
@@ -90,7 +90,7 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
                     >
                         <Icon className={item.iconName} />
                         {item.name}
-                        {item.subMenu && (
+                        {item.subMenu && !horizontalDisplay ? (
                             <Menu.Menu>
                                 {item.subMenu.map(subItem => (
                                     <Menu.Item
@@ -103,7 +103,7 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
                                     </Menu.Item>
                                 ))}
                             </Menu.Menu>
-                        )}
+                        ) : null}
                     </Menu.Item>
                 );
             })}
