@@ -42,6 +42,8 @@ export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Reso
         likes: resource.like,
         priceId: resource.price_id,
         typeId: resource.price_id,
+        priceName: resource.price.name,
+        typeName: resource.type.name,
         createdAt: resource.created_at,
         tags: serializeTagsFromAPI(resource.resource_tags.map(({ tag }) => tag)),
     }));

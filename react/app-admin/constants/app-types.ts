@@ -42,4 +42,6 @@ export interface Resource {
     likes: number;
     createdAt: Date;
     tags: Tag[];
+    priceName: string;
+    typeName: string;
 }
