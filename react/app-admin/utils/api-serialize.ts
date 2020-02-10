@@ -114,3 +114,10 @@ export const serializeResourceToAPI = (resource: Partial<Resource>): Partial<API
         })) : [],
     };
 };
+
+export const serializeTagToAPI = (tag: Partial<Tag>): Partial<APITag> => {
+    return {
+        name: tag.name,
+        parent_id: tag.parentId,
+    };
+};

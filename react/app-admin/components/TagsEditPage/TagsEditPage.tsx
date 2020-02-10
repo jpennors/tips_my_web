@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { Button, Form, Header, Icon, Message, StrictDropdownItemProps } from 'semantic-ui-react';
 import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
-import { serializeTagsFromAPI } from 'tmw-admin/utils/api-serialize';
+import { Tag } from 'tmw-admin/constants/app-types';
+import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
 import { buildTagsMap } from 'tmw-admin/utils/tags';
 import { ajaxGet, ajaxPut } from 'tmw-common/utils/ajax';
 
 export const TagsEditPage: React.FunctionComponent = () => {
-    const [tagName, setTagName] = React.useState<string>('');
-    const [tagParentId, setTagParentId] = React.useState<string>('');
+    const [tag, setTag] = React.useState<Partial<Tag>>({});
     const [tagOptions, setTagOptions] = React.useState<StrictDropdownItemProps[]>([]);
     const isTagOptionsEmpty = tagOptions.length == 0;
-    const isReadyToSubmit = tagName.length > 0;
+    const isReadyToSubmit = tag.name && tag.name.length > 0;
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [canEdit, setCanEdit] = React.useState<boolean>(true);
@@ -29,8 +29,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
 
             const tagsMap = buildTagsMap(tags);
             if (id && id in tagsMap) {
-                setTagName(tagsMap[id].name);
-                setTagParentId(tagsMap[id].parentId || '');
+                setTag(tagsMap[id]);
             } else {
                 setErrorMessage('No matching tag was found for this ID.');
                 setCanEdit(false);
@@ -46,25 +45,21 @@ export const TagsEditPage: React.FunctionComponent = () => {
     };
 
     const onTagNameInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
-        setTagName(value);
+        setTag({ ...tag, name: value });
     };
 
     const onTagParentIdInputChange = (event: React.SyntheticEvent<HTMLElement>, { value }: { value: string}): void => {
-        setTagParentId(value);
+        setTag({ ...tag, parentId: value });
     };
 
     const saveTag = (): void => {
         setSuccessMessage('');
         setErrorMessage('');
         setIsLoading(true);
-        const newTag = {
-            name: tagName,
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            parent_id: tagParentId,
-        };
+        const newTag = serializeTagToAPI(tag);
 
         ajaxPut(`tags/${id}`, newTag).then(() => {
-            setSuccessMessage('Your tag "' + tagName + '" was successfully edited.');
+            setSuccessMessage('Your tag "' + tag.name + '" was successfully edited.');
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while updating the tag. Your modifications were probably not saved.');
@@ -111,7 +106,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
                                 fluid
                                 label='Tag Name'
                                 placeholder='Tag Name'
-                                value={tagName}
+                                value={tag.name}
                                 onChange={onTagNameInputChange}
                                 required
                             />
@@ -121,7 +116,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
                                 placeholder="Parent Tag"
                                 disabled={isTagOptionsEmpty}
                                 options={tagOptions}
-                                value={tagParentId}
+                                value={tag.parentId || undefined}
                                 onChange={onTagParentIdInputChange}
                             />
                         </Form.Group>

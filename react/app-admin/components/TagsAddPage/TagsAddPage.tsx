@@ -2,16 +2,16 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Header, Icon, Message } from 'semantic-ui-react';
 import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
-import { serializeTagsFromAPI } from 'tmw-admin/utils/api-serialize';
+import { Tag } from 'tmw-admin/constants/app-types';
+import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
 import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
 import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
 
 export const TagsAddPage: React.FunctionComponent = () => {
-    const [tagName, setTagName] = React.useState<string>('');
-    const [tagParentId, setTagParentId] = React.useState<string>('');
+    const [tag, setTag] = React.useState<Partial<Tag>>({});
     const [tagOptions, setTagOptions] = React.useState<InputSelectOption[]>([]);
     const isTagOptionsEmpty = tagOptions.length == 0;
-    const isReadyToSubmit = tagName.length > 0;
+    const isReadyToSubmit = tag.name && tag.name.length > 0;
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
@@ -31,26 +31,21 @@ export const TagsAddPage: React.FunctionComponent = () => {
     };
 
     const onTagNameInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
-        setTagName(value);
+        setTag({ ...tag, name: value });
     };
 
     const onTagParentIdInputChange = (event: React.SyntheticEvent<HTMLElement>, { value }: { value: string}): void => {
-        setTagParentId(value);
+        setTag({ ...tag, parentId: value });
     };
 
     const saveTag = (): void => {
         setSuccessMessage('');
         setErrorMessage('');
         setIsLoading(true);
-        const newTag = {
-            name: tagName,
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            parent_id: tagParentId,
-        };
+        const newTag = serializeTagToAPI(tag);
         ajaxPost('tags', newTag).then(() => {
-            setSuccessMessage('Your new tag "' + tagName + '" was successfully saved.');
-            setTagName('');
-            setTagParentId('');
+            setSuccessMessage('Your new tag "' + tag.name + '" was successfully saved.');
+            setTag({});
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while posting new tag to API. The new tag was probably not saved.');
@@ -96,7 +91,7 @@ export const TagsAddPage: React.FunctionComponent = () => {
                             fluid
                             label='Tag Name'
                             placeholder='Tag Name'
-                            value={tagName}
+                            value={tag.name}
                             onChange={onTagNameInputChange}
                             required
                         />
@@ -106,7 +101,7 @@ export const TagsAddPage: React.FunctionComponent = () => {
                             placeholder="Parent Tag"
                             disabled={isTagOptionsEmpty}
                             options={tagOptions}
-                            value={tagParentId}
+                            value={tag.parentId || undefined}
                             onChange={onTagParentIdInputChange}
                         />
                     </Form.Group>
