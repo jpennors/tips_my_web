@@ -52,6 +52,12 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
     const hasError = errorMessage.length > 0;
     const hasSuccess = successMessage.length > 0;
 
+    const resetForm = (): void => {
+        setResource({});
+        setResourceImageFile(undefined);
+        setResourceImageTempURL('');
+    };
+
     const fetchPricesOptions = async (): Promise<void> => {
         ajaxGet('prices').then(res => {
             const prices = serializePricesFromAPI(res.data);
@@ -190,9 +196,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                 fileUpload(resourceImageFile, res.data.id);
             }
             setSuccessMessage('Your resource "' + resource.name + '" was successfully saved.');
-            setResource({});
-            setResourceImageFile(undefined);
-            setResourceImageTempURL('');
+            resetForm();
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while posting new resource to API. The new resource was probably not saved.');

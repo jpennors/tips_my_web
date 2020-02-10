@@ -19,6 +19,10 @@ export const TagsAddPage: React.FunctionComponent = () => {
     const hasError = errorMessage.length > 0;
     const hasSuccess = successMessage.length > 0;
 
+    const resetForm = (): void => {
+        setTag({});
+    };
+
     const fetchTagOptions = async (): Promise<void> => {
         ajaxGet('tags').then(res => {
             const tags = serializeTagsFromAPI(res.data);
@@ -45,7 +49,7 @@ export const TagsAddPage: React.FunctionComponent = () => {
         const newTag = serializeTagToAPI(tag);
         ajaxPost('tags', newTag).then(() => {
             setSuccessMessage('Your new tag "' + tag.name + '" was successfully saved.');
-            setTag({});
+            resetForm();
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while posting new tag to API. The new tag was probably not saved.');
