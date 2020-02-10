@@ -282,7 +282,6 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                                         onChange={onResourceImageInputChange}
                                     />
                                     <TextArea
-                                        fluid
                                         placeholder='Resource description'
                                         value={resource.description || ''}
                                         onChange={onResourceDescriptionInputChange}
