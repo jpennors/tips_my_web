@@ -46,6 +46,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
         && resource.interfaceScore
         && resource.locale;
 
+    const [canEdit, setCanEdit] = React.useState<boolean>(true);
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
@@ -65,6 +66,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching pricing options from API.');
+            setCanEdit(false);
             setIsLoading(false);
         });
     };
@@ -76,6 +78,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching types options from API.');
+            setCanEdit(false);
             setIsLoading(false);
         });
     };
@@ -88,6 +91,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching tag options from API.');
+            setCanEdit(false);
             setIsLoading(false);
         });
     };
@@ -235,7 +239,8 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                     <Message.Header>Something wrong happened...</Message.Header>
                     <p>{errorMessage}</p>
                 </Message>
-            ) : (
+            ) : null}
+            {canEdit ? (
                 <>
                     <Message
                         attached
@@ -400,7 +405,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                         </Button>
                     </Form>
                 </>
-            )}
+            ) : null}
         </div>
     );
 };
