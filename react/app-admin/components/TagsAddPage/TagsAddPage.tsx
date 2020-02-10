@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Form, Header, Icon, Message, StrictDropdownItemProps } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Message } from 'semantic-ui-react';
 import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
 import { serializeTagsFromAPI } from 'tmw-admin/utils/api-serialize';
+import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
 import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
 
 export const TagsAddPage: React.FunctionComponent = () => {
     const [tagName, setTagName] = React.useState<string>('');
     const [tagParentId, setTagParentId] = React.useState<string>('');
-    const [tagOptions, setTagOptions] = React.useState<StrictDropdownItemProps[]>([]);
+    const [tagOptions, setTagOptions] = React.useState<InputSelectOption[]>([]);
     const isTagOptionsEmpty = tagOptions.length == 0;
     const isReadyToSubmit = tagName.length > 0;
 
@@ -21,7 +22,7 @@ export const TagsAddPage: React.FunctionComponent = () => {
     const fetchTagOptions = async (): Promise<void> => {
         ajaxGet('tags').then(res => {
             const tags = serializeTagsFromAPI(res.data);
-            setTagOptions(tags.map(tag => ({ key: tag.id, value: tag.id, text: tag.name })));
+            setTagOptions(convertToSelectOptions(tags, 'id', 'name'));
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching parent tags options from API. As a result, adding a parent is not possible for now.');
