@@ -93,9 +93,11 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                     <Table.Cell>{resource.priceName}</Table.Cell>
                                     <Table.Cell>{resource.likes}</Table.Cell>
                                     <Table.Cell>
-                                        {resource.tags.map(tag => (
-                                            <Label key={tag.tagId} size="small">{tag.tag.name}</Label>
-                                        ))}
+                                        <Label.Group style={{ marginBottom: '-0.5em' }}>
+                                            {resource.tags.map(tag => (
+                                                <Label key={tag.tagId} size="small">{tag.tag.name}</Label>
+                                            ))}
+                                        </Label.Group>
                                     </Table.Cell>
                                     <Table.Cell textAlign="center">
                                         <Link to={ADMIN_APP_RESOURCES_EDIT_URL.replace(':id', resource.id)}>

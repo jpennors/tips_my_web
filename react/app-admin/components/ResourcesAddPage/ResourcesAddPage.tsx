@@ -349,7 +349,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                             </Header>
                             <Segment attached>
                                 {resource.tags && resource.tags.length > 0 ? (
-                                    <Label.Group>
+                                    <Label.Group style={{ marginBottom: '-0.5em' }}>
                                         {resource.tags.map(tag => (
                                             <Label key={tag.tagId} color='teal' image style={{ marginBottom: '0.5em' }}>
                                                 <Icon name='trash alternate' link onClick={(): void => removeSelectedTag(tag.tagId)} />
@@ -368,7 +368,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                             </Segment>
                             <Segment attached secondary>
                                 {displayedTagOptions.length ? (
-                                    <Label.Group>
+                                    <Label.Group style={{ marginBottom: '-0.5em' }}>
                                         {displayedTagOptions.map(tag => (
                                             <Label key={tag.key} as='a' onClick={(): void => addSelectedTag(tag.key)}>
                                                 <Icon name='plus'/>
