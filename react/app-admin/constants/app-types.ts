@@ -24,6 +24,12 @@ export interface Tag {
     parentName: string | null;
 }
 
+export interface ResourceTag {
+    tagId: string;
+    belonging: number;
+    tag: Tag;
+}
+
 export interface TagsMap {
     [id: string]: Tag;
 }
@@ -41,7 +47,17 @@ export interface Resource {
     typeId: string;
     likes: number;
     createdAt: Date;
-    tags: Tag[];
+    tags: ResourceTag[];
     priceName: string;
     typeName: string;
+}
+
+export interface Price {
+    id: string;
+    name: string;
+}
+
+export interface ResourceType {
+    id: string;
+    name: string;
 }

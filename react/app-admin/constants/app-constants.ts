@@ -2,8 +2,14 @@
 export const TOKEN_VALIDITY_TIME = 2 * 3600 * 1000;
 
 export enum LOCALES {
-    FRENCH = 'fr'
+    FRENCH = 'fr',
+    ENGLISH = 'en',
 }
+
+export const LOCALES_NAMES = {
+    [LOCALES.FRENCH]: 'French',
+    [LOCALES.ENGLISH]: 'English',
+};
 
 /*
  * Admin app routes

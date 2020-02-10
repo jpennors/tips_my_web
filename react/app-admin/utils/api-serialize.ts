@@ -1,5 +1,21 @@
-import { APIContact, APITag, APIWebsiteSuggestion, APIResource, APIBasicTag } from 'tmw-admin/constants/api-types';
-import { Contact, Tag, WebsiteSuggestion , Resource } from 'tmw-admin/constants/app-types';
+import {
+    APIContact,
+    APITag,
+    APIWebsiteSuggestion,
+    APIResource,
+    APIBasicTag,
+    APIPrice,
+    APIResourceType, APIResourceTag,
+} from 'tmw-admin/constants/api-types';
+import {
+    Contact,
+    Tag,
+    WebsiteSuggestion,
+    Resource,
+    Price,
+    ResourceType,
+    ResourceTag,
+} from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
 
 export const serializeContactsFromAPI = (contactsFromAPI: APIContact[]): Contact[] => {
@@ -29,6 +45,14 @@ export const serializeTagsFromAPI = (tagsFromAPI: Array<APITag | APIBasicTag>): 
     }));
 };
 
+export const serializeResourceTagsFromAPI = (resourceTagsFromAPI: APIResourceTag[]): ResourceTag[] => {
+    return resourceTagsFromAPI.map(resourceTag => ({
+        tagId: resourceTag.tag_id,
+        belonging: resourceTag.belonging,
+        tag: serializeTagsFromAPI([resourceTag.tag])[0],
+    }));
+};
+
 export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Resource[] => {
     return resourcesFromAPI.map(resource => ({
         id: resource.id,
@@ -45,6 +69,21 @@ export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Reso
         priceName: resource.price.name,
         typeName: resource.type.name,
         createdAt: resource.created_at,
-        tags: serializeTagsFromAPI(resource.resource_tags.map(({ tag }) => tag)),
+        tags: serializeResourceTagsFromAPI(resource.resource_tags),
     }));
 };
+
+export const serializePricesFromAPI = (pricesFromAPI: APIPrice[]): Price[] => {
+    return pricesFromAPI.map(price => ({
+        id: price.id,
+        name: price.name,
+    }));
+};
+
+export const serializeResourceTypesFromAPI = (typesFromAPI: APIResourceType[]): ResourceType[] => {
+    return typesFromAPI.map(type => ({
+        id: type.id,
+        name: type.name,
+    }));
+};
+
