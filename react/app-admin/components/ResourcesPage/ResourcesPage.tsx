@@ -94,7 +94,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                     <Table.Cell>{resource.likes}</Table.Cell>
                                     <Table.Cell>
                                         {resource.tags.map(tag => (
-                                            <Label key={tag.id} size="small">{tag.name}</Label>
+                                            <Label key={tag.tagId} size="small">{tag.tag.name}</Label>
                                         ))}
                                     </Table.Cell>
                                     <Table.Cell textAlign="center">
