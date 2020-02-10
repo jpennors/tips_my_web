@@ -206,9 +206,6 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
         fetchTagOptions();
     }, []);
 
-    console.log(resource);
-    console.log(resourceImageTempURL);
-
     const displayedTagOptions = tagOptions.filter(tag =>
         !resource.tags ||
         !resource.tags.map(resourceTag => resourceTag.tagId).includes(tag.key),
