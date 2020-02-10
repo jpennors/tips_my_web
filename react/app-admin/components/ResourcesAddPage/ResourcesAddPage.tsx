@@ -17,6 +17,7 @@ import { ADMIN_APP_RESOURCES_URL, LOCALES, LOCALES_NAMES } from 'tmw-admin/const
 import { Resource, TagsMap } from 'tmw-admin/constants/app-types';
 import {
     serializePricesFromAPI,
+    serializeResourceToAPI,
     serializeResourceTypesFromAPI,
     serializeTagsFromAPI,
 } from 'tmw-admin/utils/api-serialize';
@@ -183,29 +184,12 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
 
     const saveResource = (): void => {
         setIsLoading(true);
-        const newResource = {
-            name: resource.name,
-            url: resource.url,
-            description: resource.description,
-            language: resource.locale,
-            score: resource.score,
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            price_id: resource.priceId,
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            type_id: resource.typeId,
-            interface: resource.interfaceScore,
-            tags: resource.tags ? resource.tags.map(tag => ({
-                // eslint-disable-next-line @typescript-eslint/camelcase
-                tag_id: tag.tagId,
-                belonging: tag.belonging,
-            })) : [],
-        };
-
+        const newResource = serializeResourceToAPI(resource);
         ajaxPost('resources', newResource).then(res => {
             if (resourceImageFile) {
                 fileUpload(resourceImageFile, res.data.id);
             }
-            setSuccessMessage('Your resource "' + newResource.name + '" was successfully saved.');
+            setSuccessMessage('Your resource "' + resource.name + '" was successfully saved.');
             setResource({});
             setResourceImageFile(undefined);
             setResourceImageTempURL('');

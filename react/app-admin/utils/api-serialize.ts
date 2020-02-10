@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import {
     APIContact,
     APITag,
@@ -5,7 +7,8 @@ import {
     APIResource,
     APIBasicTag,
     APIPrice,
-    APIResourceType, APIResourceTag,
+    APIResourceType,
+    APIResourceTag,
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -17,6 +20,10 @@ import {
     ResourceTag,
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
+
+/*
+ * Convert data from API format to frontend format
+ */
 
 export const serializeContactsFromAPI = (contactsFromAPI: APIContact[]): Contact[] => {
     return contactsFromAPI.map(contact => ({
@@ -87,3 +94,23 @@ export const serializeResourceTypesFromAPI = (typesFromAPI: APIResourceType[]): 
     }));
 };
 
+/*
+ * Convert data from frontend format to (partial) API format (to use with POST API)
+ */
+
+export const serializeResourceToAPI = (resource: Partial<Resource>): Partial<APIResource> => {
+    return {
+        name: resource.name,
+        description: resource.description,
+        url: resource.url,
+        language: resource.locale,
+        score: resource.score,
+        interface: resource.interfaceScore,
+        price_id: resource.priceId,
+        type_id: resource.typeId,
+        tags: resource.tags ? resource.tags.map(tag => ({
+            tag_id: tag.tagId,
+            belonging: tag.belonging,
+        })) : [],
+    };
+};

@@ -93,6 +93,7 @@ export interface APIResource {
     updated_at: Date | null;
     deleted_at: Date | null;
     resource_tags: APIResourceTag[];
+    tags: Pick<APIResourceTag, 'tag_id' | 'belonging'>[]; // Used only for POST/PUT
     price: APIPrice;
     type: APIResourceType;
 }
