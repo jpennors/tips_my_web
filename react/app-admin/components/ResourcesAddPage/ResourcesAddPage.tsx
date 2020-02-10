@@ -247,7 +247,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                                 fluid
                                 label='Resource Name'
                                 placeholder='Resource Name'
-                                value={resource.name}
+                                value={resource.name || ''}
                                 onChange={onResourceNameInputChange}
                                 required
                             />
@@ -255,7 +255,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                                 fluid
                                 label='URL'
                                 placeholder='URL'
-                                value={resource.url}
+                                value={resource.url || ''}
                                 onChange={onResourceURLInputChange}
                                 required
                             />
@@ -287,7 +287,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                                     <TextArea
                                         fluid
                                         placeholder='Resource description'
-                                        value={resource.description}
+                                        value={resource.description || ''}
                                         onChange={onResourceDescriptionInputChange}
                                         required
                                     />
@@ -300,7 +300,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                                 label='Type'
                                 placeholder="Type"
                                 options={typesOptions}
-                                value={resource.typeId}
+                                value={resource.typeId || ''}
                                 onChange={onResourceTypeIdInputChange}
                                 required
                             />
@@ -309,7 +309,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                                 label='Language'
                                 placeholder="Language"
                                 options={localNameOptions}
-                                value={resource.locale}
+                                value={resource.locale || ''}
                                 onChange={onResourceLanguageInputChange}
                                 required
                             />
@@ -318,7 +318,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                                 label='Pricing'
                                 placeholder="Pricing"
                                 options={pricesOptions}
-                                value={resource.priceId}
+                                value={resource.priceId || ''}
                                 onChange={onResourcePriceIdInputChange}
                                 required
                             />
@@ -329,7 +329,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                                 label='Score'
                                 placeholder='Score'
                                 type="number"
-                                value={resource.score}
+                                value={resource.score || ''}
                                 onChange={onResourceScoreInputChange}
                                 required
                             />
@@ -338,7 +338,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                                 label='Interface'
                                 placeholder='Interface'
                                 type="number"
-                                value={resource.interfaceScore}
+                                value={resource.interfaceScore || ''}
                                 onChange={onResourceInterfaceScoreInputChange}
                                 required
                             />

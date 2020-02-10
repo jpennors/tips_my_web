@@ -91,7 +91,7 @@ export const TagsAddPage: React.FunctionComponent = () => {
                             fluid
                             label='Tag Name'
                             placeholder='Tag Name'
-                            value={tag.name}
+                            value={tag.name || ''}
                             onChange={onTagNameInputChange}
                             required
                         />
@@ -101,7 +101,7 @@ export const TagsAddPage: React.FunctionComponent = () => {
                             placeholder="Parent Tag"
                             disabled={isTagOptionsEmpty}
                             options={tagOptions}
-                            value={tag.parentId || undefined}
+                            value={tag.parentId || ''}
                             onChange={onTagParentIdInputChange}
                         />
                     </Form.Group>
