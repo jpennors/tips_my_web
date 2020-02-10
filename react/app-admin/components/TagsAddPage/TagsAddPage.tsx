@@ -72,15 +72,21 @@ export const TagsAddPage: React.FunctionComponent = () => {
                 </Header.Content>
             </Header>
             {hasError ? (
-                <Message negative>
-                    <Message.Header>Something wrong happened...</Message.Header>
-                    <p>{errorMessage}</p>
+                <Message negative icon>
+                    <Icon name='warning circle'/>
+                    <Message.Content>
+                        <Message.Header>Something wrong happened...</Message.Header>
+                        {errorMessage}
+                    </Message.Content>
                 </Message>
             ) : null}
             {hasSuccess ? (
-                <Message positive>
-                    <Message.Header>Success!</Message.Header>
-                    <p>{successMessage}</p>
+                <Message positive icon>
+                    <Icon name='check circle outline'/>
+                    <Message.Content>
+                        <Message.Header>Success!</Message.Header>
+                        {successMessage}
+                    </Message.Content>
                 </Message>
             ) : null}
             <>
