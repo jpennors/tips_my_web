@@ -47,7 +47,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                 <Icon name='world' />
                 <Header.Content>
                     Resources
-                    <Header.Subheader>Websites that can be searched through TipsMyWeb</Header.Subheader>
+                    <Header.Subheader>Resources that can be searched through TipsMyWeb</Header.Subheader>
                 </Header.Content>
             </Header>
             <Link to={ADMIN_APP_RESOURCES_ADD_URL}>
