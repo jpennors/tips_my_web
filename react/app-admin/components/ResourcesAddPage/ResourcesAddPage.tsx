@@ -14,30 +14,17 @@ import {
     Container,
 } from 'semantic-ui-react';
 import { ADMIN_APP_RESOURCES_URL, LOCALES, LOCALES_NAMES } from 'tmw-admin/constants/app-constants';
-import { Resource, Tag, TagsMap } from 'tmw-admin/constants/app-types';
+import { Resource, TagsMap } from 'tmw-admin/constants/app-types';
 import {
     serializePricesFromAPI,
     serializeResourceTypesFromAPI,
     serializeTagsFromAPI,
 } from 'tmw-admin/utils/api-serialize';
 import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
+import { buildTagsMap } from 'tmw-admin/utils/tags';
 import { ajaxGet, ajaxPost, ajaxPostImage } from 'tmw-common/utils/ajax';
 
 const localNameOptions: InputSelectOption[] = Object.values(LOCALES).map(locale => ({ key: locale, value: locale, text: LOCALES_NAMES[locale] }));
-
-const getTagsMap = (tags: Tag[]): TagsMap => {
-    const tagsMap: TagsMap = {};
-
-    tags.forEach(tag => {
-        if (tag.id in tagsMap) {
-            console.error('Some tags have the same ID!');
-        } else {
-            tagsMap[tag.id] = tag;
-        }
-    });
-
-    return tagsMap;
-};
 
 export const ResourcesAddPage: React.FunctionComponent = () => {
     const [resource, setResource] = React.useState<Partial<Resource>>({});
@@ -90,7 +77,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
         ajaxGet('tags').then(res => {
             const tags = serializeTagsFromAPI(res.data);
             setTagOptions(convertToSelectOptions(tags, 'id', 'name'));
-            setTagsMap(getTagsMap(tags));
+            setTagsMap(buildTagsMap(tags));
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching tag options from API.');

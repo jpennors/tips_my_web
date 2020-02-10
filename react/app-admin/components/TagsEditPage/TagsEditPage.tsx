@@ -3,23 +3,9 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { Button, Form, Header, Icon, Message, StrictDropdownItemProps } from 'semantic-ui-react';
 import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
-import { Tag, TagsMap } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI } from 'tmw-admin/utils/api-serialize';
+import { buildTagsMap } from 'tmw-admin/utils/tags';
 import { ajaxGet, ajaxPut } from 'tmw-common/utils/ajax';
-
-const getTagsMap = (tags: Tag[]): TagsMap => {
-    const tagsMap: TagsMap = {};
-
-    tags.forEach(tag => {
-        if (tag.id in tagsMap) {
-            console.error('Some tags have the same ID!');
-        } else {
-            tagsMap[tag.id] = tag;
-        }
-    });
-
-    return tagsMap;
-};
 
 export const TagsEditPage: React.FunctionComponent = () => {
     const [tagName, setTagName] = React.useState<string>('');
@@ -41,7 +27,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
         ajaxGet('tags').then(res => {
             const tags = serializeTagsFromAPI(res.data);
 
-            const tagsMap = getTagsMap(tags);
+            const tagsMap = buildTagsMap(tags);
             if (id && id in tagsMap) {
                 setTagName(tagsMap[id].name);
                 setTagParentId(tagsMap[id].parentId || '');
