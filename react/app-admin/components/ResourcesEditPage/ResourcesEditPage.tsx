@@ -319,7 +319,6 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
                                     <Form.Input
                                         fluid
                                         accept="image/*"
-                                        placeholder='Image'
                                         type="file"
                                         onChange={onResourceImageInputChange}
                                     />
