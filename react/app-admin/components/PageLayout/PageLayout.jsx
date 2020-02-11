@@ -4,7 +4,7 @@ import { Container, Grid } from 'semantic-ui-react';
 import { OverviewPage } from 'tmw-admin/components/OverviewPage';
 import AdminImportComponent from 'tmw-admin/components/import/AdminImportComponent';
 import { ContactPage } from 'tmw-admin/components/ContactPage';
-import { ResourcesAddPage } from 'tmw-admin/components/ResourcesAddPage';
+import { ResourcesEditPage } from 'tmw-admin/components/ResourcesEditPage';
 import { ResourcesPage } from 'tmw-admin/components/ResourcesPage';
 import { SideNavMenu } from 'tmw-admin/components/SideNavMenu';
 import { SuggestionsPage } from 'tmw-admin/components/SuggestionsPage';
@@ -23,6 +23,7 @@ import {
     ADMIN_APP_TAGS_ADD_URL,
     ADMIN_APP_TAGS_EDIT_URL,
     ADMIN_APP_RESOURCES_ADD_URL,
+    ADMIN_APP_RESOURCES_EDIT_URL,
 } from 'tmw-admin/constants/app-constants';
 
 import './page-layout.css';
@@ -55,7 +56,8 @@ export class PageLayout extends React.Component {
                                         <ProtectedRoute path={ADMIN_APP_SUGGESTIONS_URL} exact component={SuggestionsPage} />
                                         <ProtectedRoute path={ADMIN_APP_CONTACT_URL} exact component={ContactPage} />
                                         <ProtectedRoute path={ADMIN_APP_RESOURCES_URL} exact component={ResourcesPage} />
-                                        <ProtectedRoute path={ADMIN_APP_RESOURCES_ADD_URL} exact component={ResourcesAddPage} />
+                                        <ProtectedRoute path={ADMIN_APP_RESOURCES_ADD_URL} exact component={ResourcesEditPage} />
+                                        <ProtectedRoute path={ADMIN_APP_RESOURCES_EDIT_URL} exact component={ResourcesEditPage} />
                                         <Route component={Error404} />
                                     </Switch>
                                 </div>

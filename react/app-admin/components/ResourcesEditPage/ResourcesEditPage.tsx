@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
     Button,
@@ -14,21 +15,21 @@ import {
     Container,
 } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
-import { ADMIN_APP_RESOURCES_URL, LOCALES, LOCALES_NAMES } from 'tmw-admin/constants/app-constants';
+import { ADMIN_APP_RESOURCES_URL, LOCALES, LOCALES_NAMES, RESOURCES_IMAGE_BASE_URL } from 'tmw-admin/constants/app-constants';
 import { Resource, TagsMap } from 'tmw-admin/constants/app-types';
 import {
-    serializePricesFromAPI,
+    serializePricesFromAPI, serializeResourcesFromAPI,
     serializeResourceToAPI,
     serializeResourceTypesFromAPI,
     serializeTagsFromAPI,
 } from 'tmw-admin/utils/api-serialize';
 import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
 import { buildTagsMap } from 'tmw-admin/utils/tags';
-import { ajaxGet, ajaxPost, ajaxPostImage } from 'tmw-common/utils/ajax';
+import { ajaxGet, ajaxPost, ajaxPostImage, ajaxPut } from 'tmw-common/utils/ajax';
 
 const localNameOptions: InputSelectOption[] = Object.values(LOCALES).map(locale => ({ key: locale, value: locale, text: LOCALES_NAMES[locale] }));
 
-export const ResourcesAddPage: React.FunctionComponent = () => {
+export const ResourcesEditPage: React.FunctionComponent = () => {
     const [resource, setResource] = React.useState<Partial<Resource>>({});
     const [resourceImageTempURL, setResourceImageTempURL] = React.useState<string>('');
     const [resourceImageFile, setResourceImageFile] = React.useState<File>();
@@ -52,10 +53,31 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
-    const resetForm = (): void => {
-        setResource({});
-        setResourceImageFile(undefined);
-        setResourceImageTempURL('');
+    const { id: editedResourceId } = useParams();
+
+    const fetchResource = async (): Promise<void> => {
+        ajaxGet('resources').then(res => {
+            const resources = serializeResourcesFromAPI(res.data);
+
+            if (editedResourceId) {
+                const editedResource = resources.find(resource => resource.id === editedResourceId);
+                if (editedResource) {
+                    setResource(editedResource);
+                    if (editedResource.iconFilename) {
+                        setResourceImageTempURL(RESOURCES_IMAGE_BASE_URL + editedResourceId);
+                    }
+                } else {
+                    setErrorMessage('No matching resource was found for this ID.');
+                    setCanEdit(false);
+                }
+            }
+
+            setIsLoading(false);
+        }).catch(() => {
+            setErrorMessage('Error while fetching resource from the API.');
+            setCanEdit(false);
+            setIsLoading(false);
+        });
     };
 
     const fetchPricesOptions = async (): Promise<void> => {
@@ -64,7 +86,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
             setPricesOptions(convertToSelectOptions(prices, 'id', 'name'));
             setIsLoading(false);
         }).catch(() => {
-            setErrorMessage('Error while fetching pricing options from API.');
+            setErrorMessage('Error while fetching pricing options from the API.');
             setCanEdit(false);
             setIsLoading(false);
         });
@@ -76,7 +98,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
             setTypesOptions(convertToSelectOptions(types, 'id', 'name'));
             setIsLoading(false);
         }).catch(() => {
-            setErrorMessage('Error while fetching types options from API.');
+            setErrorMessage('Error while fetching types options from the API.');
             setCanEdit(false);
             setIsLoading(false);
         });
@@ -89,7 +111,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
             setTagsMap(buildTagsMap(tags));
             setIsLoading(false);
         }).catch(() => {
-            setErrorMessage('Error while fetching tag options from API.');
+            setErrorMessage('Error while fetching tag options from the API.');
             setCanEdit(false);
             setIsLoading(false);
         });
@@ -191,26 +213,49 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
         });
     };
 
+    const resetForm = (): void => {
+        setResource({});
+        setResourceImageFile(undefined);
+        setResourceImageTempURL('');
+    };
+
     const saveResource = (): void => {
         setIsLoading(true);
         const newResource = serializeResourceToAPI(resource);
-        ajaxPost('resources', newResource).then(res => {
-            if (resourceImageFile) {
-                fileUpload(resourceImageFile, res.data.id);
-            }
-            setSuccessMessage('Your resource "' + resource.name + '" was successfully saved.');
-            resetForm();
-            setIsLoading(false);
-        }).catch(() => {
-            setErrorMessage('Error while posting new resource to API. The new resource was probably not saved.');
-            setIsLoading(false);
-        });
+        newResource.id = editedResourceId;
+
+        if (editedResourceId) {
+            ajaxPut(`resources/${editedResourceId}`, newResource).then(() => {
+                if (resourceImageFile) {
+                    fileUpload(resourceImageFile, editedResourceId);
+                }
+                setSuccessMessage('Your resource "' + resource.name + '" was successfully edited.');
+                setIsLoading(false);
+            }).catch(() => {
+                setErrorMessage('Error while updating the resource. Your modifications were probably not saved.');
+                setIsLoading(false);
+            });
+        } else {
+            ajaxPost('resources', newResource).then(res => {
+                if (resourceImageFile) {
+                    fileUpload(resourceImageFile, res.data.id);
+                }
+                setSuccessMessage('Your resource "' + resource.name + '" was successfully saved.');
+                resetForm();
+                setIsLoading(false);
+            }).catch(() => {
+                setErrorMessage('Error while posting new resource to API. The new resource was probably not saved.');
+                setIsLoading(false);
+            });
+        }
+
     };
 
     React.useEffect(() => {
         fetchPricesOptions();
         fetchTypesOptions();
         fetchTagOptions();
+        fetchResource();
     }, []);
 
     const displayedTagOptions = tagOptions.filter(tag =>
@@ -223,8 +268,10 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
             <Header dividing as="h3">
                 <Icon name='world' />
                 <Header.Content>
-                    Add Resource
-                    <Header.Subheader>Add a resource to be displayed on search results</Header.Subheader>
+                    {editedResourceId ? 'Edit Resource' : 'Add Resource'}
+                    <Header.Subheader>
+                        {editedResourceId ? 'Edit an existing resource' : 'Add a resource to be displayed on search results'}
+                    </Header.Subheader>
                 </Header.Content>
             </Header>
             <ActionMessage type='success' message={successMessage} />
@@ -233,7 +280,7 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                 <>
                     <Message
                         attached
-                        header='Add a resource with tags'
+                        header={editedResourceId ? 'Edit an existing resource' : 'Add a resource with tags'}
                         content='The resource will be available as a search result with the tags you set'
                     />
                     <Form className="attached fluid segment" loading={isLoading}>

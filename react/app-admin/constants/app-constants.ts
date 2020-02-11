@@ -11,6 +11,8 @@ export const LOCALES_NAMES = {
     [LOCALES.ENGLISH]: 'English',
 };
 
+export const RESOURCES_IMAGE_BASE_URL = '/api/resources/image/';
+
 /*
  * Admin app routes
  */
