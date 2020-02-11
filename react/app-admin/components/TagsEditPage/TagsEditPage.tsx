@@ -6,8 +6,9 @@ import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
+import { convertToSelectOptions } from 'tmw-admin/utils/select-options';
 import { buildTagsMap } from 'tmw-admin/utils/tags';
-import { ajaxGet, ajaxPut } from 'tmw-common/utils/ajax';
+import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/ajax';
 
 export const TagsEditPage: React.FunctionComponent = () => {
     const [tag, setTag] = React.useState<Partial<Tag>>({});
@@ -20,21 +21,23 @@ export const TagsEditPage: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
-    const { id } = useParams();
+    const { id: editedTagId } = useParams();
 
     const fetchTagOptions = async (): Promise<void> => {
         ajaxGet('tags').then(res => {
             const tags = serializeTagsFromAPI(res.data);
 
-            const tagsMap = buildTagsMap(tags);
-            if (id && id in tagsMap) {
-                setTag(tagsMap[id]);
-            } else {
-                setErrorMessage('No matching tag was found for this ID.');
-                setCanEdit(false);
+            if (editedTagId) {
+                const tagsMap = buildTagsMap(tags);
+                if (editedTagId in tagsMap) {
+                    setTag(tagsMap[editedTagId]);
+                } else {
+                    setErrorMessage('No matching tag was found for this ID.');
+                    setCanEdit(false);
+                }
             }
 
-            setTagOptions(tags.filter(tag => tag.id != id).map(tag => ({ key: tag.id, value: tag.id, text: tag.name })));
+            setTagOptions(convertToSelectOptions(tags.filter(tag => tag.id != editedTagId), 'id', 'name'));
             setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while trying to fetch tag data from the API.');
@@ -51,20 +54,34 @@ export const TagsEditPage: React.FunctionComponent = () => {
         setTag({ ...tag, parentId: value });
     };
 
+    const resetForm = (): void => {
+        setTag({});
+    };
+
     const saveTag = (): void => {
         setSuccessMessage('');
         setErrorMessage('');
         setIsLoading(true);
         const newTag = serializeTagToAPI(tag);
 
-        ajaxPut(`tags/${id}`, newTag).then(() => {
-            setSuccessMessage('Your tag "' + tag.name + '" was successfully edited.');
-            setIsLoading(false);
-        }).catch(() => {
-            setErrorMessage('Error while updating the tag. Your modifications were probably not saved.');
-            setIsLoading(false);
-        });
-
+        if (editedTagId) {
+            ajaxPut(`tags/${editedTagId}`, newTag).then(() => {
+                setSuccessMessage('Your tag "' + tag.name + '" was successfully edited.');
+                setIsLoading(false);
+            }).catch(() => {
+                setErrorMessage('Error while updating the tag. Your modifications were probably not saved.');
+                setIsLoading(false);
+            });
+        } else {
+            ajaxPost('tags', newTag).then(() => {
+                setSuccessMessage('Your new tag "' + tag.name + '" was successfully saved.');
+                resetForm();
+                setIsLoading(false);
+            }).catch(() => {
+                setErrorMessage('Error while posting new tag to API. The new tag was probably not saved.');
+                setIsLoading(false);
+            });
+        }
     };
 
     React.useEffect(() => {
@@ -76,8 +93,10 @@ export const TagsEditPage: React.FunctionComponent = () => {
             <Header dividing as="h3">
                 <Icon name='tags' />
                 <Header.Content>
-                    Edit Tag
-                    <Header.Subheader>Edit an existing tag</Header.Subheader>
+                    {editedTagId ? 'Edit Tag' : 'Add Tag'}
+                    <Header.Subheader>
+                        {editedTagId ? 'Edit an existing tag' : 'Add a tag to be used to search for resources'}
+                    </Header.Subheader>
                 </Header.Content>
             </Header>
             <ActionMessage type='success' message={successMessage} />
@@ -86,7 +105,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
                 <>
                     <Message
                         attached
-                        header='Edit an existing tag'
+                        header={editedTagId ? 'Edit an existing tag' : 'Add a tag to filter resources'}
                         content='A tag can also be attached to a parent tag'
                     />
                     <Form className="attached fluid segment" loading={isLoading}>

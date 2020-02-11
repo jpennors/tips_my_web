@@ -8,7 +8,6 @@ import { ResourcesAddPage } from 'tmw-admin/components/ResourcesAddPage';
 import { ResourcesPage } from 'tmw-admin/components/ResourcesPage';
 import { SideNavMenu } from 'tmw-admin/components/SideNavMenu';
 import { SuggestionsPage } from 'tmw-admin/components/SuggestionsPage';
-import { TagsAddPage } from 'tmw-admin/components/TagsAddPage';
 import { TagsEditPage } from 'tmw-admin/components/TagsEditPage';
 import { TagsPage } from 'tmw-admin/components/TagsPage';
 import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
@@ -50,7 +49,7 @@ export class PageLayout extends React.Component {
                                     <Switch>
                                         <ProtectedRoute path={ADMIN_APP_MAIN_URL} exact component={OverviewPage} />
                                         <ProtectedRoute path={ADMIN_APP_TAGS_URL} exact component={TagsPage} />
-                                        <ProtectedRoute path={ADMIN_APP_TAGS_ADD_URL} exact component={TagsAddPage} />
+                                        <ProtectedRoute path={ADMIN_APP_TAGS_ADD_URL} exact component={TagsEditPage} />
                                         <ProtectedRoute path={ADMIN_APP_TAGS_EDIT_URL} exact component={TagsEditPage} />
                                         <ProtectedRoute path={ADMIN_APP_IMPORT_URL} exact component={AdminImportComponent} />
                                         <ProtectedRoute path={ADMIN_APP_SUGGESTIONS_URL} exact component={SuggestionsPage} />

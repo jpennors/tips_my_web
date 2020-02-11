@@ -1,1 +1,0 @@
-export { TagsAddPage } from './TagsAddPage';
