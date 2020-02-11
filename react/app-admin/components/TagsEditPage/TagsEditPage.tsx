@@ -45,11 +45,11 @@ export const TagsEditPage: React.FunctionComponent = () => {
         });
     };
 
-    const onTagNameInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
+    const onTagNameInputChange = (_: any, { value }: { value: string}): void => {
         setTag({ ...tag, name: value });
     };
 
-    const onTagParentIdInputChange = (event: React.SyntheticEvent<HTMLElement>, { value }: { value: string}): void => {
+    const onTagParentIdInputChange = (_: any, { value }: { value: string}): void => {
         setTag({ ...tag, parentId: value });
     };
 

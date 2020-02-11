@@ -117,11 +117,11 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
         });
     };
 
-    const onResourceNameInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
+    const onResourceNameInputChange = (_: any, { value }: { value: string}): void => {
         setResource({ ...resource, name: value });
     };
 
-    const onResourceURLInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
+    const onResourceURLInputChange = (_: any, { value }: { value: string}): void => {
         setResource({ ...resource, url: value });
     };
 
@@ -133,27 +133,27 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
         }
     };
 
-    const onResourceTypeIdInputChange = (event: React.SyntheticEvent<HTMLElement>, { value }: { value: string}): void => {
+    const onResourceTypeIdInputChange = (_: any, { value }: { value: string}): void => {
         setResource({ ...resource, typeId: value });
     };
 
-    const onResourceLanguageInputChange = (event: React.SyntheticEvent<HTMLElement>, { value }: { value: string}): void => {
+    const onResourceLanguageInputChange = (_: any, { value }: { value: string}): void => {
         setResource({ ...resource, locale: value });
     };
 
-    const onResourcePriceIdInputChange = (event: React.SyntheticEvent<HTMLElement>, { value }: { value: string}): void => {
+    const onResourcePriceIdInputChange = (_: any, { value }: { value: string}): void => {
         setResource({ ...resource, priceId: value });
     };
 
-    const onResourceDescriptionInputChange = (event: React.FormEvent<HTMLTextAreaElement>, { value }: { value: string}): void => {
+    const onResourceDescriptionInputChange = (_: any, { value }: { value: string}): void => {
         setResource({ ...resource, description: value });
     };
 
-    const onResourceScoreInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
+    const onResourceScoreInputChange = (_: any, { value }: { value: string}): void => {
         setResource({ ...resource, score: parseInt(value) });
     };
 
-    const onResourceInterfaceScoreInputChange = (event: React.ChangeEvent<HTMLInputElement>, { value }: { value: string}): void => {
+    const onResourceInterfaceScoreInputChange = (_: any, { value }: { value: string}): void => {
         setResource({ ...resource, interfaceScore: parseInt(value) });
     };
 
