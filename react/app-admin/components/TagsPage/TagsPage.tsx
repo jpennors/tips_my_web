@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Header, Icon, Label, Loader, Table } from 'semantic-ui-react';
+import { Button, Icon, Label, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_TAGS_ADD_URL, ADMIN_APP_TAGS_EDIT_URL } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI } from 'tmw-admin/utils/api-serialize';
@@ -43,13 +44,11 @@ export const TagsPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing as="h3">
-                <Icon name='tags' />
-                <Header.Content>
-                    Tags
-                    <Header.Subheader>Tags proposed to search for a type of resources</Header.Subheader>
-                </Header.Content>
-            </Header>
+            <PageHeader
+                iconName="tags"
+                headerContent="Tags"
+                subHeaderContent='Tags proposed to search for a type of resources'
+            />
             <Link to={ADMIN_APP_TAGS_ADD_URL}>
                 <Button fluid icon>
                     Add Tag

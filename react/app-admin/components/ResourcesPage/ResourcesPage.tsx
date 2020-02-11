@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Header, Icon, Label, Loader, Table } from 'semantic-ui-react';
+import { Button, Icon, Label, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_RESOURCES_ADD_URL, ADMIN_APP_RESOURCES_EDIT_URL } from 'tmw-admin/constants/app-constants';
 import { Resource } from 'tmw-admin/constants/app-types';
 import { serializeResourcesFromAPI } from 'tmw-admin/utils/api-serialize';
@@ -43,13 +44,11 @@ export const ResourcesPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing as="h3">
-                <Icon name='world' />
-                <Header.Content>
-                    Resources
-                    <Header.Subheader>Resources that can be searched through TipsMyWeb</Header.Subheader>
-                </Header.Content>
-            </Header>
+            <PageHeader
+                iconName="world"
+                headerContent="Resources"
+                subHeaderContent="Resources that can be searched through TipsMyWeb"
+            />
             <Link to={ADMIN_APP_RESOURCES_ADD_URL}>
                 <Button fluid icon>
                     Add Resource

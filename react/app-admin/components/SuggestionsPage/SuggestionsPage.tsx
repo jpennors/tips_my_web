@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Header, Icon, Loader, Table } from 'semantic-ui-react';
+import { Icon, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { WebsiteSuggestion } from 'tmw-admin/constants/app-types';
 import { serializeSuggestionsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
@@ -41,13 +42,11 @@ export const SuggestionsPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing as="h3">
-                <Icon name='lightbulb' />
-                <Header.Content>
-                    Resources Suggestions
-                    <Header.Subheader>Websites suggestions sent through the &quot;Share a website&quot; form</Header.Subheader>
-                </Header.Content>
-            </Header>
+            <PageHeader
+                iconName="lightbulb"
+                headerContent="Resources Suggestions"
+                subHeaderContent='Websites suggestions sent through the "Share a website" form'
+            />
             <ActionMessage type='success' message={successMessage} />
             <ActionMessage type='error' message={errorMessage} />
             {isLoading ? <Loader active inline="centered" /> : hasError ? null : isEmpty ? (

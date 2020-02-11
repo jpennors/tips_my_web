@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { Button, Form, Header, Icon, Message, StrictDropdownItemProps } from 'semantic-ui-react';
+import { Button, Form, Icon, Message, StrictDropdownItemProps } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
@@ -89,15 +90,11 @@ export const TagsEditPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing as="h3">
-                <Icon name='tags' />
-                <Header.Content>
-                    {editedTagId ? 'Edit Tag' : 'Add Tag'}
-                    <Header.Subheader>
-                        {editedTagId ? 'Edit an existing tag' : 'Add a tag to be used to search for resources'}
-                    </Header.Subheader>
-                </Header.Content>
-            </Header>
+            <PageHeader
+                iconName="tags"
+                headerContent={editedTagId ? 'Edit Tag' : 'Add Tag'}
+                subHeaderContent={editedTagId ? 'Edit an existing tag' : 'Add a tag to be used to search for resources'}
+            />
             <ActionMessage type='success' message={successMessage} />
             <ActionMessage type='error' message={errorMessage} />
             {canEdit && (

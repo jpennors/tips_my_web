@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { Header, Icon, Message } from 'semantic-ui-react';
+import { Message } from 'semantic-ui-react';
+import { PageHeader } from 'tmw-admin/components/PageHeader';
 
 export const OverviewPage: React.FunctionComponent = () => {
     return (
         <div>
-            <Header dividing as="h3">
-                <Icon name='list alternate' />
-                <Header.Content>
-                    Overview
-                    <Header.Subheader>Main statistics about TipsMyWeb</Header.Subheader>
-                </Header.Content>
-            </Header>
+            <PageHeader
+                iconName="list alternate"
+                headerContent="Overview"
+                subHeaderContent="Main statistics about TipsMyWeb"
+            />
             <Message info>
                 <Message.Header>Nothing to display for now...</Message.Header>
                 <p>This part of the website is under construction!</p>

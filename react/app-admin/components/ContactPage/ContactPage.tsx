@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Header, Icon, Loader, Table } from 'semantic-ui-react';
+import { Icon, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { Contact } from 'tmw-admin/constants/app-types';
 import { serializeContactsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
@@ -41,13 +42,11 @@ export const ContactPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing as="h3">
-                <Icon name='comment' />
-                <Header.Content>
-                    Contact Messages
-                    <Header.Subheader>Messages sent through the &quot;Contact&quot; form</Header.Subheader>
-                </Header.Content>
-            </Header>
+            <PageHeader
+                iconName="comment"
+                headerContent="Contact Messages"
+                subHeaderContent='Messages sent through the "Contact" form'
+            />
             <ActionMessage type='success' message={successMessage} />
             <ActionMessage type='error' message={errorMessage} />
             {isLoading ? <Loader active inline="centered" /> : hasError ? null : isEmpty ? (

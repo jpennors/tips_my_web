@@ -15,6 +15,7 @@ import {
     Container,
 } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_RESOURCES_URL, LOCALES, LOCALES_NAMES, RESOURCES_IMAGE_BASE_URL } from 'tmw-admin/constants/app-constants';
 import { Resource, TagsMap } from 'tmw-admin/constants/app-types';
 import {
@@ -265,15 +266,11 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
 
     return (
         <div>
-            <Header dividing as="h3">
-                <Icon name='world' />
-                <Header.Content>
-                    {editedResourceId ? 'Edit Resource' : 'Add Resource'}
-                    <Header.Subheader>
-                        {editedResourceId ? 'Edit an existing resource' : 'Add a resource to be displayed on search results'}
-                    </Header.Subheader>
-                </Header.Content>
-            </Header>
+            <PageHeader
+                iconName="world"
+                headerContent={editedResourceId ? 'Edit Resource' : 'Add Resource'}
+                subHeaderContent={editedResourceId ? 'Edit an existing resource' : 'Add a resource to be displayed on search results'}
+            />
             <ActionMessage type='success' message={successMessage} />
             <ActionMessage type='error' message={errorMessage} />
             {canEdit ? (
