@@ -7,7 +7,6 @@ import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
 import { convertToSelectOptions } from 'tmw-admin/utils/select-options';
-import { buildTagsMap } from 'tmw-admin/utils/tags';
 import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/ajax';
 
 export const TagsEditPage: React.FunctionComponent = () => {
@@ -28,9 +27,9 @@ export const TagsEditPage: React.FunctionComponent = () => {
             const tags = serializeTagsFromAPI(res.data);
 
             if (editedTagId) {
-                const tagsMap = buildTagsMap(tags);
-                if (editedTagId in tagsMap) {
-                    setTag(tagsMap[editedTagId]);
+                const editedTag = tags.find(tag => tag.id === editedTagId);
+                if (editedTag) {
+                    setTag(editedTag);
                 } else {
                     setErrorMessage('No matching tag was found for this ID.');
                     setCanEdit(false);
