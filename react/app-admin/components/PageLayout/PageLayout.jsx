@@ -11,7 +11,7 @@ import { SuggestionsPage } from 'tmw-admin/components/SuggestionsPage';
 import { TagsEditPage } from 'tmw-admin/components/TagsEditPage';
 import { TagsPage } from 'tmw-admin/components/TagsPage';
 import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
-import { ProtectedRoute } from 'tmw-admin/utils/ProtectedRoute';
+import { ProtectedRoute } from 'tmw-admin/components/ProtectedRoute';
 import Error404 from 'tmw-admin/screens/Error404';
 import {
     ADMIN_APP_CONTACT_URL,
