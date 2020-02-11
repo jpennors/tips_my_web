@@ -1,6 +1,7 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
+import { NotFoundErrorMessage } from 'tmw-admin/components/NotFoundErrorMessage';
 import { OverviewPage } from 'tmw-admin/components/OverviewPage';
 import AdminImportComponent from 'tmw-admin/components/import/AdminImportComponent';
 import { ContactPage } from 'tmw-admin/components/ContactPage';
@@ -12,7 +13,6 @@ import { TagsEditPage } from 'tmw-admin/components/TagsEditPage';
 import { TagsPage } from 'tmw-admin/components/TagsPage';
 import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
 import { ProtectedRoute } from 'tmw-admin/components/ProtectedRoute';
-import Error404 from 'tmw-admin/screens/Error404';
 import {
     ADMIN_APP_CONTACT_URL,
     ADMIN_APP_IMPORT_URL,
@@ -58,7 +58,7 @@ export class PageLayout extends React.Component {
                                         <ProtectedRoute path={ADMIN_APP_RESOURCES_URL} exact component={ResourcesPage} />
                                         <ProtectedRoute path={ADMIN_APP_RESOURCES_ADD_URL} exact component={ResourcesEditPage} />
                                         <ProtectedRoute path={ADMIN_APP_RESOURCES_EDIT_URL} exact component={ResourcesEditPage} />
-                                        <Route component={Error404} />
+                                        <ProtectedRoute component={NotFoundErrorMessage} />
                                     </Switch>
                                 </div>
                             </div>
