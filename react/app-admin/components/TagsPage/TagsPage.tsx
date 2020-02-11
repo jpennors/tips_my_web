@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Header, Icon, Label, Loader, Message, Table } from 'semantic-ui-react';
+import { Button, Header, Icon, Label, Loader, Table } from 'semantic-ui-react';
+import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { ADMIN_APP_TAGS_ADD_URL, ADMIN_APP_TAGS_EDIT_URL } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI } from 'tmw-admin/utils/api-serialize';
@@ -12,7 +13,6 @@ export const TagsPage: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
     const hasError = errorMessage.length > 0;
-    const hasSuccess = successMessage.length > 0;
     const isEmpty = tags.length == 0;
 
     const fetchTags = async (): Promise<void> => {
@@ -55,28 +55,14 @@ export const TagsPage: React.FunctionComponent = () => {
                     Add Tag
                 </Button>
             </Link>
-            {hasSuccess ? (
-                <Message positive icon>
-                    <Icon name='check circle outline'/>
-                    <Message.Content>
-                        <Message.Header>Success!</Message.Header>
-                        {successMessage}
-                    </Message.Content>
-                </Message>
-            ) : null}
-            {isLoading ? <Loader active inline="centered" /> : hasError ? (
-                <Message negative icon>
-                    <Icon name='warning circle'/>
-                    <Message.Content>
-                        <Message.Header>Something wrong happened...</Message.Header>
-                        {errorMessage}
-                    </Message.Content>
-                </Message>
-            ) : isEmpty ? (
-                <Message warning>
-                    <Message.Header>No tags for now...</Message.Header>
-                    <p>Click on the &quot;Add Tag&quot; button to add your first tag!</p>
-                </Message>
+            <ActionMessage type='success' message={successMessage} />
+            <ActionMessage type='error' message={errorMessage} />
+            {isLoading ? <Loader active inline="centered" /> : hasError ? null : isEmpty ? (
+                <ActionMessage
+                    type='warning'
+                    message='Click on the "Add Tag" button to add your first tag!'
+                    messageHeader='No tags for now...'
+                />
             ) : (
                 <Table celled striped selectable unstackable>
                     <Table.Header>

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Header, Icon, Loader, Message, Table } from 'semantic-ui-react';
+import { Header, Icon, Loader, Table } from 'semantic-ui-react';
+import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { WebsiteSuggestion } from 'tmw-admin/constants/app-types';
 import { serializeSuggestionsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
@@ -10,7 +11,6 @@ export const SuggestionsPage: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
     const hasError = errorMessage.length > 0;
-    const hasSuccess = successMessage.length > 0;
     const isEmpty = suggestions.length == 0;
 
     const fetchWebsiteSuggestions = async (): Promise<void> => {
@@ -48,28 +48,14 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                     <Header.Subheader>Websites suggestions sent through the &quot;Share a website&quot; form</Header.Subheader>
                 </Header.Content>
             </Header>
-            {hasSuccess ? (
-                <Message positive icon>
-                    <Icon name='check circle outline'/>
-                    <Message.Content>
-                        <Message.Header>Success!</Message.Header>
-                        {successMessage}
-                    </Message.Content>
-                </Message>
-            ) : null}
-            {isLoading ? <Loader active inline="centered" /> : hasError ? (
-                <Message negative icon>
-                    <Icon name='warning circle'/>
-                    <Message.Content>
-                        <Message.Header>Something wrong happened...</Message.Header>
-                        {errorMessage}
-                    </Message.Content>
-                </Message>
-            ) : isEmpty ? (
-                <Message warning>
-                    <Message.Header>No suggestions for now...</Message.Header>
-                    <p>Be patient!</p>
-                </Message>
+            <ActionMessage type='success' message={successMessage} />
+            <ActionMessage type='error' message={errorMessage} />
+            {isLoading ? <Loader active inline="centered" /> : hasError ? null : isEmpty ? (
+                <ActionMessage
+                    type='warning'
+                    message='Be patient!'
+                    messageHeader='No suggestions for now...'
+                />
             ) : (
                 <Table celled striped selectable unstackable>
                     <Table.Header>

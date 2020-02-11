@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { Button, Form, Header, Icon, Message, StrictDropdownItemProps } from 'semantic-ui-react';
+import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
@@ -18,8 +19,6 @@ export const TagsEditPage: React.FunctionComponent = () => {
     const [canEdit, setCanEdit] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
-    const hasError = errorMessage.length > 0;
-    const hasSuccess = successMessage.length > 0;
 
     const { id } = useParams();
 
@@ -81,24 +80,8 @@ export const TagsEditPage: React.FunctionComponent = () => {
                     <Header.Subheader>Edit an existing tag</Header.Subheader>
                 </Header.Content>
             </Header>
-            {hasError ? (
-                <Message negative icon>
-                    <Icon name='warning circle'/>
-                    <Message.Content>
-                        <Message.Header>Something wrong happened...</Message.Header>
-                        {errorMessage}
-                    </Message.Content>
-                </Message>
-            ) : null}
-            {hasSuccess ? (
-                <Message positive icon>
-                    <Icon name='check circle outline'/>
-                    <Message.Content>
-                        <Message.Header>Success!</Message.Header>
-                        {successMessage}
-                    </Message.Content>
-                </Message>
-            ) : null}
+            <ActionMessage type='success' message={successMessage} />
+            <ActionMessage type='error' message={errorMessage} />
             {canEdit && (
                 <>
                     <Message

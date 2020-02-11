@@ -13,6 +13,7 @@ import {
     Label,
     Container,
 } from 'semantic-ui-react';
+import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { ADMIN_APP_RESOURCES_URL, LOCALES, LOCALES_NAMES } from 'tmw-admin/constants/app-constants';
 import { Resource, TagsMap } from 'tmw-admin/constants/app-types';
 import {
@@ -50,8 +51,6 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
-    const hasError = errorMessage.length > 0;
-    const hasSuccess = successMessage.length > 0;
 
     const resetForm = (): void => {
         setResource({});
@@ -228,24 +227,8 @@ export const ResourcesAddPage: React.FunctionComponent = () => {
                     <Header.Subheader>Add a resource to be displayed on search results</Header.Subheader>
                 </Header.Content>
             </Header>
-            {hasSuccess ? (
-                <Message positive icon>
-                    <Icon name='check circle outline'/>
-                    <Message.Content>
-                        <Message.Header>Success!</Message.Header>
-                        {successMessage}
-                    </Message.Content>
-                </Message>
-            ) : null}
-            {hasError ? (
-                <Message negative icon>
-                    <Icon name='warning circle'/>
-                    <Message.Content>
-                        <Message.Header>Something wrong happened...</Message.Header>
-                        {errorMessage}
-                    </Message.Content>
-                </Message>
-            ) : null}
+            <ActionMessage type='success' message={successMessage} />
+            <ActionMessage type='error' message={errorMessage} />
             {canEdit ? (
                 <>
                     <Message

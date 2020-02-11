@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Header, Icon, Message } from 'semantic-ui-react';
+import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
@@ -16,8 +17,6 @@ export const TagsAddPage: React.FunctionComponent = () => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
-    const hasError = errorMessage.length > 0;
-    const hasSuccess = successMessage.length > 0;
 
     const resetForm = (): void => {
         setTag({});
@@ -71,69 +70,51 @@ export const TagsAddPage: React.FunctionComponent = () => {
                     <Header.Subheader>Add a tag to be used to search for resources</Header.Subheader>
                 </Header.Content>
             </Header>
-            {hasError ? (
-                <Message negative icon>
-                    <Icon name='warning circle'/>
-                    <Message.Content>
-                        <Message.Header>Something wrong happened...</Message.Header>
-                        {errorMessage}
-                    </Message.Content>
-                </Message>
-            ) : null}
-            {hasSuccess ? (
-                <Message positive icon>
-                    <Icon name='check circle outline'/>
-                    <Message.Content>
-                        <Message.Header>Success!</Message.Header>
-                        {successMessage}
-                    </Message.Content>
-                </Message>
-            ) : null}
-            <>
-                <Message
-                    attached
-                    header='Add a tag to filter resources'
-                    content='A tag can also be attached to a parent tag'
-                />
-                <Form className="attached fluid segment" loading={isLoading}>
-                    <Form.Group widths="equal">
-                        <Form.Input
-                            fluid
-                            label='Tag Name'
-                            placeholder='Tag Name'
-                            value={tag.name || ''}
-                            onChange={onTagNameInputChange}
-                            required
-                        />
-                        <Form.Select
-                            fluid
-                            label='Parent Tag'
-                            placeholder="Parent Tag"
-                            disabled={isTagOptionsEmpty}
-                            options={tagOptions}
-                            value={tag.parentId || ''}
-                            onChange={onTagParentIdInputChange}
-                        />
-                    </Form.Group>
-                    <Link to={ADMIN_APP_TAGS_URL}>
-                        <Button icon labelPosition='left'>
-                            <Icon name='arrow left' />
-                            Cancel
-                        </Button>
-                    </Link>
-                    <Button
-                        icon
-                        labelPosition='right'
-                        color="blue"
-                        onClick={saveTag}
-                        disabled={!isReadyToSubmit}
-                        floated="right"
-                    >
-                        Submit
-                        <Icon name='upload' />
+            <ActionMessage type='success' message={successMessage} />
+            <ActionMessage type='error' message={errorMessage} />
+            <Message
+                attached
+                header='Add a tag to filter resources'
+                content='A tag can also be attached to a parent tag'
+            />
+            <Form className="attached fluid segment" loading={isLoading}>
+                <Form.Group widths="equal">
+                    <Form.Input
+                        fluid
+                        label='Tag Name'
+                        placeholder='Tag Name'
+                        value={tag.name || ''}
+                        onChange={onTagNameInputChange}
+                        required
+                    />
+                    <Form.Select
+                        fluid
+                        label='Parent Tag'
+                        placeholder="Parent Tag"
+                        disabled={isTagOptionsEmpty}
+                        options={tagOptions}
+                        value={tag.parentId || ''}
+                        onChange={onTagParentIdInputChange}
+                    />
+                </Form.Group>
+                <Link to={ADMIN_APP_TAGS_URL}>
+                    <Button icon labelPosition='left'>
+                        <Icon name='arrow left' />
+                        Cancel
                     </Button>
-                </Form>
-            </>
+                </Link>
+                <Button
+                    icon
+                    labelPosition='right'
+                    color="blue"
+                    onClick={saveTag}
+                    disabled={!isReadyToSubmit}
+                    floated="right"
+                >
+                    Submit
+                    <Icon name='upload' />
+                </Button>
+            </Form>
         </div>
     );
 };
