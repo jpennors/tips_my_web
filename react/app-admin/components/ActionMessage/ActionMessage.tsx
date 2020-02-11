@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Message } from 'semantic-ui-react';
 
-interface ErrorMessageProps {
+interface ActionMessageProps {
     message: string;
     type: 'success' | 'error' | 'warning';
     messageHeader?: string;
 }
 
-export const ActionMessage: React.FunctionComponent<ErrorMessageProps> = ({
+export const ActionMessage: React.FunctionComponent<ActionMessageProps> = ({
     message,
     type,
     messageHeader,
