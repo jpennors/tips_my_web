@@ -11,7 +11,7 @@ const buildEntryPoint = entryPoint => ([
 module.exports = {
     entry: {
         main: buildEntryPoint('./react/app-main/app-main-entry.tsx'),
-        admin: buildEntryPoint('./react/app-admin/app-admin-entry.jsx'),
+        admin: buildEntryPoint('./react/app-admin/app-admin-entry.tsx'),
     },
     output: {
         path: path.resolve(__dirname, 'public'),
