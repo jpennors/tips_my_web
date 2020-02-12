@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { Button, Form, Icon, Message, StrictDropdownItemProps } from 'semantic-ui-react';
+import { Form, Message, StrictDropdownItemProps } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { FormFooter } from 'tmw-admin/components/FormFooter';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
@@ -124,23 +124,11 @@ export const TagsEditPage: React.FunctionComponent = () => {
                                 onChange={onTagParentIdInputChange}
                             />
                         </Form.Group>
-                        <Link to={ADMIN_APP_TAGS_URL}>
-                            <Button icon labelPosition='left'>
-                                <Icon name='arrow left' />
-                                Cancel
-                            </Button>
-                        </Link>
-                        <Button
-                            icon
-                            labelPosition='right'
-                            color="blue"
-                            onClick={saveTag}
-                            disabled={!isReadyToSubmit}
-                            floated="right"
-                        >
-                            Submit
-                            <Icon name='upload' />
-                        </Button>
+                        <FormFooter
+                            isSubmitDisabled={!isReadyToSubmit}
+                            onSubmitClick={saveTag}
+                            backButtonURL={ADMIN_APP_TAGS_URL}
+                        />
                     </Form>
                 </>
             )}

@@ -1,15 +1,11 @@
 import * as React from 'react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { FormFooter } from 'tmw-admin/components/FormFooter';
 import { APIBasicTag, APIResource, APITag } from 'tmw-admin/constants/api-types';
 import { InputSelectOption } from 'tmw-admin/utils/select-options';
 import * as XLSX from 'xlsx';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import {
-    Button,
-    Form,
-    Icon,
-    Message,
-} from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 
 const importTypeOptions: InputSelectOption[] = [
@@ -165,17 +161,10 @@ export const BatchImportPage: React.FunctionComponent = () => {
                         required
                     />
                 </Form.Group>
-                <Button
-                    icon
-                    labelPosition="right"
-                    color="blue"
-                    onClick={handleFile}
-                    disabled={!isReadyToSubmit}
-                    floated="right"
-                >
-                    Submit
-                    <Icon name='upload' />
-                </Button>
+                <FormFooter
+                    isSubmitDisabled={!isReadyToSubmit}
+                    onSubmitClick={handleFile}
+                />
             </Form>
             {validationErrors.length > 0 ? (
                 <Message

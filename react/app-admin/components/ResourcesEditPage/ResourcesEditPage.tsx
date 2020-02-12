@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 import {
-    Button,
     Form,
     Header,
     Icon,
@@ -15,6 +13,7 @@ import {
     Container,
 } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { FormFooter } from 'tmw-admin/components/FormFooter';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_RESOURCES_URL, LOCALES, LOCALES_NAMES, RESOURCES_IMAGE_BASE_URL } from 'tmw-admin/constants/app-constants';
 import { Resource, TagsMap } from 'tmw-admin/constants/app-types';
@@ -419,23 +418,11 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
                                 )}
                             </Segment>
                         </Container>
-                        <Link to={ADMIN_APP_RESOURCES_URL}>
-                            <Button icon labelPosition='left'>
-                                <Icon name='arrow left' />
-                                Cancel
-                            </Button>
-                        </Link>
-                        <Button
-                            icon
-                            labelPosition='right'
-                            color="blue"
-                            onClick={saveResource}
-                            disabled={!isReadyToSubmit}
-                            floated="right"
-                        >
-                            Submit
-                            <Icon name='upload' />
-                        </Button>
+                        <FormFooter
+                            isSubmitDisabled={!isReadyToSubmit}
+                            onSubmitClick={saveResource}
+                            backButtonURL={ADMIN_APP_RESOURCES_URL}
+                        />
                     </Form>
                 </>
             ) : null}
