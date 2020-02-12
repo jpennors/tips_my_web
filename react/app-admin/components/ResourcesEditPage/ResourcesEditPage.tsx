@@ -299,7 +299,7 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
                                 required
                             />
                         </Form.Group>
-                        <Grid style={{ marginBottom: '5px' }}>
+                        <Grid style={{ marginBottom: 0 }}>
                             <Grid.Row stretched>
                                 <Grid.Column width={6}>
                                     {resourceImageTempURL.length ? (
@@ -321,8 +321,10 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
                                         accept="image/*"
                                         type="file"
                                         onChange={onResourceImageInputChange}
+                                        style={{ marginBottom: '-0.5em' }}
                                     />
                                     <TextArea
+                                        style={{ resize: 'none' }}
                                         placeholder='Resource description'
                                         value={resource.description || ''}
                                         onChange={onResourceDescriptionInputChange}
