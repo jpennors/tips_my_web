@@ -24,7 +24,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
     const { id: editedTagId } = useParams();
 
     const fetchTagOptions = async (): Promise<void> => {
-        ajaxGet('tags').then(res => {
+        return ajaxGet('tags').then(res => {
             const tags = serializeTagsFromAPI(res.data);
 
             if (editedTagId) {
@@ -38,11 +38,9 @@ export const TagsEditPage: React.FunctionComponent = () => {
             }
 
             setTagOptions(convertToSelectOptions(tags.filter(tag => tag.id != editedTagId), 'id', 'name'));
-            setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while trying to fetch tag data from the API.');
             setCanEdit(false);
-            setIsLoading(false);
         });
     };
 
@@ -67,25 +65,27 @@ export const TagsEditPage: React.FunctionComponent = () => {
         if (editedTagId) {
             ajaxPut(`tags/${editedTagId}`, newTag).then(() => {
                 setSuccessMessage('Your tag "' + tag.name + '" was successfully edited.');
-                setIsLoading(false);
             }).catch(() => {
                 setErrorMessage('Error while updating the tag. Your modifications were probably not saved.');
+            }).finally(() => {
                 setIsLoading(false);
             });
         } else {
             ajaxPost('tags', newTag).then(() => {
                 setSuccessMessage('Your new tag "' + tag.name + '" was successfully saved.');
                 resetForm();
-                setIsLoading(false);
             }).catch(() => {
                 setErrorMessage('Error while posting new tag to API. The new tag was probably not saved.');
+            }).finally(() => {
                 setIsLoading(false);
             });
         }
     };
 
     React.useEffect(() => {
-        fetchTagOptions();
+        fetchTagOptions().finally(() => {
+            setIsLoading(false);
+        });
     }, []);
 
     return (

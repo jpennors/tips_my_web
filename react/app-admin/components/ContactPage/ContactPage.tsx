@@ -15,29 +15,32 @@ export const ContactPage: React.FunctionComponent = () => {
     const isEmpty = contacts.length == 0;
 
     const fetchContactMessages = async (): Promise<void> => {
-        ajaxGet('contacts').then(res => {
+        return ajaxGet('contacts').then(res => {
             const contacts = serializeContactsFromAPI(res.data);
             setContacts(contacts);
-            setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching contacts list from API.');
-            setIsLoading(false);
         });
     };
 
     const deleteContact = async (contactId: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
+        setIsLoading(true);
         ajaxDelete(`contacts/${contactId}`).then(() => {
             setSuccessMessage('The message was successfully deleted.');
-            fetchContactMessages();
+            return fetchContactMessages();
         }).catch(() => {
             setErrorMessage('Error while trying to delete contact message.');
+        }).finally(() => {
+            setIsLoading(false);
         });
     };
 
     React.useEffect(() => {
-        fetchContactMessages();
+        fetchContactMessages().finally(() => {
+            setIsLoading(false);
+        });
     }, []);
 
     return (

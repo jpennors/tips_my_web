@@ -15,29 +15,32 @@ export const SuggestionsPage: React.FunctionComponent = () => {
     const isEmpty = suggestions.length == 0;
 
     const fetchWebsiteSuggestions = async (): Promise<void> => {
-        ajaxGet('suggestions').then(res => {
+        return ajaxGet('suggestions').then(res => {
             const suggestions = serializeSuggestionsFromAPI(res.data);
             setSuggestions(suggestions);
-            setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching suggestions list from API.');
-            setIsLoading(false);
         });
     };
 
     const deleteSuggestion = async (suggestionId: string, suggestionName: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
+        setIsLoading(true);
         ajaxDelete(`suggestions/${suggestionId}`).then(() => {
             setSuccessMessage('The suggestion for "' + suggestionName + '" was successfully deleted.');
-            fetchWebsiteSuggestions();
+            return fetchWebsiteSuggestions();
         }).catch(() => {
             setErrorMessage('Error while trying to delete suggestion.');
+        }).finally(() => {
+            setIsLoading(false);
         });
     };
 
     React.useEffect(() => {
-        fetchWebsiteSuggestions();
+        fetchWebsiteSuggestions().finally(() => {
+            setIsLoading(false);
+        });
     }, []);
 
     return (

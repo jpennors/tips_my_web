@@ -23,6 +23,7 @@ export const BatchImportPage: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
     const [validationErrors, setValidationErrors] = React.useState<string[]>([]);
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     const isReadyToSubmit = importedFile !== undefined && importType.length > 0;
 
@@ -78,11 +79,14 @@ export const BatchImportPage: React.FunctionComponent = () => {
     };
 
     const submitBatchData = (data: any): void => {
+        setIsLoading(true);
         ajaxPost(`import/${importType}`, { data }).then(() => {
             setSuccessMessage('The file was successfully imported!');
             resetForm();
         }).catch(() => {
             setErrorMessage('Error while posting the file to the API. The import probably failed.');
+        }).finally(() => {
+            setIsLoading(false);
         });
     };
 
@@ -141,7 +145,7 @@ export const BatchImportPage: React.FunctionComponent = () => {
                 header="Import a batch file"
                 content="The resources/tags will be imported all at once"
             />
-            <Form className="attached fluid segment">
+            <Form className="attached fluid segment" loading={isLoading}>
                 <Form.Group widths="equal">
                     <Form.Input
                         fluid

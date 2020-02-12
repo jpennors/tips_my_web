@@ -17,29 +17,30 @@ export const TagsPage: React.FunctionComponent = () => {
     const isEmpty = tags.length == 0;
 
     const fetchTags = async (): Promise<void> => {
-        ajaxGet('tags').then(res => {
+        return ajaxGet('tags').then(res => {
             const tags = serializeTagsFromAPI(res.data);
             setTags(tags);
-            setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching tags list from API.');
-            setIsLoading(false);
         });
     };
 
     const deleteTag = async (tagId: string, tagName: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
+        setIsLoading(true);
         ajaxDelete(`tags/${tagId}`).then(() => {
             setSuccessMessage('The tag "' + tagName + '" was successfully deleted.');
-            fetchTags();
+            return fetchTags();
         }).catch(() => {
             setErrorMessage('Error while trying to delete the tag "' + tagName + '".');
         });
     };
 
     React.useEffect(() => {
-        fetchTags();
+        fetchTags().finally(() => {
+            setIsLoading(false);
+        });
     }, []);
 
     return (

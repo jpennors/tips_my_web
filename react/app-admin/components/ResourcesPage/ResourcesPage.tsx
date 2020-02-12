@@ -17,29 +17,32 @@ export const ResourcesPage: React.FunctionComponent = () => {
     const isEmpty = resources.length == 0;
 
     const fetchResources = async (): Promise<void> => {
-        ajaxGet('resources').then(res => {
+        return ajaxGet('resources').then(res => {
             const resources = serializeResourcesFromAPI(res.data);
             setResources(resources);
-            setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching resources list from API.');
-            setIsLoading(false);
         });
     };
 
     const deleteResource = async (resourceId: string, resourceName: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
+        setIsLoading(true);
         ajaxDelete(`resources/${resourceId}`).then(() => {
             setSuccessMessage('The resource "' + resourceName + '" was successfully deleted.');
-            fetchResources();
+            return fetchResources();
         }).catch(() => {
             setErrorMessage('Error while trying to delete the resource "' + resourceName + '".');
+        }).finally(() => {
+            setIsLoading(false);
         });
     };
 
     React.useEffect(() => {
-        fetchResources();
+        fetchResources().finally(() => {
+            setIsLoading(false);
+        });
     }, []);
 
     return (

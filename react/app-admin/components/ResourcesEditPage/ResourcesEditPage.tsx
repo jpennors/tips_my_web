@@ -57,7 +57,7 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
     const { id: editedResourceId } = useParams();
 
     const fetchResource = async (): Promise<void> => {
-        ajaxGet('resources').then(res => {
+        return ajaxGet('resources').then(res => {
             const resources = serializeResourcesFromAPI(res.data);
 
             if (editedResourceId) {
@@ -72,49 +72,40 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
                     setCanEdit(false);
                 }
             }
-
-            setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching resource from the API.');
             setCanEdit(false);
-            setIsLoading(false);
         });
     };
 
     const fetchPricesOptions = async (): Promise<void> => {
-        ajaxGet('prices').then(res => {
+        return ajaxGet('prices').then(res => {
             const prices = serializePricesFromAPI(res.data);
             setPricesOptions(convertToSelectOptions(prices, 'id', 'name'));
-            setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching pricing options from the API.');
             setCanEdit(false);
-            setIsLoading(false);
         });
     };
 
     const fetchTypesOptions = async (): Promise<void> => {
-        ajaxGet('types').then(res => {
+        return ajaxGet('types').then(res => {
             const types = serializeResourceTypesFromAPI(res.data);
             setTypesOptions(convertToSelectOptions(types, 'id', 'name'));
-            setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching types options from the API.');
             setCanEdit(false);
-            setIsLoading(false);
         });
     };
 
     const fetchTagOptions = async (): Promise<void> => {
-        ajaxGet('tags').then(res => {
+        return ajaxGet('tags').then(res => {
             const tags = serializeTagsFromAPI(res.data);
             setTagOptions(convertToSelectOptions(tags, 'id', 'name'));
             setTagsMap(buildTagsMap(tags));
-            setIsLoading(false);
         }).catch(() => {
             setErrorMessage('Error while fetching tag options from the API.');
             setCanEdit(false);
-            setIsLoading(false);
         });
     };
 
@@ -205,13 +196,12 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
         }
     };
 
-    const fileUpload = async (file: File, resourceId: string): Promise<void> => {
-        const fd = new FormData();
-        fd.append('file', file);
-        ajaxPostImage(`resources/image/${resourceId}`, fd).catch(() => {
-            setErrorMessage('Error while posting resource image API. The image was probably not saved.');
-            setIsLoading(false);
-        });
+    const saveImage = async (imageFile: File | undefined, resourceId: string): Promise<void> => {
+        if (imageFile) {
+            const fd = new FormData();
+            fd.append('file', imageFile);
+            return ajaxPostImage(`resources/image/${resourceId}`, fd);
+        }
     };
 
     const resetForm = (): void => {
@@ -221,31 +211,37 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
     };
 
     const saveResource = (): void => {
+        setSuccessMessage('');
+        setErrorMessage('');
         setIsLoading(true);
         const newResource = serializeResourceToAPI(resource);
         newResource.id = editedResourceId;
 
         if (editedResourceId) {
             ajaxPut(`resources/${editedResourceId}`, newResource).then(() => {
-                if (resourceImageFile) {
-                    fileUpload(resourceImageFile, editedResourceId);
-                }
-                setSuccessMessage('Your resource "' + resource.name + '" was successfully edited.');
-                setIsLoading(false);
+                return saveImage(resourceImageFile, editedResourceId).then(() => {
+                    setSuccessMessage('Your resource "' + resource.name + '" was successfully edited.');
+                }).catch(() => {
+                    setErrorMessage('The resource was successfully edited but there was an error while posting ' +
+                        'the resource\'s image to the API. The image was probably not saved.');
+                });
             }).catch(() => {
                 setErrorMessage('Error while updating the resource. Your modifications were probably not saved.');
+            }).finally(() => {
                 setIsLoading(false);
             });
         } else {
             ajaxPost('resources', newResource).then(res => {
-                if (resourceImageFile) {
-                    fileUpload(resourceImageFile, res.data.id);
-                }
-                setSuccessMessage('Your resource "' + resource.name + '" was successfully saved.');
                 resetForm();
-                setIsLoading(false);
+                return saveImage(resourceImageFile, res.data.id).then(() => {
+                    setSuccessMessage('Your resource "' + resource.name + '" was successfully saved.');
+                }).catch(() => {
+                    setErrorMessage('The resource was successfully edited but there was an error while posting ' +
+                        'the resource\'s image to the API. The image was probably not saved.');
+                });
             }).catch(() => {
                 setErrorMessage('Error while posting new resource to API. The new resource was probably not saved.');
+            }).finally(() => {
                 setIsLoading(false);
             });
         }
@@ -253,10 +249,15 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        fetchPricesOptions();
-        fetchTypesOptions();
-        fetchTagOptions();
-        fetchResource();
+        Promise.all([
+            fetchPricesOptions(),
+            fetchTypesOptions(),
+            fetchTagOptions(),
+            fetchResource(),
+        ]).then(() => {
+            setIsLoading(false);
+        });
+
     }, []);
 
     const displayedTagOptions = tagOptions.filter(tag =>
