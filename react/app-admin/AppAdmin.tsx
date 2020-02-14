@@ -5,6 +5,8 @@ import { ProtectedRoute } from 'tmw-admin/components/ProtectedRoute';
 import { LoginPage } from 'tmw-admin/components/LoginPage';
 import { PageLayout } from 'tmw-admin/components/PageLayout';
 
+import './app-admin.css';
+
 export const AppAdmin: React.FunctionComponent = () => (
     <BrowserRouter>
         <Switch>

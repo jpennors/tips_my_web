@@ -1,0 +1,7 @@
+/*
+ * This file should only contain fixes for UI inconsistencies in semantic-ui-react.
+ */
+
+.ui.form input[type=file] {
+    padding: 0.5em;
+}

@@ -145,8 +145,8 @@ export const BatchImportPage: React.FunctionComponent = () => {
                 <Form.Group widths="equal">
                     <Form.Input
                         fluid
+                        label='File'
                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        placeholder='File'
                         type="file"
                         onChange={onFileInputChange}
                         required
