@@ -10,7 +10,6 @@ import {
     Grid,
     Image,
     Label,
-    Container,
 } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
@@ -382,44 +381,46 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
                                 required
                             />
                         </Form.Group>
-                        <Container fluid style={{ marginBottom: '10px' }}>
-                            <Header as="h5" attached='top'>
-                                Associated Tags
-                            </Header>
-                            <Segment attached>
-                                {resource.tags && resource.tags.length > 0 ? (
-                                    <Label.Group style={{ marginBottom: '-0.5em' }}>
-                                        {resource.tags.map(tag => (
-                                            <Label key={tag.tagId} color='teal' image style={{ marginBottom: '0.5em' }}>
-                                                <Icon name='trash alternate' link onClick={(): void => removeSelectedTag(tag.tagId)} />
-                                                {tag.tag.name}
-                                                <Label.Detail>
-                                                    <Icon name='minus' size='small' link onClick={(): void => decrementSelectedTag(tag.tagId)} />
+                        <Grid style={{ marginBottom: 0 }}>
+                            <Grid.Column>
+                                <Header as="h5" attached='top'>
+                                    Associated Tags
+                                </Header>
+                                <Segment attached>
+                                    {resource.tags && resource.tags.length > 0 ? (
+                                        <Label.Group style={{ marginBottom: '-0.5em' }}>
+                                            {resource.tags.map(tag => (
+                                                <Label key={tag.tagId} color='teal' image style={{ marginBottom: '0.5em' }}>
+                                                    <Icon name='trash alternate' link onClick={(): void => removeSelectedTag(tag.tagId)} />
+                                                    {tag.tag.name}
+                                                    <Label.Detail>
+                                                        <Icon name='minus' size='small' link onClick={(): void => decrementSelectedTag(tag.tagId)} />
                                                         &nbsp;{tag.belonging}&nbsp;
-                                                    <Icon name='plus' size='small' link onClick={(): void => incrementSelectedTag(tag.tagId)} />
-                                                </Label.Detail>
-                                            </Label>
-                                        ))}
-                                    </Label.Group>
-                                ) : (
-                                    <>No tags selected!</>
-                                )}
-                            </Segment>
-                            <Segment attached secondary>
-                                {displayedTagOptions.length ? (
-                                    <Label.Group style={{ marginBottom: '-0.5em' }}>
-                                        {displayedTagOptions.map(tag => (
-                                            <Label key={tag.key} as='a' onClick={(): void => addSelectedTag(tag.key)}>
-                                                <Icon name='plus'/>
-                                                {tag.text}
-                                            </Label>
-                                        ))}
-                                    </Label.Group>
-                                ) : (
-                                    <>No tags available!</>
-                                )}
-                            </Segment>
-                        </Container>
+                                                        <Icon name='plus' size='small' link onClick={(): void => incrementSelectedTag(tag.tagId)} />
+                                                    </Label.Detail>
+                                                </Label>
+                                            ))}
+                                        </Label.Group>
+                                    ) : (
+                                        <>No tags selected!</>
+                                    )}
+                                </Segment>
+                                <Segment attached secondary>
+                                    {displayedTagOptions.length ? (
+                                        <Label.Group style={{ marginBottom: '-0.5em' }}>
+                                            {displayedTagOptions.map(tag => (
+                                                <Label key={tag.key} as='a' onClick={(): void => addSelectedTag(tag.key)}>
+                                                    <Icon name='plus'/>
+                                                    {tag.text}
+                                                </Label>
+                                            ))}
+                                        </Label.Group>
+                                    ) : (
+                                        <>No tags available!</>
+                                    )}
+                                </Segment>
+                            </Grid.Column>
+                        </Grid>
                         <FormFooter
                             isSubmitDisabled={!isReadyToSubmit}
                             onSubmitClick={saveResource}
