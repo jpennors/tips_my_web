@@ -13,7 +13,14 @@ export const FormFooter: React.FunctionComponent<FormFooterProps> = ({
     isSubmitDisabled,
     onSubmitClick,
 }) => (
-    <>
+    <div style={ backButtonURL ? undefined : { textAlign: 'right' } }>
+        {
+            /*
+             * Fix for footers without a back button: the whole div is set to align
+             * text to right (the floated-right button doesn't work if it's alone
+             * in the div).
+             */
+        }
         {backButtonURL ? (
             <Link to={backButtonURL}>
                 <Button icon labelPosition='left'>
@@ -28,10 +35,10 @@ export const FormFooter: React.FunctionComponent<FormFooterProps> = ({
             color="blue"
             onClick={onSubmitClick}
             disabled={isSubmitDisabled}
-            floated="right"
+            floated={ backButtonURL ? 'right' : undefined }
         >
             Submit
             <Icon name='upload' />
         </Button>
-    </>
+    </div>
 );
