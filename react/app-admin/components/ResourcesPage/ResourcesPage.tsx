@@ -71,7 +71,6 @@ export const ResourcesPage: React.FunctionComponent = () => {
                         <Table.Row>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>URL</Table.HeaderCell>
-                            <Table.HeaderCell>Price</Table.HeaderCell>
                             <Table.HeaderCell>Likes</Table.HeaderCell>
                             <Table.HeaderCell>Tags</Table.HeaderCell>
                             <Table.HeaderCell collapsing textAlign="center">Edit</Table.HeaderCell>
@@ -84,7 +83,6 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                 <Table.Row key={resource.id}>
                                     <Table.Cell>{resource.name}</Table.Cell>
                                     <Table.Cell>{resource.url}</Table.Cell>
-                                    <Table.Cell>{resource.priceName}</Table.Cell>
                                     <Table.Cell>{resource.likes}</Table.Cell>
                                     <Table.Cell>
                                         <Label.Group style={{ marginBottom: '-0.5em' }}>

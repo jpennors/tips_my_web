@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Icon, Menu, StrictMenuProps } from 'semantic-ui-react';
+import  { Icon, Menu, MenuProps } from 'semantic-ui-react';
 import { SemanticWIDTHS } from 'semantic-ui-react/dist/commonjs/generic';
 import {
     ADMIN_APP_CONTACT_URL,
@@ -75,14 +75,15 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
         },
     ];
 
-    const horizontalDisplayProps: StrictMenuProps = {
+    const horizontalDisplayProps: MenuProps = {
         icon: 'labeled',
         size: 'tiny',
         fluid: true,
         widths: navItems.length as SemanticWIDTHS,
+        style: { minWidth: '400px' },
     };
 
-    const verticalDisplayProps: StrictMenuProps = {
+    const verticalDisplayProps: MenuProps = {
         vertical: true,
     };
 
