@@ -37,7 +37,9 @@ export const TagsEditPage: React.FunctionComponent = () => {
                 }
             }
 
-            setTagOptions(convertToSelectOptions(tags.filter(tag => tag.id != editedTagId), 'id', 'name'));
+            const fetchedTagOptions = convertToSelectOptions(tags.filter(tag => tag.id != editedTagId), 'id', 'name');
+            fetchedTagOptions.unshift({ key: 'no-parent', text: 'No Parent', value: 'no-parent' }); // Add 'No Parent' Option
+            setTagOptions(fetchedTagOptions);
         }).catch(() => {
             setErrorMessage('Error while trying to fetch tag data from the API.');
             setCanEdit(false);
@@ -49,7 +51,11 @@ export const TagsEditPage: React.FunctionComponent = () => {
     };
 
     const onTagParentIdInputChange = (_: any, { value }: { value: string}): void => {
-        setTag({ ...tag, parentId: value });
+        if (value === 'no-parent') {
+            setTag({ ...tag, parentId: null });
+        } else {
+            setTag({ ...tag, parentId: value });
+        }
     };
 
     const resetForm = (): void => {
@@ -117,7 +123,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
                             <Form.Select
                                 fluid
                                 label='Parent Tag'
-                                placeholder="Parent Tag"
+                                placeholder="No Parent"
                                 disabled={isTagOptionsEmpty}
                                 options={tagOptions}
                                 value={tag.parentId || ''}
