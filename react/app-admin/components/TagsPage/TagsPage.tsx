@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Icon, Label, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { ADMIN_APP_TAGS_ADD_URL, ADMIN_APP_TAGS_EDIT_URL } from 'tmw-admin/constants/app-constants';
+import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
@@ -50,7 +50,7 @@ export const TagsPage: React.FunctionComponent = () => {
                 headerContent="Tags"
                 subHeaderContent='Tags proposed to search for a type of resources'
             />
-            <Link to={ADMIN_APP_TAGS_ADD_URL}>
+            <Link to={ADMIN_APP_ROUTES.TAGS_ADD}>
                 <Button fluid icon>
                     Add Tag
                 </Button>
@@ -80,7 +80,7 @@ export const TagsPage: React.FunctionComponent = () => {
                                     <Table.Cell>{tag.name}</Table.Cell>
                                     <Table.Cell>{tag.parentName && (<Label size="small">{tag.parentName}</Label>)}</Table.Cell>
                                     <Table.Cell textAlign="center">
-                                        <Link to={ADMIN_APP_TAGS_EDIT_URL.replace(':id', tag.id)}>
+                                        <Link to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}>
                                             <Icon name='edit' color='blue' link />
                                         </Link>
                                     </Table.Cell>

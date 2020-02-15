@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Icon, Label, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { ADMIN_APP_RESOURCES_ADD_URL, ADMIN_APP_RESOURCES_EDIT_URL } from 'tmw-admin/constants/app-constants';
+import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { Resource } from 'tmw-admin/constants/app-types';
 import { serializeResourcesFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
@@ -52,7 +52,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                 headerContent="Resources"
                 subHeaderContent="Resources that can be searched through TipsMyWeb"
             />
-            <Link to={ADMIN_APP_RESOURCES_ADD_URL}>
+            <Link to={ADMIN_APP_ROUTES.RESOURCES_ADD}>
                 <Button fluid icon>
                     Add Resource
                 </Button>
@@ -92,7 +92,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                         </Label.Group>
                                     </Table.Cell>
                                     <Table.Cell textAlign="center">
-                                        <Link to={ADMIN_APP_RESOURCES_EDIT_URL.replace(':id', resource.id)}>
+                                        <Link to={ADMIN_APP_ROUTES.RESOURCES_EDIT.replace(':id', resource.id)}>
                                             <Icon name='edit' color='blue' link />
                                         </Link>
                                     </Table.Cell>

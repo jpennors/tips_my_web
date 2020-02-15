@@ -1,17 +1,8 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import  { Icon, Menu, MenuProps } from 'semantic-ui-react';
+import { Icon, Menu, MenuProps } from 'semantic-ui-react';
 import { SemanticWIDTHS } from 'semantic-ui-react/dist/commonjs/generic';
-import {
-    ADMIN_APP_CONTACT_URL,
-    ADMIN_APP_IMPORT_URL,
-    ADMIN_APP_MAIN_URL,
-    ADMIN_APP_RESOURCES_ADD_URL,
-    ADMIN_APP_RESOURCES_URL,
-    ADMIN_APP_SUGGESTIONS_URL,
-    ADMIN_APP_TAGS_ADD_URL,
-    ADMIN_APP_TAGS_URL,
-} from 'tmw-admin/constants/app-constants';
+import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 
 interface SideNavMenuProps {
     horizontalDisplay?: boolean;
@@ -25,52 +16,52 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
     const navItems = [
         {
             name: 'Overview',
-            path: ADMIN_APP_MAIN_URL,
+            path: ADMIN_APP_ROUTES.MAIN,
             iconName: 'list alternate',
         },
         {
             name: 'Resources',
-            path: ADMIN_APP_RESOURCES_URL,
+            path: ADMIN_APP_ROUTES.RESOURCES,
             iconName: 'world',
             subMenu: [
                 {
                     name: 'List',
-                    path: ADMIN_APP_RESOURCES_URL,
+                    path: ADMIN_APP_ROUTES.RESOURCES,
                 },
                 {
                     name: 'Add',
-                    path: ADMIN_APP_RESOURCES_ADD_URL,
+                    path: ADMIN_APP_ROUTES.RESOURCES_ADD,
                 },
             ],
         },
         {
             name: 'Tags',
-            path: ADMIN_APP_TAGS_URL,
+            path: ADMIN_APP_ROUTES.TAGS,
             iconName: 'tags',
             subMenu: [
                 {
                     name: 'List',
-                    path: ADMIN_APP_TAGS_URL,
+                    path: ADMIN_APP_ROUTES.TAGS,
                 },
                 {
                     name: 'Add',
-                    path: ADMIN_APP_TAGS_ADD_URL,
+                    path: ADMIN_APP_ROUTES.TAGS_ADD,
                 },
             ],
         },
         {
             name: 'Import',
-            path: ADMIN_APP_IMPORT_URL,
+            path: ADMIN_APP_ROUTES.IMPORT,
             iconName: 'plus circle',
         },
         {
             name: 'Suggestions',
-            path: ADMIN_APP_SUGGESTIONS_URL,
+            path: ADMIN_APP_ROUTES.SUGGESTIONS,
             iconName: 'lightbulb',
         },
         {
             name: 'Messages',
-            path: ADMIN_APP_CONTACT_URL,
+            path: ADMIN_APP_ROUTES.CONTACT,
             iconName: 'comment',
         },
     ];
@@ -91,7 +82,7 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
         <Menu {...(horizontalDisplay ? horizontalDisplayProps : verticalDisplayProps)}>
             {navItems.map(item => {
                 const onClick = !item.subMenu || horizontalDisplay ? (): void => history.push(item.path) : undefined;
-                const allPaths = !item.subMenu ? [item.path] : item.subMenu.map(subItem => subItem.path);
+                const allPaths: string[] = !item.subMenu ? [item.path] : item.subMenu.map(subItem => subItem.path);
 
                 return (
                     <Menu.Item

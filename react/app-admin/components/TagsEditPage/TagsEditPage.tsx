@@ -4,7 +4,7 @@ import { Form, Message, StrictDropdownItemProps } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { ADMIN_APP_TAGS_URL } from 'tmw-admin/constants/app-constants';
+import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
 import { convertToSelectOptions } from 'tmw-admin/utils/select-options';
@@ -127,7 +127,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
                         <FormFooter
                             isSubmitDisabled={!isReadyToSubmit}
                             onSubmitClick={saveTag}
-                            backButtonURL={ADMIN_APP_TAGS_URL}
+                            backButtonURL={ADMIN_APP_ROUTES.TAGS}
                         />
                     </Form>
                 </>

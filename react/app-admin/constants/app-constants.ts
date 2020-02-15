@@ -16,14 +16,16 @@ export const RESOURCES_IMAGE_BASE_URL = '/api/resources/image/';
 /*
  * Admin app routes
  */
-export const ADMIN_APP_MAIN_URL = '/admin';
-export const ADMIN_APP_LOGIN_URL = '/admin/login';
-export const ADMIN_APP_RESOURCES_URL = '/admin/resources';
-export const ADMIN_APP_RESOURCES_ADD_URL = '/admin/resources/add';
-export const ADMIN_APP_RESOURCES_EDIT_URL = '/admin/resources/edit/:id';
-export const ADMIN_APP_TAGS_URL = '/admin/tags';
-export const ADMIN_APP_TAGS_ADD_URL = '/admin/tags/add';
-export const ADMIN_APP_TAGS_EDIT_URL = '/admin/tags/edit/:id';
-export const ADMIN_APP_IMPORT_URL = '/admin/import';
-export const ADMIN_APP_SUGGESTIONS_URL = '/admin/suggestions';
-export const ADMIN_APP_CONTACT_URL = '/admin/contact';
+export enum ADMIN_APP_ROUTES {
+    MAIN = '/admin',
+    LOGIN = '/admin/login',
+    RESOURCES = '/admin/resources',
+    RESOURCES_ADD = '/admin/resources/add',
+    RESOURCES_EDIT = '/admin/resources/edit/:id',
+    TAGS = '/admin/tags',
+    TAGS_ADD = '/admin/tags/add',
+    TAGS_EDIT = '/admin/tags/edit/:id',
+    IMPORT = '/admin/import',
+    SUGGESTIONS = '/admin/suggestions',
+    CONTACT = '/admin/contact',
+}

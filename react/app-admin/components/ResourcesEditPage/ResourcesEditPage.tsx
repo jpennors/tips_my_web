@@ -14,7 +14,12 @@ import {
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { ADMIN_APP_RESOURCES_URL, LOCALES, LOCALES_NAMES, RESOURCES_IMAGE_BASE_URL } from 'tmw-admin/constants/app-constants';
+import {
+    ADMIN_APP_ROUTES,
+    LOCALES,
+    LOCALES_NAMES,
+    RESOURCES_IMAGE_BASE_URL,
+} from 'tmw-admin/constants/app-constants';
 import { Resource, TagsMap } from 'tmw-admin/constants/app-types';
 import {
     serializePricesFromAPI, serializeResourcesFromAPI,
@@ -424,7 +429,7 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
                         <FormFooter
                             isSubmitDisabled={!isReadyToSubmit}
                             onSubmitClick={saveResource}
-                            backButtonURL={ADMIN_APP_RESOURCES_URL}
+                            backButtonURL={ADMIN_APP_ROUTES.RESOURCES}
                         />
                     </Form>
                 </>
