@@ -10,12 +10,17 @@ export const removeLocalToken = (): void => localStorage.removeItem('token');
 export const getLocalToken = (): string | null => {
     const rawAuthToken = localStorage.getItem('token');
     if (rawAuthToken) {
-        const authToken: AuthToken = JSON.parse(rawAuthToken);
-        if (authToken.expiration > Date.now() && authToken.expiration <= Date.now() + TOKEN_VALIDITY_TIME) {
-            return authToken.token;
+        try {
+            const authToken: AuthToken = JSON.parse(rawAuthToken);
+            if (authToken.expiration > Date.now() && authToken.expiration <= Date.now() + TOKEN_VALIDITY_TIME) {
+                return authToken.token;
+            }
+        } catch {
+            removeLocalToken();
         }
-        removeLocalToken(); // Remove token if it's not valid anymore
     }
+    // Remove token if it's not valid anymore or if parsing failed
+    removeLocalToken();
     return null;
 };
 
