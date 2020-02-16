@@ -94,7 +94,7 @@ class TagController extends Controller
 
         } catch(\Exception $e) {
             dd($e);
-            abort(500, "Can't update the resource");
+            abort(500, "Can't update the tag");
         }
         return response()->json($tag, 200);
     }
