@@ -38,7 +38,7 @@ class AdminController extends Controller
             // return redirect('/#/login?token='.$token);
 
         } else {
-            return response()->json(array("error" => "401, authentication failed."), 401);
+            return response()->json(array("error" => "bad_credentials"), 401);
         }
 
     }

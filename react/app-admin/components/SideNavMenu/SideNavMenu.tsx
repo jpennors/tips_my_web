@@ -1,0 +1,115 @@
+import * as React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Icon, Menu, MenuProps } from 'semantic-ui-react';
+import { SemanticWIDTHS } from 'semantic-ui-react/dist/commonjs/generic';
+import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
+
+interface SideNavMenuProps {
+    horizontalDisplay?: boolean;
+}
+export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
+    horizontalDisplay = false,
+}) => {
+    const history = useHistory();
+    const activePath = window.location.pathname;
+
+    const navItems = [
+        {
+            name: 'Overview',
+            path: ADMIN_APP_ROUTES.MAIN,
+            iconName: 'list alternate',
+        },
+        {
+            name: 'Resources',
+            path: ADMIN_APP_ROUTES.RESOURCES,
+            iconName: 'world',
+            subMenu: [
+                {
+                    name: 'List',
+                    path: ADMIN_APP_ROUTES.RESOURCES,
+                },
+                {
+                    name: 'Add',
+                    path: ADMIN_APP_ROUTES.RESOURCES_ADD,
+                },
+            ],
+        },
+        {
+            name: 'Tags',
+            path: ADMIN_APP_ROUTES.TAGS,
+            iconName: 'tags',
+            subMenu: [
+                {
+                    name: 'List',
+                    path: ADMIN_APP_ROUTES.TAGS,
+                },
+                {
+                    name: 'Add',
+                    path: ADMIN_APP_ROUTES.TAGS_ADD,
+                },
+            ],
+        },
+        {
+            name: 'Import',
+            path: ADMIN_APP_ROUTES.IMPORT,
+            iconName: 'plus circle',
+        },
+        {
+            name: 'Suggestions',
+            path: ADMIN_APP_ROUTES.SUGGESTIONS,
+            iconName: 'lightbulb',
+        },
+        {
+            name: 'Messages',
+            path: ADMIN_APP_ROUTES.CONTACT,
+            iconName: 'comment',
+        },
+    ];
+
+    const horizontalDisplayProps: MenuProps = {
+        icon: 'labeled',
+        size: 'tiny',
+        fluid: true,
+        widths: navItems.length as SemanticWIDTHS,
+        style: { minWidth: '400px' },
+    };
+
+    const verticalDisplayProps: MenuProps = {
+        vertical: true,
+    };
+
+    return (
+        <Menu {...(horizontalDisplay ? horizontalDisplayProps : verticalDisplayProps)}>
+            {navItems.map(item => {
+                const onClick = !item.subMenu || horizontalDisplay ? (): void => history.push(item.path) : undefined;
+                const allPaths: string[] = !item.subMenu ? [item.path] : item.subMenu.map(subItem => subItem.path);
+
+                return (
+                    <Menu.Item
+                        name={item.name}
+                        key={item.path}
+                        active={allPaths.includes(activePath)}
+                        onClick={onClick}
+                    >
+                        <Icon className={item.iconName} />
+                        {item.name}
+                        {item.subMenu && !horizontalDisplay ? (
+                            <Menu.Menu>
+                                {item.subMenu.map(subItem => (
+                                    <Menu.Item
+                                        name={subItem.name}
+                                        key={subItem.path}
+                                        active={activePath === subItem.path}
+                                        onClick={(): void => history.push(subItem.path)}
+                                    >
+                                        {subItem.name}
+                                    </Menu.Item>
+                                ))}
+                            </Menu.Menu>
+                        ) : null}
+                    </Menu.Item>
+                );
+            })}
+        </Menu>
+    );
+};

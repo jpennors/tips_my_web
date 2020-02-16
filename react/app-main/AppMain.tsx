@@ -8,7 +8,7 @@ import './app-main.css';
 
 export const AppMain: React.FunctionComponent = () => (
     <CookiesProvider>
-        <div className="main-app">
+        <div className="app-main">
             <LayoutHeader/>
             <ResourceSearch/>
             <LayoutFooter/>
