@@ -62,6 +62,7 @@ module.exports = {
         ]),
         new webpack.HotModuleReplacementPlugin(),
     ],
+    devtool: 'eval-source-map',
     devServer: {
         contentBase: path.join(__dirname, 'public'),
         headers: { 'Access-Control-Allow-Origin': '*' },
