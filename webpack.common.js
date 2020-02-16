@@ -62,15 +62,4 @@ module.exports = {
         ]),
         new webpack.HotModuleReplacementPlugin(),
     ],
-    devtool: 'eval-source-map',
-    devServer: {
-        contentBase: path.join(__dirname, 'public'),
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        port: 3000,
-        hot: true,
-        historyApiFallback: true,
-        proxy: {
-            '*': 'http://localhost:8888',
-        },
-    },
 };
