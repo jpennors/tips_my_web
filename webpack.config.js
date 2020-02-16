@@ -2,19 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const buildEntryPoint = entryPoint => ([
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    entryPoint,
-]);
-
 module.exports = {
     entry: {
-        main: buildEntryPoint('./react/app-main/app-main-entry.tsx'),
-        admin: buildEntryPoint('./react/app-admin/app-admin-entry.tsx'),
+        main: './react/app-main/app-main-entry.tsx',
+        admin:'./react/app-admin/app-admin-entry.tsx',
     },
     output: {
         path: path.resolve(__dirname, 'public'),
+        publicPath: '/',
         filename: 'js/app-[name].js',
     },
     module: {
