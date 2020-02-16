@@ -72,7 +72,7 @@ export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Reso
         interfaceScore: resource.interface,
         likes: resource.like,
         priceId: resource.price_id,
-        typeId: resource.price_id,
+        typeId: resource.type_id,
         priceName: resource.price.name,
         typeName: resource.type.name,
         createdAt: resource.created_at,

@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        'Barryvdh\Debugbar\ServiceProvider',
 
          /*
          * Application Service Providers...
@@ -229,6 +230,7 @@ return [
         'Uuid' => Webpatser\Uuid\Uuid::class,
 
         'Validation' => App\Facades\Validation::class,
+        'Debugbar' => 'Barryvdh\Debugbar\Facade',
 
     ],
 

@@ -16,8 +16,6 @@ class TagController extends Controller
      */
     public function index(Request $request)
     {
-        // dd();
-
         $only = $request->input('only', null);
         if ($only == "parent") {
             $tag = Tag::all()->where('parent_id', '<>', null)->with('parent')->get();
@@ -93,7 +91,6 @@ class TagController extends Controller
             $tag->update($request->all());
 
         } catch(\Exception $e) {
-            dd($e);
             abort(500, "Can't update the tag");
         }
         return response()->json($tag, 200);

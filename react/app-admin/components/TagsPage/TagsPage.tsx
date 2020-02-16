@@ -34,6 +34,8 @@ export const TagsPage: React.FunctionComponent = () => {
             return fetchTags();
         }).catch(() => {
             setErrorMessage('Error while trying to delete the tag "' + tagName + '".');
+        }).finally(() => {
+            setIsLoading(false);
         });
     };
 
