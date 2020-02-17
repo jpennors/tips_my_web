@@ -23,7 +23,7 @@ cd tips_my_web
 
 This will install all the javascript dependencies to make the React app work
 
-First install *NPM* globally on your computer by following the instructions [here](https://www.npmjs.com/get-npm), then run the following:
+First install **NPM** globally on your computer by following the instructions [here](https://www.npmjs.com/get-npm), then run the following:
 ```
 npm install
 ```
@@ -32,7 +32,7 @@ npm install
 
 This will install all the php dependencies to make the Laravel app work
 
-First install *Composer* in the `tips_my_web` directory by following the instructions [here](https://getcomposer.org/download/), then run the following:
+First install **Composer** in the `tips_my_web` directory by following the instructions [here](https://getcomposer.org/download/), then run the following:
 ```
 php composer.phar install
 ```
@@ -46,7 +46,7 @@ Install a MySQL database on your computer: there are a lot of options available 
 - ...
 - ...
 
-Create a new database caled...
+Create a new database called...
 
 #### Add database credentials to `.env` file
 
@@ -59,13 +59,27 @@ In the `tips_my_web` directory, create a file named `.env` and copy the content 
 
 ### Launch the app
 
-#### Launch the backend server
+#### Build the frontend
 
 Run the following in the `tips_my_web` directory:
+```
+npm run build
+```
+
+This will export the react app into js bundled files and make them available in the `tips_my_web/public/` directory.
+
+
+#### Launch the backend server
+
+⚠️ Before laucnhing the backend server, make sure the mysql database is running! Then run the following in the `tips_my_web` directory:
 ```
 php artisan serve
 ```
 
-This will launch the Laravel app and expose it to `http://localhost:8000` by default. If you want to use another port, add the `--` option.
+This will launch the Laravel app and expose it to `http://localhost:8000` by default. If you want to use another port, for example `8080`, run `php artisan serve --port=8080`.
+
+That's it! Open [http://localhost:8000](http://localhost:8000) to see the app running.
+
+## Development tools
 
 
