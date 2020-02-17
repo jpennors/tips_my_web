@@ -1,5 +1,9 @@
 # TipsMyWeb
 
+A simple web app to help people find useful resources for their projects.
+Available at [https://tipsmyweb.com/](https://tipsmyweb.com/)
+
+![Screenshot](documentation/main-app-screenshot.png)
 
 # Table of contents
 
