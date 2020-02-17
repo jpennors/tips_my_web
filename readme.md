@@ -117,6 +117,12 @@ This will launch the Laravel app and expose it to `http://localhost:8000`. The l
 
 That's it! Open [http://localhost:8000](http://localhost:8000) to see the app running.
 
+### Use the app
+
+The project contains two separate sub-apps:
+- The main app, which is the TipsMyWeb website
+- The admin app, where you can add, edit and delete entities such as tags and resources that are used by the main app. To access the admin app, just add `/admin` to the main app's url (for example here: [http://localhost:8000/admin](http://localhost:8000/admin)). The login credentials are the `ADMIN_USERNAME` and `ADMIN_PASSWORD` fields of the `.env` file.
+
 # Development tools
 
 ## Frontend development
@@ -125,9 +131,9 @@ As you have probably seen, the app takes time to fully build and waiting this lo
 ```
 npm run dev
 ```
-This will launch a development server accessible at `http://localhost:3000` that will watch your files and update the view as soon as a change is detected. Don't forget to also launch the backend server (`php artisan serve`) as the frontend development server will still make api calls to the backend server.
+This will launch a development server accessible at [http://localhost:3000](http://localhost:3000) that will watch your files and update the view as soon as a change is detected. Don't forget to also launch the backend server (`php artisan serve`) as the frontend development server will still make api calls to the backend server.
 
-If you want to change the host/port of the backend server or the frontend development server, update the fiels `BACKEND_SERVER_URL` and `FRONTEND_DEV_SERVER_PORT` in the `.env` file.
+If you want to change the host/port of the backend server or the frontend development server, update the fields `BACKEND_SERVER_URL` and `FRONTEND_DEV_SERVER_PORT` in the `.env` file.
 
 ## Backend development
 
@@ -138,6 +144,3 @@ APP_DEBUG=true
 ```
 
 This will add a debug bar on the frontend and add additional logs to help you debug the app while developing. If you want to come back to the original configuration, set back these two params to the values they have in the `.env.example` file.
-
-+ admin creds
-+ enable frontend dev for more logs
