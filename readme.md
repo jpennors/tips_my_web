@@ -37,6 +37,25 @@ First install **Composer** in the `tips_my_web` directory by following the instr
 php composer.phar install
 ```
 
+### Add `.env` file
+
+#### Create the file
+Run the following to create a `.env` file in the project root directory, which will for now be a copy of the default `.env.example` file:
+```
+cp .env.example .env
+```
+
+Later, we'll fill out this file to add database and debugging configuration.
+
+#### Add the encryption key
+Laravel requires you to have an app encryption key which is generally randomly generated and stored in your `.env` file. The app will use this encryption key to encode various elements, from cookies to password hashes and more. Run the following to generate the key:
+
+```
+php artisan key:generate
+```
+
+If you check the `.env` file again, you will see that it now has a long random string of characters in the `APP_KEY` field. We now have a valid app encryption key.
+
 ### Configure database
 
 #### Install a database
@@ -46,16 +65,24 @@ Install a MySQL database on your computer: there are a lot of options available 
 - ...
 - ...
 
-Create a new database called...
-
 #### Add database credentials to `.env` file
 
-In the `tips_my_web` directory, create a file named `.env` and copy the content of `.env.example` in it. On the database section, fill in the credentials of your newly created mysql database.
+Create an empty database (you can name it `tmw` for example but the name is up to you).
 
-#### Migrate data
+In the `.env` file, fill in the `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` options to match the credentials of the database you just created. This will allow us to run migrations and seed the database in the next step.
 
-...
+#### Migrate the database
 
+Once your credentials are in the `.env` file, you can migrate your database:
+```
+php artisan migrate
+```
+
+This will create the tables necessary for the app to work.
+
+#### Seed the database
+
+*⚠️ TODO ! The database is empty for now, so you'll have to add some data through the admin interface to use the app. Later we'll add some basic random set of resources/tags that will be added automatically at the beginning.*
 
 ### Launch the app
 
@@ -71,7 +98,7 @@ This will export the react app into js bundled files and make them available in 
 
 #### Launch the backend server
 
-⚠️ Before laucnhing the backend server, make sure the mysql database is running! Then run the following in the `tips_my_web` directory:
+⚠️ Before launching the backend server, make sure the mysql database is running! Then run the following in the `tips_my_web` directory:
 ```
 php artisan serve
 ```
