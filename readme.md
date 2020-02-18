@@ -37,7 +37,7 @@ cd tips_my_web
 
 ### Frontend dependencies
 
-This will install all the javascript dependencies to make the React app work
+This will install all the javascript dependencies to make the React app work.
 
 First install **NPM** globally on your computer by following the instructions [here](https://www.npmjs.com/get-npm), then run the following:
 ```bash
@@ -46,7 +46,7 @@ npm install
 
 ### Backend dependencies
 
-This will install all the php dependencies to make the Laravel app work
+This will install all the php dependencies to make the Laravel app work.
 
 First install **Composer** in the `tips_my_web` directory by following the instructions [here](https://getcomposer.org/download/), then run the following:
 ```bash
@@ -78,9 +78,9 @@ If you check the `.env` file again, you will see that it now has a long random s
 
 For the app to work, you'll need a MySQL database running on your computer. There are many ways of installing such a database, but a simple solution is to install an AMP stack, which consists of a pre-configured package of a MySQL database, an interface to use the database and an Apache server (that we won't use here).
 
-- For Mac OS: [MAMP](https://www.mamp.info/en/mamp/)
-- For Windows: [WAMP](http://www.wampserver.com/)
-- For Linux: if you use linux, you already know how to do it
+- **For Mac OS:** [MAMP](https://www.mamp.info/en/mamp/)
+- **For Windows:** [WAMP](http://www.wampserver.com/)
+- **For Linux:** *if you use linux, you already know how to do it*
 
 Both *WAMP* and *MAMP* come with **phpMyadmin**, a web interface to control your database. That's the one you'll use to create the app's database. The default login is `root` and the default password is `password` (it can also be empty sometimes).
 
@@ -112,7 +112,7 @@ Run the following in the `tips_my_web` directory:
 npm run build
 ```
 
-This will export the react app into js bundled files and make them available in the `tips_my_web/public/` directory.
+This will export the react app into javascript bundled files and make them available in the `tips_my_web/public/` directory.
 
 
 ### Launch the backend server
@@ -124,13 +124,11 @@ php artisan serve --port=8000
 
 This will launch the Laravel app and expose it to `http://localhost:8000`. The later part (`--port=8000`) is not necessary: the default port is `8000`. If you want to use another port, don't forget to update the `APP_URL` field in the `.env` file.
 
-That's it! Open [http://localhost:8000](http://localhost:8000) to see the app running.
-
 ### Use the app
 
 The project contains two separate sub-apps:
-- The main app, which is the TipsMyWeb website
-- The admin app, where you can add, edit and delete entities such as tags and resources that are used by the main app. To access the admin app, just add `/admin` to the main app's url (for example here: [http://localhost:8000/admin](http://localhost:8000/admin)). The login credentials are the `ADMIN_USERNAME` and `ADMIN_PASSWORD` fields of the `.env` file.
+- The main app, which is the TipsMyWeb website, which is now accessible at [http://localhost:8000](http://localhost:8000)
+- The admin app, where you can add, edit and delete entities such as tags and resources that are used by the main app. To access the admin app, just add `/admin` to the main app's url ([http://localhost:8000/admin](http://localhost:8000/admin)). The login credentials are stored in the `.env` file (`ADMIN_USERNAME` and `ADMIN_PASSWORD`).
 
 # Development tools
 
