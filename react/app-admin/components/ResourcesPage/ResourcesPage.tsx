@@ -62,7 +62,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
             {isLoading ? <Loader active inline="centered" /> : hasError ? null : isEmpty ? (
                 <ActionMessage
                     type='warning'
-                    message='Click on the "Add Resource" button to add your first tag!'
+                    message='Click on the "Add Resource" button to add your first resource!'
                     messageHeader='No resources for now...'
                 />
             ) : (
