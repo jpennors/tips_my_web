@@ -85,6 +85,11 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
         return ajaxGet('prices').then(res => {
             const prices = serializePricesFromAPI(res.data);
             setPricesOptions(convertToSelectOptions(prices, 'id', 'name'));
+
+            if (prices.length == 0) {
+                setErrorMessage('There are no pricing options available yet. Add some first before editing/adding resources!');
+                setCanEdit(false);
+            }
         }).catch(() => {
             setErrorMessage('Error while fetching pricing options from the API.');
             setCanEdit(false);
@@ -95,6 +100,11 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
         return ajaxGet('types').then(res => {
             const types = serializeResourceTypesFromAPI(res.data);
             setTypesOptions(convertToSelectOptions(types, 'id', 'name'));
+
+            if (types.length == 0) {
+                setErrorMessage('There are no resource type options available yet. Add some first before editing/adding resources!');
+                setCanEdit(false);
+            }
         }).catch(() => {
             setErrorMessage('Error while fetching types options from the API.');
             setCanEdit(false);
