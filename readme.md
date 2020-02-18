@@ -103,6 +103,8 @@ This will create the tables necessary for the app to work.
 
 The database is empty for now, so you'll have to add some data through the admin interface to use the app. Later we'll add some basic random set of resources/tags that will be added automatically at the beginning.
 
+⚠️ You'll need to manually fill the `prices` and `types` tables through **phpMyAdmin**, with at least one value for each, or else you won't be able to add resources in the admin app. For example, add a `Website` type and a `Freemium` pricing, and set the id and dates to whatever you want. We'll add a form in the admin app to add pricing and types options soon.
+
 ## Launch the app
 
 ### Build the frontend
