@@ -127,7 +127,7 @@ This will launch the Laravel app and expose it to `http://localhost:8000`. The l
 ### Use the app
 
 The project contains two separate sub-apps:
-- The main app, which is the TipsMyWeb website, which is now accessible at [http://localhost:8000](http://localhost:8000)
+- The main app is the *TipsMyWeb* website, which is now accessible at [http://localhost:8000](http://localhost:8000)
 - The admin app, where you can add, edit and delete entities such as tags and resources that are used by the main app. To access the admin app, just add `/admin` to the main app's url ([http://localhost:8000/admin](http://localhost:8000/admin)). The login credentials are stored in the `.env` file (`ADMIN_USERNAME` and `ADMIN_PASSWORD`).
 
 # Development tools
