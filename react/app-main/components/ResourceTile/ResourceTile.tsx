@@ -59,14 +59,14 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
                 <a role="button" className="resource-tile__like-resource-button">
                     {isLiked ? (
                         <img
-                            src={'images/heart-full.svg'}
+                            src={'/images/heart-full.svg'}
                             alt="Unlike"
                             height="15px"
                             onClick={likeResource}
                         />
                     ) : (
                         <img
-                            src={'images/heart.svg'}
+                            src={'/images/heart.svg'}
                             alt="Like"
                             height="15px"
                             onClick={likeResource}
