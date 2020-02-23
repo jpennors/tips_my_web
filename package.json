@@ -31,7 +31,6 @@
 		"file-loader": "^5.1.0",
 		"react-cookie": "^4.0.3",
 		"react-hot-loader": "^4.12.19",
-		"resolve-url-loader": "3.1.0",
 		"style-loader": "^0.23.1",
 		"ts-loader": "^6.2.1",
 		"typescript": "^3.8.2",
