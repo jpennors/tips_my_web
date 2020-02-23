@@ -43,6 +43,10 @@ export const SearchResultsPage: React.FunctionComponent = () => {
         });
     }, []);
 
+    const pageTitle = resultResources.length > 0
+        ? 'Here are some websites to improve your workflow'
+        : 'We didn\'t find any result for this search...';
+
     return (
         <div className="search-results-page">
             {isLoading ? (
@@ -52,7 +56,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                 </div>
             ) : (
                 <>
-                    <p className="search-results-page__title">Here are some websites to improve your workflow</p>
+                    <p className="search-results-page__title">{pageTitle}</p>
                     <div className="search-results-page__results-list">
                         {resultResources.map(resource => (
                             <ResourceTile
