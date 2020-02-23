@@ -5,16 +5,9 @@ import { ResourceTile } from 'tmw-main/components/ResourceTile';
 import { Resource } from 'tmw-main/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { serializeResourcesFromAPI } from 'tmw-main/utils/api-serialize';
+import { parseSearchTags } from 'tmw-main/utils/tags-search-url';
 
 import './search-results-page.css';
-
-/*
- * Search tags are encoded in url like this : tag1&tag2&tag3
- * This function parses the url and returns the array of tags.
- */
-const parseSearchTags = (searchTagsString: string): string[] => {
-    return searchTagsString.split('&');
-};
 
 export const SearchResultsPage: React.FunctionComponent = () => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);

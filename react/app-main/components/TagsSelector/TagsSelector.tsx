@@ -8,12 +8,10 @@ import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw-main/constants/app-types'
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Tag } from 'tmw-main/components/Tag';
 import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
+import { encodeSearchTags } from 'tmw-main/utils/tags-search-url';
+
 
 import './tags-selector.css';
-
-const encodeSearchTags = (searchTagsSlugs: string[]): string => {
-    return searchTagsSlugs.join('&');
-};
 
 export const TagsSelector: React.FunctionComponent = () => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
