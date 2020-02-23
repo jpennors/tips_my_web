@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { CookiesProvider } from 'react-cookie';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { LayoutFooter } from 'tmw-main/components/LayoutFooter';
 import { LayoutHeader } from 'tmw-main/components/LayoutHeader';
 import { ResourceSearch } from 'tmw-main/components/ResourceSearch';
+import { SearchResultsPage } from 'tmw-main/components/SearchResultsPage';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 
 import './app-main.css';
@@ -14,8 +15,10 @@ export const AppMain: React.FunctionComponent = () => (
             <LayoutHeader/>
             <BrowserRouter>
                 <Switch>
-                    <Route path={MAIN_APP_ROUTES.HOME} component={ResourceSearch} />
+                    <Route path={MAIN_APP_ROUTES.HOME} component={ResourceSearch} exact />
                     <Route path={MAIN_APP_ROUTES.SEARCH} component={ResourceSearch} />
+                    <Route path={MAIN_APP_ROUTES.RESULTS} component={SearchResultsPage} />
+                    <Redirect to={MAIN_APP_ROUTES.HOME} />
                 </Switch>
             </BrowserRouter>
             <LayoutFooter/>
