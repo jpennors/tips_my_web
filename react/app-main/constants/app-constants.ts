@@ -10,3 +10,9 @@ export enum LOCALES {
 
 export const RESOURCES_BASE_URL = '/api/resources/image/';
 export const DEFAULT_RESOURCE_URL = '/images/default-resource-img.jpg';
+
+export enum MAIN_APP_ROUTES {
+    HOME = '/',
+    SEARCH = '/search',
+    RESULTS = '/results/:searchTags'
+}

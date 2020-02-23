@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ResourceTag;
+use App\Tag;
 
 class ResourceTagController extends Controller
 {
@@ -11,16 +12,17 @@ class ResourceTagController extends Controller
     /**
      * Function to search resources based on requested tags
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function search(Request $request)
     {
-        $search_tags = $request->tags;
-        $search_size = sizeof($search_tags);
+        $search_tags_slugs = $request->tags;
+        $search_size = sizeof($search_tags_slugs);
         $search_results = array();
 
-        foreach ($search_tags as $search_tag) {
-            $resource_tags = ResourceTag::with('resource')->where('tag_id', $search_tag)->get();
+        foreach ($search_tags_slugs as $tag_slug) {
+            $tag = Tag::where('slug', $tag_slug)->firstOrFail();
+            $resource_tags = ResourceTag::with('resource')->where('tag_id', $tag["id"])->get();
             foreach ($resource_tags as $resource_tag) {
 
                 $index = array_search($resource_tag->resource['id'], array_column($search_results, 'id'));

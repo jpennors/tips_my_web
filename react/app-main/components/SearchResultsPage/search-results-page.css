@@ -1,0 +1,30 @@
+.search-results-page {
+    width: 88%;
+    margin: auto;
+}
+
+.search-results-page__loading-spinner {
+    text-align: center;
+    margin-top: 40px;
+    font-family: var(--app-font-light);
+}
+
+.search-results-page__title {
+    text-align: left;
+    font-family: var(--app-font-medium);
+    font-size: 4vh;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.search-results-page__results-list {
+    overflow-x: scroll;
+    margin-top: 20px;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.search-results-page__results-list::-webkit-scrollbar {
+    display: none;
+}

@@ -1,6 +1,6 @@
 import { Resource, TagsMap } from 'tmw-main/constants/app-types';
 import { APIResource, APITag } from 'tmw-main/constants/api-types';
-import { LOCALES } from 'tmw-main/constants/ui-constants';
+import { LOCALES } from 'tmw-main/constants/app-constants';
 
 export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
     const tagsMap: TagsMap = {};
@@ -15,6 +15,7 @@ export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
             tagsMap[tag.id] = {
                 id: tag.id,
                 name: tag.name,
+                slug: tag.slug,
                 secondaryTags: [],
             };
         }

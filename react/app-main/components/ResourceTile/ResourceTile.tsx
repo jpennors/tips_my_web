@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
-import { DEFAULT_RESOURCE_URL, RESOURCES_BASE_URL } from 'tmw-main/constants/ui-constants';
+import { DEFAULT_RESOURCE_URL, RESOURCES_BASE_URL } from 'tmw-main/constants/app-constants';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 
@@ -59,14 +59,14 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
                 <a role="button" className="resource-tile__like-resource-button">
                     {isLiked ? (
                         <img
-                            src={'images/heart-full.svg'}
+                            src={'/images/heart-full.svg'}
                             alt="Unlike"
                             height="15px"
                             onClick={likeResource}
                         />
                     ) : (
                         <img
-                            src={'images/heart.svg'}
+                            src={'/images/heart.svg'}
                             alt="Like"
                             height="15px"
                             onClick={likeResource}
