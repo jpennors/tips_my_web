@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { TagsLaunchBar } from 'tmw-main/components/TagsLaunchBar';
-import { SIZES } from 'tmw-main/constants/ui-constants';
+import { SIZES } from 'tmw-main/constants/app-constants';
 import { serializeTagsFromAPI } from 'tmw-main/utils/api-serialize';
 import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw-main/constants/app-types';
 import { ajaxGet } from 'tmw-common/utils/ajax';
