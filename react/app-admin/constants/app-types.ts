@@ -20,6 +20,7 @@ export interface WebsiteSuggestion {
 export interface Tag {
     id: string;
     name: string;
+    slug: string;
     parentId: string | null;
     parentName: string | null;
 }

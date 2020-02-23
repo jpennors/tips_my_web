@@ -70,6 +70,7 @@ export const TagsPage: React.FunctionComponent = () => {
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Name</Table.HeaderCell>
+                            <Table.HeaderCell>Slug</Table.HeaderCell>
                             <Table.HeaderCell>Parent</Table.HeaderCell>
                             <Table.HeaderCell collapsing textAlign="center">Edit</Table.HeaderCell>
                             <Table.HeaderCell collapsing textAlign="center">Delete</Table.HeaderCell>
@@ -80,6 +81,7 @@ export const TagsPage: React.FunctionComponent = () => {
                             tags.map(tag => (
                                 <Table.Row key={tag.id}>
                                     <Table.Cell>{tag.name}</Table.Cell>
+                                    <Table.Cell>{tag.slug}</Table.Cell>
                                     <Table.Cell>{tag.parentName && (<Label size="small">{tag.parentName}</Label>)}</Table.Cell>
                                     <Table.Cell textAlign="center">
                                         <Link to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}>
