@@ -82,7 +82,9 @@ export const TagsPage: React.FunctionComponent = () => {
                                 <Table.Row key={tag.id}>
                                     <Table.Cell>{tag.name}</Table.Cell>
                                     <Table.Cell>{tag.slug}</Table.Cell>
-                                    <Table.Cell>{tag.parentName && (<Label size="small">{tag.parentName}</Label>)}</Table.Cell>
+                                    <Table.Cell disabled={!tag.parentName}>
+                                        {tag.parentName ? (<Label size="small">{tag.parentName}</Label>) : 'No parent'}
+                                    </Table.Cell>
                                     <Table.Cell textAlign="center">
                                         <Link to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}>
                                             <Icon name='edit' color='blue' link />
