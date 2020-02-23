@@ -76,7 +76,7 @@ If you check the `.env` file again, you will see that it now has a long random s
 
 ### Install a database
 
-For the app to work, you'll need a MySQL database running on your computer. There are many ways of installing such a database, but a simple solution is to install an AMP stack, which consists of a pre-configured package of a MySQL database, an interface to use the database and an Apache server (that we won't use here).
+For the app to work, you'll need a MySQL database running on your computer. There are many ways of installing such a database, but a simple solution is to install an AMP stack, which consists of a pre-configured package of a MySQL database, an interface to use the database (phpMyAdmin) and an Apache server (that we won't use here).
 
 - **For Mac OS:** [MAMP](https://www.mamp.info/en/mamp/)
 - **For Windows:** [WAMP](http://www.wampserver.com/)
