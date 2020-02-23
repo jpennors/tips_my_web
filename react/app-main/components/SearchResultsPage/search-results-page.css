@@ -1,9 +1,15 @@
-.search-results-page__results {
+.search-results-page {
     width: 88%;
     margin: auto;
 }
 
-.search-results-page__results-title {
+.search-results-page__loading-spinner {
+    text-align: center;
+    margin-top: 40px;
+    font-family: var(--app-font-light);
+}
+
+.search-results-page__title {
     text-align: left;
     font-family: var(--app-font-medium);
     font-size: 4vh;

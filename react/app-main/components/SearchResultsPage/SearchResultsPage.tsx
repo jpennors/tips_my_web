@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router';
+import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { ResourceTile } from 'tmw-main/components/ResourceTile';
 import { Resource } from 'tmw-main/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
@@ -45,10 +46,13 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     return (
         <div className="search-results-page">
             {isLoading ? (
-                <div className="ui active inverted loader" />
+                <div className="search-results-page__loading-spinner">
+                    <LoadingSpinner /><br/>
+                    Loading results
+                </div>
             ) : (
-                <div className="search-results-page__results">
-                    <p className="search-results-page__results-title">Here are some websites to improve your workflow</p>
+                <>
+                    <p className="search-results-page__title">Here are some websites to improve your workflow</p>
                     <div className="search-results-page__results-list">
                         {resultResources.map(resource => (
                             <ResourceTile
@@ -58,7 +62,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                             />
                         ))}
                     </div>
-                </div>
+                </>
             )}
         </div>
     );
