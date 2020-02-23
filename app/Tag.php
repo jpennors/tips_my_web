@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Uuids;
@@ -10,6 +12,7 @@ class Tag extends Model
 {
     use SoftDeletes;
     use Uuids;
+    use HasSlug;
 
 
     /**
@@ -34,6 +37,20 @@ class Tag extends Model
      * @var array
      */
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            ->usingSeparator('-')
+            ->doNotGenerateSlugsOnUpdate() // To guarantee that shareable URLs won't change
+            ->slugsShouldBeNoLongerThan(50);
+    }
 
 
     /**
