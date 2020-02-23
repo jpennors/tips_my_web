@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { TagsLaunchBar } from 'tmw-main/components/TagsLaunchBar';
-import { SIZES } from 'tmw-main/constants/app-constants';
+import { MAIN_APP_ROUTES, SIZES } from 'tmw-main/constants/app-constants';
 import { serializeTagsFromAPI } from 'tmw-main/utils/api-serialize';
 import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw-main/constants/app-types';
 import { ajaxGet } from 'tmw-common/utils/ajax';
@@ -10,154 +11,131 @@ import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
 
 import './tags-selector.css';
 
-interface TagsSelectorState {
-    tagsMap: TagsMap;
-    primaryTag: PrimaryTag | null;
-    secondaryTags: SecondaryTag[];
-    requestLoading: boolean;
-}
+const encodeSearchTags = (searchTagsSlugs: string[]): string => {
+    return searchTagsSlugs.join('&');
+};
 
-export class TagsSelector extends React.Component<
-    {},
-    TagsSelectorState
-> {
-    constructor(props: {}) {
-        super(props);
+export const TagsSelector: React.FunctionComponent = () => {
+    const [isLoading, setIsLoading] = React.useState<boolean>(true);
+    const [primaryTag, setPrimaryTag] = React.useState<PrimaryTag>();
+    const [secondaryTags, setSecondaryTags] = React.useState<SecondaryTag[]>([]);
+    const [tagsMap, setTagsMap] = React.useState<TagsMap>({});
 
-        this.state = {
-            tagsMap: {},
-            primaryTag: null,
-            secondaryTags: [],
-            requestLoading: true,
-        };
-    }
+    const history = useHistory();
 
-    fetchTags = (): void => {
-        ajaxGet('tags')
+    const fetchTagOptions = (): Promise<void> => {
+        return ajaxGet('tags')
             .then(res => {
-                this.setState({
-                    tagsMap: serializeTagsFromAPI(res.data || []),
-                    requestLoading: false,
-                });
+                const newTagsMap = serializeTagsFromAPI(res.data || []);
+                setTagsMap(newTagsMap);
             })
             .catch(() => {
-                this.setState({
-                    requestLoading: false,
-                });
+                // TODO: Handle errors / no tags
             });
     };
 
-    addSecondaryTag = (selectedTag: SecondaryTag): void => {
-        this.setState(previousState => ({
-            secondaryTags: previousState.secondaryTags.concat([selectedTag]),
-        }));
+    const addSecondaryTag = (selectedTag: SecondaryTag): void => {
+        setSecondaryTags(secondaryTags.concat([selectedTag]));
     };
 
-    removeSecondaryTag = (selectedTag: SecondaryTag): void => {
-        this.setState(previousState => ({
-            secondaryTags: previousState.secondaryTags.filter(
-                tag => tag.id !== selectedTag.id,
-            ),
-        }));
+    const removeSecondaryTag = (selectedTag: SecondaryTag): void => {
+        setSecondaryTags(secondaryTags.filter(tag => tag.id !== selectedTag.id));
     };
 
-    selectSecondaryTag = (selectedTag: SecondaryTag): void => {
-        const index = this.state.secondaryTags
-            .map(tag => tag.id)
-            .indexOf(selectedTag.id);
+    const onSecondaryTagClick = (selectedTag: SecondaryTag): void => {
+        const index = secondaryTags.map(tag => tag.id).indexOf(selectedTag.id);
         if (index === -1) {
-            this.addSecondaryTag(selectedTag);
+            addSecondaryTag(selectedTag);
         } else {
-            this.removeSecondaryTag(selectedTag);
+            removeSecondaryTag(selectedTag);
         }
     };
 
-    selectPrimaryTag = (selectedTag: PrimaryTag): void => {
-        this.setState(previousState => ({
-            primaryTag: previousState.primaryTag ? null : selectedTag,
-            secondaryTags: previousState.primaryTag ? [] : previousState.secondaryTags,
-        }));
+    const onPrimaryTagClick = (selectedTag: PrimaryTag): void => {
+        if (primaryTag) {
+            setPrimaryTag(undefined);
+            setSecondaryTags([]);
+        } else {
+            setPrimaryTag(selectedTag);
+        }
     };
 
-    launchSearch = (): void => {
-        const { primaryTag, secondaryTags } = this.state;
-
+    const launchSearch = (): void => {
         if (primaryTag) {
             const selectedTags = [primaryTag, ...secondaryTags];
-            const selectedTagIds = selectedTags.map(tag => tag.id);
-            // onSearchStart(selectedTagIds);
+            const selectedTagSlugs = selectedTags.map(tag => tag.slug);
+            const searchRoute = MAIN_APP_ROUTES.RESULTS.replace(':searchTags', encodeSearchTags(selectedTagSlugs));
+            history.push(searchRoute);
         }
     };
 
-    componentDidMount(): void {
-        this.fetchTags();
-    }
+    React.useEffect(() => {
+        fetchTagOptions().finally(() => {
+            setIsLoading(false);
+        });
+    }, []);
 
-    render(): React.ReactNode {
-        const { tagsMap, primaryTag, secondaryTags, requestLoading } = this.state;
+    let barPercentage = 0;
+    barPercentage += primaryTag ? 40 : 0;
+    barPercentage += secondaryTags.length * 20;
 
-        let barPercentage = 0;
-        barPercentage += primaryTag ? 40 : 0;
-        barPercentage += secondaryTags.length * 20;
-
-        return (
-            <div className="tags-selector">
-                <TagsLaunchBar
-                    onClickCallback={this.launchSearch}
-                    completionPercentage={barPercentage}
-                />
-                {requestLoading ? (
-                    <div className="tags-selector__loading-spinner">
-                        <LoadingSpinner /><br/>
+    return (
+        <div className="tags-selector">
+            <TagsLaunchBar
+                onClickCallback={launchSearch}
+                completionPercentage={barPercentage}
+            />
+            {isLoading ? (
+                <div className="tags-selector__loading-spinner">
+                    <LoadingSpinner /><br/>
                         Loading Tags
-                    </div>
-                ) : (
-                    <div className="tags-selector__container">
-                        {primaryTag && (
-                            <div className="tags-selector__selected-primary-tag">
-                                <span
-                                    className="tags-selector__selected-primary-tag-arrow"
-                                    onClick={(): void => this.selectPrimaryTag(primaryTag)}
-                                >
-                                    <ArrowIcon
-                                        width={20}
-                                    />
-                                </span>
-                                <Tag
-                                    content={primaryTag.name}
-                                    isSelected={false}
-                                    size={SIZES.LARGE}
-                                    clickable={false}
+                </div>
+            ) : (
+                <div className="tags-selector__container">
+                    {primaryTag && (
+                        <div className="tags-selector__selected-primary-tag">
+                            <span
+                                className="tags-selector__selected-primary-tag-arrow"
+                                onClick={(): void => onPrimaryTagClick(primaryTag)}
+                            >
+                                <ArrowIcon
+                                    width={20}
                                 />
-                            </div>
-                        )}
-                        <div className="tags-selector__tag-options">
-                            {primaryTag
-                                ? primaryTag.secondaryTags.map((tag: SecondaryTag) => (
+                            </span>
+                            <Tag
+                                content={primaryTag.name}
+                                isSelected={false}
+                                size={SIZES.LARGE}
+                                clickable={false}
+                            />
+                        </div>
+                    )}
+                    <div className="tags-selector__tag-options">
+                        {primaryTag
+                            ? primaryTag.secondaryTags.map((tag: SecondaryTag) => (
+                                <Tag
+                                    key={tag.id}
+                                    content={tag.name}
+                                    isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
+                                    onClickCallback={(): void => onSecondaryTagClick(tag)}
+                                    size={SIZES.MEDIUM}
+                                />
+                            ))
+                            : Object.keys(tagsMap).map((tagId: string) => {
+                                const tag = tagsMap[tagId];
+                                return (
                                     <Tag
                                         key={tag.id}
                                         content={tag.name}
-                                        isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
-                                        onClickCallback={(): void => this.selectSecondaryTag(tag)}
+                                        isSelected={false}
+                                        onClickCallback={(): void => onPrimaryTagClick(tag)}
                                         size={SIZES.MEDIUM}
                                     />
-                                ))
-                                : Object.keys(tagsMap).map((tagId: string) => {
-                                    const tag = tagsMap[tagId];
-                                    return (
-                                        <Tag
-                                            key={tag.id}
-                                            content={tag.name}
-                                            isSelected={false}
-                                            onClickCallback={(): void => this.selectPrimaryTag(tag)}
-                                            size={SIZES.MEDIUM}
-                                        />
-                                    );
-                                })}
-                        </div>
+                                );
+                            })}
                     </div>
-                )}
-            </div>
-        );
-    }
-}
+                </div>
+            )}
+        </div>
+    );
+};

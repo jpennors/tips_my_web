@@ -3,6 +3,7 @@ import { LOCALES } from 'tmw-main/constants/app-constants';
 export interface SecondaryTag {
     id: string;
     name: string;
+    slug: string;
 }
 
 export interface PrimaryTag extends SecondaryTag{

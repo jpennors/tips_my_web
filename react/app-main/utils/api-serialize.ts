@@ -15,6 +15,7 @@ export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
             tagsMap[tag.id] = {
                 id: tag.id,
                 name: tag.name,
+                slug: tag.slug,
                 secondaryTags: [],
             };
         }
