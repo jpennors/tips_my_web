@@ -10,10 +10,6 @@ import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
 
 import './tags-selector.css';
 
-interface TagsSelectorProps {
-    onSearchStart: (selectedTagIds: string[]) => void;
-}
-
 interface TagsSelectorState {
     tagsMap: TagsMap;
     primaryTag: PrimaryTag | null;
@@ -22,10 +18,10 @@ interface TagsSelectorState {
 }
 
 export class TagsSelector extends React.Component<
-    TagsSelectorProps,
+    {},
     TagsSelectorState
 > {
-    constructor(props: TagsSelectorProps) {
+    constructor(props: {}) {
         super(props);
 
         this.state = {
@@ -84,13 +80,12 @@ export class TagsSelector extends React.Component<
     };
 
     launchSearch = (): void => {
-        const { onSearchStart } = this.props;
         const { primaryTag, secondaryTags } = this.state;
 
         if (primaryTag) {
             const selectedTags = [primaryTag, ...secondaryTags];
             const selectedTagIds = selectedTags.map(tag => tag.id);
-            onSearchStart(selectedTagIds);
+            // onSearchStart(selectedTagIds);
         }
     };
 

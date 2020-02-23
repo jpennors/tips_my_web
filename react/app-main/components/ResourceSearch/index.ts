@@ -1,1 +1,0 @@
-export { ResourceSearch } from './ResourceSearch';
