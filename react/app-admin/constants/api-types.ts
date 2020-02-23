@@ -33,6 +33,7 @@ export interface APIWebsiteSuggestion {
 export interface APIBasicTag {
     id: string;
     name: string;
+    slug: string;
     parent_id: string | null;
     created_at: Date;
     updated_at: Date | null;

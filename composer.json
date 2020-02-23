@@ -15,6 +15,7 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "nesbot/carbon": "1.37",
+        "spatie/laravel-sluggable": "^2.2",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
