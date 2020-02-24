@@ -15,7 +15,6 @@ export const ProtectedRoute: React.FunctionComponent<ProtectedRouteProps> = ({
     redirection = ADMIN_APP_ROUTES.LOGIN,
     ...routeProps
 }) => {
-
     const isAuthenticated = checkAuthentication();
 
     const renderedComponent = (props: any): React.ReactNode => {
@@ -26,10 +25,5 @@ export const ProtectedRoute: React.FunctionComponent<ProtectedRouteProps> = ({
         }
     };
 
-    return (
-        <Route
-            {...routeProps}
-            render={renderedComponent}
-        />
-    );
+    return <Route {...routeProps} render={renderedComponent} />;
 };

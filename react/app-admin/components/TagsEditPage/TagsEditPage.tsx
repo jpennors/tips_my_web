@@ -24,33 +24,43 @@ export const TagsEditPage: React.FunctionComponent = () => {
     const { id: editedTagId } = useParams();
 
     const fetchTagOptions = async (): Promise<void> => {
-        return ajaxGet('tags').then(res => {
-            const tags = serializeTagsFromAPI(res.data);
+        return ajaxGet('tags')
+            .then(res => {
+                const tags = serializeTagsFromAPI(res.data);
 
-            if (editedTagId) {
-                const editedTag = tags.find(tag => tag.id === editedTagId);
-                if (editedTag) {
-                    setTag(editedTag);
-                } else {
-                    setErrorMessage('No matching tag was found for this ID.');
-                    setCanEdit(false);
+                if (editedTagId) {
+                    const editedTag = tags.find(tag => tag.id === editedTagId);
+                    if (editedTag) {
+                        setTag(editedTag);
+                    } else {
+                        setErrorMessage('No matching tag was found for this ID.');
+                        setCanEdit(false);
+                    }
                 }
-            }
 
-            const fetchedTagOptions = convertToSelectOptions(tags.filter(tag => tag.id != editedTagId), 'id', 'name');
-            fetchedTagOptions.unshift({ key: 'no-parent', text: 'No Parent', value: 'no-parent' }); // Add 'No Parent' Option
-            setTagOptions(fetchedTagOptions);
-        }).catch(() => {
-            setErrorMessage('Error while trying to fetch tag data from the API.');
-            setCanEdit(false);
-        });
+                const fetchedTagOptions = convertToSelectOptions(
+                    tags.filter(tag => tag.id != editedTagId),
+                    'id',
+                    'name',
+                );
+                fetchedTagOptions.unshift({
+                    key: 'no-parent',
+                    text: 'No Parent',
+                    value: 'no-parent',
+                }); // Add 'No Parent' Option
+                setTagOptions(fetchedTagOptions);
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to fetch tag data from the API.');
+                setCanEdit(false);
+            });
     };
 
-    const onTagNameInputChange = (_: any, { value }: { value: string}): void => {
+    const onTagNameInputChange = (_: any, { value }: { value: string }): void => {
         setTag({ ...tag, name: value });
     };
 
-    const onTagParentIdInputChange = (_: any, { value }: { value: string}): void => {
+    const onTagParentIdInputChange = (_: any, { value }: { value: string }): void => {
         if (value === 'no-parent') {
             setTag({ ...tag, parentId: null });
         } else {
@@ -69,22 +79,32 @@ export const TagsEditPage: React.FunctionComponent = () => {
         const newTag = serializeTagToAPI(tag);
 
         if (editedTagId) {
-            ajaxPut(`tags/${editedTagId}`, newTag).then(() => {
-                setSuccessMessage('Your tag "' + tag.name + '" was successfully edited.');
-            }).catch(() => {
-                setErrorMessage('Error while updating the tag. Your modifications were probably not saved.');
-            }).finally(() => {
-                setIsLoading(false);
-            });
+            ajaxPut(`tags/${editedTagId}`, newTag)
+                .then(() => {
+                    setSuccessMessage('Your tag "' + tag.name + '" was successfully edited.');
+                })
+                .catch(() => {
+                    setErrorMessage(
+                        'Error while updating the tag. Your modifications were probably not saved.',
+                    );
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
         } else {
-            ajaxPost('tags', newTag).then(() => {
-                setSuccessMessage('Your new tag "' + tag.name + '" was successfully saved.');
-                resetForm();
-            }).catch(() => {
-                setErrorMessage('Error while posting new tag to API. The new tag was probably not saved.');
-            }).finally(() => {
-                setIsLoading(false);
-            });
+            ajaxPost('tags', newTag)
+                .then(() => {
+                    setSuccessMessage('Your new tag "' + tag.name + '" was successfully saved.');
+                    resetForm();
+                })
+                .catch(() => {
+                    setErrorMessage(
+                        'Error while posting new tag to API. The new tag was probably not saved.',
+                    );
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
         }
     };
 
@@ -99,30 +119,36 @@ export const TagsEditPage: React.FunctionComponent = () => {
             <PageHeader
                 iconName="tags"
                 headerContent={editedTagId ? 'Edit Tag' : 'Add Tag'}
-                subHeaderContent={editedTagId ? 'Edit an existing tag' : 'Add a tag to be used to search for resources'}
+                subHeaderContent={
+                    editedTagId
+                        ? 'Edit an existing tag'
+                        : 'Add a tag to be used to search for resources'
+                }
             />
-            <ActionMessage type='success' message={successMessage} />
-            <ActionMessage type='error' message={errorMessage} />
+            <ActionMessage type="success" message={successMessage} />
+            <ActionMessage type="error" message={errorMessage} />
             {canEdit && (
                 <>
                     <Message
                         attached
-                        header={editedTagId ? 'Edit an existing tag' : 'Add a tag to filter resources'}
-                        content='A tag can also be attached to a parent tag'
+                        header={
+                            editedTagId ? 'Edit an existing tag' : 'Add a tag to filter resources'
+                        }
+                        content="A tag can also be attached to a parent tag"
                     />
                     <Form className="attached fluid segment" loading={isLoading}>
                         <Form.Group widths="equal">
                             <Form.Input
                                 fluid
-                                label='Tag Name'
-                                placeholder='Tag Name'
+                                label="Tag Name"
+                                placeholder="Tag Name"
                                 value={tag.name || ''}
                                 onChange={onTagNameInputChange}
                                 required
                             />
                             <Form.Select
                                 fluid
-                                label='Parent Tag'
+                                label="Parent Tag"
                                 placeholder="No Parent"
                                 disabled={isTagOptionsEmpty}
                                 options={tagOptions}

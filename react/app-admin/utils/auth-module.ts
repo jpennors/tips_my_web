@@ -12,7 +12,10 @@ export const getLocalToken = (): string | null => {
     if (rawAuthToken) {
         try {
             const authToken: AuthToken = JSON.parse(rawAuthToken);
-            if (authToken.expiration > Date.now() && authToken.expiration <= Date.now() + TOKEN_VALIDITY_TIME) {
+            if (
+                authToken.expiration > Date.now() &&
+                authToken.expiration <= Date.now() + TOKEN_VALIDITY_TIME
+            ) {
                 return authToken.token;
             }
         } catch {
@@ -44,7 +47,7 @@ export const redirectUser = (): void => {
 
 export const login = async (data: any): Promise<void | string> => {
     emptyLocalStorage();
-    return ajaxPost('login', data).then((res: {data: LoginAPIResponse}) => {
+    return ajaxPost('login', data).then((res: { data: LoginAPIResponse }) => {
         setLocalToken(res.data.token);
         redirectUser();
     });

@@ -15,58 +15,53 @@ export const LoginPage: React.FunctionComponent = () => {
     const onFormSubmit = async (): Promise<void> => {
         await login({ username, password }).catch((error: AxiosError) => {
             if (error.response && error.response.data.error == APILoginErrors.BAD_CREDENTIALS) {
-                setErrorMessage('Your username and password don\'t match !');
-            }
-            else {
+                setErrorMessage("Your username and password don't match !");
+            } else {
                 setErrorMessage('Unknown error');
             }
         });
     };
 
-    const onUsernameInputChange = (_: any, { value }: { value: string}): void => {
+    const onUsernameInputChange = (_: any, { value }: { value: string }): void => {
         setUsername(value);
     };
 
-    const onPasswordInputChange = (_: any, { value }: { value: string}): void => {
+    const onPasswordInputChange = (_: any, { value }: { value: string }): void => {
         setPassword(value);
     };
 
     return (
-        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+        <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
             <Grid.Column style={{ maxWidth: 450 }}>
-                <Image size='tiny' centered src='/images/logo.png' />
-                <Header as='h2' color='orange' textAlign='center'>
+                <Image size="tiny" centered src="/images/logo.png" />
+                <Header as="h2" color="orange" textAlign="center">
                     TipsMyWeb Admin
                 </Header>
-                <Form size='large' error={hasError} >
+                <Form size="large" error={hasError}>
                     <Segment stacked>
                         <Form.Input
                             fluid
-                            icon='user'
-                            iconPosition='left'
-                            placeholder='Username'
+                            icon="user"
+                            iconPosition="left"
+                            placeholder="Username"
                             value={username}
                             onChange={onUsernameInputChange}
                         />
                         <Form.Input
                             fluid
-                            icon='lock'
-                            iconPosition='left'
-                            placeholder='Password'
-                            type='password'
+                            icon="lock"
+                            iconPosition="left"
+                            placeholder="Password"
+                            type="password"
                             value={password}
                             onChange={onPasswordInputChange}
                         />
-                        {hasError ? (
-                            <Message error>
-                                { errorMessage }
-                            </Message>
-                        ) : null}
+                        {hasError ? <Message error>{errorMessage}</Message> : null}
                         <Button
                             disabled={!isReadyToLogin}
-                            color='orange'
+                            color="orange"
                             fluid
-                            size='large'
+                            size="large"
                             onClick={onFormSubmit}
                         >
                             Login

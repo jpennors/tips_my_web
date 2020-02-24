@@ -34,7 +34,9 @@ export const serializeContactsFromAPI = (contactsFromAPI: APIContact[]): Contact
     }));
 };
 
-export const serializeSuggestionsFromAPI = (suggestionsFromAPI: APIWebsiteSuggestion[]): WebsiteSuggestion[] => {
+export const serializeSuggestionsFromAPI = (
+    suggestionsFromAPI: APIWebsiteSuggestion[],
+): WebsiteSuggestion[] => {
     return suggestionsFromAPI.map(suggestion => ({
         id: suggestion.id,
         url: suggestion.url,
@@ -53,7 +55,9 @@ export const serializeTagsFromAPI = (tagsFromAPI: Array<APITag | APIBasicTag>): 
     }));
 };
 
-export const serializeResourceTagsFromAPI = (resourceTagsFromAPI: APIResourceTag[]): ResourceTag[] => {
+export const serializeResourceTagsFromAPI = (
+    resourceTagsFromAPI: APIResourceTag[],
+): ResourceTag[] => {
     return resourceTagsFromAPI.map(resourceTag => ({
         tagId: resourceTag.tag_id,
         belonging: resourceTag.belonging,
@@ -109,10 +113,12 @@ export const serializeResourceToAPI = (resource: Partial<Resource>): Partial<API
         interface: resource.interfaceScore,
         price_id: resource.priceId,
         type_id: resource.typeId,
-        tags: resource.tags ? resource.tags.map(tag => ({
-            tag_id: tag.tagId,
-            belonging: tag.belonging,
-        })) : [],
+        tags: resource.tags
+            ? resource.tags.map(tag => ({
+                tag_id: tag.tagId,
+                belonging: tag.belonging,
+            }))
+            : [],
     };
 };
 

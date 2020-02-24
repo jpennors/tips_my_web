@@ -38,11 +38,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
                 <span className="resource-tile__header-dot resource-tile__header-dot--green" />
             </div>
             <a href={resource.url} target="_blank" rel="noopener noreferrer">
-                <img
-                    src={iconUrl}
-                    alt={resource.name}
-                    className="resource-tile__icon"
-                />
+                <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
             </a>
             <div className="resource-tile__content">
                 <p className="resource-tile__title">{resource.name}</p>
@@ -72,7 +68,6 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
                             onClick={likeResource}
                         />
                     )}
-
                 </a>
                 <a
                     href={resource.url}

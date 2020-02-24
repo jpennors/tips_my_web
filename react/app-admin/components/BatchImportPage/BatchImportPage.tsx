@@ -23,14 +23,17 @@ export const BatchImportPage: React.FunctionComponent = () => {
 
     const isReadyToSubmit = importedFile !== undefined && importType.length > 0;
 
-    const onImportTypeInputChange = (_: any, { value }: { value: string}): void => {
+    const onImportTypeInputChange = (_: any, { value }: { value: string }): void => {
         setImportType(value);
     };
 
     const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.files) {
             const file = event.target.files[0];
-            if (file && file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+            if (
+                file &&
+                file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            ) {
                 setImportedFile(file);
             } else if (file) {
                 setErrorMessage('File format should be .xlsx');
@@ -53,7 +56,7 @@ export const BatchImportPage: React.FunctionComponent = () => {
         return errors;
     };
 
-    const checkResourcesValidity = (resources: Partial<APIResource>[]): string[]   => {
+    const checkResourcesValidity = (resources: Partial<APIResource>[]): string[] => {
         const errors: string[] = [];
         resources.forEach((resource, index) => {
             if (!resource.name) {
@@ -76,14 +79,19 @@ export const BatchImportPage: React.FunctionComponent = () => {
 
     const submitBatchData = (data: any): void => {
         setIsLoading(true);
-        ajaxPost(`import/${importType}`, { data }).then(() => {
-            setSuccessMessage('The file was successfully imported!');
-            resetForm();
-        }).catch(() => {
-            setErrorMessage('Error while posting the file to the API. The import probably failed.');
-        }).finally(() => {
-            setIsLoading(false);
-        });
+        ajaxPost(`import/${importType}`, { data })
+            .then(() => {
+                setSuccessMessage('The file was successfully imported!');
+                resetForm();
+            })
+            .catch(() => {
+                setErrorMessage(
+                    'Error while posting the file to the API. The import probably failed.',
+                );
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     const handleFile = (): void => {
@@ -134,8 +142,8 @@ export const BatchImportPage: React.FunctionComponent = () => {
                 headerContent="Batch Import"
                 subHeaderContent="Import resources and tags from a file"
             />
-            <ActionMessage type='success' message={successMessage} />
-            <ActionMessage type='error' message={errorMessage} />
+            <ActionMessage type="success" message={successMessage} />
+            <ActionMessage type="error" message={errorMessage} />
             <Message
                 attached
                 header="Import a batch file"
@@ -145,7 +153,7 @@ export const BatchImportPage: React.FunctionComponent = () => {
                 <Form.Group widths="equal">
                     <Form.Input
                         fluid
-                        label='File'
+                        label="File"
                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         type="file"
                         onChange={onFileInputChange}
@@ -153,7 +161,7 @@ export const BatchImportPage: React.FunctionComponent = () => {
                     />
                     <Form.Select
                         fluid
-                        label='Type'
+                        label="Type"
                         placeholder="Type"
                         options={importTypeOptions}
                         value={importType}
@@ -161,17 +169,10 @@ export const BatchImportPage: React.FunctionComponent = () => {
                         required
                     />
                 </Form.Group>
-                <FormFooter
-                    isSubmitDisabled={!isReadyToSubmit}
-                    onSubmitClick={handleFile}
-                />
+                <FormFooter isSubmitDisabled={!isReadyToSubmit} onSubmitClick={handleFile} />
             </Form>
             {validationErrors.length > 0 ? (
-                <Message
-                    error
-                    header="Errors found in batch file"
-                    list={validationErrors}
-                />
+                <Message error header="Errors found in batch file" list={validationErrors} />
             ) : null}
         </div>
     );

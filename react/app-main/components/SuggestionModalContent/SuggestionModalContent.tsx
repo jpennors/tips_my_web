@@ -3,7 +3,6 @@ import * as React from 'react';
 import { ModalSubmitButton } from 'tmw-main/components/ModalSubmitButton';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 
-
 import './suggestion-modal-content.css';
 
 export const SuggestionModalContent: React.FunctionComponent = () => {
@@ -40,7 +39,9 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
     return (
         <div className="suggestion-modal-content">
             <div className="suggestion-modal-content__title">Share a website</div>
-            <div className="suggestion-modal-content__subtitle">Share your favorite resources with the community</div>
+            <div className="suggestion-modal-content__subtitle">
+                Share your favorite resources with the community
+            </div>
             <div className="suggestion-modal-content__body">
                 <form className="suggestion-modal-content__form">
                     <input
@@ -63,7 +64,7 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                 </form>
             </div>
             <div className="suggestion-modal-content__buttons">
-                <ModalSubmitButton content="SUBMIT" onClick={submitSuggestionForm}/>
+                <ModalSubmitButton content="SUBMIT" onClick={submitSuggestionForm} />
             </div>
         </div>
     );

@@ -10,7 +10,13 @@ import './app-admin.css';
 export const AppAdmin: React.FunctionComponent = () => (
     <BrowserRouter>
         <Switch>
-            <ProtectedRoute path={ADMIN_APP_ROUTES.LOGIN} component={LoginPage} shouldBeLoggedOut={true} redirection={ADMIN_APP_ROUTES.MAIN} exact />
+            <ProtectedRoute
+                path={ADMIN_APP_ROUTES.LOGIN}
+                component={LoginPage}
+                shouldBeLoggedOut={true}
+                redirection={ADMIN_APP_ROUTES.MAIN}
+                exact
+            />
             <ProtectedRoute path={ADMIN_APP_ROUTES.MAIN} component={PageLayout} />
         </Switch>
     </BrowserRouter>
