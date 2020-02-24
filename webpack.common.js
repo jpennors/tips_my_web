@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         main: './react/app-main/app-main-entry.tsx',
-        admin:'./react/app-admin/app-admin-entry.tsx',
+        admin: './react/app-admin/app-admin-entry.tsx',
     },
     output: {
         path: path.resolve(__dirname, 'public'),
@@ -20,9 +20,9 @@ module.exports = {
                 use: ['react-hot-loader/webpack', 'babel-loader'],
             },
             {
-                test: /\.tsx?$/,
+                test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
-                use: ['ts-loader'],
+                use: ['babel-loader', 'ts-loader'],
             },
             {
                 test: /\.css$/,

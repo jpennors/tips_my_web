@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
-    "lib": ["es6", "dom"],
+    "target": "es2020",
+    "lib": ["es2020", "dom"],
     "baseUrl": ".",
     "paths": {
       "tmw-main/*": ["react/app-main/*"],
@@ -10,8 +10,7 @@
       "tmw-common/*": ["react/common/*"]
     },
     "sourceMap": true,
-    "allowJs": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
