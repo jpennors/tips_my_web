@@ -81,8 +81,13 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
     return (
         <Menu {...(horizontalDisplay ? horizontalDisplayProps : verticalDisplayProps)}>
             {navItems.map(item => {
-                const onClick = !item.subMenu || horizontalDisplay ? (): void => history.push(item.path) : undefined;
-                const allPaths: string[] = !item.subMenu ? [item.path] : item.subMenu.map(subItem => subItem.path);
+                const onClick =
+                    !item.subMenu || horizontalDisplay
+                        ? (): void => history.push(item.path)
+                        : undefined;
+                const allPaths: string[] = !item.subMenu
+                    ? [item.path]
+                    : item.subMenu.map(subItem => subItem.path);
 
                 return (
                     <Menu.Item

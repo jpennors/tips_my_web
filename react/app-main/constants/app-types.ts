@@ -6,7 +6,7 @@ export interface SecondaryTag {
     slug: string;
 }
 
-export interface PrimaryTag extends SecondaryTag{
+export interface PrimaryTag extends SecondaryTag {
     secondaryTags: SecondaryTag[];
 }
 

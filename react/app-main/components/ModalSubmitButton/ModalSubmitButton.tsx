@@ -11,5 +11,7 @@ export const ModalSubmitButton: React.FunctionComponent<ModalSubmitButtonProps> 
     content,
     onClick,
 }) => (
-    <a className="modal-submit-button" onClick={onClick}>{content}</a>
+    <a className="modal-submit-button" onClick={onClick}>
+        {content}
+    </a>
 );

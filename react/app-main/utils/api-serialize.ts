@@ -24,8 +24,7 @@ export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
     secondaryTags.forEach((tag: APITag) => {
         if (tag.parent_id && tag.parent_id in tagsMap) {
             tagsMap[tag.parent_id].secondaryTags.push(tag);
-        }
-        else {
+        } else {
             // No parent
         }
     });

@@ -12,17 +12,15 @@ interface RequestConfigOptions {
  * additional information about the content that is sent.
  */
 const buildRequestConfig = ({
-    contentLength= null,
+    contentLength = null,
     contentType = 'application/json',
-}: RequestConfigOptions): AxiosRequestConfig => (
-    {
-        headers: {
-            ...(contentType !== null && { ContentType: contentType }),
-            ...(contentLength !== null && { ContentLength: contentLength }),
-            Authorization: getLocalToken() || '',
-        },
-    }
-);
+}: RequestConfigOptions): AxiosRequestConfig => ({
+    headers: {
+        ...(contentType !== null && { ContentType: contentType }),
+        ...(contentLength !== null && { ContentLength: contentLength }),
+        Authorization: getLocalToken() || '',
+    },
+});
 
 /*
  * Intercept all axios error and redirect users to the login page

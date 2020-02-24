@@ -10,7 +10,6 @@ import { Tag } from 'tmw-main/components/Tag';
 import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
 import { encodeSearchTags } from 'tmw-main/utils/tags-search-url';
 
-
 import './tags-selector.css';
 
 export const TagsSelector: React.FunctionComponent = () => {
@@ -62,7 +61,10 @@ export const TagsSelector: React.FunctionComponent = () => {
         if (primaryTag) {
             const selectedTags = [primaryTag, ...secondaryTags];
             const selectedTagSlugs = selectedTags.map(tag => tag.slug);
-            const searchRoute = MAIN_APP_ROUTES.RESULTS.replace(':searchTags', encodeSearchTags(selectedTagSlugs));
+            const searchRoute = MAIN_APP_ROUTES.RESULTS.replace(
+                ':searchTags',
+                encodeSearchTags(selectedTagSlugs),
+            );
             history.push(searchRoute);
         }
     };
@@ -79,14 +81,12 @@ export const TagsSelector: React.FunctionComponent = () => {
 
     return (
         <div className="tags-selector">
-            <TagsLaunchBar
-                onClickCallback={launchSearch}
-                completionPercentage={barPercentage}
-            />
+            <TagsLaunchBar onClickCallback={launchSearch} completionPercentage={barPercentage} />
             {isLoading ? (
                 <div className="tags-selector__loading-spinner">
-                    <LoadingSpinner /><br/>
-                        Loading Tags
+                    <LoadingSpinner />
+                    <br />
+                    Loading Tags
                 </div>
             ) : (
                 <div className="tags-selector__container">
@@ -96,9 +96,7 @@ export const TagsSelector: React.FunctionComponent = () => {
                                 className="tags-selector__selected-primary-tag-arrow"
                                 onClick={(): void => onPrimaryTagClick(primaryTag)}
                             >
-                                <ArrowIcon
-                                    width={20}
-                                />
+                                <ArrowIcon width={20} />
                             </span>
                             <Tag
                                 content={primaryTag.name}

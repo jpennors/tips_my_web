@@ -12,7 +12,7 @@ import './app-main.css';
 export const AppMain: React.FunctionComponent = () => (
     <CookiesProvider>
         <div className="app-main">
-            <LayoutHeader/>
+            <LayoutHeader />
             <BrowserRouter>
                 <Switch>
                     <Route path={MAIN_APP_ROUTES.HOME} component={SearchPage} exact />
@@ -21,7 +21,7 @@ export const AppMain: React.FunctionComponent = () => (
                     <Redirect to={MAIN_APP_ROUTES.HOME} />
                 </Switch>
             </BrowserRouter>
-            <LayoutFooter/>
+            <LayoutFooter />
         </div>
     </CookiesProvider>
 );

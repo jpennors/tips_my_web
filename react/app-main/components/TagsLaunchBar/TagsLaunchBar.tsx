@@ -16,7 +16,7 @@ export const TagsLaunchBar: React.FunctionComponent<TagsLaunchBarProps> = ({
     completionPercentage,
     onClickCallback,
 }) => {
-    let barWidth = completionPercentage * MAX_BAR_WIDTH / 100;
+    let barWidth = (completionPercentage * MAX_BAR_WIDTH) / 100;
     let isMinWidth = false;
 
     if (barWidth > MAX_BAR_WIDTH) {
@@ -27,7 +27,10 @@ export const TagsLaunchBar: React.FunctionComponent<TagsLaunchBarProps> = ({
     }
 
     return (
-        <div className="tags-launch-bar" style={{ width: `${barWidth}px`, height: `${SEARCH_BUTTON_WIDTH}px` }}>
+        <div
+            className="tags-launch-bar"
+            style={{ width: `${barWidth}px`, height: `${SEARCH_BUTTON_WIDTH}px` }}
+        >
             <a role="button" title="Launch Search">
                 {isMinWidth ? (
                     <img
@@ -45,7 +48,6 @@ export const TagsLaunchBar: React.FunctionComponent<TagsLaunchBarProps> = ({
                         onClick={onClickCallback}
                     />
                 )}
-
             </a>
         </div>
     );

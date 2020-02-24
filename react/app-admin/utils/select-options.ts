@@ -4,7 +4,11 @@ export interface InputSelectOption {
     text: string;
 }
 
-export const convertToSelectOptions = (array: Array<any>, valueKey: string, textKey: string ): InputSelectOption[] => {
+export const convertToSelectOptions = (
+    array: Array<any>,
+    valueKey: string,
+    textKey: string,
+): InputSelectOption[] => {
     const selectOptions: InputSelectOption[] = [];
     array.forEach(el => {
         if (el[valueKey] && el[textKey]) {

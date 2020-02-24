@@ -23,28 +23,68 @@ export const PageLayout: React.FunctionComponent = () => {
             <TopNavMenu />
             <Container>
                 <Grid padded>
-                    <Grid.Row centered columns={1} only='mobile'>
+                    <Grid.Row centered columns={1} only="mobile">
                         <SideNavMenu horizontalDisplay />
                     </Grid.Row>
                     <Grid.Row>
                         <div className="page-layout__content-container">
-                            <Grid padded className='tablet computer only'>
+                            <Grid padded className="tablet computer only">
                                 <div>
                                     <SideNavMenu />
                                 </div>
                             </Grid>
                             <div className="page-layout__main-content">
                                 <Switch>
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.MAIN} exact component={OverviewPage} />
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.TAGS} exact component={TagsPage} />
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.TAGS_ADD} exact component={TagsEditPage} />
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.TAGS_EDIT} exact component={TagsEditPage} />
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.IMPORT} exact component={BatchImportPage} />
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.SUGGESTIONS} exact component={SuggestionsPage} />
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.CONTACT} exact component={ContactPage} />
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.RESOURCES} exact component={ResourcesPage} />
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.RESOURCES_ADD} exact component={ResourcesEditPage} />
-                                    <ProtectedRoute path={ADMIN_APP_ROUTES.RESOURCES_EDIT} exact component={ResourcesEditPage} />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.MAIN}
+                                        exact
+                                        component={OverviewPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.TAGS}
+                                        exact
+                                        component={TagsPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.TAGS_ADD}
+                                        exact
+                                        component={TagsEditPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.TAGS_EDIT}
+                                        exact
+                                        component={TagsEditPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.IMPORT}
+                                        exact
+                                        component={BatchImportPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.SUGGESTIONS}
+                                        exact
+                                        component={SuggestionsPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.CONTACT}
+                                        exact
+                                        component={ContactPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.RESOURCES}
+                                        exact
+                                        component={ResourcesPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.RESOURCES_ADD}
+                                        exact
+                                        component={ResourcesEditPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.RESOURCES_EDIT}
+                                        exact
+                                        component={ResourcesEditPage}
+                                    />
                                     <ProtectedRoute component={NotFoundErrorMessage} />
                                 </Switch>
                             </div>

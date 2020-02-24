@@ -15,26 +15,31 @@ export const ContactPage: React.FunctionComponent = () => {
     const isEmpty = contacts.length == 0;
 
     const fetchContactMessages = async (): Promise<void> => {
-        return ajaxGet('contacts').then(res => {
-            const contacts = serializeContactsFromAPI(res.data);
-            setContacts(contacts);
-        }).catch(() => {
-            setErrorMessage('Error while fetching contacts list from API.');
-        });
+        return ajaxGet('contacts')
+            .then(res => {
+                const contacts = serializeContactsFromAPI(res.data);
+                setContacts(contacts);
+            })
+            .catch(() => {
+                setErrorMessage('Error while fetching contacts list from API.');
+            });
     };
 
     const deleteContact = async (contactId: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
         setIsLoading(true);
-        ajaxDelete(`contacts/${contactId}`).then(() => {
-            setSuccessMessage('The message was successfully deleted.');
-            return fetchContactMessages();
-        }).catch(() => {
-            setErrorMessage('Error while trying to delete contact message.');
-        }).finally(() => {
-            setIsLoading(false);
-        });
+        ajaxDelete(`contacts/${contactId}`)
+            .then(() => {
+                setSuccessMessage('The message was successfully deleted.');
+                return fetchContactMessages();
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to delete contact message.');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     React.useEffect(() => {
@@ -50,13 +55,15 @@ export const ContactPage: React.FunctionComponent = () => {
                 headerContent="Contact Messages"
                 subHeaderContent='Messages sent through the "Contact" form'
             />
-            <ActionMessage type='success' message={successMessage} />
-            <ActionMessage type='error' message={errorMessage} />
-            {isLoading ? <Loader active inline="centered" /> : hasError ? null : isEmpty ? (
+            <ActionMessage type="success" message={successMessage} />
+            <ActionMessage type="error" message={errorMessage} />
+            {isLoading ? (
+                <Loader active inline="centered" />
+            ) : hasError ? null : isEmpty ? (
                 <ActionMessage
-                    type='warning'
-                    message='Be patient!'
-                    messageHeader='No contact messages for now...'
+                    type="warning"
+                    message="Be patient!"
+                    messageHeader="No contact messages for now..."
                 />
             ) : (
                 <Table celled striped selectable unstackable>
@@ -69,18 +76,23 @@ export const ContactPage: React.FunctionComponent = () => {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {
-                            contacts.map(contact => (
-                                <Table.Row key={contact.id}>
-                                    <Table.Cell>{contact.createdAt}</Table.Cell>
-                                    <Table.Cell>{contact.email}</Table.Cell>
-                                    <Table.Cell>{contact.message}</Table.Cell>
-                                    <Table.Cell collapsing textAlign="center">
-                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteContact(contact.id);}}/>
-                                    </Table.Cell>
-                                </Table.Row>
-                            ))
-                        }
+                        {contacts.map(contact => (
+                            <Table.Row key={contact.id}>
+                                <Table.Cell>{contact.createdAt}</Table.Cell>
+                                <Table.Cell>{contact.email}</Table.Cell>
+                                <Table.Cell>{contact.message}</Table.Cell>
+                                <Table.Cell collapsing textAlign="center">
+                                    <Icon
+                                        name="trash alternate"
+                                        color="red"
+                                        link
+                                        onClick={(): void => {
+                                            deleteContact(contact.id);
+                                        }}
+                                    />
+                                </Table.Cell>
+                            </Table.Row>
+                        ))}
                     </Table.Body>
                 </Table>
             )}

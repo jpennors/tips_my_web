@@ -8,11 +8,22 @@ import './layout-header.css';
 
 export const LayoutHeader: React.FunctionComponent = () => (
     <div className="layout-header">
-        <a href="/"><img src="/images/logo.svg" alt="logo" className="layout-header__logo" /></a>
+        <a href="/">
+            <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
+        </a>
         <div className="layout-header__links">
-            <HeaderModal content={<SuggestionModalContent/>} target={<a className="layout-header__link">Share a website</a>}/>
-            <HeaderModal content={<AboutModalContent/>} target={<a className="layout-header__link">About</a>}/>
-            <HeaderModal content={<ContactModalContent/>} target={<a className="layout-header__link">Contact</a>}/>
+            <HeaderModal
+                content={<SuggestionModalContent />}
+                target={<a className="layout-header__link">Share a website</a>}
+            />
+            <HeaderModal
+                content={<AboutModalContent />}
+                target={<a className="layout-header__link">About</a>}
+            />
+            <HeaderModal
+                content={<ContactModalContent />}
+                target={<a className="layout-header__link">Contact</a>}
+            />
         </div>
     </div>
 );

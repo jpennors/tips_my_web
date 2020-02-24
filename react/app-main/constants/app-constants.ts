@@ -1,11 +1,11 @@
 export enum SIZES {
     SMALL = 'small',
     MEDIUM = 'medium',
-    LARGE = 'large'
+    LARGE = 'large',
 }
 
 export enum LOCALES {
-    FRENCH = 'fr'
+    FRENCH = 'fr',
 }
 
 export const RESOURCES_BASE_URL = '/api/resources/image/';
@@ -14,5 +14,5 @@ export const DEFAULT_RESOURCE_URL = '/images/default-resource-img.jpg';
 export enum MAIN_APP_ROUTES {
     HOME = '/',
     SEARCH = '/search',
-    RESULTS = '/results/:searchTags'
+    RESULTS = '/results/:searchTags',
 }

@@ -15,26 +15,36 @@ export const SuggestionsPage: React.FunctionComponent = () => {
     const isEmpty = suggestions.length == 0;
 
     const fetchWebsiteSuggestions = async (): Promise<void> => {
-        return ajaxGet('suggestions').then(res => {
-            const suggestions = serializeSuggestionsFromAPI(res.data);
-            setSuggestions(suggestions);
-        }).catch(() => {
-            setErrorMessage('Error while fetching suggestions list from API.');
-        });
+        return ajaxGet('suggestions')
+            .then(res => {
+                const suggestions = serializeSuggestionsFromAPI(res.data);
+                setSuggestions(suggestions);
+            })
+            .catch(() => {
+                setErrorMessage('Error while fetching suggestions list from API.');
+            });
     };
 
-    const deleteSuggestion = async (suggestionId: string, suggestionName: string): Promise<void> => {
+    const deleteSuggestion = async (
+        suggestionId: string,
+        suggestionName: string,
+    ): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
         setIsLoading(true);
-        ajaxDelete(`suggestions/${suggestionId}`).then(() => {
-            setSuccessMessage('The suggestion for "' + suggestionName + '" was successfully deleted.');
-            return fetchWebsiteSuggestions();
-        }).catch(() => {
-            setErrorMessage('Error while trying to delete suggestion.');
-        }).finally(() => {
-            setIsLoading(false);
-        });
+        ajaxDelete(`suggestions/${suggestionId}`)
+            .then(() => {
+                setSuccessMessage(
+                    'The suggestion for "' + suggestionName + '" was successfully deleted.',
+                );
+                return fetchWebsiteSuggestions();
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to delete suggestion.');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     React.useEffect(() => {
@@ -50,13 +60,15 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                 headerContent="Resources Suggestions"
                 subHeaderContent='Websites suggestions sent through the "Share a website" form'
             />
-            <ActionMessage type='success' message={successMessage} />
-            <ActionMessage type='error' message={errorMessage} />
-            {isLoading ? <Loader active inline="centered" /> : hasError ? null : isEmpty ? (
+            <ActionMessage type="success" message={successMessage} />
+            <ActionMessage type="error" message={errorMessage} />
+            {isLoading ? (
+                <Loader active inline="centered" />
+            ) : hasError ? null : isEmpty ? (
                 <ActionMessage
-                    type='warning'
-                    message='Be patient!'
-                    messageHeader='No suggestions for now...'
+                    type="warning"
+                    message="Be patient!"
+                    messageHeader="No suggestions for now..."
                 />
             ) : (
                 <Table celled striped selectable unstackable>
@@ -65,22 +77,29 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>Date</Table.HeaderCell>
                             <Table.HeaderCell>URL</Table.HeaderCell>
                             <Table.HeaderCell>Description</Table.HeaderCell>
-                            <Table.HeaderCell collapsing textAlign="center">Delete</Table.HeaderCell>
+                            <Table.HeaderCell collapsing textAlign="center">
+                                Delete
+                            </Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {
-                            suggestions.map(suggestion => (
-                                <Table.Row key={suggestion.id}>
-                                    <Table.Cell>{suggestion.createdAt}</Table.Cell>
-                                    <Table.Cell>{suggestion.url}</Table.Cell>
-                                    <Table.Cell>{suggestion.description}</Table.Cell>
-                                    <Table.Cell textAlign="center">
-                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteSuggestion(suggestion.id, suggestion.url);}} />
-                                    </Table.Cell>
-                                </Table.Row>
-                            ))
-                        }
+                        {suggestions.map(suggestion => (
+                            <Table.Row key={suggestion.id}>
+                                <Table.Cell>{suggestion.createdAt}</Table.Cell>
+                                <Table.Cell>{suggestion.url}</Table.Cell>
+                                <Table.Cell>{suggestion.description}</Table.Cell>
+                                <Table.Cell textAlign="center">
+                                    <Icon
+                                        name="trash alternate"
+                                        color="red"
+                                        link
+                                        onClick={(): void => {
+                                            deleteSuggestion(suggestion.id, suggestion.url);
+                                        }}
+                                    />
+                                </Table.Cell>
+                            </Table.Row>
+                        ))}
                     </Table.Body>
                 </Table>
             )}

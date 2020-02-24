@@ -36,4 +36,3 @@ export interface APIResource {
     deleted_at: Date | null;
     search_score: number;
 }
-

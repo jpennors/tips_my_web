@@ -8,18 +8,15 @@ export const TopNavMenu: React.FunctionComponent = () => {
         <Menu inverted style={{ borderRadius: 0 }}>
             <Container>
                 <Menu.Item href={ADMIN_APP_ROUTES.MAIN} header>
-                    <Image size='mini' src='/images/logo.png' style={{ marginRight: '5px' }} />
+                    <Image size="mini" src="/images/logo.png" style={{ marginRight: '5px' }} />
                     TipsMyWeb Admin
                 </Menu.Item>
-                <Menu.Item onClick={logout}>
-                    Logout
-                </Menu.Item>
-                <Menu.Item position='right'>
+                <Menu.Item onClick={logout}>Logout</Menu.Item>
+                <Menu.Item position="right">
                     <Responsive minWidth={500}>
-                        <Input inverted className='icon' icon='search' placeholder='Search...' />
+                        <Input inverted className="icon" icon="search" placeholder="Search..." />
                     </Responsive>
                 </Menu.Item>
-
             </Container>
         </Menu>
     );

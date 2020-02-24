@@ -17,26 +17,33 @@ export const ResourcesPage: React.FunctionComponent = () => {
     const isEmpty = resources.length == 0;
 
     const fetchResources = async (): Promise<void> => {
-        return ajaxGet('resources').then(res => {
-            const resources = serializeResourcesFromAPI(res.data);
-            setResources(resources);
-        }).catch(() => {
-            setErrorMessage('Error while fetching resources list from API.');
-        });
+        return ajaxGet('resources')
+            .then(res => {
+                const resources = serializeResourcesFromAPI(res.data);
+                setResources(resources);
+            })
+            .catch(() => {
+                setErrorMessage('Error while fetching resources list from API.');
+            });
     };
 
     const deleteResource = async (resourceId: string, resourceName: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
         setIsLoading(true);
-        ajaxDelete(`resources/${resourceId}`).then(() => {
-            setSuccessMessage('The resource "' + resourceName + '" was successfully deleted.');
-            return fetchResources();
-        }).catch(() => {
-            setErrorMessage('Error while trying to delete the resource "' + resourceName + '".');
-        }).finally(() => {
-            setIsLoading(false);
-        });
+        ajaxDelete(`resources/${resourceId}`)
+            .then(() => {
+                setSuccessMessage('The resource "' + resourceName + '" was successfully deleted.');
+                return fetchResources();
+            })
+            .catch(() => {
+                setErrorMessage(
+                    'Error while trying to delete the resource "' + resourceName + '".',
+                );
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     React.useEffect(() => {
@@ -57,13 +64,15 @@ export const ResourcesPage: React.FunctionComponent = () => {
                     Add Resource
                 </Button>
             </Link>
-            <ActionMessage type='success' message={successMessage} />
-            <ActionMessage type='error' message={errorMessage} />
-            {isLoading ? <Loader active inline="centered" /> : hasError ? null : isEmpty ? (
+            <ActionMessage type="success" message={successMessage} />
+            <ActionMessage type="error" message={errorMessage} />
+            {isLoading ? (
+                <Loader active inline="centered" />
+            ) : hasError ? null : isEmpty ? (
                 <ActionMessage
-                    type='warning'
+                    type="warning"
                     message='Click on the "Add Resource" button to add your first resource!'
-                    messageHeader='No resources for now...'
+                    messageHeader="No resources for now..."
                 />
             ) : (
                 <Table celled striped selectable unstackable>
@@ -73,35 +82,51 @@ export const ResourcesPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>URL</Table.HeaderCell>
                             <Table.HeaderCell>Likes</Table.HeaderCell>
                             <Table.HeaderCell>Tags</Table.HeaderCell>
-                            <Table.HeaderCell collapsing textAlign="center">Edit</Table.HeaderCell>
-                            <Table.HeaderCell collapsing textAlign="center">Delete</Table.HeaderCell>
+                            <Table.HeaderCell collapsing textAlign="center">
+                                Edit
+                            </Table.HeaderCell>
+                            <Table.HeaderCell collapsing textAlign="center">
+                                Delete
+                            </Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {
-                            resources.map(resource => (
-                                <Table.Row key={resource.id}>
-                                    <Table.Cell>{resource.name}</Table.Cell>
-                                    <Table.Cell>{resource.url}</Table.Cell>
-                                    <Table.Cell>{resource.likes}</Table.Cell>
-                                    <Table.Cell>
-                                        <Label.Group style={{ marginBottom: '-0.5em' }}>
-                                            {resource.tags.map(tag => (
-                                                <Label key={tag.tagId} size="small">{tag.tag.name}</Label>
-                                            ))}
-                                        </Label.Group>
-                                    </Table.Cell>
-                                    <Table.Cell textAlign="center">
-                                        <Link to={ADMIN_APP_ROUTES.RESOURCES_EDIT.replace(':id', resource.id)}>
-                                            <Icon name='edit' color='blue' link />
-                                        </Link>
-                                    </Table.Cell>
-                                    <Table.Cell textAlign="center">
-                                        <Icon name='trash alternate' color='red' link onClick={(): void => {deleteResource(resource.id, resource.name);}} />
-                                    </Table.Cell>
-                                </Table.Row>
-                            ))
-                        }
+                        {resources.map(resource => (
+                            <Table.Row key={resource.id}>
+                                <Table.Cell>{resource.name}</Table.Cell>
+                                <Table.Cell>{resource.url}</Table.Cell>
+                                <Table.Cell>{resource.likes}</Table.Cell>
+                                <Table.Cell>
+                                    <Label.Group style={{ marginBottom: '-0.5em' }}>
+                                        {resource.tags.map(tag => (
+                                            <Label key={tag.tagId} size="small">
+                                                {tag.tag.name}
+                                            </Label>
+                                        ))}
+                                    </Label.Group>
+                                </Table.Cell>
+                                <Table.Cell textAlign="center">
+                                    <Link
+                                        to={ADMIN_APP_ROUTES.RESOURCES_EDIT.replace(
+                                            ':id',
+                                            resource.id,
+                                        )}
+                                    >
+                                        <Icon name="edit" color="blue" link />
+                                    </Link>
+                                </Table.Cell>
+                                <Table.Cell textAlign="center">
+                                    <Icon
+                                        name="trash alternate"
+                                        color="red"
+                                        link
+                                        onClick={(): void => {
+                                            deleteResource(resource.id, resource.name);
+                                        }}
+                                    />
+                                </Table.Cell>
+                            </Table.Row>
+                        ))}
                     </Table.Body>
                 </Table>
             )}

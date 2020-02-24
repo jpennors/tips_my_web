@@ -17,12 +17,14 @@ export const SearchResultsPage: React.FunctionComponent = () => {
 
     const fetchSearchResults = (selectedTags: string[]): Promise<void> => {
         setIsLoading(true);
-        return ajaxPost('resources/search', { tags: selectedTags }).then(res => {
-            const serializedResources =  serializeResourcesFromAPI(res.data || []);
-            setResultResources(serializedResources);
-        }).catch(() => {
-            // TODO: Add errors and no-results handling
-        });
+        return ajaxPost('resources/search', { tags: selectedTags })
+            .then(res => {
+                const serializedResources = serializeResourcesFromAPI(res.data || []);
+                setResultResources(serializedResources);
+            })
+            .catch(() => {
+                // TODO: Add errors and no-results handling
+            });
     };
 
     const knownResource = (resourceId: string): void => {
@@ -36,15 +38,17 @@ export const SearchResultsPage: React.FunctionComponent = () => {
         });
     }, []);
 
-    const pageTitle = resultResources.length > 0
-        ? 'Here are some websites to improve your workflow'
-        : 'We didn\'t find any result for this search...';
+    const pageTitle =
+        resultResources.length > 0
+            ? 'Here are some websites to improve your workflow'
+            : "We didn't find any result for this search...";
 
     return (
         <div className="search-results-page">
             {isLoading ? (
                 <div className="search-results-page__loading-spinner">
-                    <LoadingSpinner /><br/>
+                    <LoadingSpinner />
+                    <br />
                     Loading results
                 </div>
             ) : (

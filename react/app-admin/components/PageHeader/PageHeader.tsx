@@ -8,13 +8,9 @@ interface PageHeaderProps {
 }
 
 export const PageHeader: React.FunctionComponent<PageHeaderProps> = ({
-    iconName, headerContent, subHeaderContent,
+    iconName,
+    headerContent,
+    subHeaderContent,
 }) => (
-    <Header
-        dividing
-        as="h3"
-        icon={iconName}
-        content={headerContent}
-        subheader={subHeaderContent}
-    />
+    <Header dividing as="h3" icon={iconName} content={headerContent} subheader={subHeaderContent} />
 );
