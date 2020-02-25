@@ -16,16 +16,16 @@
 }
 
 .resource-pricing-pill--green {
-    border-color: green;
-    color: green;
+    border-color: var(--app-color-green);
+    color: var(--app-color-green);
 }
 
 .resource-pricing-pill--yellow {
-    border-color: yellow;
-    color: yellow;
+    border-color: var(--app-color-yellow);
+    color: var(--app-color-yellow);
 }
 
 .resource-pricing-pill--red {
-    border-color: red;
-    color: red;
+    border-color: var(--app-color-red);
+    color: var(--app-color-red);
 }

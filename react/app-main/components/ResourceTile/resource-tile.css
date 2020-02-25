@@ -105,7 +105,7 @@
 .resource-tile__visit-resource-button {
     font-size: 10px;
     color: white;
-    background-color: #1EBF74;
+    background-color: var(--app-color-green);
     border-radius: 2px;
     margin-left: 15px;
     padding: 3px 20px;
@@ -115,5 +115,5 @@
 
 .resource-tile__visit-resource-button:hover {
     color: white;
-    background-color: #1fa549;
+    background-color: var(--app-color-green-2);
 }
