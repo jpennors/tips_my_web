@@ -1,4 +1,4 @@
-import { LOCALES } from 'tmw-main/constants/app-constants';
+import { LOCALES, PRICING_OPTIONS } from 'tmw-main/constants/app-constants';
 
 export interface SecondaryTag {
     id: string;
@@ -24,5 +24,5 @@ export interface Resource {
     score: number;
     likes: number;
     searchScore: number;
-    pricing: string;
+    pricing: PRICING_OPTIONS;
 }

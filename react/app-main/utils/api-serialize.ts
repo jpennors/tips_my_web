@@ -1,6 +1,6 @@
 import { Resource, TagsMap } from 'tmw-main/constants/app-types';
 import { APIResource, APITag } from 'tmw-main/constants/api-types';
-import { LOCALES } from 'tmw-main/constants/app-constants';
+import { LOCALES, PRICING_OPTIONS } from 'tmw-main/constants/app-constants';
 
 export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
     const tagsMap: TagsMap = {};
@@ -46,7 +46,7 @@ export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Reso
             score: resource.score,
             likes: resource.like,
             searchScore: resource.search_score,
-            pricing: resource.price.name,
+            pricing: resource.price.name as PRICING_OPTIONS,
         });
     });
 
