@@ -32,7 +32,7 @@ class ResourceTagController extends Controller
                 // If not, sum the search_score
                 if($index === FALSE){
                     // Get resource with price
-                    $resource = Resource::findOrFail($resource_tag->resource['id'])->with('price')->get()[0];
+                    $resource = Resource::where('id', $resource_tag->resource['id'])->with('price')->get()[0];
 
                     $resource["search_score"] = $resource_tag->belonging/$search_size;
                     array_push($search_results, $resource);
