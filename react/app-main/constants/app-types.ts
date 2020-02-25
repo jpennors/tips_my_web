@@ -24,4 +24,5 @@ export interface Resource {
     score: number;
     likes: number;
     searchScore: number;
+    pricing: string;
 }

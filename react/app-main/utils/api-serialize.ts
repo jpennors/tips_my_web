@@ -46,6 +46,7 @@ export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Reso
             score: resource.score,
             likes: resource.like,
             searchScore: resource.search_score,
+            pricing: resource.price.name,
         });
     });
 
