@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
+import { ResourcePricingPill } from 'tmw-main/components/ResourcePricingPill';
 import { DEFAULT_RESOURCE_URL, RESOURCES_BASE_URL } from 'tmw-main/constants/app-constants';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
@@ -41,6 +42,9 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
                 <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
             </a>
             <div className="resource-tile__content">
+                <div className="resource-tile__pricing">
+                    <ResourcePricingPill pricing={resource.pricing} />
+                </div>
                 <p className="resource-tile__title">{resource.name}</p>
                 <p className="resource-tile__description">{resource.description}</p>
             </div>

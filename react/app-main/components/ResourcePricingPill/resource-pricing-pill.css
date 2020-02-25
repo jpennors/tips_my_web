@@ -1,0 +1,16 @@
+@import '../../constants/ui-constants.css';
+
+.resource-pricing-pill {
+    font-family: var(--app-font-regular);
+    border: black 1px solid;
+    background: transparent;
+    color: black;
+    display: inline-block;
+    text-decoration: none;
+    user-select: none;
+    outline: none;
+
+    border-radius: 30px;
+    font-size: 10px;
+    padding: 0.3em 1em;
+}

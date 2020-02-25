@@ -47,21 +47,24 @@
 
 .resource-tile__content {
     height: 120px;
+    margin-top: 12px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .resource-tile__title {
-    margin-top: 12px;
-    margin-left: 15px;
     color: black;
     font-size: 15px;
     font-family: var(--app-font-medium);
 }
 
+.resource-tile__pricing {
+    float: right;
+}
+
 .resource-tile__description {
     height: 65px;
     text-align: left;
-    margin-right: 15px;
-    margin-left: 15px;
     color: #575757;
     font-size: 13px;
     font-family: var(--app-font-regular);
