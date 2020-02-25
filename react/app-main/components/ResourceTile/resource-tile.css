@@ -84,20 +84,6 @@
     align-items: center;
 }
 
-.resource-tile__know-resource-button {
-    color: black;
-    font-size: 10px;
-    margin-right: 15px;
-    text-decoration: underline;
-    cursor: pointer;
-    font-family: var(--app-font-regular);
- }
-
-.resource-tile__know-resource-button:hover {
-    color: #222222;
-    text-decoration: underline;
-}
-
 .resource-tile__like-resource-button {
     cursor: pointer;
 }

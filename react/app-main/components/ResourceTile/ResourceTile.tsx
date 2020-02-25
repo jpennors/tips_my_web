@@ -9,13 +9,9 @@ import './resource-tile.css';
 
 interface ResourceTileProps {
     resource: Resource;
-    knowResourceAction: () => void;
 }
 
-export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
-    resource,
-    knowResourceAction,
-}) => {
+export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resource }) => {
     const [cookies, setCookie] = useCookies([resource.id]);
     const isLiked = cookies[resource.id] === 'true';
 
@@ -49,13 +45,6 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({
                 <p className="resource-tile__description">{resource.description}</p>
             </div>
             <div className="resource-tile__actions">
-                <a
-                    role="button"
-                    className="resource-tile__know-resource-button"
-                    onClick={knowResourceAction}
-                >
-                    I know it
-                </a>
                 <a role="button" className="resource-tile__like-resource-button">
                     {isLiked ? (
                         <img
