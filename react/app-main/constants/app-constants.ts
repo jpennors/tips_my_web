@@ -4,6 +4,12 @@ export enum SIZES {
     LARGE = 'large',
 }
 
+export enum PRICING_OPTIONS {
+    FREE = 'Free',
+    FREEMIUM = 'Freemium',
+    PAID = '$$',
+}
+
 export enum LOCALES {
     FRENCH = 'fr',
 }
