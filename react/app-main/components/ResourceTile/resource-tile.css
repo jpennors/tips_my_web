@@ -85,6 +85,7 @@
 }
 
 .resource-tile__like-resource-button {
+    padding-top: 3px;
     cursor: pointer;
 }
 
