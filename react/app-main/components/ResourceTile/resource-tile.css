@@ -4,10 +4,10 @@
     background: white;
     display: inline-block;
     width: 350px;
-    margin: 20px 20px 20px 0;
+    margin: 20px 40px 20px 0;
     filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
     vertical-align: middle;
-    border-radius: 3px;
+    border-radius: 5px;
     overflow: hidden;
 }
 
@@ -47,21 +47,24 @@
 
 .resource-tile__content {
     height: 120px;
+    margin-top: 12px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .resource-tile__title {
-    margin-top: 12px;
-    margin-left: 15px;
     color: black;
     font-size: 15px;
     font-family: var(--app-font-medium);
 }
 
+.resource-tile__pricing {
+    float: right;
+}
+
 .resource-tile__description {
     height: 65px;
     text-align: left;
-    margin-right: 15px;
-    margin-left: 15px;
     color: #575757;
     font-size: 13px;
     font-family: var(--app-font-regular);
@@ -81,28 +84,15 @@
     align-items: center;
 }
 
-.resource-tile__know-resource-button {
-    color: black;
-    font-size: 10px;
-    margin-right: 15px;
-    text-decoration: underline;
-    cursor: pointer;
-    font-family: var(--app-font-regular);
- }
-
-.resource-tile__know-resource-button:hover {
-    color: #222222;
-    text-decoration: underline;
-}
-
 .resource-tile__like-resource-button {
+    padding-top: 3px;
     cursor: pointer;
 }
 
 .resource-tile__visit-resource-button {
     font-size: 10px;
     color: white;
-    background-color: #1EBF74;
+    background-color: var(--app-color-green);
     border-radius: 2px;
     margin-left: 15px;
     padding: 3px 20px;
@@ -112,5 +102,5 @@
 
 .resource-tile__visit-resource-button:hover {
     color: white;
-    background-color: #1fa549;
+    background-color: var(--app-color-green-2);
 }

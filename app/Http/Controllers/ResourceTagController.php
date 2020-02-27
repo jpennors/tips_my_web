@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ResourceTag;
+use App\Resource;
 use App\Tag;
 
 class ResourceTagController extends Controller
@@ -30,7 +31,9 @@ class ResourceTagController extends Controller
                 // If resource not found in the search_results, add it with a search_score
                 // If not, sum the search_score
                 if($index === FALSE){
-                    $resource = $resource_tag->resource;
+                    // Get resource with price
+                    $resource = Resource::where('id', $resource_tag->resource['id'])->with('price')->get()[0];
+
                     $resource["search_score"] = $resource_tag->belonging/$search_size;
                     array_push($search_results, $resource);
                 } else {

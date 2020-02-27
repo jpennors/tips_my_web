@@ -21,4 +21,11 @@
     --app-font-regular: 'Montserrat-Regular';
     --app-font-medium: 'Montserrat-Medium';
     --app-font-black: 'Montserrat-Black';
+
+    --app-color-green: #1ebf74;
+    --app-color-green-2: #1fa549;
+
+    --app-color-yellow: #bf8426;
+
+    --app-color-red: #bf3442;
 }

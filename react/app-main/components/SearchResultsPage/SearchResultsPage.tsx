@@ -27,10 +27,6 @@ export const SearchResultsPage: React.FunctionComponent = () => {
             });
     };
 
-    const knownResource = (resourceId: string): void => {
-        setResultResources(resultResources.filter(resource => resource.id !== resourceId));
-    };
-
     React.useEffect(() => {
         const parsedSearchTags = searchTags ? parseSearchTags(searchTags) : [];
         fetchSearchResults(parsedSearchTags).finally(() => {
@@ -56,11 +52,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                     <p className="search-results-page__title">{pageTitle}</p>
                     <div className="search-results-page__results-list">
                         {resultResources.map(resource => (
-                            <ResourceTile
-                                key={resource.id}
-                                resource={resource}
-                                knowResourceAction={(): void => knownResource(resource.id)}
-                            />
+                            <ResourceTile key={resource.id} resource={resource} />
                         ))}
                     </div>
                 </>
