@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 
 import './layout-footer.css';
 
@@ -7,7 +9,7 @@ export const LayoutFooter: React.FunctionComponent = () => (
         <div className="layout-footer__left-side">
             <p>© 2019 TipsMyWeb</p>
             <p>
-                <a href="#">Terms</a>
+                <Link to={MAIN_APP_ROUTES.TERMS}>Terms</Link>
             </p>
         </div>
         <div className="layout-footer__right-side">

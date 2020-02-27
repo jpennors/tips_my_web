@@ -1,0 +1,38 @@
+@import '../../constants/ui-constants.css';
+
+.terms-page {
+    color: white;
+    font-size: 14px;
+    font-family: var(--app-font-regular);
+
+    margin: auto;
+    width: 72%;
+}
+
+.terms-page__header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    font-size: 20px;
+    font-family: var(--app-font-medium);
+}
+
+.terms-page__content {
+    height: 50vh;
+    overflow: auto;
+}
+
+.terms-page p {
+    text-align: justify;
+    width: 100%;
+}
+
+.terms-page h2 {
+    font-size: 18px;
+    font-family: var(--app-font-medium);
+}
+
+.terms-page a {
+    color: white
+}
+
