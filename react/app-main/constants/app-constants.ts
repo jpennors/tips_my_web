@@ -21,4 +21,5 @@ export enum MAIN_APP_ROUTES {
     HOME = '/',
     SEARCH = '/search',
     RESULTS = '/results/:searchTags',
+    TERMS = '/terms',
 }

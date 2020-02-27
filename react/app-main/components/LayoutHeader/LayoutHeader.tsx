@@ -1,16 +1,18 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { AboutModalContent } from 'tmw-main/components/AboutModalContent';
 import { ContactModalContent } from 'tmw-main/components/ContactModalContent';
 import { HeaderModal } from 'tmw-main/components/HeaderModal';
 import { SuggestionModalContent } from 'tmw-main/components/SuggestionModalContent';
+import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 
 import './layout-header.css';
 
 export const LayoutHeader: React.FunctionComponent = () => (
     <div className="layout-header">
-        <a href="/">
+        <Link to={MAIN_APP_ROUTES.HOME}>
             <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
-        </a>
+        </Link>
         <div className="layout-header__links">
             <HeaderModal
                 content={<SuggestionModalContent />}

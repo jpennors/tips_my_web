@@ -5,23 +5,25 @@ import { LayoutFooter } from 'tmw-main/components/LayoutFooter';
 import { LayoutHeader } from 'tmw-main/components/LayoutHeader';
 import { SearchPage } from 'tmw-main/components/SearchPage';
 import { SearchResultsPage } from 'tmw-main/components/SearchResultsPage';
+import { TermsPage } from 'tmw-main/components/TermsPage';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 
 import './app-main.css';
 
 export const AppMain: React.FunctionComponent = () => (
     <CookiesProvider>
-        <div className="app-main">
-            <LayoutHeader />
-            <BrowserRouter>
+        <BrowserRouter>
+            <div className="app-main">
+                <LayoutHeader />
                 <Switch>
                     <Route path={MAIN_APP_ROUTES.HOME} component={SearchPage} exact />
                     <Route path={MAIN_APP_ROUTES.SEARCH} component={SearchPage} />
+                    <Route path={MAIN_APP_ROUTES.TERMS} component={TermsPage} />
                     <Route path={MAIN_APP_ROUTES.RESULTS} component={SearchResultsPage} />
                     <Redirect to={MAIN_APP_ROUTES.HOME} />
                 </Switch>
-            </BrowserRouter>
-            <LayoutFooter />
-        </div>
+                <LayoutFooter />
+            </div>
+        </BrowserRouter>
     </CookiesProvider>
 );
