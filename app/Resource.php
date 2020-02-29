@@ -13,7 +13,7 @@ use Storage;
 
 class Resource extends Model
 {
-    use SoftDeletes;
+
     use Uuids;
 
 
