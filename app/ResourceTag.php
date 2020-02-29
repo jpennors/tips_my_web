@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ResourceTag extends Model
 {
-    use SoftDeletes;
 
 
     /**
