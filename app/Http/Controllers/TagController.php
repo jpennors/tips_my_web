@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tag;
 use App\ResourceTag;
-use Validator;
+use App\Http\Requests\TagRequest;
 
 class TagController extends Controller
 {
@@ -39,13 +39,9 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        $validator = Validator::make($request->all(), Tag::$rules);
 
-        // Mauvaises données, on retourne les erreurs
-        if($validator->fails()) {
-            return response()->json($validator->errors(), 422);
         }
 
         // Instance creation
@@ -82,7 +78,7 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TagRequest $request, $id)
     {
         $tag = Tag::findOrFail($id);
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Resource;
 use App\ResourceTag;
 use App\Tag;
-use Validator;
+use App\Http\Requests\ResourceRequest;
 
 
 class ResourceController extends Controller
@@ -30,15 +30,8 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ResourceRequest $request)
     {
-
-        $validator = Validator::make($request->all(), Resource::$rules);
-
-        // Mauvaises données, on retourne les erreurs
-        if($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
 
         $r = new Resource();
 
@@ -73,7 +66,7 @@ class ResourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ResourceRequest $request, $id)
     {
         $r = Resource::findOrFail($id);
 

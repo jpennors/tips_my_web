@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Suggestion;
+use App\Http\Requests\SuggestionRequest;
 
 class SuggestionController extends Controller
 {
@@ -24,7 +25,7 @@ class SuggestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SuggesstionRequest $request)
     {
         // Instance creation
         $s = new Suggestion();
