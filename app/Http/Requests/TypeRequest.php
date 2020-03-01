@@ -27,7 +27,7 @@ class TypeRequest extends FormRequest
             'name'  =>  [
                 'required',
                 'string',
-                'unique:types,name'.\Request::instance()->id.',id',
+                'unique:types,name,'.\Request::instance()->id.',id',
                 'between:2,30',
             ],
         ];

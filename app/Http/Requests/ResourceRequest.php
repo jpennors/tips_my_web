@@ -26,13 +26,13 @@ class ResourceRequest extends FormRequest
         return [
             'name' =>  [
                 'required', 
-                'unique:resources, name'.\Request::instance()->id.',id', 
+                'unique:resources,name,'.\Request::instance()->id.',id', 
                 'string', 
                 'between:3,40',
             ],
             'url'  =>   [
                 'required',
-                'unique:resources, url'.\Request::instance()->id.',id',
+                'unique:resources,url,'.\Request::instance()->id.',id',
                 'url',
                 'string',
                 'between:2,150',

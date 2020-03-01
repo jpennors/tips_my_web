@@ -28,13 +28,13 @@ class PriceRequest extends FormRequest
                 'required', 
                 'string', 
                 'between:2,30', 
-                'unique:prices, name'.\Request::instance()->id.',id'
+                'unique:prices,name,'.\Request::instance()->id.',id'
             ],
             'slug'  =>  [
                 'required', 
                 'string', 
                 'between:2,30', 
-                'unique:prices, slug'.\Request::instance()->id.',id'
+                'unique:prices,slug,'.\Request::instance()->id.',id'
             ],
         ];
     }

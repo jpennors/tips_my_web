@@ -28,7 +28,7 @@ class TagRequest extends FormRequest
                 'required',
                 'string',
                 'between:3,40',
-                'unique:tags,name'.\Request::instance()->id.',id',
+                'unique:tags,name,'.\Request::instance()->id.',id',
             ],
             'parent_id'  =>  [
                 'nullable',
