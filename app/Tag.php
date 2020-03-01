@@ -76,14 +76,4 @@ class Tag extends Model
         return $this->belongsTo('App\Tag', 'parent_id');
     }
 
-    /**
-    * Rules pour Validator
-    *
-    * @var array
-    */
-    public static $rules = [
-        'name'              =>      'required',
-        // 'parent_id'         =>      'exists:tags'
-    ];
-
 }
