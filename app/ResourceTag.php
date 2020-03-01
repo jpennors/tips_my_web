@@ -87,4 +87,14 @@ class ResourceTag extends Model
 
     }
 
+    /**
+    * Rules pour Validator
+    *
+    * @var array
+    */
+    public static $rules = [
+        'resource_id'           =>      'required|exists:resources,id',
+        'tag_id'                =>      'required|exists:tags,id',
+        'belonging'             =>      'required|integer|min:0|max:0'
+    ];
 }
