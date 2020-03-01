@@ -28,7 +28,7 @@ class ContactRequest extends FormRequest
                 'required',
                 'email',
                 'string',
-                'between2:150',
+                'between:2,150',
             ],
             'message'  =>  [
                 'required',

@@ -25,7 +25,7 @@ class SuggestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SuggesstionRequest $request)
+    public function store(SuggestionRequest $request)
     {
         // Instance creation
         $s = new Suggestion();
