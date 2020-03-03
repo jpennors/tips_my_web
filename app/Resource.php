@@ -13,7 +13,7 @@ use Storage;
 
 class Resource extends Model
 {
-    use SoftDeletes;
+
     use Uuids;
 
 
@@ -95,22 +95,7 @@ class Resource extends Model
         }
         return $tags;
     }
-
-
-    /**
-    * Rules pour Validator
-    *
-    * @var array
-    */
-    public static $rules = [
-        'name'              =>      'required|unique:resources',
-        'url'               =>      'required|unique:resources',
-        'score'             =>      'required|integer',
-        'interface'         =>      'required|integer',
-        'type_id'           =>      'required',
-        'price_id'          =>      'required'
-    ];
-
+    
 
     /**
     *       Mettre à null image

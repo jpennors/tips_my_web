@@ -5,10 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tag;
 use App\ResourceTag;
-use Validator;
+use App\Http\Requests\TagRequest;
 
 class TagController extends Controller
 {
+
+
+    /**
+     * Check if parent_id tag does not have a parent itself
+     */
+    protected function isParentTagIdSecondary($parent_tag_id)
+    {
+        $parent_tag = Tag::find($parent_tag_id);
+        return $parent_tag->parent_id != null;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,13 +50,12 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        $validator = Validator::make($request->all(), Tag::$rules);
 
-        // Mauvaises données, on retourne les erreurs
-        if($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+        // Check if the parent tag is not already a secondary tag (meaning it has already itself a parent tag)
+        if ($request->parent_id && $this->isParentTagIdSecondary($request->parent_id)) {
+            return response()->json(["parent_id" => ["The parent tag is already a secondary tag."]], 422);
         }
 
         // Instance creation
@@ -82,8 +92,15 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TagRequest $request, $id)
     {
+
+
+        // Check if the parent tag is not already a secondary tag (meaning it has already itself a parent tag)
+        if ($request->parent_id && $this->isParentTagIdSecondary($request->parent_id)) {
+            return response()->json(["parent_id" => ["The parent tag is already a secondary tag."]], 422);
+        }
+
         $tag = Tag::findOrFail($id);
 
         try {
