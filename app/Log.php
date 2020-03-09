@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Log extends Model
 {
+
     /**
      * The table associated with the model.
      *
@@ -19,5 +20,6 @@ class Log extends Model
     *
     * @var array
     */
-    protected $fillable = ['token', 'disabled'];
+    protected $fillable = ['description', 'level', 'created_date', 'hashed_ip', 'route_id', 'geoip_id', 'token_id'];
+
 }
