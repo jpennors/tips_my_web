@@ -4,6 +4,7 @@ namespace App\Services\Logs;
 
 use App\AdminToken;
 use App\LogRoute;
+use Illuminate\Support\Facades\Hash;
 use Log;
 
 class LogCreator
@@ -35,7 +36,7 @@ class LogCreator
             return null;
         }
 
-        return $request->ip();
+        return Hash::make($request->ip());
     }
 
 
