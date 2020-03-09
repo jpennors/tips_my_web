@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App;
+use App\Services\Logs\LogCreator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        App::singleton('LogCreator', function() {
+            return new LogCreator();
+        });
     }
 
     /**

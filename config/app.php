@@ -229,6 +229,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
 
+        'LogCreator' => App\Facade\LogCreator::class,
+
         'Validation' => App\Facades\Validation::class,
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
 
