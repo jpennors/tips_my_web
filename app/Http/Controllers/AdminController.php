@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 // use Log;
-use App\Log;
-use JWTFactory;
-use JWTAuth;
+use App\AdminToken;
 
 class AdminController extends Controller
 {
@@ -30,7 +28,7 @@ class AdminController extends Controller
 
             // Create a token
             $token = $this->generateToken();
-            Log::create(array("token" => $token));
+            AdminToken::create(array("token" => $token));
             \Log::info("Connexion ".\Carbon\Carbon::now());
 
             return response()->json(array("token" => $token));
@@ -64,7 +62,7 @@ class AdminController extends Controller
      */
     public function logout(Request $request){
         $token = $request->header("Authorization");
-        $log = Log::where('token', $token)->get()->first();
+        $log = AdminToken::where('token', $token)->get()->first();
         $log->update(array('disabled' => true));
     }
 
