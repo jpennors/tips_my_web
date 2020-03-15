@@ -65,6 +65,10 @@ class LogCreator
 
         $route_info = $request->route();
 
+        if (!$route_info) {
+            return null;
+        }
+
         $uri = $route_info->uri;
         $method = join(",", $route_info->methods);
         $controller = $route_info->controller;
