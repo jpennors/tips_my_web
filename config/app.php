@@ -176,7 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ValidationServiceProvider::class,
-
+        \Torann\GeoIP\GeoIPServiceProvider::class,
     ],
 
     /*
@@ -233,6 +233,7 @@ return [
 
         'Validation' => App\Facades\Validation::class,
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
 
     ],
 
