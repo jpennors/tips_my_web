@@ -4,8 +4,10 @@ namespace App\Services\Logs;
 
 use App\AdminToken;
 use App\LogRoute;
+use App\LogGeoip;
 use Illuminate\Support\Facades\Hash;
 use Log;
+use \Torann\GeoIP\Facades\GeoIP;
 
 class LogCreator
 {
@@ -18,7 +20,7 @@ class LogCreator
     {        
         $context = [
             "hashed_ip" => $this->getIpAdress($request),
-            "geoip_id"  => null,
+            "geoip_id"  => $this->getLogGeoipId($request),
             "route_id"  => $this->getLogRouteId($request),            
             "token_id"  => $this->getAdminTokenId($token),
         ];
@@ -81,4 +83,24 @@ class LogCreator
 
         return $log_route->id;
     }
+
+
+    public function getLogGeoipId($request)
+    {
+        if (!$request) {
+            return null;
+        }
+
+        $geoip = geoip($request->ip());
+        $log_geoip = LogGeoip::firstOrCreate([
+            'continent'   => $geoip['continent'],
+            'timezone'    => $geoip['timezone'],
+            'country'     => $geoip['country'],
+            'state_name'  => $geoip['state_name'],
+            'city'        => $geoip['city'] 
+        ],[]);
+
+        return $log_geoip->id;
+    }
+
 }
