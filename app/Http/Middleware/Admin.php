@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\AdminToken;
 use Closure;
 use App\Log;
 use \Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class Admin
         {
 
             $token = $request->header("Authorization");
-            $log = Log::where('token', $token)->get();
+            $log = AdminToken::where('token', $token)->get();
             if($log->first()) {
                 $log = $log->first();
                 $validity_hours = config('auth.admin.validity_hours');
