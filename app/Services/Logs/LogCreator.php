@@ -7,6 +7,7 @@ use App\LogRoute;
 use App\LogGeoip;
 use Illuminate\Support\Facades\Hash;
 use Log;
+use \Illuminate\Http\Request;
 use \Torann\GeoIP\Facades\GeoIP;
 
 class LogCreator
@@ -16,15 +17,8 @@ class LogCreator
     /**
      * Handle Log Creation
      */
-    public function create($message, $level, $request = null, $token = null)
-    {        
-        $context = [
-            "hashed_ip" => $this->getIpAdress($request),
-            "geoip_id"  => $this->getLogGeoipId($request),
-            "route_id"  => $this->getLogRouteId($request),            
-            "token_id"  => $this->getAdminTokenId($token),
-        ];
-
+    public function create($message, $level, $context)
+    {      
        \Log::channel('custom')->$level($message, $context);
     }
 
