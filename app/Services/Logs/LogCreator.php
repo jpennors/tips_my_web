@@ -103,4 +103,15 @@ class LogCreator
         return $log_geoip->id;
     }
 
+
+    public function serializeLog(Request $request = null, string $token = null)
+    {
+        return [
+            "hashed_ip" => $this->getIpAdress($request),
+            "geoip_id"  => $this->getLogGeoipId($request),
+            "route_id"  => $this->getLogRouteId($request),            
+            "token_id"  => $this->getAdminTokenId($token),
+        ];
+    }
+
 }
