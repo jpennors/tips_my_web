@@ -20,6 +20,7 @@ class CreateLogGeoipsTable extends Migration
             $table->string('country');
             $table->string('state_name');
             $table->string('city');
+            $table->timestamps();
         });
     }
 

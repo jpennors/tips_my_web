@@ -18,6 +18,7 @@ class CreateLogRoutesTable extends Migration
             $table->string('uri')->nullable();
             $table->string('method')->nullable();
             $table->string('controller')->nullable();
+            $table->timestamps();
         });
     }
 
