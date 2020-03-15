@@ -16,6 +16,7 @@
         "laravel/tinker": "^1.0",
         "nesbot/carbon": "1.37",
         "spatie/laravel-sluggable": "^2.2",
+        "torann/geoip": "1.1.0",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
