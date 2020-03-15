@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Facade\LogCreator as FacadeLogCreator;
 use Closure;
 use \Illuminate\Http\Request;
 use LogCreator;
+use App\Jobs\ProcessLog;
 
 class RequestMiddleware
 {
@@ -23,7 +23,7 @@ class RequestMiddleware
 
         $response = $next($request);
 
-        FacadeLogCreator::create("Request on ".$request->path(), "info", $request, $token);
+        ProcessLog::dispatch("Request on ".$request->path(), "info", LogCreator::serializeLog($request));
 
         return $response;
 
