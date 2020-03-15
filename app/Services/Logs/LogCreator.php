@@ -31,8 +31,8 @@ class LogCreator
         if (!$request) {
             return null;
         }
-
-        return Hash::make($request->ip());
+        return hash("sha256", $request->ip());
+        // return Hash::make($request->ip());
     }
 
 
