@@ -9,6 +9,7 @@ import {
     APIPrice,
     APIResourceType,
     APIResourceTag,
+    APILog,
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -18,6 +19,7 @@ import {
     Price,
     ResourceType,
     ResourceTag,
+    Log,
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
 
@@ -98,6 +100,23 @@ export const serializeResourceTypesFromAPI = (typesFromAPI: APIResourceType[]): 
         name: type.name,
     }));
 };
+
+
+export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
+    return logsFromAPI.map(log => ({
+        id: log.id,
+        description: log.description,
+        level: log.level,
+        routeUri: log.route?.uri,
+        routeMethod: log.route?.method,
+        geoipCity: log.geoip?.city,
+        geoipContinent: log.geoip?.continent,
+        geoipCountry: log.geoip?.country,
+        geoipStateName: log.geoip?.state_name,
+        geoipTimezone: log.geoip?.timezone
+    }));
+};
+
 
 /*
  * Convert data from frontend format to (partial) API format (to use with POST API)

@@ -98,3 +98,36 @@ export interface APIResource {
     price: APIPrice;
     type: APIResourceType;
 }
+
+
+export interface APILogRoute {
+    id: string,
+    uri: string,
+    method: string,
+    controller: string,
+    created_at: Date;
+    updated_at: Date;
+}
+
+
+export interface APILogGeoip {
+    id: string,
+    continent: string,
+    timezone: string,
+    country: string,
+    state_name: string,
+    city: string,
+    created_at: Date;
+    updated_at: Date;
+}
+
+
+export interface APILog {
+    id: string,
+    description: string,
+    level: string,
+    route: APILogRoute,
+    geoip: APILogGeoip,
+    created_at: Date;
+    updated_at: Date;
+}
