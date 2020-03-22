@@ -70,11 +70,41 @@ class ResourceController extends Controller
     {
         $r = Resource::findOrFail($id);
 
+        // Update resource
         try {
             $r->update($request->all());
         } catch(\Exception $e) {
             abort(500, "Can't update the resource");
         }
+
+        // Update resource tags
+        try {
+            $old_resource_tags = ResourceTag::where('resource_id', $id)->get();
+            $new_resource_tags = $request->tags;
+            foreach ($old_resource_tags  as $rt) {
+                $index = array_search($rt->tag_id, array_column($new_resource_tags, 'tag_id'));
+                if ($index === FALSE) {
+                    $rt->delete();
+                } else {
+                    $rt->update($new_resource_tags[$index]);
+                }
+            }
+            foreach ($new_resource_tags as $rt) {
+                $index = array_search($rt['tag_id'], array_column($old_resource_tags->toArray(), 'tag_id'));
+
+                if ($index === FALSE) {
+                    $new_rt = new ResourceTag();
+                    $new_rt->tag_id = $rt['tag_id'];
+                    $new_rt->resource_id = $id;
+                    $new_rt->belonging = $rt['belonging'];
+                    $new_rt->save();
+                }
+            }            
+        } catch (\Exception $e) {
+            dd($e);
+            abort(500, "Can't update the resource tags");
+        }
+
         return response()->json($r, 200);
     }
 
