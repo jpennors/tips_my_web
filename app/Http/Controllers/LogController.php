@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Log;
+use Carbon\Carbon;
 
 class LogController extends Controller
 {
@@ -18,7 +19,7 @@ class LogController extends Controller
         $end_date = $request->end_date;
 
         $visitors = DB::table('logs')
-            ->select('created_date', DB::raw('COUNT(DISTINCT(hashed_ip)) as visitor'))
+            ->select('created_date', DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
             ->where([
                 ['created_date', '>=', $start_date],
                 ['created_date', '<=', $end_date]
@@ -36,9 +37,24 @@ class LogController extends Controller
         // Date formate Y-m-d
         $date = $request->date;
 
-        $logs = Log::where("created_date", $date)->get();
+        $logs = Log::where("created_date", $date)->with('route', 'geoip')->get();
         return response()->json($logs, 200);
 
+    }
+
+
+    public function getCurrentVisitor(Request $request)
+    {
+
+        $current_date = Carbon::now()->format('Y-m-d');
+
+        $visitors = DB::table('logs')
+            ->select(DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
+            ->where('created_date', $current_date)
+            ->get()->first();
+
+        return response()->json($visitors, 200);
+        
     }
 
 }
