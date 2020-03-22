@@ -35,12 +35,12 @@ class PriceController extends Controller
 
         // Try to save the price
         try {
-            $prices = $price->create($request->all());
+            $price = $price->create($request->all());
         } catch(\Exception $e) {
             abort(500, "Can't save the resource");
         }
 
-        return response()->json(Price::find($prices->id), 201);
+        return response()->json($price, 201);
     }
 
 
