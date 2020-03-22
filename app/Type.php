@@ -39,4 +39,13 @@ class Type extends Model
      * @var bool
      */
     public $incrementing = false;
+
+
+     /**
+     * Resources that belong to the type.
+     */
+    public function resources()
+    {
+        return $this->hasMany(Resource::class);
+    }
 }
