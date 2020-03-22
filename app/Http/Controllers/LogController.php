@@ -37,7 +37,7 @@ class LogController extends Controller
         // Date formate Y-m-d
         $date = $request->date;
 
-        $logs = Log::where("created_date", $date)->get();
+        $logs = Log::where("created_date", $date)->with('route', 'geoip')->get();
         return response()->json($logs, 200);
 
     }
