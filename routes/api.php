@@ -13,41 +13,52 @@ use Illuminate\Http\Request;
 |
 */
 
+# Login
 Route::post('login', 'AdminController@login');
 
-Route::apiResource('resources', 'ResourceController')->only(['index']);
-Route::apiResource('tags', 'TagController')->only(['index']);
+# Tag
+Route::get('main/tags', 'TagController@indexPublic');
 
+# Suggestions
 Route::apiResource('suggestions', 'SuggestionController')->only(['store']);
+
+# Contacts
 Route::apiResource('contacts', 'ContactController')->only(['store']);
 
-
+# Resources
 Route::post('resources/search', 'ResourceTagController@search');
 Route::get('resources/image/{id}', 'ResourceController@getImage');
-
 Route::get('resources/like/add/{id}', 'ResourceController@addLike');
 Route::get('resources/like/remove/{id}', 'ResourceController@removeLike');
+
 
 # Admin routes
 Route::group(['middleware' => 'admin'], function () {
 
-    Route::apiResource('resources', 'ResourceController')->only(['show',
+    # Resources
+    Route::apiResource('resources', 'ResourceController')->only(['index', 'show',
     'store', 'update', 'destroy']);
-
-    Route::apiResource('tags', 'TagController')->only(['show',
-    'store', 'update', 'destroy']);
-
-    Route::apiResource('suggestions', 'SuggestionController')->only(['index', 'destroy']);
-    Route::apiResource('contacts', 'ContactController')->only(['index', 'destroy']);
-
-    Route::apiResource('prices', 'PriceController')->only(['index']);
-    Route::apiResource('types', 'TypeController')->only(['index']);
-
-    Route::post('import/tags', 'TagController@importTags');
     Route::post('import/resources', 'ResourceController@importResources');
-
     Route::post('resources/image/{id}', 'ResourceController@uploadImage');
 
+    # Tags
+    Route::apiResource('tags', 'TagController')->only(['index', 'show',
+    'store', 'update', 'destroy']);
+    Route::post('import/tags', 'TagController@importTags');
+
+    # Suggestions
+    Route::apiResource('suggestions', 'SuggestionController')->only(['index', 'destroy']);
+    
+    # Contacts
+    Route::apiResource('contacts', 'ContactController')->only(['index', 'destroy']);
+
+    # Prices
+    Route::apiResource('prices', 'PriceController')->only(['index']);
+    
+    # Types
+    Route::apiResource('types', 'TypeController')->only(['index']);
+
+    # Logout
     Route::get('logout', 'AdminController@logout');
 
 });
