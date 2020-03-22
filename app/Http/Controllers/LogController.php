@@ -19,7 +19,7 @@ class LogController extends Controller
         $end_date = $request->end_date;
 
         $visitors = DB::table('logs')
-            ->select('created_date', DB::raw('COUNT(DISTINCT(hashed_ip)) as visitor'))
+            ->select('created_date', DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
             ->where([
                 ['created_date', '>=', $start_date],
                 ['created_date', '<=', $end_date]
