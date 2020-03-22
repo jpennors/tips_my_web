@@ -39,6 +39,9 @@ class Tag extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
 
+    protected $hidden = ['resource_tags_count'];
+
+
     /**
      * Get the options for generating the slug.
      */
