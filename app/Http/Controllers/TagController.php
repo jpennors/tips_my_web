@@ -25,24 +25,26 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function indexPublic(Request $request)
+    {
+        $tags = Tag::with('parent', 'resource_tags')->withCount('resource_tags')->having('resource_tags_count', '>=', 5)->get();
+
+        return response()->json($tags, 200);
+    }
+
+
+    /**
+     * Display a listing of the resource for admin management.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
-        $only = $request->input('only', null);
-        if ($only == "parent") {
-            $tag = Tag::all()->where('parent_id', '<>', null)->with('parent')->get();
-            // $tag = Tag::where('parent_id', '<>', null)->with('parent_id', 'resource_tags')->get();
-        } else if ($only == "child") {
-            $tag = Tag::with('parent', 'resource_tags')->get();
-        } else {
-            $tag = Tag::with('parent', 'resource_tags')->get();
-        }
+        $tags = Tag::withTrashed()->with('parent', 'resource_tags')->get();
 
-        // $tag = Tag::all();
-
-        // $tag = Tag::with('resource_tags')->get();
-        // $tag = Tag::where('parent_id', null)->with('resource_tags')->get();
-        return response()->json($tag, 200);
+        return response()->json($tags, 200);
     }
+
 
     /**
      * Store a newly created resource in storage.
