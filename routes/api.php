@@ -53,7 +53,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::apiResource('contacts', 'ContactController')->only(['index', 'destroy']);
 
     # Prices
-    Route::apiResource('prices', 'PriceController')->only(['index']);
+    Route::apiResource('prices', 'PriceController')->only(['index', 'store', 'update', 'destroy']);
     
     # Types
     Route::apiResource('types', 'TypeController')->only(['index']);

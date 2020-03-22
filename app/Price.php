@@ -41,4 +41,13 @@ class Price extends Model
     public $incrementing = false;
 
 
+    /**
+     * Resources that belong to the price.
+     */
+    public function resources()
+    {
+        return $this->hasMany(Resource::class);
+    }
+
+
 }
