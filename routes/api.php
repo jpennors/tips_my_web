@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 Route::post('login', 'AdminController@login');
 
 # Tag
-Route::get('public/tags', 'TagController@indexPublic');
+Route::get('main/tags', 'TagController@indexPublic');
 
 # Suggestions
 Route::apiResource('suggestions', 'SuggestionController')->only(['store']);
