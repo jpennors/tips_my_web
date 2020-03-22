@@ -49,9 +49,9 @@ class LogController extends Controller
         $current_date = Carbon::now()->format('Y-m-d');
 
         $visitors = DB::table('logs')
-            ->select(DB::raw('COUNT(DISTINCT(hashed_ip)) as visitor'))
+            ->select(DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
             ->where('created_date', $current_date)
-            ->get();
+            ->get()->first();
 
         return response()->json($visitors, 200);
         
