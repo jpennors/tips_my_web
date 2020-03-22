@@ -4,15 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Log extends Model
+class AdminToken extends Model
 {
-
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'logs';
+    protected $table = 'admin_token';
 
 
     /**
@@ -20,6 +19,5 @@ class Log extends Model
     *
     * @var array
     */
-    protected $fillable = ['description', 'level', 'created_date', 'hashed_ip', 'route_id', 'geoip_id', 'token_id'];
-
+    protected $fillable = ['token', 'disabled'];
 }

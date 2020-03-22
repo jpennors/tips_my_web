@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Log extends Model
+class LogGeoip extends Model
 {
 
     /**
@@ -12,7 +12,7 @@ class Log extends Model
      *
      * @var string
      */
-    protected $table = 'logs';
+    protected $table = 'log_geoips';
 
 
     /**
@@ -20,6 +20,6 @@ class Log extends Model
     *
     * @var array
     */
-    protected $fillable = ['description', 'level', 'created_date', 'hashed_ip', 'route_id', 'geoip_id', 'token_id'];
+    protected $fillable = ['continent', 'timezone', 'country', 'state_name', 'city'];
 
 }

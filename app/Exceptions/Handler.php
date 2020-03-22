@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Exception;
+use LogCreator;
+use App\Jobs\ProcessLog;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -46,6 +48,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        ProcessLog::dispatch("Exception ".$exception->getMessage()." - line ".$exception->getLine(). " - file ".$exception->getFile(), "error", LogCreator::serializeLog($request));
         return parent::render($request, $exception);
     }
 }
