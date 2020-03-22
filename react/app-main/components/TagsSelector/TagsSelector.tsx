@@ -21,7 +21,7 @@ export const TagsSelector: React.FunctionComponent = () => {
     const history = useHistory();
 
     const fetchTagOptions = (): Promise<void> => {
-        return ajaxGet('tags')
+        return ajaxGet('main/tags')
             .then(res => {
                 const newTagsMap = serializeTagsFromAPI(res.data || []);
                 setTagsMap(newTagsMap);
