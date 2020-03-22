@@ -22,4 +22,19 @@ class Log extends Model
     */
     protected $fillable = ['description', 'level', 'created_date', 'hashed_ip', 'route_id', 'geoip_id', 'token_id'];
 
+    /**
+     * Route relationship
+     */
+    public function route(){
+        return $this->belongsTo('App\LogRoute');
+    }
+
+
+    /**
+     * Route relationship
+     */
+    public function geoip(){
+        return $this->belongsTo('App\LogGeoip');
+    }
+
 }
