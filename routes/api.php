@@ -56,7 +56,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::apiResource('prices', 'PriceController')->only(['index', 'store', 'update', 'destroy']);
     
     # Types
-    Route::apiResource('types', 'TypeController')->only(['index']);
+    Route::apiResource('types', 'TypeController')->only(['index', 'store', 'update', 'destroy']);
 
     # Logout
     Route::get('logout', 'AdminController@logout');
