@@ -13,7 +13,7 @@ module.exports = merge(common, {
         hot: true,
         historyApiFallback: true,
         proxy: {
-            '*': process.env.BACKEND_SERVER_URL || 'http://localhost:8888',
+            '*': process.env.BACKEND_SERVER_URL || 'http://localhost:8000',
         },
     },
 });
