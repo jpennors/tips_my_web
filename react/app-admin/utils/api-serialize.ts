@@ -101,7 +101,6 @@ export const serializeResourceTypesFromAPI = (typesFromAPI: APIResourceType[]): 
     }));
 };
 
-
 export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
     return logsFromAPI.map(log => ({
         id: log.id,
@@ -113,10 +112,9 @@ export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
         geoipContinent: log.geoip?.continent,
         geoipCountry: log.geoip?.country,
         geoipStateName: log.geoip?.state_name,
-        geoipTimezone: log.geoip?.timezone
+        geoipTimezone: log.geoip?.timezone,
     }));
 };
-
 
 /*
  * Convert data from frontend format to (partial) API format (to use with POST API)
@@ -135,8 +133,8 @@ export const serializeResourceToAPI = (resource: Partial<Resource>): Partial<API
         tags: resource.tags
             ? resource.tags.map(tag => ({
                 tag_id: tag.tagId,
-                belonging: tag.belonging,
-            }))
+                  belonging: tag.belonging,
+              }))
             : [],
     };
 };

@@ -64,14 +64,14 @@ export interface ResourceType {
 }
 
 export interface Log {
-    id: string,
-    description: string,
-    level: string,
-    routeUri: string | null,
-    routeMethod: string | null,
-    geoipContinent: string | null,
-    geoipTimezone: string | null,
-    geoipCountry: string | null,
-    geoipStateName: string | null,
-    geoipCity: string | null
+    id: string;
+    description: string;
+    level: string;
+    routeUri: string | null;
+    routeMethod: string | null;
+    geoipContinent: string | null;
+    geoipTimezone: string | null;
+    geoipCountry: string | null;
+    geoipStateName: string | null;
+    geoipCity: string | null;
 }

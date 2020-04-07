@@ -25,7 +25,7 @@ export const OverviewPage: React.FunctionComponent = () => {
     };
 
     const fetchLogs = async (): Promise<void> => {
-        return ajaxPost('logs', {'date': '2020-03-15'})
+        return ajaxPost('logs', { 'date': '2020-03-15' })
             .then(res => {
                 const logs = serializeLogsFromAPI(res.data);
                 setLogs(logs);
@@ -44,16 +44,16 @@ export const OverviewPage: React.FunctionComponent = () => {
 
 
     const getLabelColor = function(logLevel: string){
-        if (logLevel == "warning") {
+        if (logLevel == 'warning') {
             return 'yellow';
-        } else if (logLevel == "error") {
+        } else if (logLevel == 'error') {
             return 'red';
-        } else if (logLevel == "info"){
+        } else if (logLevel == 'info') {
             return 'teal';
         } else {
             return 'grey';
         }
-    }
+    };
 
 
     return (
@@ -75,7 +75,9 @@ export const OverviewPage: React.FunctionComponent = () => {
             ) : (
                 <Message info>
                     <Message.Header>Stats</Message.Header>
-                    <p>Number of visitors today : <strong>{visitorsNumber}</strong></p>
+                    <p>
+                        Number of visitors today : <strong>{visitorsNumber}</strong>
+                    </p>
                 </Message>
             )}
 
@@ -104,12 +106,12 @@ export const OverviewPage: React.FunctionComponent = () => {
                                     </Label>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {log && log.routeMethod && log.routeUri ? 
-                                    (<span>{log.routeMethod}: {log.routeUri}</span>): ("--")}
+                                    {log && log.routeMethod && log.routeUri ? (
+                                        (<span>{log.routeMethod}: {log.routeUri}</span>): ("--")}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {log && log.geoipCountry && log.geoipStateName ? 
-                                    (<span>{log.geoipCountry}/{log.geoipStateName}</span>): ("--")}
+                                    {log && log.geoipCountry && log.geoipStateName ? (
+                                        (<span>{log.geoipCountry}/{log.geoipStateName}</span>): ("--")}
                                 </Table.Cell>
                             </Table.Row>
                         ))}
