@@ -3,7 +3,7 @@
 .layout-footer {
     width: 88%;
     position: absolute;
-    bottom: 3vh;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
 
@@ -18,7 +18,7 @@
 .layout-footer__left-side p {
     font-family: var(--app-font-medium);
     color: white;
-    font-size: 10px;
+    font-size: var(--app-font-size-small);
     display: inline-block;
     margin-right: 15px;
 }
@@ -26,7 +26,7 @@
 .layout-footer__left-side a {
     font-family: var(--app-font-medium);
     color: white;
-    font-size: 10px;
+    font-size: var(--app-font-size-small);
     text-decoration: none;
 }
 

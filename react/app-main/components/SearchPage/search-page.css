@@ -1,19 +1,20 @@
 .search-page {
     padding-top: 2rem;
     width: 88%;
-    margin: 6vh auto 0 auto;
+    margin: calc(20vh - 100px) auto 0;
     max-width: 800px;
 }
 
 .search-page__title {
     font-family: var(--app-font-medium);
     text-align: center;
-    font-size: 4vh;
+    font-size: var(--app-font-size-extra-large);
+    margin-top: 0;
     margin-bottom: 15px;
 }
 
 .search-page__subtitle {
     font-family: var(--app-font-regular);
     text-align: center;
-    font-size: 2.5vh;
+    font-size: var(--app-font-size-large);
 }
