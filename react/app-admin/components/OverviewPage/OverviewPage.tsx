@@ -5,14 +5,13 @@ import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { serializeLogsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
 import { Log } from 'tmw-admin/constants/app-types';
-export const OverviewPage: React.FunctionComponent = () => {
 
+export const OverviewPage: React.FunctionComponent = () => {
     const [visitorsNumber, setVisitorNumbers] = React.useState<number>(0);
     const [logs, setLogs] = React.useState<Log[]>([]);
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const hasError = errorMessage.length > 0;
-
 
     const fetchVisitorNumbers = async (): Promise<void> => {
         return ajaxGet('current/visitors')
@@ -25,7 +24,7 @@ export const OverviewPage: React.FunctionComponent = () => {
     };
 
     const fetchLogs = async (): Promise<void> => {
-        return ajaxPost('logs', { 'date': '2020-03-15' })
+        return ajaxPost('logs', { date: '2020-03-15' })
             .then(res => {
                 const logs = serializeLogsFromAPI(res.data);
                 setLogs(logs);
@@ -42,8 +41,7 @@ export const OverviewPage: React.FunctionComponent = () => {
         fetchLogs();
     }, []);
 
-
-    const getLabelColor = function(logLevel: string){
+    const getLabelColor = function(logLevel: string) {
         if (logLevel == 'warning') {
             return 'yellow';
         } else if (logLevel == 'error') {
@@ -55,11 +53,7 @@ export const OverviewPage: React.FunctionComponent = () => {
         }
     };
 
-
     return (
-
-        
-
         <div>
             <PageHeader
                 iconName="list alternate"
@@ -81,7 +75,6 @@ export const OverviewPage: React.FunctionComponent = () => {
                 </Message>
             )}
 
-
             {/* Logs table */}
             {isLoading ? (
                 ''
@@ -97,28 +90,34 @@ export const OverviewPage: React.FunctionComponent = () => {
                     </Table.Header>
                     <Table.Body>
                         {logs.map(log => (
-                            
                             <Table.Row key={log.id}>
                                 <Table.Cell>{log.description}</Table.Cell>
                                 <Table.Cell>
-                                    <Label color={getLabelColor(log.level)}>
-                                        {log.level}
-                                    </Label>
+                                    <Label color={getLabelColor(log.level)}>{log.level}</Label>
                                 </Table.Cell>
                                 <Table.Cell>
                                     {log && log.routeMethod && log.routeUri ? (
-                                        (<span>{log.routeMethod}: {log.routeUri}</span>): ("--")}
+                                        <span>
+                                            {log.routeMethod}: {log.routeUri}
+                                        </span>
+                                    ) : (
+                                        '--'
+                                    )}
                                 </Table.Cell>
                                 <Table.Cell>
                                     {log && log.geoipCountry && log.geoipStateName ? (
-                                        (<span>{log.geoipCountry}/{log.geoipStateName}</span>): ("--")}
+                                        <span>
+                                            {log.geoipCountry}/{log.geoipStateName}
+                                        </span>
+                                    ) : (
+                                        '--'
+                                    )}
                                 </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>
                 </Table>
             )}
-            
         </div>
     );
 };
