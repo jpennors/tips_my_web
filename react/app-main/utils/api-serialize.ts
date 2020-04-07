@@ -22,10 +22,16 @@ export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
     });
 
     secondaryTags.forEach((tag: APITag) => {
-        if (tag.parent_id && tag.parent_id in tagsMap) {
-            tagsMap[tag.parent_id].secondaryTags.push(tag);
+        const parentTag = tag.parent;
+        if (parentTag.id in tagsMap) {
+            tagsMap[parentTag.id].secondaryTags.push(tag);
         } else {
-            // No parent
+            tagsMap[parentTag.id] = {
+                id: parentTag.id,
+                name: parentTag.name,
+                slug: parentTag.slug,
+                secondaryTags: [tag],
+            };
         }
     });
 
