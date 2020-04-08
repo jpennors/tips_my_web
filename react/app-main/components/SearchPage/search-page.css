@@ -1,7 +1,6 @@
 .search-page {
-    padding-top: 2rem;
     width: 88%;
-    margin: calc(20vh - 100px) auto 0;
+    margin: calc(20vh - 70px) auto 0;
     max-width: 800px;
 }
 
