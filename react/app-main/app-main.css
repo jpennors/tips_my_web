@@ -12,11 +12,13 @@ html, body, #root {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    height: 100%;
-    width: 100%;
-    min-height: 550px;
-    min-width: 310px;
+
     position: absolute;
+    min-height: calc(100% - 55px);
+    padding-bottom: 55px;
+
+    width: 100%;
+    min-width: 310px;
 
     font-family: var(--app-font-medium);
     color: white;
