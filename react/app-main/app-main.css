@@ -14,6 +14,8 @@ html, body, #root {
     background-position: center;
     height: 100%;
     width: 100%;
+    min-height: 550px;
+    position: absolute;
 
     font-family: var(--app-font-medium);
     color: white;
