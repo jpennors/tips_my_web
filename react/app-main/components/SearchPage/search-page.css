@@ -13,8 +13,16 @@
     margin-bottom: 15px;
 }
 
+.search-page__title--mobile {
+    font-size: 6vw;
+}
+
 .search-page__subtitle {
     font-family: var(--app-font-regular);
     text-align: center;
     font-size: var(--app-font-size-large);
+}
+
+.search-page__subtitle--mobile {
+    font-size: 4vw
 }
