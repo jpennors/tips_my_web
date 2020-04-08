@@ -4,6 +4,7 @@
     width: 88%;
     margin: auto auto 10px;
     padding-top: 30px;
+    height: 80px;
 }
 
 .layout-header__logo {
@@ -15,6 +16,11 @@
     float: right;
     text-align: right;
     margin-top: 28px;
+}
+
+.layout-header__links--centered {
+    float: none;
+    text-align: center;
 }
 
 .layout-header__link {
@@ -30,6 +36,11 @@
 .layout-header__link:hover {
     text-decoration: underline;
     color: white;
+}
+
+.layout-header__link--centered {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 
