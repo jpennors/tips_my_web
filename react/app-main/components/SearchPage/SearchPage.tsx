@@ -1,13 +1,14 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { TagsSelector } from 'tmw-main/components/TagsSelector';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
+import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 
 import './search-page.css';
-import classNames from 'classnames';
 
 export const SearchPage: React.FunctionComponent = () => {
     const { width } = useViewport();
-    const isMobileViewport = width < 450;
+    const isMobileViewport = width < VIEWPORT_BREAKPOINTS.MOBILE;
 
     return (
         <div className="search-page">

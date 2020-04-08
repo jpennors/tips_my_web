@@ -4,6 +4,10 @@ export enum SIZES {
     LARGE = 'large',
 }
 
+export enum VIEWPORT_BREAKPOINTS {
+    MOBILE = 450,
+}
+
 export enum PRICING_OPTIONS {
     FREE = 'Free',
     FREEMIUM = 'Freemium',
