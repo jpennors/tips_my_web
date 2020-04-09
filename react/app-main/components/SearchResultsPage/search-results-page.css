@@ -1,12 +1,18 @@
 .search-results-page {
     width: 88%;
-    margin: calc(15vh - 60px) auto 0;
+    margin: 0 auto;
 }
 
 .search-results-page__loading-spinner {
     margin: 60px auto auto;
     text-align: center;
     font-family: var(--app-font-light);
+}
+
+.search-results-page__top-spacing {
+    width: 100%;
+    margin: 20px 0 0;
+    height: calc(12vh - 70px);
 }
 
 .search-results-page__title {

@@ -12,6 +12,7 @@ export const SearchPage: React.FunctionComponent = () => {
 
     return (
         <div className="search-page">
+            <div className="search-page__top-spacing" />
             <p
                 className={classNames('search-page__title', {
                     'search-page__title--mobile': isMobileViewport,
