@@ -84,6 +84,31 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                     >
                         {pageTitle}
                     </p>
+                    {!isMobileViewport ? (
+                        <>
+                            {showLeftArrow ? (
+                                <div className="search-results-page__scroll-arrow search-results-page__scroll-arrow-left ">
+                                    <img
+                                        src="/images/chevron-down.svg"
+                                        alt="Scroll left"
+                                        className="search-results-page__scroll-arrow-left-icon"
+                                        onClick={onLeftArrowClick}
+                                    />
+                                </div>
+                            ) : null}
+
+                            {showRightArrow ? (
+                                <div className="search-results-page__scroll-arrow search-results-page__scroll-arrow-right">
+                                    <img
+                                        src="/images/chevron-down.svg"
+                                        alt="Scroll right"
+                                        className="search-results-page__scroll-arrow-right-icon"
+                                        onClick={onRightArrowClick}
+                                    />
+                                </div>
+                            ) : null}
+                        </>
+                    ) : null}
                     <div
                         ref={resultsListElement}
                         onScroll={onResultsListScroll}
@@ -91,31 +116,6 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                             'search-results-page__results-list--mobile': isMobileViewport,
                         })}
                     >
-                        {!isMobileViewport ? (
-                            <>
-                                {showLeftArrow ? (
-                                    <div className="search-results-page__scroll-arrow search-results-page__scroll-arrow-left ">
-                                        <img
-                                            src="/images/chevron-down.svg"
-                                            alt="Scroll left"
-                                            className="search-results-page__scroll-arrow-left-icon"
-                                            onClick={onLeftArrowClick}
-                                        />
-                                    </div>
-                                ) : null}
-
-                                {showRightArrow ? (
-                                    <div className="search-results-page__scroll-arrow search-results-page__scroll-arrow-right">
-                                        <img
-                                            src="/images/chevron-down.svg"
-                                            alt="Scroll right"
-                                            className="search-results-page__scroll-arrow-right-icon"
-                                            onClick={onRightArrowClick}
-                                        />
-                                    </div>
-                                ) : null}
-                            </>
-                        ) : null}
                         {resultResources.map(resource => (
                             <ResourceTile key={resource.id} resource={resource} />
                         ))}
