@@ -195,4 +195,34 @@ class Resource extends Model
         }
     }
 
+
+    /**
+     * Update resource tags of a resource
+     * Remove, update or create resource tags
+     * depending on existing one and tags provided
+     */
+    public function updateResourceTags($tags){
+
+        $old_resource_tags = ResourceTag::where('resource_id', $this->id)->get();
+        $new_resource_tags = $tags;
+        foreach ($old_resource_tags  as $rt) {
+            $index = array_search($rt->tag_id, array_column($new_resource_tags, 'tag_id'));
+            if ($index === FALSE) {
+                $rt->delete();
+            } else {
+                $rt->update($new_resource_tags[$index]);
+            }
+        }
+        foreach ($new_resource_tags as $rt) {
+            $index = array_search($rt['tag_id'], array_column($old_resource_tags->toArray(), 'tag_id'));
+
+            if ($index === FALSE) {
+                $new_rt = new ResourceTag();
+                $new_rt->tag_id = $rt['tag_id'];
+                $new_rt->resource_id = $this->id;
+                $new_rt->belonging = $rt['belonging'];
+                $new_rt->save();
+            }
+        }        
+    }
 }
