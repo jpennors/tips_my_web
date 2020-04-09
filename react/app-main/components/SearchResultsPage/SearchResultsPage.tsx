@@ -34,8 +34,8 @@ export const SearchResultsPage: React.FunctionComponent = () => {
         resultsListElement?.current?.scrollBy({ left: -360, behavior: 'smooth' });
     };
 
-    const showLeftArrow = scrollLeftPosition > 200;
-    const showRightArrow = scrollRightPosition > 200;
+    const showLeftArrow = scrollLeftPosition > 0;
+    const showRightArrow = scrollRightPosition > 0;
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [resultResources, setResultResources] = React.useState<Resource[]>([]);
