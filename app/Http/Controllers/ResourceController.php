@@ -173,6 +173,8 @@ class ResourceController extends Controller
             }
             $r->updateResourceTags($tags);    
 
+            // Add image to resource
+            $r->uploadImageFromUrl($resource);
 
         }
         return response()->json();
