@@ -1,6 +1,6 @@
 .search-results-page {
     width: 88%;
-    margin: calc(15vh - 70px) auto 0;
+    margin: calc(15vh - 60px) auto 0;
 }
 
 .search-results-page__loading-spinner {
@@ -16,9 +16,16 @@
     font-size: var(--app-font-size-extra-large);
 }
 
+.search-results-page__title--mobile {
+    margin-top: 10px;
+    font-size: 6vw;
+    text-align: center;
+}
+
 .search-results-page__results-list {
-    overflow-x: scroll;
     margin-top: 20px;
+
+    overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
 
@@ -34,4 +41,20 @@
 
 .search-results-page__results-list::-webkit-scrollbar {
     display: none;
+}
+
+.search-results-page__results-list--mobile {
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    mask-image: none;
+    -webkit-mask-image: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

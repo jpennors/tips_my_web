@@ -1,17 +1,27 @@
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { ResourcePricingPill } from 'tmw-main/components/ResourcePricingPill';
-import { DEFAULT_RESOURCE_URL, RESOURCES_BASE_URL } from 'tmw-main/constants/app-constants';
+import {
+    DEFAULT_RESOURCE_URL,
+    RESOURCES_BASE_URL,
+    VIEWPORT_BREAKPOINTS,
+} from 'tmw-main/constants/app-constants';
+import { useViewport } from 'tmw-common/components/ViewportProvider';
+
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 
 import './resource-tile.css';
+import classNames from 'classnames';
 
 interface ResourceTileProps {
     resource: Resource;
 }
 
 export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resource }) => {
+    const { width } = useViewport();
+    const isMobileViewport = width < VIEWPORT_BREAKPOINTS.MOBILE;
+
     const [cookies, setCookie] = useCookies([resource.id]);
     const isLiked = cookies[resource.id] === 'true';
 
@@ -28,12 +38,18 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
     const iconUrl = resource.iconFilename ? RESOURCES_BASE_URL + resource.id : DEFAULT_RESOURCE_URL;
 
     return (
-        <div className="resource-tile">
-            <div className="resource-tile__header">
-                <span className="resource-tile__header-dot resource-tile__header-dot--red" />
-                <span className="resource-tile__header-dot resource-tile__header-dot--yellow" />
-                <span className="resource-tile__header-dot resource-tile__header-dot--green" />
-            </div>
+        <div
+            className={classNames('resource-tile', {
+                'resource-tile--mobile': isMobileViewport,
+            })}
+        >
+            {!isMobileViewport ? (
+                <div className="resource-tile__header">
+                    <span className="resource-tile__header-dot resource-tile__header-dot--red" />
+                    <span className="resource-tile__header-dot resource-tile__header-dot--yellow" />
+                    <span className="resource-tile__header-dot resource-tile__header-dot--green" />
+                </div>
+            ) : null}
             <a href={resource.url} target="_blank" rel="noopener noreferrer">
                 <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
             </a>

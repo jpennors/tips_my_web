@@ -11,6 +11,11 @@
     overflow: hidden;
 }
 
+.resource-tile--mobile {
+    width: 95%;
+    margin: 10px 0;
+}
+
 .resource-tile__header {
     height: 18px !important;
     width: 100%;
@@ -45,11 +50,19 @@
     object-fit: cover;
 }
 
+.resource-tile--mobile .resource-tile__icon {
+    height: 30vw;
+}
+
 .resource-tile__content {
     height: 100px;
     margin-top: 12px;
     margin-left: 15px;
     margin-right: 15px;
+}
+
+.resource-tile--mobile .resource-tile__content {
+    height: 20vw;
 }
 
 .resource-tile__title {
