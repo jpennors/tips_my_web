@@ -5,11 +5,9 @@ import './terms-page.css';
 export const TermsPage: React.FunctionComponent = () => {
     return (
         <div className="terms-page">
-            <div className="terms-page__header">
-                <h1>Terms & Conditions</h1>
-            </div>
+            <div className="terms-page__header">Terms & Conditions</div>
             <div className="terms-page__content">
-                <h2>Welcome on Tips myWeb</h2>
+                <p className="terms-page__subtitle">Welcome on Tips myWeb</p>
                 <p>
                     These terms and conditions outline the rules and regulations for the use of Tips
                     myWeb&apos;s Website.
@@ -18,8 +16,9 @@ export const TermsPage: React.FunctionComponent = () => {
                 Tips myWeb is located at:
                 <br />
                 <address>
-                    79 rue de sèze Lyon <br />
-                    69006 - Rhone , France
+                    79 rue de Sèze
+                    <br />
+                    69006 Lyon - Rhone, France
                     <br />
                 </address>
                 <p>
@@ -44,7 +43,7 @@ export const TermsPage: React.FunctionComponent = () => {
                     terminology or other words in the singular, plural, capitalisation and/or he/she
                     or they, are taken as interchangeable and therefore as referring to same.
                 </p>
-                <h2>Cookies</h2>
+                <p className="terms-page__subtitle">Cookies</p>
                 <p>
                     We employ the use of cookies. By using Tips myWeb&apos;s website you consent to
                     the use of cookies in accordance with Tips myWeb&apos;s privacy policy.
@@ -55,7 +54,7 @@ export const TermsPage: React.FunctionComponent = () => {
                     to enable the functionality of this area and ease of use for those people
                     visiting. Some of our affiliate / advertising partners may also use cookies.
                 </p>
-                <h2>License</h2>
+                <p className="terms-page__subtitle">License</p>
                 <p>
                     Unless otherwise stated, Tips myWeb and/or it&apos;s licensors own the
                     intellectual property rights for all material on Tips myWeb. All intellectual
@@ -73,7 +72,7 @@ export const TermsPage: React.FunctionComponent = () => {
                     Redistribute content from Tips myWeb (unless content is specifically made for
                     redistribution).
                 </p>
-                <h2>Hyperlinking to our Content</h2>
+                <p className="terms-page__subtitle">Hyperlinking to our Content</p>
                 <ol>
                     <li>
                         The following organizations may link to our Web site without prior written
@@ -175,13 +174,13 @@ export const TermsPage: React.FunctionComponent = () => {
                     No use of Tips myWeb&apos;s logo or other artwork will be allowed for linking
                     absent a trademark license agreement.
                 </p>
-                <h2>Iframes</h2>
+                <p className="terms-page__subtitle">Iframes</p>
                 <p>
                     Without prior approval and express written permission, you may not create frames
                     around our Web pages or use other techniques that alter in any way the visual
                     presentation or appearance of our Web site.
                 </p>
-                <h2>Reservation of Rights</h2>
+                <p className="terms-page__subtitle">Reservation of Rights</p>
                 <p>
                     We reserve the right at any time and in its sole discretion to request that you
                     remove all links or any particular link to our Web site. You agree to
@@ -190,7 +189,7 @@ export const TermsPage: React.FunctionComponent = () => {
                     time. By continuing to link to our Web site, you agree to be bound to and abide
                     by these linking terms and conditions.
                 </p>
-                <h2>Removal of links from our website</h2>
+                <p className="terms-page__subtitle">Removal of links from our website</p>
                 <p>
                     If you find any link on our Web site or any linked web site objectionable for
                     any reason, you may contact us about this. We will consider requests to remove
@@ -202,7 +201,7 @@ export const TermsPage: React.FunctionComponent = () => {
                     that the website remains available or that the material on the website is kept
                     up to date.
                 </p>
-                <h2>Content Liability</h2>
+                <p className="terms-page__subtitle">Content Liability</p>
                 <p>
                     We shall have no responsibility or liability for any content appearing on your
                     Web site. You agree to indemnify and defend us against all claims arising out of
@@ -211,7 +210,7 @@ export const TermsPage: React.FunctionComponent = () => {
                     libelous, obscene or criminal, or which infringes, otherwise violates, or
                     advocates the infringement or other violation of, any third party rights.
                 </p>
-                <h2>Disclaimer</h2>
+                <p className="terms-page__subtitle">Disclaimer</p>
                 <p>
                     To the maximum extent permitted by applicable law, we exclude all
                     representations, warranties and conditions relating to our website and the use

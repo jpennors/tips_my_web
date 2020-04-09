@@ -2,7 +2,7 @@
 
 .terms-page {
     color: white;
-    font-size: 14px;
+    font-size: var(--app-font-size-medium);
     font-family: var(--app-font-regular);
 
     margin: auto;
@@ -13,26 +13,23 @@
     text-align: center;
     margin-bottom: 30px;
 
-    font-size: 20px;
+    font-size: var(--app-font-size-extra-large);
     font-family: var(--app-font-medium);
 }
 
-.terms-page__content {
-    height: 50vh;
-    overflow: auto;
+.terms-page__subtitle {
+    font-size: var(--app-font-size-large);
+    font-family: var(--app-font-medium);
+    margin-top: 30px;
+}
 
-    mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 5%, rgba(0,0,0,1) 6%, rgba(0,0,0,1) 94%, rgba(0,0,0,0.9) 95%, rgba(0,0,0,0) 100%);
-    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(5%, rgba(0,0,0,0.9)), color-stop(6%, rgba(0,0,0,1)), color-stop(94%, rgba(0,0,0,1)), color-stop(95%, rgba(0,0,0,0.9)), color-stop(100%, rgba(0,0,0,0)));
+.terms-page__content {
+    margin-bottom: 30px;
 }
 
 .terms-page p {
     text-align: justify;
     width: 100%;
-}
-
-.terms-page h2 {
-    font-size: 18px;
-    font-family: var(--app-font-medium);
 }
 
 .terms-page a {
