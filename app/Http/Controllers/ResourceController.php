@@ -120,13 +120,9 @@ class ResourceController extends Controller
 
         foreach ($request->data as $resource) {
 
-            $r = Resource::withTrashed()->where('name', $resource['name'])->get()->first();
+            $r = Resource::where('name', $resource['name'])->get()->first();
 
-            if ($r) {
-                if($r->deleted_at){
-                    $r->restore();
-                }
-            } else {
+            if (!$r) {
                 $r = new Resource();
             }
 
