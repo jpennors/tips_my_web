@@ -2,25 +2,29 @@
 
 .layout-header {
     width: 88%;
-    margin: auto;
-    padding-bottom: 2rem;
-    padding-top: 5vh;
+    margin: auto auto 10px;
+    padding-top: 30px;
 }
 
 .layout-header__logo {
-    width: 12vh;
+    width: 80px;
     vertical-align: middle;
 }
 
 .layout-header__links {
     float: right;
     text-align: right;
-    margin-top: 4.4vh;
+    margin-top: 28px;
+}
+
+.layout-header__links--centered {
+    float: none;
+    text-align: center;
 }
 
 .layout-header__link {
     font-family: var(--app-font-medium);
-    font-size: 13px;
+    font-size: var(--app-font-size-medium);
     text-decoration: none;
     color: white;
     vertical-align: middle;
@@ -31,6 +35,11 @@
 .layout-header__link:hover {
     text-decoration: underline;
     color: white;
+}
+
+.layout-header__link--centered {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 

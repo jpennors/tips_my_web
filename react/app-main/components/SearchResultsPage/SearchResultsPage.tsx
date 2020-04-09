@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { useParams } from 'react-router';
 import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { ResourceTile } from 'tmw-main/components/ResourceTile';
@@ -6,10 +7,15 @@ import { Resource } from 'tmw-main/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { serializeResourcesFromAPI } from 'tmw-main/utils/api-serialize';
 import { parseSearchTags } from 'tmw-main/utils/tags-search-url';
+import { useViewport } from 'tmw-common/components/ViewportProvider';
+import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 
 import './search-results-page.css';
 
 export const SearchResultsPage: React.FunctionComponent = () => {
+    const { width } = useViewport();
+    const isMobileViewport = width < VIEWPORT_BREAKPOINTS.MOBILE;
+
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [resultResources, setResultResources] = React.useState<Resource[]>([]);
 
@@ -49,8 +55,19 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                 </div>
             ) : (
                 <>
-                    <p className="search-results-page__title">{pageTitle}</p>
-                    <div className="search-results-page__results-list">
+                    <div className="search-results-page__top-spacing" />
+                    <p
+                        className={classNames('search-results-page__title', {
+                            'search-results-page__title--mobile': isMobileViewport,
+                        })}
+                    >
+                        {pageTitle}
+                    </p>
+                    <div
+                        className={classNames('search-results-page__results-list', {
+                            'search-results-page__results-list--mobile': isMobileViewport,
+                        })}
+                    >
                         {resultResources.map(resource => (
                             <ResourceTile key={resource.id} resource={resource} />
                         ))}
