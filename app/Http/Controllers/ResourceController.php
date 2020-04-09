@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Resource;
 use App\ResourceTag;
 use App\Tag;
+use App\Price;
+use App\Type;
 use App\Http\Requests\ResourceRequest;
 
 
@@ -79,29 +81,8 @@ class ResourceController extends Controller
 
         // Update resource tags
         try {
-            $old_resource_tags = ResourceTag::where('resource_id', $id)->get();
-            $new_resource_tags = $request->tags;
-            foreach ($old_resource_tags  as $rt) {
-                $index = array_search($rt->tag_id, array_column($new_resource_tags, 'tag_id'));
-                if ($index === FALSE) {
-                    $rt->delete();
-                } else {
-                    $rt->update($new_resource_tags[$index]);
-                }
-            }
-            foreach ($new_resource_tags as $rt) {
-                $index = array_search($rt['tag_id'], array_column($old_resource_tags->toArray(), 'tag_id'));
-
-                if ($index === FALSE) {
-                    $new_rt = new ResourceTag();
-                    $new_rt->tag_id = $rt['tag_id'];
-                    $new_rt->resource_id = $id;
-                    $new_rt->belonging = $rt['belonging'];
-                    $new_rt->save();
-                }
-            }            
+            $r->updateResourceTags($request->tags);    
         } catch (\Exception $e) {
-            dd($e);
             abort(500, "Can't update the resource tags");
         }
 
@@ -141,46 +122,59 @@ class ResourceController extends Controller
 
         foreach ($request->data as $resource) {
 
-            $r = Resource::withTrashed()->where('name', $resource['name'])->get()->first();
+            $r = Resource::where('name', $resource['name'])->get()->first();
 
-            if ($r) {
-                if($r->deleted_at){
-                    $r->restore();
-                }
-            } else {
+            if (!$r) {
                 $r = new Resource();
             }
 
             // To DO vérification
 
+            // Create resource entity
             $r->name = $resource['name'];
             $r->url = $resource['url'];
             $r->language = $resource['language'];
             $r->score = $resource['score'];
-            $r->save();
+            
+            $price_entity = Price::where('name', $resource['price'])->get()->first();
+            if ($price_entity) {
+                $r->price_id = $price_entity->id;
+            } else {
+                $r->price_id = Price::all()->first()->id;
+            }
 
+            // To Add when frontend will get type attribute
+            // $type_entity = Type::where('name', $resource['type'])->get()->first();
+            // if ($type_entity) {
+            //     $r->type_id = $type_entity->id;
+            // } else {
+            //     $r->type_id = Type::all()->first()->id;
+            // }
+            $r->type_id = Type::all()->first()->id;
+            $r->save();
+            
+
+            // Create resource tags entity
             $tags = [];
             $resource_tags = explode(",", $resource['tag']);
             foreach ($resource_tags as $resource_tag) {
                 $args = explode("|", $resource_tag);
-                // dd($args);
-                // if ($arguments[0] && arguments[1]) {
-                    $tag_name = trim($args[0]," ");
-                    $tag_score = trim($args[1], " ");
-                    // dd($tag_name);
-                    $t = Tag::withTrashed()->where('name', $tag_name)->get()->first();
-                    if ($t) {
-                        $tag_id = $t->id;
-                        $tag = array(
-                            "tag_id" => $tag_id,
-                            "belonging" =>  $tag_score
-                        );
-                        array_push($tags, $tag);
-                    }
-                // }
-
+                $tag_name = trim($args[0]," ");
+                $tag_score = trim($args[1], " ");
+                $t = Tag::withTrashed()->where('name', $tag_name)->get()->first();
+                if ($t) {
+                    $tag_id = $t->id;
+                    $tag = array(
+                        "tag_id" => $tag_id,
+                        "belonging" =>  $tag_score
+                    );
+                    array_push($tags, $tag);
+                }
             }
-            $r->resource_tags()->createMany($tags);
+            $r->updateResourceTags($tags);    
+
+            // Add image to resource
+            $r->uploadImageFromUrl($resource);
 
         }
         return response()->json();

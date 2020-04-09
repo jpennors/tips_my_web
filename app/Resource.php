@@ -121,7 +121,7 @@ class Resource extends Model
 
 
     /**
-    *       Update de l'image
+    *  Update image
     *
     */
     public function uploadImage($file){
@@ -154,7 +154,73 @@ class Resource extends Model
 
 
     /**
-    *       Récupération de l'image
+     * Upload new image after importing resource
+     * 
+     */
+    public function uploadImageFromUrl($provided_resource)
+    {
+        $new_image = null;
+
+        // Image attribute is a link of image
+        if (array_key_exists('image', $provided_resource) && $provided_resource['image']) {
+
+            try {
+
+                $new_image = file_get_contents($provided_resource['image']);
+                $filename = $this->id.".png";
+
+            } catch (\Throwable $th){}
+
+        } 
+
+        // Search in website source code
+        else if (array_key_exists('url', $provided_resource) && $provided_resource['url'])
+        {
+            try {
+
+                // Retrieve image
+                $html = file_get_contents($provided_resource['url']);
+                
+                // Research meta property in source code to get image
+                $img_meta_property = "og:image";
+                
+                if (($pos = strpos($html, $img_meta_property)) !== FALSE) {
+                    // If property found, try to get content of it
+                    $html = substr($html, $pos);
+                    $img_meta_property_attribute = "content=";
+                    if (($pos = strpos($html, "content=")) !== FALSE) {
+
+                        $html = substr($html, $pos + strlen($img_meta_property_attribute) + 1);
+                        $pos = strpos($html, " ");
+                        $image_url = substr($html, 0, $pos - 1);
+                        $filename = basename($image_url);
+                        $new_image = file_get_contents($image_url);
+                    }
+                }
+
+            } catch (\Throwable $th) {}
+        }
+
+        if ($new_image) {
+
+            try {
+
+                // Add new one in Storage
+                Storage::put("public/resources/".$filename, $new_image);
+
+                // Delete existing one if exists
+                $this->deleteImage();
+                
+                // Save new filename
+                $this->setImage($filename);
+
+            } catch (\Throwable $th) {}
+        }
+    }
+
+
+    /**
+    *  Retrieve image
     *
     */
     public function getImage(){
@@ -179,7 +245,7 @@ class Resource extends Model
 
 
     /**
-    *       Suppression de l'image
+    *  Remove image
     *
     */
     public function deleteImage(){
@@ -195,4 +261,34 @@ class Resource extends Model
         }
     }
 
+
+    /**
+     * Update resource tags of a resource
+     * Remove, update or create resource tags
+     * depending on existing one and tags provided
+     */
+    public function updateResourceTags($tags){
+
+        $old_resource_tags = ResourceTag::where('resource_id', $this->id)->get();
+        $new_resource_tags = $tags;
+        foreach ($old_resource_tags  as $rt) {
+            $index = array_search($rt->tag_id, array_column($new_resource_tags, 'tag_id'));
+            if ($index === FALSE) {
+                $rt->delete();
+            } else {
+                $rt->update($new_resource_tags[$index]);
+            }
+        }
+        foreach ($new_resource_tags as $rt) {
+            $index = array_search($rt['tag_id'], array_column($old_resource_tags->toArray(), 'tag_id'));
+
+            if ($index === FALSE) {
+                $new_rt = new ResourceTag();
+                $new_rt->tag_id = $rt['tag_id'];
+                $new_rt->resource_id = $this->id;
+                $new_rt->belonging = $rt['belonging'];
+                $new_rt->save();
+            }
+        }        
+    }
 }
