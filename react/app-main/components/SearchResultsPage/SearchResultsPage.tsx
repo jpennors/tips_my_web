@@ -16,6 +16,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     const { width } = useViewport();
     const isMobileViewport = width < VIEWPORT_BREAKPOINTS.MOBILE;
 
+    const resultsListElement = React.useRef<HTMLDivElement>(null);
     const [scrollLeftPosition, setScrollLeftPosition] = React.useState(0);
     const [scrollRightPosition, setScrollRightPosition] = React.useState(width * 0.88);
 
@@ -23,6 +24,14 @@ export const SearchResultsPage: React.FunctionComponent = () => {
         const { scrollLeft, scrollWidth, clientWidth } = e.currentTarget;
         setScrollLeftPosition(scrollLeft);
         setScrollRightPosition(scrollWidth - clientWidth - scrollLeft);
+    };
+
+    const onRightArrowClick = (): void => {
+        resultsListElement?.current?.scrollBy({ left: 360, behavior: 'smooth' });
+    };
+
+    const onLeftArrowClick = (): void => {
+        resultsListElement?.current?.scrollBy({ left: -360, behavior: 'smooth' });
     };
 
     const showLeftArrow = scrollLeftPosition > 200;
@@ -76,6 +85,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                         {pageTitle}
                     </p>
                     <div
+                        ref={resultsListElement}
                         onScroll={onResultsListScroll}
                         className={classNames('search-results-page__results-list', {
                             'search-results-page__results-list--mobile': isMobileViewport,
@@ -89,6 +99,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                                             src="/images/chevron-down.svg"
                                             alt="Scroll left"
                                             className="search-results-page__scroll-arrow-left-icon"
+                                            onClick={onLeftArrowClick}
                                         />
                                     </div>
                                 ) : null}
@@ -99,6 +110,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                                             src="/images/chevron-down.svg"
                                             alt="Scroll right"
                                             className="search-results-page__scroll-arrow-right-icon"
+                                            onClick={onRightArrowClick}
                                         />
                                     </div>
                                 ) : null}
