@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Resource;
 use App\ResourceTag;
 use App\Tag;
+use App\Price;
+use App\Type;
 use App\Http\Requests\ResourceRequest;
 
 
