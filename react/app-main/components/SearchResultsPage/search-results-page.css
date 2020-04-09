@@ -30,7 +30,7 @@
 
 .search-results-page__scroll-arrow {
     position: absolute;
-    z-index: 1000;
+    z-index: 10;
     margin-top: 160px;
     width: 40px;
     height: 40px;
