@@ -16,3 +16,4 @@ composer.phar
 .idea
 .env.local
 .env.prod
+/.metals
