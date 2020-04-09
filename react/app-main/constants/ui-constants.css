@@ -1,18 +1,22 @@
 @font-face {
     font-family: 'Montserrat-Light';
-    src: url("../assets/fonts/Montserrat-Light.otf");
+    src: url("../assets/fonts/Montserrat-Light.ttf");
 }
 @font-face {
     font-family: 'Montserrat-Regular';
-    src: url("../assets/fonts/Montserrat-Regular.otf");
+    src: url("../assets/fonts/Montserrat-Regular.ttf");
 }
 @font-face {
     font-family: 'Montserrat-Medium';
-    src: url("../assets/fonts/Montserrat-Medium.otf");
+    src: url("../assets/fonts/Montserrat-Medium.ttf");
 }
 @font-face {
-    font-family: 'Montserrat-Black';
-    src: url("../assets/fonts/Montserrat-Black.otf");
+    font-family: 'Montserrat-SemiBold';
+    src: url("../assets/fonts/Montserrat-SemiBold.ttf");
+}
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url("../assets/fonts/Montserrat-Bold.ttf");
 }
 
 
@@ -20,7 +24,8 @@
     --app-font-light: 'Montserrat-Light';
     --app-font-regular: 'Montserrat-Regular';
     --app-font-medium: 'Montserrat-Medium';
-    --app-font-black: 'Montserrat-Black';
+    --app-font-semi-bold: 'Montserrat-SemiBold';
+    --app-font-bold: 'Montserrat-Bold';
 
     --app-font-size-extra-small: 8px;
     --app-font-size-small: 10px;
