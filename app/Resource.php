@@ -121,7 +121,7 @@ class Resource extends Model
 
 
     /**
-    *       Update de l'image
+    *  Update image
     *
     */
     public function uploadImage($file){
@@ -179,7 +179,7 @@ class Resource extends Model
 
 
     /**
-    *       Suppression de l'image
+    *  Remove image
     *
     */
     public function deleteImage(){
