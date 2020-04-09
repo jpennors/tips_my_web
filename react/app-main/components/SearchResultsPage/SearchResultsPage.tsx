@@ -68,6 +68,24 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                             'search-results-page__results-list--mobile': isMobileViewport,
                         })}
                     >
+                        {!isMobileViewport ? (
+                            <>
+                                <div className="search-results-page__scroll-arrow search-results-page__scroll-arrow-left ">
+                                    <img
+                                        src="/images/chevron-down.svg"
+                                        alt="Scroll left"
+                                        className="search-results-page__scroll-arrow-left-icon"
+                                    />
+                                </div>
+                                <div className="search-results-page__scroll-arrow search-results-page__scroll-arrow-right">
+                                    <img
+                                        src="/images/chevron-down.svg"
+                                        alt="Scroll right"
+                                        className="search-results-page__scroll-arrow-right-icon"
+                                    />
+                                </div>
+                            </>
+                        ) : null}
                         {resultResources.map(resource => (
                             <ResourceTile key={resource.id} resource={resource} />
                         ))}
