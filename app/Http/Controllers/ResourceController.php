@@ -79,29 +79,8 @@ class ResourceController extends Controller
 
         // Update resource tags
         try {
-            $old_resource_tags = ResourceTag::where('resource_id', $id)->get();
-            $new_resource_tags = $request->tags;
-            foreach ($old_resource_tags  as $rt) {
-                $index = array_search($rt->tag_id, array_column($new_resource_tags, 'tag_id'));
-                if ($index === FALSE) {
-                    $rt->delete();
-                } else {
-                    $rt->update($new_resource_tags[$index]);
-                }
-            }
-            foreach ($new_resource_tags as $rt) {
-                $index = array_search($rt['tag_id'], array_column($old_resource_tags->toArray(), 'tag_id'));
-
-                if ($index === FALSE) {
-                    $new_rt = new ResourceTag();
-                    $new_rt->tag_id = $rt['tag_id'];
-                    $new_rt->resource_id = $id;
-                    $new_rt->belonging = $rt['belonging'];
-                    $new_rt->save();
-                }
-            }            
+            $r->updateResourceTags($request->tags);    
         } catch (\Exception $e) {
-            dd($e);
             abort(500, "Can't update the resource tags");
         }
 
