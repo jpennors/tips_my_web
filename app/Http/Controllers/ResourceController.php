@@ -154,28 +154,25 @@ class ResourceController extends Controller
             $r->save();
             
 
+            // Create resource tags entity
             $tags = [];
             $resource_tags = explode(",", $resource['tag']);
             foreach ($resource_tags as $resource_tag) {
                 $args = explode("|", $resource_tag);
-                // dd($args);
-                // if ($arguments[0] && arguments[1]) {
-                    $tag_name = trim($args[0]," ");
-                    $tag_score = trim($args[1], " ");
-                    // dd($tag_name);
-                    $t = Tag::withTrashed()->where('name', $tag_name)->get()->first();
-                    if ($t) {
-                        $tag_id = $t->id;
-                        $tag = array(
-                            "tag_id" => $tag_id,
-                            "belonging" =>  $tag_score
-                        );
-                        array_push($tags, $tag);
-                    }
-                // }
-
+                $tag_name = trim($args[0]," ");
+                $tag_score = trim($args[1], " ");
+                $t = Tag::withTrashed()->where('name', $tag_name)->get()->first();
+                if ($t) {
+                    $tag_id = $t->id;
+                    $tag = array(
+                        "tag_id" => $tag_id,
+                        "belonging" =>  $tag_score
+                    );
+                    array_push($tags, $tag);
+                }
             }
-            $r->resource_tags()->createMany($tags);
+            $r->updateResourceTags($tags);    
+
 
         }
         return response()->json();
