@@ -128,11 +128,29 @@ class ResourceController extends Controller
 
             // To DO vérification
 
+            // Create resource entity
             $r->name = $resource['name'];
             $r->url = $resource['url'];
             $r->language = $resource['language'];
             $r->score = $resource['score'];
+            
+            $price_entity = Price::where('name', $resource['price'])->get()->first();
+            if ($price_entity) {
+                $r->price_id = $price_entity->id;
+            } else {
+                $r->price_id = Price::all()->first()->id;
+            }
+
+            // To Add when frontend will get type attribute
+            // $type_entity = Type::where('name', $resource['type'])->get()->first();
+            // if ($type_entity) {
+            //     $r->type_id = $type_entity->id;
+            // } else {
+            //     $r->type_id = Type::all()->first()->id;
+            // }
+            $r->type_id = Type::all()->first()->id;
             $r->save();
+            
 
             $tags = [];
             $resource_tags = explode(",", $resource['tag']);
