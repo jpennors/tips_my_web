@@ -6,12 +6,13 @@
     font-family: var(--app-font-regular);
 
     margin: auto;
-    width: 72%;
+    width: 75%;
 }
 
 .about-page__header {
     text-align: center;
     margin-bottom: 30px;
+    margin-top: 40px;
 
     font-size: var(--app-font-size-extra-large);
     font-family: var(--app-font-medium);
