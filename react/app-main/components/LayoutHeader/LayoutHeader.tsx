@@ -1,7 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { AboutModalContent } from 'tmw-main/components/AboutModalContent';
 import { ContactModalContent } from 'tmw-main/components/ContactModalContent';
 import { HeaderModal } from 'tmw-main/components/HeaderModal';
 import { SuggestionModalContent } from 'tmw-main/components/SuggestionModalContent';
@@ -18,10 +17,6 @@ export const LayoutHeader: React.FunctionComponent = () => {
         {
             title: 'Share a website',
             modal: SuggestionModalContent,
-        },
-        {
-            title: 'About',
-            modal: AboutModalContent,
         },
         {
             title: 'Contact',
