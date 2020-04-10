@@ -36,3 +36,7 @@
     color: white
 }
 
+.terms-page__back-button {
+    text-align: center;
+    margin-bottom: 30px;
+}

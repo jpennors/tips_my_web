@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { ModalSubmitButton } from 'tmw-main/components/ModalSubmitButton';
+import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
+import { Link } from 'react-router-dom';
 
 import './terms-page.css';
 
@@ -248,6 +251,11 @@ export const TermsPage: React.FunctionComponent = () => {
                     are provided free of charge, we will not be liable for any loss or damage of any
                     nature.
                 </p>
+            </div>
+            <div className="terms-page__back-button">
+                <Link to={MAIN_APP_ROUTES.HOME}>
+                    <ModalSubmitButton content="Back to Home Page" />
+                </Link>
             </div>
         </div>
     );
