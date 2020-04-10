@@ -40,10 +40,17 @@ export const LayoutHeader: React.FunctionComponent = () => {
     return (
         <div className="layout-header">
             {!isMobileViewport ? (
-                <Link to={MAIN_APP_ROUTES.HOME}>
-                    <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
-                </Link>
-            ) : null}
+                <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
+            ) : (
+                <p className="layout-header__logo-name">
+                    <img
+                        src="/images/logo.svg"
+                        alt="logo"
+                        className="layout-header__logo--mobile"
+                    />
+                    TipsMyWeb
+                </p>
+            )}
             <div
                 className={classNames('layout-header__links', {
                     'layout-header__links--centered': isMobileViewport,

@@ -11,6 +11,19 @@
     vertical-align: middle;
 }
 
+.layout-header__logo--mobile {
+    width: 40px;
+    vertical-align: middle;
+}
+
+.layout-header__logo-name {
+    font-size : var(--app-font-size-large);
+    font-family: var(--app-font-medium);
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
 .layout-header__links {
     float: right;
     text-align: right;
@@ -20,6 +33,7 @@
 .layout-header__links--centered {
     float: none;
     text-align: center;
+    margin-top: 15px;
 }
 
 .layout-header__link {
