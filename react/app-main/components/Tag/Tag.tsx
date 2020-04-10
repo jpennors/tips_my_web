@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { SIZES } from 'tmw-main/constants/app-constants';
 
-import './tag.css';
+import './tag.less';
 
 interface TagProps {
     content: string;

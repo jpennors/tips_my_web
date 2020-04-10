@@ -3,7 +3,7 @@ import * as React from 'react';
 import { BigButton } from 'tmw-main/components/BigButton';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 
-import './suggestion-modal-content.css';
+import './suggestion-modal-content.less';
 
 export const SuggestionModalContent: React.FunctionComponent = () => {
     const [addressInputValue, setAddressInputValue] = React.useState<string>('');

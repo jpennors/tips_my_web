@@ -8,7 +8,7 @@ import { MAIN_APP_ROUTES, VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-co
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { MagnifyingGlassIcon } from 'tmw-main/icons/MagnifyingGlassIcon';
 
-import './layout-header.css';
+import './layout-header.less';
 
 export const LayoutHeader: React.FunctionComponent = () => {
     const { width } = useViewport();

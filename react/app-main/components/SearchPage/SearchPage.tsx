@@ -4,7 +4,7 @@ import { TagsSelector } from 'tmw-main/components/TagsSelector';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 
-import './search-page.css';
+import './search-page.less';
 
 export const SearchPage: React.FunctionComponent = () => {
     const { width } = useViewport();

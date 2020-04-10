@@ -1,0 +1,57 @@
+@import '../../constants/ui-constants';
+
+.layout-header {
+    width: 88%;
+    margin: auto auto 10px;
+    padding-top: 30px;
+
+    &__logo {
+        width: 80px;
+        vertical-align: middle;
+
+        &--mobile {
+            width: 50px;
+            vertical-align: middle;
+        }
+    }
+
+    &__logo-name {
+        font-size : @app-font-size-large;
+        font-family: @app-font-medium;
+        color: white;
+        text-align: center;
+        margin: 0;
+    }
+
+    &__links {
+        float: right;
+        text-align: right;
+        margin-top: 28px;
+
+        &--centered {
+            float: none;
+            text-align: center;
+            margin-top: 15px;
+        }
+    }
+
+    &__link {
+        font-family: @app-font-medium;
+        font-size: @app-font-size-medium;
+        text-decoration: none;
+        color: white;
+        vertical-align: middle;
+        margin-left: 20px;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+            color: white;
+        }
+
+        &--centered {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    }
+}

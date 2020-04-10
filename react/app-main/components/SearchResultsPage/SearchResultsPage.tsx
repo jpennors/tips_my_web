@@ -10,7 +10,7 @@ import { parseSearchTags } from 'tmw-main/utils/tags-search-url';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 
-import './search-results-page.css';
+import './search-results-page.less';
 
 export const SearchResultsPage: React.FunctionComponent = () => {
     const { width } = useViewport();

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 
-import './tags-launch-bar.css';
+import './tags-launch-bar.less';
 
 const MAX_BAR_WIDTH = 600;
 const MAX_BAR_HEIGHT = 45;

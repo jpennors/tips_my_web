@@ -11,7 +11,7 @@ import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 
-import './resource-tile.css';
+import './resource-tile.less';
 import classNames from 'classnames';
 
 interface ResourceTileProps {
