@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ModalSubmitButton } from 'tmw-main/components/ModalSubmitButton';
+import { BigButton } from 'tmw-main/components/BigButton';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 import { Link } from 'react-router-dom';
 
@@ -254,7 +254,7 @@ export const TermsPage: React.FunctionComponent = () => {
             </div>
             <div className="terms-page__back-button">
                 <Link to={MAIN_APP_ROUTES.HOME}>
-                    <ModalSubmitButton content="Back to Home Page" />
+                    <BigButton content="Back to Home Page" isColored={false} />
                 </Link>
             </div>
         </div>
