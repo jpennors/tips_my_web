@@ -6,6 +6,7 @@ import { HeaderModal } from 'tmw-main/components/HeaderModal';
 import { SuggestionModalContent } from 'tmw-main/components/SuggestionModalContent';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
+import { MagnifyingGlassIcon } from 'tmw-main/icons/MagnifyingGlassIcon';
 
 import './layout-header.css';
 
@@ -15,14 +16,22 @@ export const LayoutHeader: React.FunctionComponent = () => {
 
     const links = [
         {
-            title: 'New search',
+            id: 'new-search',
+            title: (
+                <>
+                    <MagnifyingGlassIcon width={10} />
+                    &nbsp; New search
+                </>
+            ),
             link: MAIN_APP_ROUTES.SEARCH,
         },
         {
+            id: 'share-website',
             title: 'Share a website',
             modal: SuggestionModalContent,
         },
         {
+            id: 'contact',
             title: 'Contact',
             modal: ContactModalContent,
         },
@@ -40,11 +49,11 @@ export const LayoutHeader: React.FunctionComponent = () => {
                     'layout-header__links--centered': isMobileViewport,
                 })}
             >
-                {links.map(({ title, modal: Modal, link }) => {
+                {links.map(({ title, modal: Modal, link, id }) => {
                     if (Modal) {
                         return (
                             <HeaderModal
-                                key={title}
+                                key={id}
                                 content={<Modal />}
                                 target={
                                     <a
