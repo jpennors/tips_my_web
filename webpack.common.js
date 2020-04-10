@@ -51,7 +51,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.css', '.less'],
         alias: {
             'tmw-main': path.resolve(__dirname, 'react/app-main/'),
             'tmw-admin': path.resolve(__dirname, 'react/app-admin/'),
