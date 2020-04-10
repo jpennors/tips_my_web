@@ -18,7 +18,7 @@ html, body, #root {
     padding-bottom: 55px;
 
     width: 100%;
-    min-width: 310px;
+    min-width: 355px;
 
     font-family: var(--app-font-medium);
     color: white;
