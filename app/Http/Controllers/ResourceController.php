@@ -144,13 +144,12 @@ class ResourceController extends Controller
             }
 
             // To Add when frontend will get type attribute
-            // $type_entity = Type::where('name', $resource['type'])->get()->first();
-            // if ($type_entity) {
-            //     $r->type_id = $type_entity->id;
-            // } else {
-            //     $r->type_id = Type::all()->first()->id;
-            // }
-            $r->type_id = Type::all()->first()->id;
+            $type_entity = Type::where('name', $resource['type'])->get()->first();
+            if ($type_entity) {
+                $r->type_id = $type_entity->id;
+            } else {
+                $r->type_id = Type::all()->first()->id;
+            }
             $r->save();
             
 
