@@ -7,9 +7,12 @@ import './layout-footer.css';
 export const LayoutFooter: React.FunctionComponent = () => (
     <div className="layout-footer">
         <div className="layout-footer__left-side">
-            <p>© 2019 TipsMyWeb</p>
+            <p>© 2020 TipsMyWeb</p>
             <p>
                 <Link to={MAIN_APP_ROUTES.TERMS}>Terms</Link>
+            </p>
+            <p>
+                <Link to={MAIN_APP_ROUTES.ABOUT}>About</Link>
             </p>
         </div>
         <div className="layout-footer__right-side">

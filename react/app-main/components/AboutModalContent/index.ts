@@ -1,1 +1,0 @@
-export { AboutModalContent } from './AboutModalContent';

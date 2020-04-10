@@ -33,7 +33,7 @@ export const LoginPage: React.FunctionComponent = () => {
     return (
         <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
             <Grid.Column style={{ maxWidth: 450 }}>
-                <Image size="tiny" centered src="/images/logo.png" />
+                <Image size="tiny" centered src="/images/logo-icon.svg" />
                 <Header as="h2" color="orange" textAlign="center">
                     TipsMyWeb Admin
                 </Header>

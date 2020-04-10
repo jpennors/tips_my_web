@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ModalSubmitButton } from 'tmw-main/components/ModalSubmitButton';
+import { BigButton } from 'tmw-main/components/BigButton';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 
 import './suggestion-modal-content.css';
@@ -64,7 +64,7 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                 </form>
             </div>
             <div className="suggestion-modal-content__buttons">
-                <ModalSubmitButton content="SUBMIT" onClick={submitSuggestionForm} />
+                <BigButton content="SUBMIT" onClick={submitSuggestionForm} />
             </div>
         </div>
     );

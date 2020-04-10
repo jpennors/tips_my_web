@@ -1,6 +1,6 @@
 @import '../../constants/ui-constants.css';
 
-.terms-page {
+.about-page {
     color: white;
     font-size: var(--app-font-size-medium);
     font-family: var(--app-font-regular);
@@ -9,7 +9,7 @@
     width: 75%;
 }
 
-.terms-page__header {
+.about-page__header {
     text-align: center;
     margin-bottom: 30px;
     margin-top: 40px;
@@ -18,26 +18,16 @@
     font-family: var(--app-font-medium);
 }
 
-.terms-page__subtitle {
-    font-size: var(--app-font-size-large);
-    font-family: var(--app-font-semi-bold);
-    margin-top: 40px;
-}
-
-.terms-page__content {
+.about-page__content {
     margin-bottom: 30px;
 }
 
-.terms-page p {
+.about-page p {
     text-align: justify;
     width: 100%;
 }
 
-.terms-page__content a {
+.about-page a {
     color: white
 }
 
-.terms-page__back-button {
-    text-align: center;
-    margin-bottom: 30px;
-}

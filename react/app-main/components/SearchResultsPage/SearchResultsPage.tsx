@@ -16,6 +16,27 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     const { width } = useViewport();
     const isMobileViewport = width < VIEWPORT_BREAKPOINTS.MOBILE;
 
+    const resultsListElement = React.useRef<HTMLDivElement>(null);
+    const [scrollLeftPosition, setScrollLeftPosition] = React.useState(0);
+    const [scrollRightPosition, setScrollRightPosition] = React.useState(width * 0.88);
+
+    const onResultsListScroll = (e: React.UIEvent<HTMLElement>): void => {
+        const { scrollLeft, scrollWidth, clientWidth } = e.currentTarget;
+        setScrollLeftPosition(scrollLeft);
+        setScrollRightPosition(scrollWidth - clientWidth - scrollLeft);
+    };
+
+    const onRightArrowClick = (): void => {
+        resultsListElement?.current?.scrollBy({ left: 360, behavior: 'smooth' });
+    };
+
+    const onLeftArrowClick = (): void => {
+        resultsListElement?.current?.scrollBy({ left: -360, behavior: 'smooth' });
+    };
+
+    const showLeftArrow = scrollLeftPosition > 0;
+    const showRightArrow = scrollRightPosition > 0;
+
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [resultResources, setResultResources] = React.useState<Resource[]>([]);
 
@@ -55,7 +76,9 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                 </div>
             ) : (
                 <>
-                    <div className="search-results-page__top-spacing" />
+                    {!isMobileViewport ? (
+                        <div className="search-results-page__top-spacing" />
+                    ) : null}
                     <p
                         className={classNames('search-results-page__title', {
                             'search-results-page__title--mobile': isMobileViewport,
@@ -63,7 +86,34 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                     >
                         {pageTitle}
                     </p>
+                    {!isMobileViewport ? (
+                        <>
+                            {showLeftArrow ? (
+                                <div className="search-results-page__scroll-arrow search-results-page__scroll-arrow-left ">
+                                    <img
+                                        src="/images/chevron-down.svg"
+                                        alt="Scroll left"
+                                        className="search-results-page__scroll-arrow-left-icon"
+                                        onClick={onLeftArrowClick}
+                                    />
+                                </div>
+                            ) : null}
+
+                            {showRightArrow ? (
+                                <div className="search-results-page__scroll-arrow search-results-page__scroll-arrow-right">
+                                    <img
+                                        src="/images/chevron-down.svg"
+                                        alt="Scroll right"
+                                        className="search-results-page__scroll-arrow-right-icon"
+                                        onClick={onRightArrowClick}
+                                    />
+                                </div>
+                            ) : null}
+                        </>
+                    ) : null}
                     <div
+                        ref={resultsListElement}
+                        onScroll={onResultsListScroll}
                         className={classNames('search-results-page__results-list', {
                             'search-results-page__results-list--mobile': isMobileViewport,
                         })}

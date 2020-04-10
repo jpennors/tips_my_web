@@ -6,6 +6,7 @@ import { LayoutHeader } from 'tmw-main/components/LayoutHeader';
 import { SearchPage } from 'tmw-main/components/SearchPage';
 import { SearchResultsPage } from 'tmw-main/components/SearchResultsPage';
 import { TermsPage } from 'tmw-main/components/TermsPage';
+import { AboutPage } from 'tmw-main/components/AboutPage';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 import { ViewportProvider } from 'tmw-common/components/ViewportProvider';
 
@@ -21,6 +22,7 @@ export const AppMain: React.FunctionComponent = () => (
                         <Route path={MAIN_APP_ROUTES.HOME} component={SearchPage} exact />
                         <Route path={MAIN_APP_ROUTES.SEARCH} component={SearchPage} />
                         <Route path={MAIN_APP_ROUTES.TERMS} component={TermsPage} />
+                        <Route path={MAIN_APP_ROUTES.ABOUT} component={AboutPage} />
                         <Route path={MAIN_APP_ROUTES.RESULTS} component={SearchResultsPage} />
                         <Redirect to={MAIN_APP_ROUTES.HOME} />
                     </Switch>

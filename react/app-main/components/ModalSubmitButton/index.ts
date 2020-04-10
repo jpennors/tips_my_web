@@ -1,1 +1,0 @@
-export { ModalSubmitButton } from './ModalSubmitButton';
