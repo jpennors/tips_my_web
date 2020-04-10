@@ -15,6 +15,10 @@ export const LayoutHeader: React.FunctionComponent = () => {
 
     const links = [
         {
+            title: 'New search',
+            link: MAIN_APP_ROUTES.SEARCH,
+        },
+        {
             title: 'Share a website',
             modal: SuggestionModalContent,
         },
@@ -36,21 +40,37 @@ export const LayoutHeader: React.FunctionComponent = () => {
                     'layout-header__links--centered': isMobileViewport,
                 })}
             >
-                {links.map(({ title, modal: Modal }) => (
-                    <HeaderModal
-                        key={title}
-                        content={<Modal />}
-                        target={
-                            <a
+                {links.map(({ title, modal: Modal, link }) => {
+                    if (Modal) {
+                        return (
+                            <HeaderModal
+                                key={title}
+                                content={<Modal />}
+                                target={
+                                    <a
+                                        className={classNames('layout-header__link', {
+                                            'layout-header__link--centered': isMobileViewport,
+                                        })}
+                                    >
+                                        {title}
+                                    </a>
+                                }
+                            />
+                        );
+                    } else if (link) {
+                        return (
+                            <Link
+                                to={link}
                                 className={classNames('layout-header__link', {
                                     'layout-header__link--centered': isMobileViewport,
                                 })}
                             >
                                 {title}
-                            </a>
-                        }
-                    />
-                ))}
+                            </Link>
+                        );
+                    }
+                    return null;
+                })}
             </div>
         </div>
     );
