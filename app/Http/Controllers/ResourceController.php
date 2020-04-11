@@ -132,9 +132,11 @@ class ResourceController extends Controller
 
             // Create resource entity
             $r->name = $resource['name'];
+            $r->description = $resource['description'];
             $r->url = $resource['url'];
             $r->language = $resource['language'];
             $r->score = $resource['score'];
+            $r->interface = $resource['interface'];
             
             $price_entity = Price::where('name', $resource['price'])->get()->first();
             if ($price_entity) {
