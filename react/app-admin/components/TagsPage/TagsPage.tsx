@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Icon, Label, Loader, Table } from 'semantic-ui-react';
+import { Button, Icon, Label, Loader, Table, Label } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
@@ -79,6 +79,7 @@ export const TagsPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Slug</Table.HeaderCell>
                             <Table.HeaderCell>Parent</Table.HeaderCell>
+                            <Table.HeaderCell>Visibility</Table.HeaderCell>
                             <Table.HeaderCell collapsing textAlign="center">
                                 Edit
                             </Table.HeaderCell>
@@ -97,6 +98,17 @@ export const TagsPage: React.FunctionComponent = () => {
                                         <Label size="small">{tag.parentName}</Label>
                                     ) : (
                                         'No parent'
+                                    )}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {tag.deleted_at ? (
+                                        <Label color="red">Deleted</Label>
+                                    ) : (
+                                        tag.disabled ? (
+                                            <Label color="yellow">Disabled</Label>
+                                        ) : (
+                                            <Label color="teal">Available</Label>
+                                        )
                                     )}
                                 </Table.Cell>
                                 <Table.Cell textAlign="center">
