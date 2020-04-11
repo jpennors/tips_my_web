@@ -150,7 +150,7 @@ export const serializeTagToAPI = (tag: Partial<Tag>): Partial<APITag> => {
 
 export const serializeVisitorStatsFromAPI = (VisitorStatsFromAPI: APIVisitorStat[]): VisitorStat[] => {
     return VisitorStatsFromAPI.map(stat => ({
-        created_date: stat.created_date,
+        formatted_date: stat.formatted_date,
         visitors: stat.visitors ,
     }));
 };

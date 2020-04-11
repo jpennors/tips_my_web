@@ -77,6 +77,6 @@ export interface Log {
 }
 
 export interface VisitorStat {
-    created_date: Date;
+    formatted_date: Date;
     visitors: number;
 }

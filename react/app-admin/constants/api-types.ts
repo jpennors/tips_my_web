@@ -130,6 +130,6 @@ export interface APILog {
 }
 
 export interface APIVisitorStat {
-    created_date: Date;
+    formatted_date: Date;
     visitors: number;
 }
