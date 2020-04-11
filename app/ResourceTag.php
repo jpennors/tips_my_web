@@ -232,5 +232,15 @@ class ResourceTag extends Model
             return $first["final_score"] < $second["final_score"];
         });
 
+        // Remove useless attributes
+        foreach ($resources as &$resource) {
+            unset($resource["like"]);
+            unset($resource["score"]);
+            unset($resource["interface"]);
+            unset($resource["belonging"]);
+            unset($resource["final_score"]);
+        }
+
+        return $resources;
     }
 }

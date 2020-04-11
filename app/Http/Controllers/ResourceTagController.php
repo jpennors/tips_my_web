@@ -23,11 +23,13 @@ class ResourceTagController extends Controller
             ->pluck('id')
             ->toArray();
         
-        // Retrieve all resources 
+        // Retrieve all concerning resources 
         $resource_tags = ResourceTag::with('resource')->whereIn('tag_id', $tags_id)->get();
 
-        ResourceTag::getRecommendedResources($resource_tags);
-                
+        // Return ordered recommendation
+        return response()->json(
+            ResourceTag::getRecommendedResources($resource_tags), 
+            200);       
     }
 
 }
