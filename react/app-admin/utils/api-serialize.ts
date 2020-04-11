@@ -56,6 +56,8 @@ export const serializeTagsFromAPI = (tagsFromAPI: Array<APITag | APIBasicTag>): 
         slug: tag.slug,
         parentId: 'parent' in tag && tag.parent ? tag.parent.id : null,
         parentName: 'parent' in tag && tag.parent ? tag.parent.name : null,
+        disabled: tag.disabled,
+        deleted_at: tag.deleted_at,
     }));
 };
 

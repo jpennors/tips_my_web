@@ -21,8 +21,10 @@ export interface Tag {
     id: string;
     name: string;
     slug: string;
-    parentId: string | null;
     parentName: string | null;
+    parentId: string | null;
+    disabled: boolean;
+    deleted_at: Date | null;
 }
 
 export interface ResourceTag {

@@ -35,6 +35,7 @@ export interface APIBasicTag {
     name: string;
     slug: string;
     parent_id: string | null;
+    disabled: boolean;
     created_at: Date;
     updated_at: Date | null;
     deleted_at: Date | null;
@@ -45,6 +46,7 @@ export interface APITag extends APIBasicTag {
         id: string;
         name: string;
         parent_id: string | null;
+        disabled: boolean;
         created_at: Date;
         updated_at: Date | null;
         deleted_at: Date | null;
