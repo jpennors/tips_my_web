@@ -106,7 +106,7 @@ class ResourceTag extends Model
     protected static $scoringWeight = array(
         "score"         =>  10,
         "belonging"     =>  8,
-        "likes"         =>  7,
+        "like"         =>  7,
         "price"         =>  6,
         "interface"     =>  3,
     );
