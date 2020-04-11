@@ -19,7 +19,7 @@ export const OverviewPage: React.FunctionComponent = () => {
     const fetchVisitorNumbers = async (): Promise<void> => {
         
 
-        return ajaxGet('current/visitors')
+        return ajaxGet('visitors/current')
             .then(res => {
                 setVisitorNumbers(res.data.visitors);
             })
