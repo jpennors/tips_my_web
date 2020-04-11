@@ -8,6 +8,11 @@ class DateUtils
 {
 
 
+    
+    /**
+     * Get date range between two dates
+     * 
+     */
     public static function getDateRange($start_date, $end_date){
         
         $start_date = Carbon::createFromFormat('Y-m-d', $start_date);
