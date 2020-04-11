@@ -128,6 +128,30 @@ class ResourceTag extends Model
         "free_cost_2"       =>  5,
         "free_const_3"      =>  3,
         "free_purchase_1"   =>  6,
-
     );
+
+
+     /**
+     * Scoring interface values
+     * 
+     */
+    protected static $scoringInterface = array(
+        1   =>  4,
+        2   =>  7,
+        3   =>  10,
+    );
+
+
+    /**
+     * Compute Interface Score
+     * 
+     */
+    protected static function computeInterfaceScore($interface)
+    {
+        if (!$interface) {
+            return 0;
+        }
+
+        return ResourceTag::$scoringInterface[$interface];
+    }
 }
