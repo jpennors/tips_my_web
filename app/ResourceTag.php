@@ -97,4 +97,19 @@ class ResourceTag extends Model
         'tag_id'                =>      'required|exists:tags,id',
         'belonging'             =>      'required|integer|min:0|max:0'
     ];
+
+
+    /**
+     * 
+     * 
+     */
+    protected static $scoringWeight = array(
+        "score"         =>  10,
+        "belonging"     =>  8,
+        "likes"         =>  7,
+        "price"         =>  6,
+        "interface"     =>  3,
+    );
+
+
 }
