@@ -10,6 +10,7 @@ import {
     APIResourceType,
     APIResourceTag,
     APILog,
+    APIVisitorStat,
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -20,6 +21,7 @@ import {
     ResourceType,
     ResourceTag,
     Log,
+    VisitorStat,
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
 
@@ -144,4 +146,11 @@ export const serializeTagToAPI = (tag: Partial<Tag>): Partial<APITag> => {
         name: tag.name,
         parent_id: tag.parentId,
     };
+};
+
+export const serializeVisitorStatsFromAPI = (VisitorStatsFromAPI: APIVisitorStat[]): VisitorStat[] => {
+    return VisitorStatsFromAPI.map(stat => ({
+        formatted_date: stat.formatted_date,
+        visitors: stat.visitors ,
+    }));
 };

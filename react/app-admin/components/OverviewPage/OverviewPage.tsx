@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Message, Loader, Table, Label } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { VisitorsChart } from 'tmw-admin/components/OverviewPage'
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { serializeLogsFromAPI } from 'tmw-admin/utils/api-serialize';
+import { serializeLogsFromAPI, serializeVisitorStatsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
 import { Log } from 'tmw-admin/constants/app-types';
+
 
 export const OverviewPage: React.FunctionComponent = () => {
     const [visitorsNumber, setVisitorNumbers] = React.useState<number>(0);
@@ -13,8 +15,11 @@ export const OverviewPage: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const hasError = errorMessage.length > 0;
 
+
     const fetchVisitorNumbers = async (): Promise<void> => {
-        return ajaxGet('current/visitors')
+        
+
+        return ajaxGet('visitors/current')
             .then(res => {
                 setVisitorNumbers(res.data.visitors);
             })
@@ -22,6 +27,7 @@ export const OverviewPage: React.FunctionComponent = () => {
                 setErrorMessage('Error while fetching visitors number from API.');
             });
     };
+
 
     const fetchLogs = async (): Promise<void> => {
         return ajaxPost('logs', { date: '2020-03-15' })
@@ -72,7 +78,9 @@ export const OverviewPage: React.FunctionComponent = () => {
                     <p>
                         Number of visitors today : <strong>{visitorsNumber}</strong>
                     </p>
+                    <VisitorsChart/>
                 </Message>
+                
             )}
 
             {/* Logs table */}

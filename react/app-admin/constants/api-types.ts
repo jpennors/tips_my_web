@@ -128,3 +128,8 @@ export interface APILog {
     created_at: Date;
     updated_at: Date;
 }
+
+export interface APIVisitorStat {
+    formatted_date: Date;
+    visitors: number;
+}
