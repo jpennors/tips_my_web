@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Log;
 use Carbon\Carbon;
+use App\Services\DateUtils;
 
 class LogController extends Controller
 {
@@ -17,8 +18,9 @@ class LogController extends Controller
         // Date formate Y-m-d
         $start_date = $request->start_date;
         $end_date = $request->end_date;
+        $visits_date_range = DateUtils::getVisitsDateRange($start_date, $end_date);
 
-        $visitors = DB::table('logs')
+        $visitors_stat = DB::table('logs')
             ->select('created_date', DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
             ->where([
                 ['created_date', '>=', $start_date],
@@ -27,7 +29,13 @@ class LogController extends Controller
             ->groupBy('created_date')
             ->get();
 
-        return response()->json($visitors, 200);
+        foreach ($visitors_stat as $stat) {
+            if (array_key_exists($stat->created_date, $visits_date_range)) {
+                $visits_date_range[$stat->created_date]["visitors"] = $stat->visitors;
+            }
+        }
+
+        return response()->json(array_values($visits_date_range), 200);
     }
 
 
