@@ -62,8 +62,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('logout', 'AdminController@logout');
 
     # Log Controller
-    Route::get('current/visitors', 'LogController@getCurrentVisitor');
-    Route::post('visitors', 'LogController@getVisitorNumberByDay');
+    Route::get('visitors/current', 'LogController@getCurrentVisitor');
+    Route::post('visitors/stats', 'LogController@getVisitorNumberByDay');
     Route::post('logs', 'LogController@getLogs');
 
 });
