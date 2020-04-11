@@ -77,6 +77,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
         setErrorMessage('');
         setIsLoading(true);
         const newTag = serializeTagToAPI(tag);
+        newTag.id = editedTagId;
 
         if (editedTagId) {
             ajaxPut(`tags/${editedTagId}`, newTag)

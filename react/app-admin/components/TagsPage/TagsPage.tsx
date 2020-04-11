@@ -44,6 +44,60 @@ export const TagsPage: React.FunctionComponent = () => {
             });
     };
 
+
+    const disableTag = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setIsLoading(true);
+        ajaxGet(`tags/disable/${tagId}`)
+            .then(() => {
+                setSuccessMessage('The tag "' + tagName + '" was successfully disabled.');
+                return fetchTags();
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to disable the tag "' + tagName + '".');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+
+    const enableTag = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setIsLoading(true);
+        ajaxGet(`tags/enable/${tagId}`)
+            .then(() => {
+                setSuccessMessage('The tag "' + tagName + '" was successfully activated.');
+                return fetchTags();
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to activate the tag "' + tagName + '".');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+
+    const restoreTag = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setIsLoading(true);
+        ajaxGet(`tags/restore/${tagId}`)
+            .then(() => {
+                setSuccessMessage('The tag "' + tagName + '" was successfully restored.');
+                return fetchTags();
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to restore the tag "' + tagName + '".');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
     React.useEffect(() => {
         fetchTags().finally(() => {
             setIsLoading(false);
@@ -79,6 +133,7 @@ export const TagsPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Slug</Table.HeaderCell>
                             <Table.HeaderCell>Parent</Table.HeaderCell>
+                            <Table.HeaderCell>Visibility</Table.HeaderCell>
                             <Table.HeaderCell collapsing textAlign="center">
                                 Edit
                             </Table.HeaderCell>
@@ -99,20 +154,60 @@ export const TagsPage: React.FunctionComponent = () => {
                                         'No parent'
                                     )}
                                 </Table.Cell>
-                                <Table.Cell textAlign="center">
-                                    <Link to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}>
-                                        <Icon name="edit" color="blue" link />
-                                    </Link>
+                                <Table.Cell>
+                                    {tag.deleted_at ? (
+                                        <Label color="red">Deleted</Label>
+                                    ) : (
+                                        tag.disabled ? (
+                                            <Label 
+                                                as="a"
+                                                color="yellow"
+                                                onClick={(): void => {
+                                                    enableTag(tag.id, tag.name);
+                                                }}
+                                            >
+                                                Disabled
+                                            </Label>
+                                        ) : (
+                                            <Label
+                                                as="a" 
+                                                color="teal"
+                                                onClick={(): void => {
+                                                    disableTag(tag.id, tag.name);
+                                                }}
+                                            >
+                                                Available
+                                            </Label>
+                                        )
+                                    )}
                                 </Table.Cell>
                                 <Table.Cell textAlign="center">
-                                    <Icon
-                                        name="trash alternate"
-                                        color="red"
-                                        link
-                                        onClick={(): void => {
-                                            deleteTag(tag.id, tag.name);
-                                        }}
-                                    />
+                                    {tag.deleted_at ? (''):(
+                                        <Link to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}>
+                                            <Icon name="edit" color="blue" link />
+                                        </Link>
+                                    )}
+                                </Table.Cell>
+                                <Table.Cell textAlign="center">
+                                    {tag.deleted_at ? (
+                                        <Label 
+                                            as='a'
+                                            onClick={(): void => {
+                                                restoreTag(tag.id, tag.name);
+                                            }}
+                                        >
+                                            Restore
+                                        </Label>
+                                    ):(
+                                        <Icon
+                                            name="trash alternate"
+                                            color="red"
+                                            link
+                                            onClick={(): void => {
+                                                deleteTag(tag.id, tag.name);
+                                            }}
+                                        />
+                                    )}
                                 </Table.Cell>
                             </Table.Row>
                         ))}

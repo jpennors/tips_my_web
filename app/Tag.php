@@ -79,4 +79,23 @@ class Tag extends Model
         return $this->belongsTo('App\Tag', 'parent_id');
     }
 
+
+    /**
+     * Disable a tag
+     */
+    public function disableTag(){
+        $this->disabled = true;
+        $this->save();
+    }
+
+
+    /**
+     * Enable a tag
+     */
+    public function enableTag(){
+        $this->disabled = false;
+        $this->save();
+    }
+
+
 }

@@ -56,6 +56,8 @@ export const serializeTagsFromAPI = (tagsFromAPI: Array<APITag | APIBasicTag>): 
         slug: tag.slug,
         parentId: 'parent' in tag && tag.parent ? tag.parent.id : null,
         parentName: 'parent' in tag && tag.parent ? tag.parent.name : null,
+        disabled: tag.disabled,
+        deleted_at: tag.deleted_at,
     }));
 };
 
@@ -118,6 +120,13 @@ export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
     }));
 };
 
+export const serializeVisitorStatsFromAPI = (VisitorStatsFromAPI: APIVisitorStat[]): VisitorStat[] => {
+    return VisitorStatsFromAPI.map(stat => ({
+        formatted_date: stat.formatted_date,
+        visitors: stat.visitors ,
+    }));
+};
+
 /*
  * Convert data from frontend format to (partial) API format (to use with POST API)
  */
@@ -148,9 +157,4 @@ export const serializeTagToAPI = (tag: Partial<Tag>): Partial<APITag> => {
     };
 };
 
-export const serializeVisitorStatsFromAPI = (VisitorStatsFromAPI: APIVisitorStat[]): VisitorStat[] => {
-    return VisitorStatsFromAPI.map(stat => ({
-        formatted_date: stat.formatted_date,
-        visitors: stat.visitors ,
-    }));
-};
+
