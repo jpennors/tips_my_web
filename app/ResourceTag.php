@@ -185,6 +185,7 @@ class ResourceTag extends Model
             
             if (!array_key_exists($resource_id, $resources)) {
                 $resources[$resource_id] = array(
+                    "id"            =>  $resource_tag->resource->id,
                     "name"          =>  $resource_tag->resource->name,
                     "description"   =>  $resource_tag->resource->description,
                     "url"           =>  $resource_tag->resource->url,
