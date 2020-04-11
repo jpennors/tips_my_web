@@ -16,13 +16,10 @@ class DateUtils
 
         for($date = $start_date; $date->lte($end_date); $date->addDay()) {
 
-            array_push($dates, 
-                array($date->format('Y-m-d') => array(
+            $dates[$date->format('Y-m-d')] = array(
                     "formatted_date" => $date->format('m-d'),
                     "visitors"  => 0
-                ))
-            );
-    
+            );    
         }
         
         return $dates;
