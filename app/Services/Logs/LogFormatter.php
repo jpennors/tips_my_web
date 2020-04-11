@@ -35,6 +35,7 @@ class LogFormatter extends NormalizerFormatter
         $fills['geoip_id'] = $record['context']['geoip_id'];
         $fills['route_id'] = $record['context']['route_id'];
         $fills['token_id'] = $record['context']['token_id'];
+        $fills['parameters'] = $record['context']['parameters'];
         $fills['level'] = strtolower($record['level_name']);
         $fills['description'] = $record['message'];
         $fills['created_date'] = Carbon::now()->format('Y-m-d');

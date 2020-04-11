@@ -102,6 +102,12 @@ class LogCreator
     }
 
 
+    public function getJsonParameters($request)
+    {
+        return json_encode($request->all());
+    }
+
+
     public function serializeLog(Request $request = null, string $token = null)
     {
         return [
@@ -109,6 +115,7 @@ class LogCreator
             "geoip_id"  => $this->getLogGeoipId($request),
             "route_id"  => $this->getLogRouteId($request),            
             "token_id"  => $this->getAdminTokenId($token),
+            "parameters"=> $this->getJsonParameters($request),
         ];
     }
 
