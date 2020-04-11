@@ -172,4 +172,22 @@ class TagController extends Controller
 
         return response()->json();
     }
+
+
+    public function disableTag(Request $request, $id)
+    {
+        $tag = Tag::findOrFail($id);
+        $tag->disableTag();
+
+        return response()->json();
+    }
+
+
+    public function enableTag(Request $request, $id)
+    {
+        $tag = Tag::findOrFail($id);
+        $tag->enableTag();
+
+        return response()->json($tag, 200);
+    }
 }
