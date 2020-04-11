@@ -62,6 +62,25 @@ export const TagsPage: React.FunctionComponent = () => {
             });
     };
 
+
+    const enableTag = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setIsLoading(true);
+        ajaxGet(`tags/enable/${tagId}`)
+            .then(() => {
+                setSuccessMessage('The tag "' + tagName + '" was successfully activated.');
+                return fetchTags();
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to activate the tag "' + tagName + '".');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+
     const restoreTag = async (tagId: string, tagName: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
@@ -140,7 +159,15 @@ export const TagsPage: React.FunctionComponent = () => {
                                         <Label color="red">Deleted</Label>
                                     ) : (
                                         tag.disabled ? (
-                                            <Label color="yellow">Disabled</Label>
+                                            <Label 
+                                                as="a"
+                                                color="yellow"
+                                                onClick={(): void => {
+                                                    enableTag(tag.id, tag.name);
+                                                }}
+                                            >
+                                                Disabled
+                                            </Label>
                                         ) : (
                                             <Label
                                                 as="a" 
