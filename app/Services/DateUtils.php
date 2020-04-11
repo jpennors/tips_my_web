@@ -22,7 +22,6 @@ class DateUtils
                     "visitors"  => 0
                 ))
             );
-            $dates[] = $date->format('Y-m-d');
     
         }
         
