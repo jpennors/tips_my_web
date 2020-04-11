@@ -168,4 +168,40 @@ class ResourceTag extends Model
 
         return ($like / $total_like) * 10;
     }
+
+
+    /**
+     * Compute resources recommendation
+     * 
+     */
+    public static function getRecommendedResources($resource_tags)
+    {
+        $resources = array();
+        $total_likes = 0;
+
+        // Create data structure for resources
+        foreach ($resource_tags as $resource_tag) {
+            $resource_id = $resource_tag->resource->id;
+            
+            if (!array_key_exists($resource_id, $resources)) {
+                $resources[$resource_id] = array(
+                    "name"          =>  $resource_tag->resource->name,
+                    "description"   =>  $resource_tag->resource->description,
+                    "url"           =>  $resource_tag->resource->url,
+                    "image"         =>  $resource_tag->resource->image,
+                    "language"      =>  $resource_tag->resource->language,
+                    "score"         =>  $resource_tag->resource->score,
+                    "like"          =>  $resource_tag->resource->like,
+                    "price"         =>  $resource_tag->resource->price->slug,
+                    "type"          =>  $resource_tag->resource->type->name,
+                    "interface"     => $resource_tag->resource->interface,
+                    "belonging"     =>  array($resource_tag->belonging),
+                    "final_score"   => 0,
+                );
+                $total_likes += $resource_tag->resource->like;
+            } else {
+                array_push($resources[$resource_id]["belonging"], $resource_tag->belonging);
+            }
+        }
+    }
 }
