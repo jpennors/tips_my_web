@@ -154,4 +154,18 @@ class ResourceTag extends Model
 
         return ResourceTag::$scoringInterface[$interface];
     }
+
+
+    /**
+     * Compute Like Score
+     * 
+     */
+    protected static function computeLikeScore($like, $total_like)
+    {
+        if (!$total_like) {
+            return 0;
+        }
+
+        return ($like / $total_like) * 10;
+    }
 }
