@@ -226,5 +226,11 @@ class ResourceTag extends Model
 
             $resource["final_score"] = $final_score;
         }
+
+        // Order resources by final score (descending)
+        usort($resources ,function($first,$second){
+            return $first["final_score"] < $second["final_score"];
+        });
+
     }
 }
