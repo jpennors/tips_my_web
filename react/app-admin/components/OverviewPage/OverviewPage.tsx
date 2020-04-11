@@ -4,6 +4,7 @@ import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { serializeLogsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
+import { getApiDateFormat } from '../../../common/utils/date';
 import { Log } from 'tmw-admin/constants/app-types';
 
 export const OverviewPage: React.FunctionComponent = () => {
@@ -24,7 +25,8 @@ export const OverviewPage: React.FunctionComponent = () => {
     };
 
     const fetchLogs = async (): Promise<void> => {
-        return ajaxPost('logs', { date: '2020-03-15' })
+        const current_date = new Date();
+        return ajaxPost('logs', { date: getApiDateFormat(current_date) })
             .then(res => {
                 const logs = serializeLogsFromAPI(res.data);
                 setLogs(logs);
