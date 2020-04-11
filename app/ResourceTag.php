@@ -192,7 +192,8 @@ class ResourceTag extends Model
                     "language"      =>  $resource_tag->resource->language,
                     "score"         =>  $resource_tag->resource->score,
                     "like"          =>  $resource_tag->resource->like,
-                    "price"         =>  $resource_tag->resource->price->slug,
+                    "price"         =>  $resource_tag->resource->price,
+                    "price_slug"    =>  $resource_tag->resource->price->slug,
                     "type"          =>  $resource_tag->resource->type->name,
                     "interface"     => $resource_tag->resource->interface,
                     "belonging"     =>  array($resource_tag->belonging),
@@ -213,7 +214,7 @@ class ResourceTag extends Model
             
             $belonging_score = array_sum($resource["belonging"]) / sizeof($resource["belonging"]);
             $like_score = ResourceTag::computeLikeScore($resource["like"], $total_likes);
-            $price_score = $scoringPrice[$resource["price"]];
+            $price_score = $scoringPrice[$resource["price_slug"]];
             $interface_score = ResourceTag::computeInterfaceScore($resource["interface"]);
 
             $final_score = round(((
@@ -236,6 +237,7 @@ class ResourceTag extends Model
         foreach ($resources as &$resource) {
             unset($resource["like"]);
             unset($resource["score"]);
+            unset($resource["price_slug"]);
             unset($resource["interface"]);
             unset($resource["belonging"]);
             unset($resource["final_score"]);
