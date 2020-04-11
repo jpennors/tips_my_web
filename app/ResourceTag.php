@@ -203,5 +203,28 @@ class ResourceTag extends Model
                 array_push($resources[$resource_id]["belonging"], $resource_tag->belonging);
             }
         }
+
+        // Compute scoring 
+        $scoringWeight = ResourceTag::$scoringWeight;
+        $scoringPrice = ResourceTag::$scoringPrice;
+        $factor = array_sum($scoringWeight);
+
+        foreach ($resources as &$resource) {
+            
+            $belonging_score = array_sum($resource["belonging"]) / sizeof($resource["belonging"]);
+            $like_score = ResourceTag::computeLikeScore($resource["like"], $total_likes);
+            $price_score = $scoringPrice[$resource["price"]];
+            $interface_score = ResourceTag::computeInterfaceScore($resource["interface"]);
+
+            $final_score = round(((
+                $resource["score"] * $scoringWeight["score"] +
+                $belonging_score * $scoringWeight["belonging"] +
+                $like_score * $scoringWeight["like"] +
+                $price_score * $scoringWeight["price"] +
+                $interface_score * $scoringWeight["interface"]
+            ) / $factor) * 10, 2);
+
+            $resource["final_score"] = $final_score;
+        }
     }
 }
