@@ -75,3 +75,8 @@ export interface Log {
     geoipStateName: string | null;
     geoipCity: string | null;
 }
+
+export interface VisitorStat {
+    created_date: Date;
+    visitors: number;
+}
