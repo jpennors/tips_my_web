@@ -47,6 +47,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('import/tags', 'TagController@importTags');
     Route::get('tags/disable/{id}', 'TagController@disableTag');
     Route::get('tags/enable/{id}', 'TagController@enableTag');
+    Route::get('tags/restore/{id}', 'TagController@restoreTag');
 
     # Suggestions
     Route::apiResource('suggestions', 'SuggestionController')->only(['index', 'destroy']);

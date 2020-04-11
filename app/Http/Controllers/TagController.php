@@ -190,4 +190,13 @@ class TagController extends Controller
 
         return response()->json($tag, 200);
     }
+
+    
+    public function restoreTag(Request $request, $id)
+    {
+        $tag = Tag::onlyTrashed()->findOrFail($id);
+        $tag->restore();
+
+        return response()->json($tag, 200);
+    }
 }
