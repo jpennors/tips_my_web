@@ -112,9 +112,11 @@ export const TagsPage: React.FunctionComponent = () => {
                                     )}
                                 </Table.Cell>
                                 <Table.Cell textAlign="center">
-                                    <Link to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}>
-                                        <Icon name="edit" color="blue" link />
-                                    </Link>
+                                    {tag.deleted_at ? (''):(
+                                        <Link to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}>
+                                            <Icon name="edit" color="blue" link />
+                                        </Link>
+                                    )}
                                 </Table.Cell>
                                 <Table.Cell textAlign="center">
                                     <Icon
