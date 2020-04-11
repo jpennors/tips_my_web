@@ -45,6 +45,23 @@ export const TagsPage: React.FunctionComponent = () => {
     };
 
 
+    const disableTag = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setIsLoading(true);
+        ajaxGet(`tags/disable/${tagId}`)
+            .then(() => {
+                setSuccessMessage('The tag "' + tagName + '" was successfully disabled.');
+                return fetchTags();
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to disable the tag "' + tagName + '".');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
     const restoreTag = async (tagId: string, tagName: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
@@ -125,7 +142,15 @@ export const TagsPage: React.FunctionComponent = () => {
                                         tag.disabled ? (
                                             <Label color="yellow">Disabled</Label>
                                         ) : (
-                                            <Label color="teal">Available</Label>
+                                            <Label
+                                                as="a" 
+                                                color="teal"
+                                                onClick={(): void => {
+                                                    disableTag(tag.id, tag.name);
+                                                }}
+                                            >
+                                                Available
+                                            </Label>
                                         )
                                     )}
                                 </Table.Cell>
