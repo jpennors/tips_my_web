@@ -49,9 +49,6 @@ export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Reso
             url: resource.url,
             iconFilename: resource.image,
             locale: resource.language as LOCALES,
-            score: resource.score,
-            likes: resource.like,
-            searchScore: resource.search_score,
             pricing: resource.price.name as PRICING_OPTIONS,
         });
     });
