@@ -112,7 +112,7 @@ class LogController extends Controller
             }
         }
 
-        return response()->json($tags_count, 200);
+        return response()->json(array_values($tags_count), 200);
     }
 
 }
