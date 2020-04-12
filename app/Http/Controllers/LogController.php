@@ -93,6 +93,7 @@ class LogController extends Controller
                             "count" => 1,
                             "parent_slug" => null, 
                             "name" => null,
+                            "slug" => $parameter,
                         );
                     }
                 }
