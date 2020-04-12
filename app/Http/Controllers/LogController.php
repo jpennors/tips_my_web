@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Log;
+use App\Tag;
 use Carbon\Carbon;
 use App\Services\DateUtils;
 
@@ -86,11 +87,27 @@ class LogController extends Controller
             if (array_key_exists('tags', $parameters)) {
                 foreach ($parameters->tags as &$parameter) {
                     if (array_key_exists($parameter, $tags_count)) {
-                        $tags_count[$parameter] += 1;
+                        $tags_count[$parameter]["search_count"] += 1;
                     } else {
-                        $tags_count[$parameter] = 1;
+                        $tags_count[$parameter] = array(
+                            "search_count" => 1,
+                            "parent_slug" => null, 
+                            "name" => null,
+                        );
                     }
                 }
+            }
+        }
+        
+        $tag_slugs = array_keys($tags_count);
+        $tags = Tag::whereIn('slug', $tag_slugs)
+            ->with('parent')
+            ->get();
+
+        foreach ($tags as $tag) {
+            $tags_count[$tag->slug]["name"] = $tag->name;
+            if ($tag->parent) {
+                $tags_count[$tag->slug]["parent_slug"] = $tag->parent->slug;
             }
         }
 
