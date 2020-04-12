@@ -79,13 +79,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                     {!isMobileViewport ? (
                         <div className="search-results-page__top-spacing" />
                     ) : null}
-                    <p
-                        className={classNames('search-results-page__title', {
-                            'search-results-page__title--mobile': isMobileViewport,
-                        })}
-                    >
-                        {pageTitle}
-                    </p>
+                    <p className="search-results-page__title">{pageTitle}</p>
                     {!isMobileViewport ? (
                         <>
                             {showLeftArrow ? (
@@ -114,9 +108,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                     <div
                         ref={resultsListElement}
                         onScroll={onResultsListScroll}
-                        className={classNames('search-results-page__results-list', {
-                            'search-results-page__results-list--mobile': isMobileViewport,
-                        })}
+                        className="search-results-page__results-list"
                     >
                         {resultResources.map(resource => (
                             <ResourceTile key={resource.id} resource={resource} />

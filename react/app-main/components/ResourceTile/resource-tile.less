@@ -10,17 +10,9 @@
     border-radius: 5px;
     overflow: hidden;
 
-    &--mobile {
+    @media (max-width: @app-viewport-breakpoint-mobile) {
         width: 95%;
         margin: 10px 0;
-
-        .resource-tile__icon {
-            height: 30vw;
-        }
-
-        .resource-tile__content {
-            height: 20vw;
-        }
     }
 
     &__header {
@@ -55,6 +47,10 @@
         width: 100%;
         height: 140px;
         object-fit: cover;
+
+        @media (max-width: @app-viewport-breakpoint-mobile) {
+            height: 30vw;
+        }
     }
 
     &__content {
@@ -62,6 +58,10 @@
         margin-top: 12px;
         margin-left: 15px;
         margin-right: 15px;
+
+        @media (max-width: @app-viewport-breakpoint-mobile) {
+            height: 20vw;
+        }
     }
 
     &__title {

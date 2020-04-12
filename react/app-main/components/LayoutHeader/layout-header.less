@@ -9,9 +9,8 @@
         width: 80px;
         vertical-align: middle;
 
-        &--mobile {
+        @media (max-width: @app-viewport-breakpoint-mobile) {
             width: 50px;
-            vertical-align: middle;
         }
     }
 
@@ -28,7 +27,7 @@
         text-align: right;
         margin-top: 28px;
 
-        &--centered {
+        @media (max-width: @app-viewport-breakpoint-mobile) {
             float: none;
             text-align: center;
             margin-top: 15px;
@@ -49,7 +48,7 @@
             color: white;
         }
 
-        &--centered {
+        @media (max-width: @app-viewport-breakpoint-mobile) {
             margin-left: 10px;
             margin-right: 10px;
         }

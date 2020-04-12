@@ -1,32 +1,15 @@
 import * as React from 'react';
-import classNames from 'classnames';
 import { TagsSelector } from 'tmw-main/components/TagsSelector';
-import { useViewport } from 'tmw-common/components/ViewportProvider';
-import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 
 import './search-page.less';
 
 export const SearchPage: React.FunctionComponent = () => {
-    const { width } = useViewport();
-    const isMobileViewport = width < VIEWPORT_BREAKPOINTS.MOBILE;
 
     return (
         <div className="search-page">
             <div className="search-page__top-spacing" />
-            <p
-                className={classNames('search-page__title', {
-                    'search-page__title--mobile': isMobileViewport,
-                })}
-            >
-                What are your centers of interest?
-            </p>
-            <p
-                className={classNames('search-page__subtitle', {
-                    'search-page__subtitle--mobile': isMobileViewport,
-                })}
-            >
-                Let’s find your most useful websites
-            </p>
+            <p className="search-page__title">What are your centers of interest?</p>
+            <p className="search-page__subtitle">Let’s find your most useful websites</p>
             <TagsSelector />
         </div>
     );
