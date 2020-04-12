@@ -109,6 +109,9 @@ class LogController extends Controller
             }
         }
         
+        usort($tags_count ,function($first,$second){
+            return $first["count"] < $second["count"];
+        });
 
         return response()->json(array_values($tags_count), 200);
     }
