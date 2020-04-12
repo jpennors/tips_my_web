@@ -28,4 +28,5 @@ export enum ADMIN_APP_ROUTES {
     IMPORT = '/admin/import',
     SUGGESTIONS = '/admin/suggestions',
     CONTACT = '/admin/contact',
+    STATISTICS = '/admin/statistics'
 }
