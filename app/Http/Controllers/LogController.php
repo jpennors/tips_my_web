@@ -82,35 +82,33 @@ class LogController extends Controller
         
         $tags_count = array();
 
+        $tags = Tag::with('parent')
+            ->where('disabled', false)
+            ->get();
+        
+        foreach ($tags as $tag) {
+            $tags_count[$tag->slug] = array(
+                "count" => 0,
+                "parent_slug" => null, 
+                "name" => $tag->name,
+                "slug" => $tag->slug,
+            );
+            if ($tag->parent != null) {
+                $tags_count[$tag->slug]["parent_slug"] = $tag->parent->slug;
+            }
+        }
+
         foreach ($logs as $log) {
             $parameters = json_decode($log->parameters);
             if (array_key_exists('tags', $parameters)) {
                 foreach ($parameters->tags as &$parameter) {
                     if (array_key_exists($parameter, $tags_count)) {
                         $tags_count[$parameter]["count"] += 1;
-                    } else {
-                        $tags_count[$parameter] = array(
-                            "count" => 1,
-                            "parent_slug" => null, 
-                            "name" => null,
-                            "slug" => $parameter,
-                        );
-                    }
+                    } 
                 }
             }
         }
         
-        $tag_slugs = array_keys($tags_count);
-        $tags = Tag::whereIn('slug', $tag_slugs)
-            ->with('parent')
-            ->get();
-
-        foreach ($tags as $tag) {
-            $tags_count[$tag->slug]["name"] = $tag->name;
-            if ($tag->parent) {
-                $tags_count[$tag->slug]["parent_slug"] = $tag->parent->slug;
-            }
-        }
 
         return response()->json(array_values($tags_count), 200);
     }
