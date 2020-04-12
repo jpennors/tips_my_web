@@ -64,6 +64,11 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
             path: ADMIN_APP_ROUTES.CONTACT,
             iconName: 'comment',
         },
+        {
+            name: 'Statistics',
+            path: ADMIN_APP_ROUTES.STATISTICS,
+            iconName: 'chart bar'
+        }
     ];
 
     const horizontalDisplayProps: MenuProps = {

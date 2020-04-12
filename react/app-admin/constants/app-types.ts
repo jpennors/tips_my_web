@@ -82,3 +82,12 @@ export interface VisitorStat {
     formatted_date: Date;
     visitors: number;
 }
+
+export interface SearchTagStat {
+    count: number;
+    name: string;
+    slug: string;
+    parent_slug: string | null;
+    is_parent: boolean;
+}
+

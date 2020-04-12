@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Log;
+use App\Tag;
 use Carbon\Carbon;
 use App\Services\DateUtils;
 
@@ -81,20 +82,38 @@ class LogController extends Controller
         
         $tags_count = array();
 
+        $tags = Tag::with('parent')
+            ->where('disabled', false)
+            ->get();
+        
+        foreach ($tags as $tag) {
+            $tags_count[$tag->slug] = array(
+                "count" => 0,
+                "parent_slug" => null, 
+                "name" => $tag->name,
+                "slug" => $tag->slug,
+            );
+            if ($tag->parent != null) {
+                $tags_count[$tag->slug]["parent_slug"] = $tag->parent->slug;
+            }
+        }
+
         foreach ($logs as $log) {
             $parameters = json_decode($log->parameters);
             if (array_key_exists('tags', $parameters)) {
                 foreach ($parameters->tags as &$parameter) {
                     if (array_key_exists($parameter, $tags_count)) {
-                        $tags_count[$parameter] += 1;
-                    } else {
-                        $tags_count[$parameter] = 1;
-                    }
+                        $tags_count[$parameter]["count"] += 1;
+                    } 
                 }
             }
         }
+        
+        usort($tags_count ,function($first,$second){
+            return $first["count"] < $second["count"];
+        });
 
-        return response()->json($tags_count, 200);
+        return response()->json(array_values($tags_count), 200);
     }
 
 }

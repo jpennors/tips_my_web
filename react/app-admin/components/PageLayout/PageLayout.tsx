@@ -11,6 +11,7 @@ import { SideNavMenu } from 'tmw-admin/components/SideNavMenu';
 import { SuggestionsPage } from 'tmw-admin/components/SuggestionsPage';
 import { TagsEditPage } from 'tmw-admin/components/TagsEditPage';
 import { TagsPage } from 'tmw-admin/components/TagsPage';
+import { Statistics } from 'tmw-admin/components/Statistics'
 import { TopNavMenu } from 'tmw-admin/components/TopNavMenu';
 import { ProtectedRoute } from 'tmw-admin/components/ProtectedRoute';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
@@ -84,6 +85,11 @@ export const PageLayout: React.FunctionComponent = () => {
                                         path={ADMIN_APP_ROUTES.RESOURCES_EDIT}
                                         exact
                                         component={ResourcesEditPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.STATISTICS}
+                                        exact
+                                        component={Statistics}
                                     />
                                     <ProtectedRoute component={NotFoundErrorMessage} />
                                 </Switch>
