@@ -155,6 +155,37 @@ class Resource extends Model
 
 
     /**
+     * Search for image extension with url
+     * 
+     */
+    public static function getImageExtensionFromUrl($url)
+    {
+        try{
+
+            $headers = get_headers($url);
+        
+            foreach ($headers as $header) {
+                if (strpos($header, 'Content-Type') !== false) {
+                    $pos = strpos($header, 'image');
+                    if ($pos != false) {
+                        $extension = substr($header, $pos + strlen('image') + 1);
+                        $pos = strpos($extension, ';');
+                        if ($pos != false) {
+                            $extension = substr($extension, 0, $pos - 1);
+                        }
+            
+                        return $extension;
+                    }
+                }
+            }
+        } catch (\Throwable $th){}
+
+        return null;
+    }
+
+
+
+    /**
      * Create job to upload image 
      * 
      */
@@ -178,19 +209,20 @@ class Resource extends Model
         if (array_key_exists('image', $provided_resource) && $provided_resource['image']) {
 
             try {
-
-                $new_image = file_get_contents($provided_resource['image']);
-                $filename = $this->id.".png";
+                $extension = Resource::getImageExtensionFromUrl($provided_resource['image']);
+                if ($extension) {
+                    $new_image = file_get_contents($provided_resource['image']);
+                    $filename = $this->id.".".$extension;
+                }
 
             } catch (\Throwable $th){}
 
         } 
 
         // Search in website source code
-        else if (array_key_exists('url', $provided_resource) && $provided_resource['url'])
+        if (!$new_image && array_key_exists('url', $provided_resource) && $provided_resource['url'])
         {
             try {
-
                 // Retrieve image
                 $html = file_get_contents($provided_resource['url']);
                 
@@ -206,8 +238,13 @@ class Resource extends Model
                         $html = substr($html, $pos + strlen($img_meta_property_attribute) + 1);
                         $pos = strpos($html, " ");
                         $image_url = substr($html, 0, $pos - 1);
-                        $filename = basename($image_url);
-                        $new_image = file_get_contents($image_url);
+
+                        // Retrieve extension
+                        $extension = Resource::getImageExtensionFromUrl($image_url);
+                        if ($extension) {
+                            $filename = $this->id.".".$extension;
+                            $new_image = file_get_contents($image_url);
+                        }
                     }
                 }
 

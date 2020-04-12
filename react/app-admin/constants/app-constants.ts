@@ -4,11 +4,13 @@ export const TOKEN_VALIDITY_TIME = 2 * 3600 * 1000;
 export enum LOCALES {
     FRENCH = 'fr',
     ENGLISH = 'en',
+    ENGLISH_FRENCH = 'en,fr',
 }
 
 export const LOCALES_NAMES = {
     [LOCALES.FRENCH]: 'French',
     [LOCALES.ENGLISH]: 'English',
+    [LOCALES.ENGLISH_FRENCH]: 'English / French',
 };
 
 export const RESOURCES_IMAGE_BASE_URL = '/api/resources/image/';
