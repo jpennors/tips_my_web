@@ -87,10 +87,10 @@ class LogController extends Controller
             if (array_key_exists('tags', $parameters)) {
                 foreach ($parameters->tags as &$parameter) {
                     if (array_key_exists($parameter, $tags_count)) {
-                        $tags_count[$parameter]["search_count"] += 1;
+                        $tags_count[$parameter]["count"] += 1;
                     } else {
                         $tags_count[$parameter] = array(
-                            "search_count" => 1,
+                            "count" => 1,
                             "parent_slug" => null, 
                             "name" => null,
                         );
