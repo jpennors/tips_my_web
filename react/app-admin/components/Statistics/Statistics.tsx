@@ -17,7 +17,7 @@ export const Statistics: React.FunctionComponent = () => {
             />
 
             <Message info>
-                <Message.Header>Search tags chart</Message.Header>
+                <Message.Header>Search tags</Message.Header>
                 <SearchTagsChart/>
             </Message>
             
