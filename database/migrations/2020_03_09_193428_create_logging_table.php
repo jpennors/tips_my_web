@@ -22,11 +22,11 @@ class CreateLoggingTable extends Migration
             $table->string('hashed_ip')->nullable();
             $table->string('created_date', 20);
             $table->index('created_date');
-            $table->bigInteger('route_id')->nullable();
+            $table->bigInteger('route_id')->unsigned()->nullable();
             $table->foreign('route_id')->references('id')->on('log_routes');
-            $table->bigInteger('geoip_id')->nullable();
+            $table->bigInteger('geoip_id')->unsigned()->nullable();
             $table->foreign('geoip_id')->references('id')->on('log_geoips');
-            $table->bigInteger('token_id')->nullable();
+            $table->bigInteger('token_id')->unsigned()->nullable();
             $table->foreign('token_id')->references('id')->on('admin_token');
             $table->timestamps();
         });

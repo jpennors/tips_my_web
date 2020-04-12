@@ -10,7 +10,7 @@ import { AboutPage } from 'tmw-main/components/AboutPage';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 import { ViewportProvider } from 'tmw-common/components/ViewportProvider';
 
-import './app-main.css';
+import './app-main.less';
 
 export const AppMain: React.FunctionComponent = () => (
     <CookiesProvider>

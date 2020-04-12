@@ -11,7 +11,7 @@ import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 
-import './resource-tile.css';
+import './resource-tile.less';
 import classNames from 'classnames';
 
 interface ResourceTileProps {
@@ -38,11 +38,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
     const iconUrl = resource.iconFilename ? RESOURCES_BASE_URL + resource.id : DEFAULT_RESOURCE_URL;
 
     return (
-        <div
-            className={classNames('resource-tile', {
-                'resource-tile--mobile': isMobileViewport,
-            })}
-        >
+        <div className="resource-tile">
             {!isMobileViewport ? (
                 <div className="resource-tile__header">
                     <span className="resource-tile__header-dot resource-tile__header-dot--red" />

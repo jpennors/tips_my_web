@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Manager, Reference, Popper } from 'react-popper';
 
-import './header-modal.css';
+import './header-modal.less';
 
 interface HeaderModalProps {
     content: React.ReactNode;

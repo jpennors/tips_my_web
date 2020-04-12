@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './about-page.css';
+import './about-page.less';
 
 export const AboutPage: React.FunctionComponent = () => {
     return (

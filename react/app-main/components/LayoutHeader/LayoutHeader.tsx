@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { ContactModalContent } from 'tmw-main/components/ContactModalContent';
 import { HeaderModal } from 'tmw-main/components/HeaderModal';
@@ -8,7 +7,7 @@ import { MAIN_APP_ROUTES, VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-co
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { MagnifyingGlassIcon } from 'tmw-main/icons/MagnifyingGlassIcon';
 
-import './layout-header.css';
+import './layout-header.less';
 
 export const LayoutHeader: React.FunctionComponent = () => {
     const { width } = useViewport();
@@ -43,44 +42,23 @@ export const LayoutHeader: React.FunctionComponent = () => {
                 <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
             ) : (
                 <p className="layout-header__logo-name">
-                    <img
-                        src="/images/logo.svg"
-                        alt="logo"
-                        className="layout-header__logo--mobile"
-                    />
+                    <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
                     TipsMyWeb
                 </p>
             )}
-            <div
-                className={classNames('layout-header__links', {
-                    'layout-header__links--centered': isMobileViewport,
-                })}
-            >
+            <div className="layout-header__links">
                 {links.map(({ title, modal: Modal, link, id }) => {
                     if (Modal) {
                         return (
                             <HeaderModal
                                 key={id}
                                 content={<Modal />}
-                                target={
-                                    <a
-                                        className={classNames('layout-header__link', {
-                                            'layout-header__link--centered': isMobileViewport,
-                                        })}
-                                    >
-                                        {title}
-                                    </a>
-                                }
+                                target={<a className="layout-header__link">{title}</a>}
                             />
                         );
                     } else if (link) {
                         return (
-                            <Link
-                                to={link}
-                                className={classNames('layout-header__link', {
-                                    'layout-header__link--centered': isMobileViewport,
-                                })}
-                            >
+                            <Link to={link} className="layout-header__link">
                                 {title}
                             </Link>
                         );

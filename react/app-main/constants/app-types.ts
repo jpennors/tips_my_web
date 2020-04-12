@@ -21,8 +21,5 @@ export interface Resource {
     url: string;
     iconFilename: string;
     locale: LOCALES;
-    score: number;
-    likes: number;
-    searchScore: number;
     pricing: PRICING_OPTIONS;
 }

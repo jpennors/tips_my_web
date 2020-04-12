@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './loading-spinner.css';
+import './loading-spinner.less';
 
 export const LoadingSpinner: React.FunctionComponent = () => (
     <div className="loading-spinner">

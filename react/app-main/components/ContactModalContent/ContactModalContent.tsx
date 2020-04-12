@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { BigButton } from 'tmw-main/components/BigButton';
 
-import './contact-modal-content.css';
+import './contact-modal-content.less';
 
 export const ContactModalContent: React.FunctionComponent = () => {
     const [emailInputValue, setEmailInputValue] = React.useState<string>('');

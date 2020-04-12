@@ -8,6 +8,7 @@ use Response;
 use App\Traits\Uuids;
 use App\ResourceTag;
 use App\Tag;
+use App\Jobs\ImportImage;
 use File;
 use Storage;
 
@@ -151,6 +152,18 @@ class Resource extends Model
         abort(404, "Image not found");
 
     }
+
+
+    /**
+     * Create job to upload image 
+     * 
+     */
+    public function uploadImageFromUrlJobCreation($provided_resource)
+    {
+        ImportImage::dispatch($provided_resource, $this);
+    }
+    
+
 
 
     /**
