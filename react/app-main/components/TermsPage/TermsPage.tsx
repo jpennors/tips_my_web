@@ -3,7 +3,7 @@ import { BigButton } from 'tmw-main/components/BigButton';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 import { Link } from 'react-router-dom';
 
-import './terms-page.css';
+import './terms-page.less';
 
 export const TermsPage: React.FunctionComponent = () => {
     return (

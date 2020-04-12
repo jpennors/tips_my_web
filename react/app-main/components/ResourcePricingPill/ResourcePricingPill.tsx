@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { PRICING_OPTIONS } from 'tmw-main/constants/app-constants';
 
-import './resource-pricing-pill.css';
+import './resource-pricing-pill.less';
 
 interface ResourcePricingPillProps {
     pricing: PRICING_OPTIONS;

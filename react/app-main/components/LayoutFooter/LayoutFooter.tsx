@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 
-import './layout-footer.css';
+import './layout-footer.less';
 
 export const LayoutFooter: React.FunctionComponent = () => (
     <div className="layout-footer">

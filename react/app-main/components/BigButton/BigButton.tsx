@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import './big-button.css';
+import './big-button.less';
 
 interface BigButtonProps {
     content: string;

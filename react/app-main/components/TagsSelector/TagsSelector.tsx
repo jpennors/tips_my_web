@@ -10,7 +10,7 @@ import { Tag } from 'tmw-main/components/Tag';
 import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
 import { encodeSearchTags } from 'tmw-main/utils/tags-search-url';
 
-import './tags-selector.css';
+import './tags-selector.less';
 
 export const TagsSelector: React.FunctionComponent = () => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -110,25 +110,25 @@ export const TagsSelector: React.FunctionComponent = () => {
                         {primaryTag
                             ? primaryTag.secondaryTags.map((tag: SecondaryTag) => (
                                 <Tag
-                                      key={tag.id}
-                                      content={tag.name}
-                                      isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
-                                      onClickCallback={(): void => onSecondaryTagClick(tag)}
-                                      size={SIZES.MEDIUM}
-                                  />
+                                    key={tag.id}
+                                    content={tag.name}
+                                    isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
+                                    onClickCallback={(): void => onSecondaryTagClick(tag)}
+                                    size={SIZES.MEDIUM}
+                                />
                               ))
                             : Object.keys(tagsMap).map((tagId: string) => {
                                 const tag = tagsMap[tagId];
-                                  return (
+                                return (
                                     <Tag
-                                          key={tag.id}
+                                        key={tag.id}
                                         content={tag.name}
-                                          isSelected={false}
-                                          onClickCallback={(): void => onPrimaryTagClick(tag)}
+                                        isSelected={false}
+                                        onClickCallback={(): void => onPrimaryTagClick(tag)}
                                         size={SIZES.MEDIUM}
                                     />
                                 );
-                              })}
+                            })}
                     </div>
                 </div>
             )}

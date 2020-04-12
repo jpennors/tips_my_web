@@ -29,6 +29,10 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
+                test: /\.less$/,
+                loader: ['style-loader', 'css-loader', 'less-loader'],
+            },
+            {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: ['file-loader'],
             },
@@ -47,7 +51,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.css', '.less'],
         alias: {
             'tmw-main': path.resolve(__dirname, 'react/app-main/'),
             'tmw-admin': path.resolve(__dirname, 'react/app-admin/'),
