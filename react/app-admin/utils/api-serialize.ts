@@ -11,6 +11,7 @@ import {
     APIResourceTag,
     APILog,
     APIVisitorStat,
+    APISearchTagStat,
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -22,6 +23,7 @@ import {
     ResourceTag,
     Log,
     VisitorStat,
+    SearchTagStat,
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
 
@@ -124,6 +126,16 @@ export const serializeVisitorStatsFromAPI = (VisitorStatsFromAPI: APIVisitorStat
     return VisitorStatsFromAPI.map(stat => ({
         formatted_date: stat.formatted_date,
         visitors: stat.visitors ,
+    }));
+};
+
+export const serializeSearchTagsStatsFromAPI = (SearchTagsStatsFromAPI: APISearchTagStat[]): SearchTagStat[] => {
+    return SearchTagsStatsFromAPI.map(searchTag => ({
+        count: searchTag.count,
+        name: searchTag.name,
+        slug: searchTag.slug,
+        parent_slug: searchTag.parent_slug,
+        is_parent: !searchTag.parent_slug,
     }));
 };
 
