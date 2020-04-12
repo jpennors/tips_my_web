@@ -13,7 +13,7 @@ export const SearchTagsChart: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [searchTagsStats, setSearchTagsStats] = React.useState<SearchTagStat[]>([]);
 
-    const updateParentTagOptions = () : void => {
+    const getParentTagOptions = () : InputSelectOption[] => {
         let options :InputSelectOption[] = [
             {
                 key: "parent_slug",
@@ -21,13 +21,13 @@ export const SearchTagsChart: React.FunctionComponent = () => {
                 text: "Tags principaux",
             }
         ];
-        console.log(searchTagsStats);
         searchTagsStats.map(t => options.push({
             key: t.slug,
             value: t.slug,
             text: t.name,
         }));
-        setParentTagOptions(options);
+
+        return options;
     }
 
     const fetchSearchTags = async() : Promise<void> => {
@@ -95,15 +95,13 @@ export const SearchTagsChart: React.FunctionComponent = () => {
 
 
     React.useEffect(() => {
-        fetchSearchTags().finally(() => {
-            updateParentTagOptions();
-        });
+        fetchSearchTags();
     }, []);
 
 
     return (
         <div>
-            <Select placeholder='Select primary tag' options={parentTagOptions} />
+            <Select placeholder='Select primary tag' options={getParentTagOptions()} />
             <canvas id="search_tags"></canvas>
         </div>
     );
