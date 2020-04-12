@@ -68,5 +68,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('visitors/current', 'LogController@getCurrentVisitor');
     Route::post('visitors/stats', 'LogController@getVisitorNumberByDay');
     Route::post('logs', 'LogController@getLogs');
+    Route::post('count', 'LogController@countSearchTags');
 
 });

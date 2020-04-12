@@ -65,4 +65,36 @@ class LogController extends Controller
         
     }
 
+
+    public function countSearchTags(Request $request)
+    {
+        // Date formate Y-m-d
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $logs = Log::whereHas('route', function($q){
+                $q->where('uri', 'api/resources/search');})
+            ->where([
+                ['created_date', '>=', $start_date],
+                ['created_date', '<=', $end_date]])
+            ->get();
+        
+        $tags_count = array();
+
+        foreach ($logs as $log) {
+            $parameters = json_decode($log->parameters);
+            if (array_key_exists('tags', $parameters)) {
+                foreach ($parameters->tags as &$parameter) {
+                    if (array_key_exists($parameter, $tags_count)) {
+                        $tags_count[$parameter] += 1;
+                    } else {
+                        $tags_count[$parameter] = 1;
+                    }
+                }
+            }
+        }
+
+        return response()->json($tags_count, 200);
+    }
+
 }
