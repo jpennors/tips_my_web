@@ -227,4 +227,13 @@ class ResourceController extends Controller
     }
 
 
+    public function addVisit(Request $request, $id)
+    {
+        $resource = Resource::findOrFail($id);
+        $resource->visits += 1;
+        $resource->save();
+        return response()->json();
+    }
+
+
 }
