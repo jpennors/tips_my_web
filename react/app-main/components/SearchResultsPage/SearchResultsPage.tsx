@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classNames from 'classnames';
 import { useParams } from 'react-router';
 import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { ResourceTile } from 'tmw-main/components/ResourceTile';
