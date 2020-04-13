@@ -30,6 +30,7 @@ Route::post('resources/search', 'ResourceTagController@search');
 Route::get('resources/image/{id}', 'ResourceController@getImage');
 Route::get('resources/like/add/{id}', 'ResourceController@addLike');
 Route::get('resources/like/remove/{id}', 'ResourceController@removeLike');
+Route::get('resources/visit/{id}', 'ResourceController@addVisit');
 
 
 # Admin routes
