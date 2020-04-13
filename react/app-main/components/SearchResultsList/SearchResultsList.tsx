@@ -19,10 +19,18 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
     const [scrollLeftPosition, setScrollLeftPosition] = React.useState(0);
     const [scrollRightPosition, setScrollRightPosition] = React.useState(0);
 
-    const onResultsListScroll = (e: React.UIEvent<HTMLElement>): void => {
+    const onResultsListScroll = (e: React.UIEvent<HTMLDivElement>): void => {
         const { scrollLeft, scrollWidth, clientWidth } = e.currentTarget;
         setScrollLeftPosition(scrollLeft);
         setScrollRightPosition(scrollWidth - clientWidth - scrollLeft - 1);
+    };
+
+    const onResultsListWheel = (e: WheelEvent): void => {
+        const { deltaY } = e;
+        if (deltaY) {
+            resultsListElement?.current?.scrollBy({ left: deltaY });
+            e.preventDefault(); // We don't want the page to also scroll
+        }
     };
 
     const onRightArrowClick = (): void => {
@@ -41,6 +49,18 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
         const scrollWidth = resultsListElement?.current?.scrollWidth || 0;
         const clientWidth = resultsListElement?.current?.clientWidth || 0;
         setScrollRightPosition(scrollWidth - clientWidth);
+
+        /*
+         * There is a change in Chrome 73+ that makes wheel events passive by default,
+         * which also prevents calls to 'preventDefault()'. Therefore, we need to pass the
+         * option 'passive: false' but that's not possible for now with React's API so
+         * we must do it in Vanilla JS until the API changes.
+         */
+
+        // Override wheel events to scroll horizontally on results list
+        resultsListElement?.current?.addEventListener('wheel', onResultsListWheel, {
+            passive: false,
+        });
     }, []);
 
     return (
@@ -73,6 +93,7 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
             <div
                 ref={resultsListElement}
                 onScroll={onResultsListScroll}
+                // onWheel={onResultsListWheel}
                 className="search-results-list__results-list"
             >
                 {resultsList.map(resource => (
