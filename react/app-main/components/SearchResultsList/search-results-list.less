@@ -8,6 +8,7 @@
         margin-top: 160px;
         width: 40px;
         height: 40px;
+        -webkit-tap-highlight-color: transparent;
     }
 
     &__scroll-arrow-left {
@@ -22,12 +23,22 @@
         transform: rotate(90deg);
         filter: drop-shadow( 0px 0px 3px rgba(0, 0, 0, .7));
         cursor: pointer;
+        transition: all .15s ease-in-out;
+
+        &:hover {
+            transform: rotate(90deg) scale(1.05);
+        }
     }
 
     &__scroll-arrow-right-icon {
         transform: rotate(-90deg);
         filter: drop-shadow( 0px 0px 3px rgba(0, 0, 0, .7));
         cursor: pointer;
+        transition: all .15s ease-in-out;
+
+        &:hover {
+            transform: rotate(-90deg) scale(1.05);
+        }
     }
 
     &__results-list {
