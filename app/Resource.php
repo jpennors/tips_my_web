@@ -167,10 +167,10 @@ class Resource extends Model
             foreach ($headers as $header) {
                 if (strpos($header, 'Content-Type') !== false) {
                     $pos = strpos($header, 'image');
-                    if ($pos != false) {
+                    if ($pos !== false) {
                         $extension = substr($header, $pos + strlen('image') + 1);
                         $pos = strpos($extension, ';');
-                        if ($pos != false) {
+                        if ($pos !== false) {
                             $extension = substr($extension, 0, $pos - 1);
                         }
             
