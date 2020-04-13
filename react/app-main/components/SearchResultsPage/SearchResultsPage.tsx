@@ -39,10 +39,10 @@ export const SearchResultsPage: React.FunctionComponent = () => {
         });
     }, []);
 
-    const pageTitle =
-        resultResources.length > 0
-            ? 'Here are some websites to improve your workflow'
-            : "We didn't find any result for this search...";
+    const hasResults = resultResources.length > 0;
+    const pageTitle = hasResults
+        ? 'Here are some websites to improve your workflow'
+        : "We didn't find any result for this search...";
 
     return (
         <div className="search-results-page">
@@ -58,7 +58,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                         <div className="search-results-page__top-spacing" />
                     ) : null}
                     <p className="search-results-page__title">{pageTitle}</p>
-                    <SearchResultsList resultsList={resultResources} />
+                    {hasResults ? <SearchResultsList resultsList={resultResources} /> : null}
                 </>
             )}
         </div>
