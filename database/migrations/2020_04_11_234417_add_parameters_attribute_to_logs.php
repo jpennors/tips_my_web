@@ -14,7 +14,7 @@ class AddParametersAttributeToLogs extends Migration
     public function up()
     {
         Schema::table('logs', function (Blueprint $table) {
-            $table->string('parameters');
+            $table->text('parameters');
         });
     }
 
