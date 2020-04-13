@@ -9,11 +9,12 @@
     text-decoration: none;
     user-select: none;
     outline: none;
+    -webkit-tap-highlight-color: transparent;
 
     &--clickable {
         cursor: pointer;
 
-        :hover {
+        &:hover, &:active {
             background: rgba(255, 255, 255, 0.8);
             color: #f46e7a;
         }
