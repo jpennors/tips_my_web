@@ -58,7 +58,7 @@ export const LayoutHeader: React.FunctionComponent = () => {
                         );
                     } else if (link) {
                         return (
-                            <Link to={link} className="layout-header__link">
+                            <Link key={id} to={link} className="layout-header__link">
                                 {title}
                             </Link>
                         );
