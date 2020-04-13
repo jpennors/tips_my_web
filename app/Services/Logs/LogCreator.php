@@ -102,9 +102,26 @@ class LogCreator
     }
 
 
+    protected $routes_to_ignore = [
+        "api/import/tags",
+        "api/login",
+        "api/import/resources"
+    ];
+
+
     public function getJsonParameters($request)
     {
-        return json_encode($request->all());
+        $uri = null;
+        $route_info = $request->route();
+        if ($route_info) {
+            $uri = $route_info->uri;
+        }
+
+        if ($uri && array_search($uri, $this->routes_to_ignore) === FALSE) {
+            return json_encode($request->all());
+        }
+
+        return null;
     }
 
 
