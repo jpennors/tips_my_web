@@ -14,7 +14,10 @@ export const BigButton: React.FunctionComponent<BigButtonProps> = ({
     onClick,
     isColored = true,
 }) => (
-    <a className={classNames('big-button', { 'big-button--colored': isColored })} onClick={onClick}>
+    <span
+        className={classNames('big-button', { 'big-button--colored': isColored })}
+        onClick={onClick}
+    >
         {content}
-    </a>
+    </span>
 );
