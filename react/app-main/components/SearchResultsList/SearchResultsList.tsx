@@ -17,12 +17,12 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
 
     const resultsListElement = React.useRef<HTMLDivElement>(null);
     const [scrollLeftPosition, setScrollLeftPosition] = React.useState(0);
-    const [scrollRightPosition, setScrollRightPosition] = React.useState(width * 0.88);
+    const [scrollRightPosition, setScrollRightPosition] = React.useState(0);
 
     const onResultsListScroll = (e: React.UIEvent<HTMLElement>): void => {
         const { scrollLeft, scrollWidth, clientWidth } = e.currentTarget;
         setScrollLeftPosition(scrollLeft);
-        setScrollRightPosition(scrollWidth - clientWidth - scrollLeft);
+        setScrollRightPosition(scrollWidth - clientWidth - scrollLeft - 1);
     };
 
     const onRightArrowClick = (): void => {
@@ -35,6 +35,13 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
 
     const showLeftArrow = scrollLeftPosition > 0;
     const showRightArrow = scrollRightPosition > 0;
+
+    React.useEffect(() => {
+        // Set initial value for scrollRightPosition
+        const scrollWidth = resultsListElement?.current?.scrollWidth || 0;
+        const clientWidth = resultsListElement?.current?.clientWidth || 0;
+        setScrollRightPosition(scrollWidth - clientWidth);
+    }, []);
 
     return (
         <div className="search-results-list">
