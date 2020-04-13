@@ -80,6 +80,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                 </a>
                 <a
                     href={resource.url}
+                    onClick={() => visitWebsite(resource.id)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="resource-tile__visit-resource-button"
