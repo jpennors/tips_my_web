@@ -12,6 +12,7 @@
     margin: 0 10px;
     transition: all .15s ease-in-out;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 
     background-image: linear-gradient(-240deg, #FFFFFF, #eaeaea);
     color: #292929;
@@ -22,6 +23,10 @@
     }
 
     &:hover {
-        transform: scale(1.05);
+        transform: scale(1.03);
+    }
+
+    &:active {
+        transform: scale(0.97);
     }
 }
