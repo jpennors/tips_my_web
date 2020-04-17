@@ -1,7 +1,7 @@
 @import '../../constants/ui-constants';
 
 .resource-tile-placeholder {
-    background: #e9ebee;
+    background: @app-color-light-grey-1;
     display: inline-block;
     width: 320px;
     margin: 20px;
@@ -18,7 +18,7 @@
     &__header {
         height: 18px !important;
         width: 100%;
-        background-color: #e9ebee;
+        background-color: @app-color-light-grey-1;
     }
 
     &__header-dot {
@@ -30,13 +30,13 @@
         border-radius: 50%;
         display: inline-block;
 
-        background-color: #cdcfd0;
+        background-color: @app-color-light-grey-2;
     }
 
     &__icon {
         width: 100%;
         height: 140px;
-        background:  #cdcfd0;
+        background: @app-color-light-grey-2;
 
         @media (max-width: @app-viewport-breakpoint-mobile) {
             height: 30vw;
@@ -57,27 +57,31 @@
     &__title {
         height: 15px;
         width: 50%;
-        background: #cdcfd0;
+        background: @app-color-light-grey-2;
+        border-radius: 15px;
     }
 
     &__description-1 {
         height: 13px;
         width: 80%;
-        background: #cdcfd0;
+        background: @app-color-light-grey-2;
+        border-radius: 15px;
         margin-top: 10px;
     }
 
     &__description-2 {
         height: 13px;
         width: 85%;
-        background: #cdcfd0;
+        background: @app-color-light-grey-2;
+        border-radius: 15px;
         margin-top: 5px;
     }
 
     &__description-3 {
-          height: 13px;
-          width: 30%;
-          background: #cdcfd0;
+        height: 13px;
+        width: 30%;
+        background: @app-color-light-grey-2;
+        border-radius: 15px;
         margin-top: 5px;
       }
 
@@ -91,8 +95,8 @@
         &::after {
             content: "";
             display: block;
-            background: #cdcfd0;
-            background: linear-gradient(to right, #cdcfd0 0%, #c4c0c0 30%, #c4c0c0 70%,#cdcfd0 100%);
+            background: @app-color-light-grey-2;
+            background: linear-gradient(to right, @app-color-light-grey-2 0%, @app-color-light-grey-3 30%, @app-color-light-grey-3 70%, @app-color-light-grey-2 100%);
             position: absolute;
             top: 0;
             bottom: 0;
