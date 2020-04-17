@@ -17,12 +17,12 @@ export const ResourceTilePlaceholder: React.FunctionComponent = () => {
                     <span className="resource-tile-placeholder__header-dot" />
                 </div>
             ) : null}
-            <div className="resource-tile-placeholder__icon" />
+            <div className="resource-tile-placeholder__icon resource-tile-placeholder__loading" />
             <div className="resource-tile-placeholder__content">
-                <div className="resource-tile-placeholder__title" />
-                <div className="resource-tile-placeholder__description-1" />
-                <div className="resource-tile-placeholder__description-2" />
-                <div className="resource-tile-placeholder__description-3" />
+                <div className="resource-tile-placeholder__title resource-tile-placeholder__loading" />
+                <div className="resource-tile-placeholder__description-1 resource-tile-placeholder__loading" />
+                <div className="resource-tile-placeholder__description-2 resource-tile-placeholder__loading" />
+                <div className="resource-tile-placeholder__description-3 resource-tile-placeholder__loading" />
             </div>
             <div className="resource-tile-placeholder__actions" />
         </div>
