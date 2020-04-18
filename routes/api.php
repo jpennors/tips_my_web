@@ -73,8 +73,10 @@ Route::group(['middleware' => 'admin'], function () {
 
 
     # Deployment
+    Route::get('deployment/dependencies', 'DeploymentController@DependenciesInstallationCommand');
     Route::get('deployment/migrate', 'DeploymentController@DatabaseMigrationCommand');
     Route::get('deployment/seed', 'DeploymentController@DatabaseSeedingCommand');
     Route::get('deployment/config', 'DeploymentController@ConfigClearCommand');
     Route::get('deployment/cache', 'DeploymentController@CacheClearCommand');
+    
 });
