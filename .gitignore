@@ -17,3 +17,4 @@ composer.phar
 .env.local
 .env.prod
 /.metals
+deploy.env.ini
