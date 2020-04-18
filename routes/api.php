@@ -71,4 +71,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('logs', 'LogController@getLogs');
     Route::post('stats/tags/main', 'LogController@countSearchTags');
 
+
+    # Deployment
+    Route::get('deployment/migrate', 'DeploymentController@DatabaseMigrationCommand');
+    Route::get('deployment/seed', 'DeploymentController@DatabaseSeedingCommand');
+    Route::get('deployment/config', 'DeploymentController@ConfigClearCommand');
+    Route::get('deployment/cache', 'DeploymentController@CacheClearCommand');
 });
