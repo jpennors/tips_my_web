@@ -103,6 +103,7 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
                         <ResourceTilePlaceholder />
                         <ResourceTilePlaceholder />
                         <ResourceTilePlaceholder />
+                        <ResourceTilePlaceholder />
                     </>
                 ) : (
                     resultsList.map(resource => (
