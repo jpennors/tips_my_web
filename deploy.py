@@ -92,4 +92,61 @@ print("\n>>> Remove files to update <<<\n")
 remove_files_to_update(".")
 
 print("\n>>> Upload new files <<<\n")
-uploadDirectory(".")
+# uploadDirectory(".")
+
+
+def make_request(method, path, data=None, headers=None):
+    url = config['TMW_ADMIN']['API_URL']
+    return requests.request(method=method, url=url+path, data=data, headers=headers)
+
+print("\n>>> Login to Admin Webapp <<<\n")
+data = {
+    'username': config['TMW_ADMIN']['USERNAME'], 
+    'password': config['TMW_ADMIN']['PASSWORD']
+}
+response = make_request(method='POST', path='login', data=data)
+
+if response.status_code == 200:
+    token = response.json()['token']
+    print("Connection established")
+else :
+    print("Something went wrong when login into Admin Webapp..")
+    print(response.json())
+
+
+def is_deployment_command_done(api_response):
+    if api_response.status_code == 200:
+        print("Done")
+    else :
+        print("Something went wrong ...")
+        print(response)
+
+print("\n>>> Launching deployment commands in Admin Webapp <<<\n")
+
+if token:
+
+    headers = {
+        'Authorization': token
+    }
+
+    print("Dependencies...")
+    response = make_request(method='GET', path='deployment/dependencies', headers=headers)
+    is_deployment_command_done(response)
+
+    print("Migration...")
+    response = make_request(method='GET', path='deployment/migration', headers=headers)
+    is_deployment_command_done(response)
+
+    print("Seeding...")
+    response = make_request(method='GET', path='deployment/seeding', headers=headers)
+    is_deployment_command_done(response)
+
+    print("Cache...")
+    response = make_request(method='GET', path='deployment/cache', headers=headers)
+    is_deployment_command_done(response)
+
+    print("Config...")
+    response = make_request(method='GET', path='deployment/config', headers=headers)
+    is_deployment_command_done(response)
+
+print("###### DEPLOYMENT DONE ######")
