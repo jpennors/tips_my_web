@@ -64,7 +64,7 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
         resultsListElement?.current?.addEventListener('wheel', onResultsListWheel, {
             passive: false,
         });
-    }, []);
+    }, [isLoading]);
 
     return (
         <div className="search-results-list">
