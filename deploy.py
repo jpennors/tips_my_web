@@ -33,6 +33,7 @@ pwd = config['FTP_AUTHENTICATION']['PASSWORD']
 ftp = FTP()
 ftp.connect(host, int(port))
 ftp.login(usr, pwd)
+print(f'{bcolors.OKGREEN}Connection established{bcolors.ENDC}')
 ftp.cwd('/www/')
 
 
@@ -127,8 +128,8 @@ response = make_request(method='POST', path='login', data=data)
 if response.status_code == 200:
     token = response.json()['token']
     print(f'{bcolors.OKGREEN}Connection established{bcolors.ENDC}')
+
 else :
-    print(response.json())
     print(f'{bcolors.FAIL}Something went wrong when login into Admin Webapp..{bcolors.ENDC}')
 
 
@@ -147,24 +148,24 @@ if token:
         'Authorization': token
     }
 
-    print("Dependencies...")
+    print('Dependencies...')
     response = make_request(method='GET', path='deployment/dependencies', headers=headers)
     is_deployment_command_done(response)
 
-    print("Migration...")
+    print('Migration...')
     response = make_request(method='GET', path='deployment/migration', headers=headers)
     is_deployment_command_done(response)
 
-    print("Seeding...")
+    print('Seeding...')
     response = make_request(method='GET', path='deployment/seeding', headers=headers)
     is_deployment_command_done(response)
 
-    print("Cache...")
+    print('Cache...')
     response = make_request(method='GET', path='deployment/cache', headers=headers)
     is_deployment_command_done(response)
 
-    print("Config...")
+    print('Config...')
     response = make_request(method='GET', path='deployment/config', headers=headers)
     is_deployment_command_done(response)
 
-print("###### DEPLOYMENT DONE ######")
+print(f'{bcolors.OKGREEN}\n\n###### DEPLOYMENT DONE ######{bcolors.ENDC}')
