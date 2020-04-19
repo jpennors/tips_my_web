@@ -50,7 +50,7 @@ AUTHORIZED_DIRECTORIES = [
 ]
 
 AUTHORIZED_FILES = [
-    './.env'
+    '.env'
 ]
 
 FORBIDDEN_DIRECTORIES = [
@@ -105,7 +105,7 @@ def upload_tmw_project():
         print(f'Removing old {file} ...')
         ftp.delete(file)
         print(f'Uploading new {file} ...')
-        upload_file(file)
+        upload_file(".", file)
         
 
 print(f'{bcolors.OKBLUE}\n>>> Uploading new files <<<\n{bcolors.ENDC}')
