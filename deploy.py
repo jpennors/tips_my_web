@@ -11,19 +11,19 @@ class bcolors:
     ENDC = '\033[0m'
 
 config = configparser.ConfigParser()
-config.read("./deploy.env.ini")
-os.system("cls" if os.name == "nt" else "clear")
+config.read('./deploy.env.ini')
+os.system('cls' if os.name == 'nt' else 'clear')
 
 print(f'{bcolors.OKBLUE}###### DEPLOYMENT ######{bcolors.ENDC}')
 
-os.system("git pull")
 print(f'{bcolors.OKBLUE}\n\n>>> Retrieve latest data from Github <<<\n{bcolors.ENDC}')
+os.system('git pull')
 
-os.system("npm install")
 print(f'{bcolors.OKBLUE}\n\n>>> Install npm dependencies <<<\n{bcolors.ENDC}')
+os.system('npm install')
 
-os.system("npm run build")
 print(f'{bcolors.OKBLUE}\n\n>>> Build Webapp <<<\n{bcolors.ENDC}')
+os.system('npm run build')
 
 print(f'{bcolors.OKBLUE}\n\n>>> Connect to FTP Server <<<\n{bcolors.ENDC}')
 host = config['FTP_AUTHENTICATION']['HOST']
@@ -42,7 +42,6 @@ SERVER_FILES_TO_IGNORE = [
 ]
 
 AUTHORIZED_DIRECTORIES = [
-    # './.env',
     './app',
     './config',
     './public',
@@ -72,15 +71,8 @@ def remove_files(path):
             if os.path.isfile(file_path):
                 ftp.delete(file_path)
             elif os.path.isdir(file_path):
+                remove_files(file_path)
                 ftp.rmd(file_path)
-
-
-    if dir in server_files:
-        print(f'Uploading directory {dir}...')
-def file_is_base_file(file):
-    server_files = ftp.nlst('.')
-    if file in server_files:
-        print(f'Uploading {file}...')
 
 
 def upload_file(path, file):
@@ -101,7 +93,6 @@ def upload_dir(path, existing_directory=True):
                 existing_directory = False
                 if file in server_files:
                     existing_directory = True
-                file_is_base_file(file)
                 upload_dir(file_path, existing_directory)
 
 
@@ -134,6 +125,7 @@ def make_request(method, path, data=None, headers=None):
     return requests.request(method=method, url=url+path, data=data, headers=headers)
 
 print(f'{bcolors.OKBLUE}\n>>> Login to Admin Webapp <<<\n{bcolors.ENDC}')
+token = None
 data = {
     'username': config['TMW_ADMIN']['USERNAME'], 
     'password': config['TMW_ADMIN']['PASSWORD']
