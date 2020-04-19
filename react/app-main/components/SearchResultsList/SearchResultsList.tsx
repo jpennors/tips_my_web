@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ResourceTile } from 'tmw-main/components/ResourceTile';
+import { ResourceTilePlaceholder } from 'tmw-main/components/ResourceTilePlaceholder';
 import { Resource } from 'tmw-main/constants/app-types';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
@@ -8,9 +9,11 @@ import './search-results-list.less';
 
 interface SearchResultsListProps {
     resultsList: Resource[];
+    isLoading: boolean;
 }
 export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> = ({
     resultsList,
+    isLoading,
 }) => {
     const { width } = useViewport();
     const isMobileViewport = width < VIEWPORT_BREAKPOINTS.MOBILE;
@@ -61,11 +64,11 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
         resultsListElement?.current?.addEventListener('wheel', onResultsListWheel, {
             passive: false,
         });
-    }, []);
+    }, [isLoading]);
 
     return (
         <div className="search-results-list">
-            {!isMobileViewport ? (
+            {!isMobileViewport && !isLoading ? (
                 <>
                     {showLeftArrow ? (
                         <div className="search-results-list__scroll-arrow search-results-list__scroll-arrow-left ">
@@ -93,12 +96,20 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
             <div
                 ref={resultsListElement}
                 onScroll={onResultsListScroll}
-                // onWheel={onResultsListWheel}
                 className="search-results-list__results-list"
             >
-                {resultsList.map(resource => (
-                    <ResourceTile key={resource.id} resource={resource} />
-                ))}
+                {isLoading ? (
+                    <>
+                        <ResourceTilePlaceholder />
+                        <ResourceTilePlaceholder />
+                        <ResourceTilePlaceholder />
+                        <ResourceTilePlaceholder />
+                    </>
+                ) : (
+                    resultsList.map(resource => (
+                        <ResourceTile key={resource.id} resource={resource} />
+                    ))
+                )}
             </div>
         </div>
     );
