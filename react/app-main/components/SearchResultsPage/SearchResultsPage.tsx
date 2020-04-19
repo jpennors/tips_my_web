@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { useParams } from 'react-router';
+import { APIBasicTag } from 'tmw-admin/constants/api-types';
+import { SearchResultsPageTitle } from 'tmw-main/components/SearchResultsPageTitle';
 import { APIResource } from 'tmw-main/constants/api-types';
-import { Resource } from 'tmw-main/constants/app-types';
+import { PrimaryTag, Resource } from 'tmw-main/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
-import { serializeResourcesFromAPI } from 'tmw-main/utils/api-serialize';
+import { serializeResourcesFromAPI, serializeTagsFromAPI } from 'tmw-main/utils/api-serialize';
 import { parseSearchTags } from 'tmw-main/utils/tags-search-url';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
@@ -17,17 +19,20 @@ export const SearchResultsPage: React.FunctionComponent = () => {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [resultResources, setResultResources] = React.useState<Resource[]>([]);
+    const [primarySearchTag, setPrimarySearchTag] = React.useState<PrimaryTag>();
 
     const { searchTags } = useParams();
 
     const fetchSearchResults = (selectedTags: string[]): Promise<void> => {
         setIsLoading(true);
         return ajaxPost('resources/search', { tags: selectedTags })
-            .then((response: { data: { resources: APIResource[] } }) => {
+            .then((response: { data: { resources: APIResource[]; tags: APIBasicTag[] } }) => {
                 const serializedResources = serializeResourcesFromAPI(
                     response.data.resources || [],
                 );
+                const tagsMap = serializeTagsFromAPI(response.data.tags || []);
                 setResultResources(serializedResources);
+                setPrimarySearchTag(tagsMap[Object.keys(tagsMap)[0]]);
             })
             .catch(() => {
                 // TODO: Add errors and no-results handling
@@ -43,19 +48,14 @@ export const SearchResultsPage: React.FunctionComponent = () => {
 
     const hasResults = resultResources.length > 0;
 
-    let pageTitle: string;
-    if (hasResults) {
-        pageTitle = 'Here are some websites to improve your workflow';
-    } else if (isLoading) {
-        pageTitle = 'Looking for results...';
-    } else {
-        pageTitle = "We didn't find any result for this search...";
-    }
-
     return (
         <div className="search-results-page">
             {!isMobileViewport ? <div className="search-results-page__top-spacing" /> : null}
-            <p className="search-results-page__title">{pageTitle}</p>
+            <SearchResultsPageTitle
+                hasResults={hasResults}
+                isLoading={isLoading}
+                primarySearchTag={primarySearchTag}
+            />
             <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
         </div>
     );
