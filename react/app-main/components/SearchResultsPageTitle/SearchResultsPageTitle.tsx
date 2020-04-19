@@ -14,20 +14,22 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
     isLoading,
     primarySearchTag,
 }) => {
-    let pageTitle: string;
-    if (hasResults) {
-        pageTitle = 'Here are some websites to improve your workflow';
-    } else if (isLoading) {
-        pageTitle = 'Looking for results...';
-    } else {
-        pageTitle = "We didn't find any result for this search...";
-    }
-
     return (
         <>
-            <p className="search-results-page-title__title">{pageTitle}</p>
-            <div className="search-results-page-title__search-tags">
-                {primarySearchTag ? (
+            <div className="search-results-page-title__title">
+                {isLoading || hasResults ? (
+                    <>
+                        Level-up your{' '}
+                        <span className="search-results-page-title__title-emphasis">workflow!</span>
+                    </>
+                ) : (
+                    <>We didn`&apost find any resource for these tags...</>
+                )}
+            </div>
+            <div className="search-results-page-title__subtitle">
+                {isLoading ? (
+                    'Looking for great resources...'
+                ) : primarySearchTag ? (
                     <>
                         <span className="search-results-page-title__primary-search-tag-separator">
                             /
@@ -47,7 +49,7 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
                         ))}
                     </>
                 ) : (
-                    '...'
+                    'Please refine your search'
                 )}
             </div>
         </>

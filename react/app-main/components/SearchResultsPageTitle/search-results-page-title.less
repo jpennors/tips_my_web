@@ -2,9 +2,9 @@
 
 .search-results-page-title {
     &__title {
-        margin: 0 auto 15px;
+        margin: 0 auto 8px;
         text-align: left;
-        font-family: @app-font-medium;
+        font-family: @app-font-regular;
         font-size: @app-font-size-extra-large;
 
         @media (max-width: @app-viewport-breakpoint-mobile) {
@@ -12,6 +12,16 @@
             font-size: 6vw;
             text-align: center;
         }
+    }
+
+    &__subtitle {
+        text-align: left;
+        font-family: @app-font-regular;
+        font-size: 15px;
+    }
+
+    &__title-emphasis {
+        font-family: @app-font-semi-bold;
     }
 
     &__primary-search-tag-separator {
