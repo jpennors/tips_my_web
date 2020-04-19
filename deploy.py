@@ -3,6 +3,7 @@ import requests
 import configparser
 from ftplib import FTP
 from functools import partial
+import json
 
 
 class bcolors:
@@ -99,13 +100,7 @@ class FtpServer:
             elif os.path.isdir(file_path):
                 if not any(map(file_path.startswith, FORBIDDEN_DIRECTORIES)):               
                     self.upload_dir(file_path, existing_directory=(file in server_files))
-
-    def upload_tmw_dependencies(self):
-        for file in DEPENDENCIES_FILES:
-            print(f'Removing old {file} ...')
-            self.delete_file(file)
-            print(f'Uploading new {file} ...')
-            self.upload_file(".", file)
+        
     
     def upload_tmw_project(self):
         for dir in AUTHORIZED_DIRECTORIES:
@@ -118,6 +113,67 @@ class FtpServer:
             self.delete_file(file)
             print(f'Uploading new {file} ...')
             self.upload_file(".", file)
+
+    def uploading_new_dependencies(self):
+        self.download_old_dependencies()
+        dependency_comparison = self.compare_dependencies()
+        for dependency_name in dependency_comparison['dependency_to_update']:
+            print(f'Updating dependency {dependency_name}...')
+            file_path = './vendor/' + dependency_name
+            self.remove_files(file_path)
+            self.upload_dir(file_path)
+        for dependency_name in dependency_comparison['dependency_to_create']:
+            print(f'Creating dependency {dependency_name}...')
+            file_path = './vendor/' + dependency_name
+            self.upload_dir(file_path)
+        for dependency_name in dependency_comparison['dependency_to_delete']:
+            print(f'Deleting dependency {dependency_name}...')
+            file_path = './vendor/' + dependency_name
+            self.remove_files(file_path)
+        self.remove_useless_dependency_files()
+
+
+    def download_old_dependencies(self):
+        local_files = os.listdir('.')
+        if 'old_dependencies' not in local_files:
+            os.system('mkdir old_dependencies')
+        server_base_files = self.ftp.nlst(".")
+        if "composer.lock" in server_base_files:
+            self.ftp.retrbinary("RETR " + 'composer.lock' ,open('old_dependencies/composer.lock', 'wb').write)
+
+    def compare_dependencies(self):
+        new_dependencies = self.load_dependencies('composer.lock')
+        old_dependencies = self.load_dependencies('old_dependencies/composer.lock')
+        dependency_comparison = {
+            'dependency_to_create': [],
+            'dependency_to_update': [],
+            'dependency_to_delete': []
+        }
+        for dependency_name in new_dependencies.keys():
+            if dependency_name in old_dependencies.keys():
+                # Check dependencies versions
+                if new_dependencies[dependency_name] != old_dependencies[dependency_name]:
+                    dependency_comparison['dependency_to_update'].append(dependency_name)
+                del old_dependencies[dependency_name]
+            else :
+                dependency_comparison['dependency_to_create'].append(dependency_name)
+        dependency_comparison['dependency_to_delete'] = old_dependencies.keys()
+        return dependency_comparison
+    
+    def load_dependencies(self, file_path):
+        dependencies = dict()
+        if os.path.exists(file_path):
+            with open(file_path) as handle:
+                dictdump = json.loads(handle.read())
+                for package in dictdump['packages']:
+                    dependencies[package['name']] = package['version']
+        return dependencies
+
+    def remove_useless_dependency_files(self):
+        if os.path.exists('old_dependencies/composer.lock'):
+            os.remove('old_dependencies/composer.lock')
+        if os.path.exists('old_dependencies'):
+            os.rmdir('old_dependencies')
 
 
 class TmwAuthentication:
@@ -178,19 +234,18 @@ ftp = FtpServer()
 ftp.login()
 
 
-print_blue('\n>>> Login to Admin Webapp <<<\n')
-tmw = TmwAuthentication()
-tmw.login()
-
-
 print_blue('\n>>> Update dependencies <<<\n')
-ftp.upload_tmw_dependencies()
+ftp.uploading_new_dependencies()
 print('Loading new dependencies...')
-tmw.execute_command('GET', 'deployment/dependencies')
 
 
 print_blue('\n>>> Uploading new project files <<<\n')
 ftp.upload_tmw_project()    
+
+
+print_blue('\n>>> Login to Admin Webapp <<<\n')
+tmw = TmwAuthentication()
+tmw.login()
 
 
 print_blue('\n>>> Launching deployment commands in Admin Webapp <<<\n')
@@ -204,4 +259,4 @@ print('Config...')
 tmw.execute_command(method='GET', path='deployment/config')
 
 
-print(f'{bcolors.OKGREEN}\n\n###### DEPLOYMENT DONE ######{bcolors.ENDC}')
+print_green('\n\n###### DEPLOYMENT DONE ######')
