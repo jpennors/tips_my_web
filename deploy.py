@@ -72,7 +72,6 @@ def remove_files(path):
                 ftp.delete(file_path)
             elif os.path.isdir(file_path):
                 remove_files(file_path)
-                ftp.rmd(file_path)
 
 
 def upload_file(path, file):
