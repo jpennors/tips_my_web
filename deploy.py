@@ -225,6 +225,10 @@ print_blue('\n\n>>> Install npm dependencies <<<\n')
 os.system('npm install')
 
 
+print_blue('\n\n>>> Install Laravel dependencies <<<\n')
+os.system('composer install')
+
+
 print_blue('\n\n>>> Build Webapp <<<\n')
 os.system('npm run build')
 
