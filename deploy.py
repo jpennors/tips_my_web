@@ -207,7 +207,7 @@ class TmwAuthentication:
         headers = {
             'Authorization': self.token
         }
-        response = self.make_request(method='GET', path='deployment/migration', headers=headers)
+        response = self.make_request(method=method, path=path, headers=headers)
         self.is_deployment_command_done(response)
 
 
