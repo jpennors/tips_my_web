@@ -1,5 +1,8 @@
 @import '../../constants/ui-constants';
 
+@search-tag-left-margin: 10px;
+@search-tag-left-margin-mobile: 5px;
+
 .search-results-page-title {
     &__title {
         margin: 0 auto 8px;
@@ -18,6 +21,11 @@
         text-align: left;
         font-family: @app-font-regular;
         font-size: 15px;
+
+        @media (max-width: @app-viewport-breakpoint-mobile) {
+            font-size: 3.5vw;
+            text-align: center;
+        }
     }
 
     &__title-emphasis {
@@ -30,12 +38,20 @@
 
     &__primary-search-tag {
         font-family: @app-font-semi-bold;
-        margin-left: 10px;
+        margin-left: @search-tag-left-margin;
+
+        @media (max-width: @app-viewport-breakpoint-mobile) {
+            margin-left: @search-tag-left-margin-mobile;
+        }
     }
 
     &__secondary-search-tag,  &__secondary-search-tag-separator {
         font-family: @app-font-regular;
+        margin-left: @search-tag-left-margin;
         opacity: 0.8;
-        margin-left: 10px;
+
+        @media (max-width: @app-viewport-breakpoint-mobile) {
+            margin-left: @search-tag-left-margin-mobile;
+        }
     }
 }
