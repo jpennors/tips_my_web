@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router';
+import { APIResource } from 'tmw-main/constants/api-types';
 import { Resource } from 'tmw-main/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { serializeResourcesFromAPI } from 'tmw-main/utils/api-serialize';
@@ -22,8 +23,10 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     const fetchSearchResults = (selectedTags: string[]): Promise<void> => {
         setIsLoading(true);
         return ajaxPost('resources/search', { tags: selectedTags })
-            .then(res => {
-                const serializedResources = serializeResourcesFromAPI(res.data || []);
+            .then((response: { data: { resources: APIResource[] } }) => {
+                const serializedResources = serializeResourcesFromAPI(
+                    response.data.resources || [],
+                );
                 setResultResources(serializedResources);
             })
             .catch(() => {
