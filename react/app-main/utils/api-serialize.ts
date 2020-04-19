@@ -1,12 +1,13 @@
+import { APIBasicTag } from 'tmw-admin/constants/api-types';
 import { Resource, TagsMap } from 'tmw-main/constants/app-types';
-import { APIResource, APITag } from 'tmw-main/constants/api-types';
+import { APIResource } from 'tmw-main/constants/api-types';
 import { LOCALES, PRICING_OPTIONS } from 'tmw-main/constants/app-constants';
 
-export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
+export const serializeTagsFromAPI = (tagsFromAPI: APIBasicTag[]): TagsMap => {
     const tagsMap: TagsMap = {};
-    const secondaryTags: APITag[] = [];
+    const secondaryTags: APIBasicTag[] = [];
 
-    tagsFromAPI.forEach((tag: APITag) => {
+    tagsFromAPI.forEach((tag: APIBasicTag) => {
         if (tag.id in tagsMap) {
             console.error('Some tags have the same ID!');
         } else if (tag.parent_id) {
@@ -21,17 +22,20 @@ export const serializeTagsFromAPI = (tagsFromAPI: APITag[]): TagsMap => {
         }
     });
 
-    secondaryTags.forEach((tag: APITag) => {
-        const parentTag = tag.parent;
-        if (parentTag.id in tagsMap) {
-            tagsMap[parentTag.id].secondaryTags.push(tag);
-        } else {
-            tagsMap[parentTag.id] = {
-                id: parentTag.id,
-                name: parentTag.name,
-                slug: parentTag.slug,
-                secondaryTags: [tag],
-            };
+    secondaryTags.forEach((tag: APIBasicTag) => {
+        const parentTagId = tag.parent_id;
+        if (parentTagId) {
+            const parentTag = tagsMap[parentTagId];
+            if (parentTag.id in tagsMap) {
+                tagsMap[parentTag.id].secondaryTags.push(tag);
+            } else {
+                tagsMap[parentTag.id] = {
+                    id: parentTag.id,
+                    name: parentTag.name,
+                    slug: parentTag.slug,
+                    secondaryTags: [tag],
+                };
+            }
         }
     });
 
