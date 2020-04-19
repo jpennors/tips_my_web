@@ -125,7 +125,7 @@ class FtpServer:
         for dependency_name in dependency_comparison['dependency_to_create']:
             print(f'Creating dependency {dependency_name}...')
             file_path = './vendor/' + dependency_name
-            self.upload_dir(file_path)
+            self.upload_dir(file_path, False)
         for dependency_name in dependency_comparison['dependency_to_delete']:
             print(f'Deleting dependency {dependency_name}...')
             file_path = './vendor/' + dependency_name
