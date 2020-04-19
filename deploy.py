@@ -95,28 +95,21 @@ def upload_dir(path, existing_directory=True):
                 upload_dir(file_path, existing_directory)
 
 
-def remove_old_tmw_project():
-    for dir in AUTHORIZED_DIRECTORIES:
-        print(f'Removing {dir} ...')
-        remove_files(dir)
-    for file in AUTHORIZED_FILES:
-        print(f'Removing {file} ...')
-        remove_files(file)
-
 def upload_tmw_project():
     for dir in AUTHORIZED_DIRECTORIES:
-        print(f'Uploading {dir} ...')
+        print(f'Removing old {dir} ...')
+        remove_files(dir)
+        print(f'Uploading new {dir} ...')
         upload_dir(dir)
     for file in AUTHORIZED_FILES:
-        print(f'Uploading {file} ...')
-        # upload_file(file)
+        print(f'Removing old {file} ...')
+        ftp.delete(file)
+        print(f'Uploading new {file} ...')
+        upload_file(file)
+        
 
-print(f'{bcolors.OKBLUE}\n>>> Remove files to update <<<\n{bcolors.ENDC}')
-remove_old_tmw_project()
-
-print(f'{bcolors.OKBLUE}\n>>> Upload new files <<<\n{bcolors.ENDC}')
-upload_tmw_project()
-    
+print(f'{bcolors.OKBLUE}\n>>> Uploading new files <<<\n{bcolors.ENDC}')
+upload_tmw_project()    
 
 
 def make_request(method, path, data=None, headers=None):
