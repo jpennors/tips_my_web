@@ -39,16 +39,13 @@ AUTHORIZED_DIRECTORIES = [
 
 
 AUTHORIZED_FILES = [
-    '.env'
-]
-
-
-DEPENDENCIES_FILES = [
+    '.env',
     'composer.json',
     'composer.lock'
 ]
 
-files_to_ignore = [
+
+FORBIDDEN_DIRECTORIES = [
     './public/storage',
     './public/css/semantic',
 ]
