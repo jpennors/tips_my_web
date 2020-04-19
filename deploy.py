@@ -1,7 +1,8 @@
 import os
 import requests
 import configparser
-from ftplib import FTP, FTP_TLS
+from ftplib import FTP
+from functools import partial
 
 
 class bcolors:
@@ -10,37 +11,23 @@ class bcolors:
     FAIL = '\033[91m'
     ENDC = '\033[0m'
 
+
+def printc(text: str, color: str):
+    print(getattr(bcolors, color) + text + bcolors.ENDC)
+print_blue = partial(printc, color='OKBLUE')
+print_green = partial(printc, color='OKGREEN')
+print_red = partial(printc, color='FAIL')
+
+
 config = configparser.ConfigParser()
 config.read('./deploy.env.ini')
-os.system('cls' if os.name == 'nt' else 'clear')
-
-print(f'{bcolors.OKBLUE}###### DEPLOYMENT ######{bcolors.ENDC}')
-
-print(f'{bcolors.OKBLUE}\n\n>>> Retrieve latest data from Github <<<\n{bcolors.ENDC}')
-os.system('git pull')
-
-print(f'{bcolors.OKBLUE}\n\n>>> Install npm dependencies <<<\n{bcolors.ENDC}')
-os.system('npm install')
-
-print(f'{bcolors.OKBLUE}\n\n>>> Build Webapp <<<\n{bcolors.ENDC}')
-os.system('npm run build')
-
-print(f'{bcolors.OKBLUE}\n\n>>> Connect to FTP Server <<<\n{bcolors.ENDC}')
-host = config['FTP_AUTHENTICATION']['HOST']
-port = config['FTP_AUTHENTICATION']['PORT']
-usr = config['FTP_AUTHENTICATION']['USER']
-pwd = config['FTP_AUTHENTICATION']['PASSWORD']
-ftp = FTP()
-ftp.connect(host, int(port))
-ftp.login(usr, pwd)
-print(f'{bcolors.OKGREEN}Connection established{bcolors.ENDC}')
-ftp.cwd('/www/')
 
 
 SERVER_FILES_TO_IGNORE = [
     '.',
     '..'
 ]
+
 
 AUTHORIZED_DIRECTORIES = [
     './app',
@@ -50,13 +37,15 @@ AUTHORIZED_DIRECTORIES = [
     './routes'
 ]
 
+
 AUTHORIZED_FILES = [
     '.env'
 ]
 
-FORBIDDEN_DIRECTORIES = [
-    './public/storage',
-    './public/css/semantic',
+
+DEPENDENCIES_FILES = [
+    'composer.json',
+    'composer.lock'
 ]
 
 files_to_ignore = [
@@ -64,108 +53,158 @@ files_to_ignore = [
     './public/css/semantic',
 ]
 
-def remove_files(path):
-    files = ftp.nlst(path)
-    for file in files:
+
+class FtpServer:
+
+    ftp = None
+
+    def login(self):
+        host = config['FTP_AUTHENTICATION']['HOST']
+        port = config['FTP_AUTHENTICATION']['PORT']
+        usr = config['FTP_AUTHENTICATION']['USER']
+        pwd = config['FTP_AUTHENTICATION']['PASSWORD']
+        self.ftp = FTP()
+        self.ftp.connect(host, int(port))
+        self.ftp.login(usr, pwd)
+        print_green('Connection established')
+        self.ftp.cwd('/www/')
+
+    def delete_file(self, file_path):
+        try:
+            self.ftp.delete(file_path)
+        except:
+            print_red(f'Unable to remove {file_path}...')
+
+    def remove_files(self, path):
+        files = self.ftp.nlst(path)
+        for file in files:
+            file_path = f'{path}/{file}'
+            if not any(map(file_path.startswith, FORBIDDEN_DIRECTORIES)) and not file in SERVER_FILES_TO_IGNORE:
+                if os.path.isfile(file_path):
+                    self.delete_file(file_path)
+                elif os.path.isdir(file_path):
+                    self.remove_files(file_path)
+
+    def upload_file(self, path, file):
         file_path = f'{path}/{file}'
-        if not any(file_path.startswith(file) for file in FORBIDDEN_DIRECTORIES) and not any(file == file_to_ignore for file_to_ignore in SERVER_FILES_TO_IGNORE):
+        with open(file_path, 'rb') as fs:
+            self.ftp.storbinary('STOR ' + path + '/' + file, fs)
+
+    def upload_dir(self, path, existing_directory=True):
+        if not existing_directory:
+            self.ftp.mkd(path)
+        files = os.listdir(path)
+        server_files = self.ftp.nlst(path)
+        for file in files:
+            file_path = f'{path}/{file}'
             if os.path.isfile(file_path):
-                ftp.delete(file_path)
+                self.upload_file(path, file)
             elif os.path.isdir(file_path):
-                remove_files(file_path)
+                if not any(map(file_path.startswith, FORBIDDEN_DIRECTORIES)):               
+                    self.upload_dir(file_path, existing_directory=(file in server_files))
+
+    def upload_tmw_dependencies(self):
+        for file in DEPENDENCIES_FILES:
+            print(f'Removing old {file} ...')
+            self.delete_file(file)
+            print(f'Uploading new {file} ...')
+            self.upload_file(".", file)
+    
+    def upload_tmw_project(self):
+        for dir in AUTHORIZED_DIRECTORIES:
+            print(f'Removing old {dir} ...')
+            self.remove_files(dir)
+            print(f'Uploading new {dir} ...')
+            self.upload_dir(dir)
+        for file in AUTHORIZED_FILES:
+            print(f'Removing old {file} ...')
+            self.delete_file(file)
+            print(f'Uploading new {file} ...')
+            self.upload_file(".", file)
 
 
-def upload_file(path, file):
-    file_path = f'{path}/{file}'
-    ftp.storbinary('STOR ' + path + '/' + file, open(file_path, 'rb'))
+class TmwAuthentication:
 
-def upload_dir(path, existing_directory=True):
-    if not existing_directory:
-        ftp.mkd(path)
-    files = os.listdir(path)
-    server_files = ftp.nlst(path)
-    for file in files:
-        file_path = f'{path}/{file}'
-        if os.path.isfile(file_path):
-            upload_file(path, file)
-        elif os.path.isdir(file_path):
-            if not any(file_path.startswith(dir) for dir in FORBIDDEN_DIRECTORIES):
-                existing_directory = False
-                if file in server_files:
-                    existing_directory = True
-                upload_dir(file_path, existing_directory)
+    token = None
 
+    def make_request(self, method, path, data=None, headers=None):
+        url = config['TMW_ADMIN']['API_URL']
+        return requests.request(method=method, url=url+path, data=data, headers=headers)
 
-def upload_tmw_project():
-    for dir in AUTHORIZED_DIRECTORIES:
-        print(f'Removing old {dir} ...')
-        remove_files(dir)
-        print(f'Uploading new {dir} ...')
-        upload_dir(dir)
-    for file in AUTHORIZED_FILES:
-        print(f'Removing old {file} ...')
-        ftp.delete(file)
-        print(f'Uploading new {file} ...')
-        upload_file(".", file)
-        
+    def login(self):
+        data = {
+            'username': config['TMW_ADMIN']['USERNAME'], 
+            'password': config['TMW_ADMIN']['PASSWORD']
+        }
+        response = self.make_request(method='POST', path='login', data=data)
+        if response.status_code == 200:
+            self.token = response.json()['token']
+            print_green('Connection established')
+        else :
+            print_red('Something went wrong when login into Admin Webapp..')
+            sys.exit("Deployment cancelled")
 
-print(f'{bcolors.OKBLUE}\n>>> Uploading new files <<<\n{bcolors.ENDC}')
-upload_tmw_project()    
+    def is_deployment_command_done(self, api_response):
+        if api_response.status_code == 200:
+            print_green('Done')
+        else :
+            print_red('Something went wrong ...')   
+
+    def execute_command(self, method, path):
+        headers = {
+            'Authorization': self.token
+        }
+        response = self.make_request(method='GET', path='deployment/migration', headers=headers)
+        self.is_deployment_command_done(response)
 
 
-def make_request(method, path, data=None, headers=None):
-    url = config['TMW_ADMIN']['API_URL']
-    return requests.request(method=method, url=url+path, data=data, headers=headers)
-
-print(f'{bcolors.OKBLUE}\n>>> Login to Admin Webapp <<<\n{bcolors.ENDC}')
-token = None
-data = {
-    'username': config['TMW_ADMIN']['USERNAME'], 
-    'password': config['TMW_ADMIN']['PASSWORD']
-}
-response = make_request(method='POST', path='login', data=data)
-
-if response.status_code == 200:
-    token = response.json()['token']
-    print(f'{bcolors.OKGREEN}Connection established{bcolors.ENDC}')
-
-else :
-    print(f'{bcolors.FAIL}Something went wrong when login into Admin Webapp..{bcolors.ENDC}')
+os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def is_deployment_command_done(api_response):
-    if api_response.status_code == 200:
-        print(f'{bcolors.OKGREEN}Done{bcolors.ENDC}')
-    else :
-        print(f'{bcolors.FAIL}Something went wrong ...{bcolors.ENDC}')
-        print(response)
+print_blue('###### DEPLOYMENT ######')
 
-print(f'{bcolors.OKBLUE}\n>>> Launching deployment commands in Admin Webapp <<<\n{bcolors.ENDC}')
 
-if token:
+print_blue('\n\n>>> Retrieve latest data from Github <<<\n')
+os.system('git pull')
 
-    headers = {
-        'Authorization': token
-    }
 
-    print('Dependencies...')
-    response = make_request(method='GET', path='deployment/dependencies', headers=headers)
-    is_deployment_command_done(response)
+print_blue('\n\n>>> Install npm dependencies <<<\n')
+os.system('npm install')
 
-    print('Migration...')
-    response = make_request(method='GET', path='deployment/migration', headers=headers)
-    is_deployment_command_done(response)
 
-    print('Seeding...')
-    response = make_request(method='GET', path='deployment/seeding', headers=headers)
-    is_deployment_command_done(response)
+print_blue('\n\n>>> Build Webapp <<<\n')
+os.system('npm run build')
 
-    print('Cache...')
-    response = make_request(method='GET', path='deployment/cache', headers=headers)
-    is_deployment_command_done(response)
 
-    print('Config...')
-    response = make_request(method='GET', path='deployment/config', headers=headers)
-    is_deployment_command_done(response)
+print_blue('\n\n>>> Connect to FTP Server <<<\n')
+ftp = FtpServer()
+ftp.login()
+
+
+print_blue('\n>>> Login to Admin Webapp <<<\n')
+tmw = TmwAuthentication()
+tmw.login()
+
+
+print_blue('\n>>> Update dependencies <<<\n')
+ftp.upload_tmw_dependencies()
+print('Loading new dependencies...')
+tmw.execute_command('GET', 'deployment/dependencies')
+
+
+print_blue('\n>>> Uploading new project files <<<\n')
+ftp.upload_tmw_project()    
+
+
+print_blue('\n>>> Launching deployment commands in Admin Webapp <<<\n')
+print('Migration...')
+tmw.execute_command(method='GET', path='deployment/migration')
+print('Seeding...')
+tmw.execute_command(method='GET', path='deployment/seeding')
+print('Cache...')
+tmw.execute_command(method='GET', path='deployment/cache')
+print('Config...')
+tmw.execute_command(method='GET', path='deployment/config')
+
 
 print(f'{bcolors.OKGREEN}\n\n###### DEPLOYMENT DONE ######{bcolors.ENDC}')
