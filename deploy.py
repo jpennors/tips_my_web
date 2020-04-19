@@ -3,22 +3,29 @@ import requests
 import configparser
 from ftplib import FTP, FTP_TLS
 
+
+class bcolors:
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+
 config = configparser.ConfigParser()
 config.read("./deploy.env.ini")
 os.system("cls" if os.name == "nt" else "clear")
 
-print("###### DEPLOYMENT ######")
+print(f'{bcolors.OKBLUE}###### DEPLOYMENT ######{bcolors.ENDC}')
 
-print("\n\n>>> Retrieve latest data from Github <<<\n")
 os.system("git pull")
+print(f'{bcolors.OKBLUE}\n\n>>> Retrieve latest data from Github <<<\n{bcolors.ENDC}')
 
-print("\n\n>>> Install npm dependencies <<<\n")
 os.system("npm install")
+print(f'{bcolors.OKBLUE}\n\n>>> Install npm dependencies <<<\n{bcolors.ENDC}')
 
-print("\n\n>>> Build Webapp <<<\n")
 os.system("npm run build")
+print(f'{bcolors.OKBLUE}\n\n>>> Build Webapp <<<\n{bcolors.ENDC}')
 
-print("\n\n>>> Connect to FTP Server <<<\n")
+print(f'{bcolors.OKBLUE}\n\n>>> Connect to FTP Server <<<\n{bcolors.ENDC}')
 host = config['FTP_AUTHENTICATION']['HOST']
 port = config['FTP_AUTHENTICATION']['PORT']
 usr = config['FTP_AUTHENTICATION']['USER']
@@ -88,18 +95,18 @@ def uploadDirectory(path, existing_directory=True):
                 dir_is_base_dir(file)
                 uploadDirectory(file_path, existing_directory)
 
-print("\n>>> Remove files to update <<<\n")
 remove_files_to_update(".")
+print(f'{bcolors.OKBLUE}\n>>> Remove files to update <<<\n{bcolors.ENDC}')
 
-print("\n>>> Upload new files <<<\n")
 # uploadDirectory(".")
+print(f'{bcolors.OKBLUE}\n>>> Upload new files <<<\n{bcolors.ENDC}')
 
 
 def make_request(method, path, data=None, headers=None):
     url = config['TMW_ADMIN']['API_URL']
     return requests.request(method=method, url=url+path, data=data, headers=headers)
 
-print("\n>>> Login to Admin Webapp <<<\n")
+print(f'{bcolors.OKBLUE}\n>>> Login to Admin Webapp <<<\n{bcolors.ENDC}')
 data = {
     'username': config['TMW_ADMIN']['USERNAME'], 
     'password': config['TMW_ADMIN']['PASSWORD']
@@ -108,20 +115,20 @@ response = make_request(method='POST', path='login', data=data)
 
 if response.status_code == 200:
     token = response.json()['token']
-    print("Connection established")
+    print(f'{bcolors.OKGREEN}Connection established{bcolors.ENDC}')
 else :
-    print("Something went wrong when login into Admin Webapp..")
     print(response.json())
+    print(f'{bcolors.FAIL}Something went wrong when login into Admin Webapp..{bcolors.ENDC}')
 
 
 def is_deployment_command_done(api_response):
     if api_response.status_code == 200:
-        print("Done")
+        print(f'{bcolors.OKGREEN}Done{bcolors.ENDC}')
     else :
-        print("Something went wrong ...")
+        print(f'{bcolors.FAIL}Something went wrong ...{bcolors.ENDC}')
         print(response)
 
-print("\n>>> Launching deployment commands in Admin Webapp <<<\n")
+print(f'{bcolors.OKBLUE}\n>>> Launching deployment commands in Admin Webapp <<<\n{bcolors.ENDC}')
 
 if token:
 

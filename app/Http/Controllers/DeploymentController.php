@@ -11,7 +11,8 @@ class DeploymentController extends Controller
     public function DependenciesInstallationCommand(Request $request)
     {
         try {
-            $command = "php composer.phar install"; 
+            $command = "composer install";
+            // $command = "php composer.phar install"; 
             $path = base_path();
             exec("cd {$path} && {$command}");
         } catch(\Exception $e) {
