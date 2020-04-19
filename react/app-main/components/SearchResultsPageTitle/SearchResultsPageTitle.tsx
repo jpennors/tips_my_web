@@ -38,14 +38,14 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
                             {primarySearchTag.name}
                         </span>
                         {primarySearchTag.secondaryTags.map(tag => (
-                            <>
+                            <React.Fragment key={tag.id}>
                                 <span className="search-results-page-title__secondary-search-tag-separator">
                                     /
                                 </span>
                                 <span className="search-results-page-title__secondary-search-tag">
                                     {tag.name}
                                 </span>
-                            </>
+                            </React.Fragment>
                         ))}
                     </>
                 ) : (
