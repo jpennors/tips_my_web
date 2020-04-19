@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useParams } from 'react-router';
-import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { Resource } from 'tmw-main/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { serializeResourcesFromAPI } from 'tmw-main/utils/api-serialize';
@@ -40,27 +39,21 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     }, []);
 
     const hasResults = resultResources.length > 0;
-    const pageTitle = hasResults
-        ? 'Here are some websites to improve your workflow'
-        : "We didn't find any result for this search...";
+
+    let pageTitle: string;
+    if (hasResults) {
+        pageTitle = 'Here are some websites to improve your workflow';
+    } else if (isLoading) {
+        pageTitle = 'Looking for results...';
+    } else {
+        pageTitle = "We didn't find any result for this search...";
+    }
 
     return (
         <div className="search-results-page">
-            {isLoading ? (
-                <div className="search-results-page__loading-spinner">
-                    <LoadingSpinner />
-                    <br />
-                    Loading results
-                </div>
-            ) : (
-                <>
-                    {!isMobileViewport ? (
-                        <div className="search-results-page__top-spacing" />
-                    ) : null}
-                    <p className="search-results-page__title">{pageTitle}</p>
-                    {hasResults ? <SearchResultsList resultsList={resultResources} /> : null}
-                </>
-            )}
+            {!isMobileViewport ? <div className="search-results-page__top-spacing" /> : null}
+            <p className="search-results-page__title">{pageTitle}</p>
+            <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
         </div>
     );
 };
