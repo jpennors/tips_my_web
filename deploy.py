@@ -36,49 +36,58 @@ ftp.login(usr, pwd)
 ftp.cwd('/www/')
 
 
-server_files_to_ignore = [
-    ".",
-    ".."
+SERVER_FILES_TO_IGNORE = [
+    '.',
+    '..'
+]
+
+AUTHORIZED_DIRECTORIES = [
+    # './.env',
+    './app',
+    './config',
+    './public',
+    './resources',
+    './routes'
+]
+
+AUTHORIZED_FILES = [
+    './.env'
+]
+
+FORBIDDEN_DIRECTORIES = [
+    './public/storage',
+    './public/css/semantic',
 ]
 
 files_to_ignore = [
-    "./.metals",
-    "./bootstrap",
-    "./documentation",
-    "./public/storage",
-    "./public/css/semantic",
-    "./.git",
-    "./node_modules",
-    "./react",
-    "./storage",
-    "./tests",
-    "./vendor",
-    "./deploy.py"
+    './public/storage',
+    './public/css/semantic',
 ]
 
-def remove_files_to_update(path):
+def remove_files(path):
     files = ftp.nlst(path)
     for file in files:
         file_path = f'{path}/{file}'
-        if not any(file_path.startswith(file) for file in files_to_ignore) and not any(file_path.startswith(file) for file in server_files_to_ignore):
+        if not any(file_path.startswith(file) for file in FORBIDDEN_DIRECTORIES) and not any(file == file_to_ignore for file_to_ignore in SERVER_FILES_TO_IGNORE):
             if os.path.isfile(file_path):
                 ftp.delete(file_path)
             elif os.path.isdir(file_path):
-                remove_files_to_update(file_path)
                 ftp.rmd(file_path)
 
 
-def dir_is_base_dir(dir):
-    server_files = ftp.nlst(".")
     if dir in server_files:
         print(f'Uploading directory {dir}...')
+def file_is_base_file(file):
+    server_files = ftp.nlst('.')
+    if file in server_files:
+        print(f'Uploading {file}...')
 
 
-def uploadFile(path, file):
+def upload_file(path, file):
     file_path = f'{path}/{file}'
-    ftp.storbinary('STOR ' + path + "/" + file, open(file_path, 'rb'))
+    ftp.storbinary('STOR ' + path + '/' + file, open(file_path, 'rb'))
 
-def uploadDirectory(path, existing_directory=True):
+def upload_dir(path, existing_directory=True):
     if not existing_directory:
         ftp.mkd(path)
     files = os.listdir(path)
@@ -86,20 +95,38 @@ def uploadDirectory(path, existing_directory=True):
     for file in files:
         file_path = f'{path}/{file}'
         if os.path.isfile(file_path):
-            uploadFile(path, file)
+            upload_file(path, file)
         elif os.path.isdir(file_path):
-            if not any(file_path.startswith(file) for file in files_to_ignore):
+            if not any(file_path.startswith(dir) for dir in FORBIDDEN_DIRECTORIES):
                 existing_directory = False
                 if file in server_files:
                     existing_directory = True
-                dir_is_base_dir(file)
-                uploadDirectory(file_path, existing_directory)
+                file_is_base_file(file)
+                upload_dir(file_path, existing_directory)
 
-remove_files_to_update(".")
+
+def remove_old_tmw_project():
+    for dir in AUTHORIZED_DIRECTORIES:
+        print(f'Removing {dir} ...')
+        remove_files(dir)
+    for file in AUTHORIZED_FILES:
+        print(f'Removing {file} ...')
+        remove_files(file)
+
+def upload_tmw_project():
+    for dir in AUTHORIZED_DIRECTORIES:
+        print(f'Uploading {dir} ...')
+        upload_dir(dir)
+    for file in AUTHORIZED_FILES:
+        print(f'Uploading {file} ...')
+        # upload_file(file)
+
 print(f'{bcolors.OKBLUE}\n>>> Remove files to update <<<\n{bcolors.ENDC}')
+remove_old_tmw_project()
 
-# uploadDirectory(".")
 print(f'{bcolors.OKBLUE}\n>>> Upload new files <<<\n{bcolors.ENDC}')
+upload_tmw_project()
+    
 
 
 def make_request(method, path, data=None, headers=None):
