@@ -22,14 +22,19 @@ class ResourceTagController extends Controller
         $tags_id = Tag::whereIn('slug', $search_tags_slugs)
             ->pluck('id')
             ->toArray();
-        
-        // Retrieve all concerning resources 
+
+        // Get associated tags names
+        $tags = Tag::whereIn('slug', $search_tags_slugs)
+            ->get();
+
+        // Retrieve all concerning resources
         $resource_tags = ResourceTag::with('resource')->whereIn('tag_id', $tags_id)->get();
 
         // Return ordered recommendation
-        return response()->json(
-            ResourceTag::getRecommendedResources($resource_tags), 
-            200);       
+        return response()->json([
+            "resources" => ResourceTag::getRecommendedResources($resource_tags),
+            "tags" => $tags,
+        ], 200);
     }
 
 }
