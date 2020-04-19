@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { BigButton } from 'tmw-main/components/BigButton';
+import { InputField } from 'tmw-main/components/InputField';
 
 import './contact-modal-content.less';
 
@@ -41,21 +42,22 @@ export const ContactModalContent: React.FunctionComponent = () => {
             <div className="contact-modal-content__subtitle">Send us your comments!</div>
             <div className="contact-modal-content__body">
                 <form className="contact-modal-content__form">
-                    <input
+                    <InputField
                         className="contact-modal-content__email-input"
                         type="text"
                         placeholder="Your email"
                         name="email-input"
                         value={emailInputValue}
-                        required
+                        isRequired
                         onChange={handleEmailInputChange}
                     />
-                    <textarea
+                    <InputField
+                        type="textarea"
                         className="contact-modal-content__message-input"
                         placeholder="Tell us what you think"
                         name="messageInput"
                         value={messageInputValue}
-                        required
+                        isRequired
                         onChange={handleMessageInputChange}
                     />
                 </form>

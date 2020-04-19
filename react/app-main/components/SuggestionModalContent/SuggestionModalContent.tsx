@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { BigButton } from 'tmw-main/components/BigButton';
 import { ajaxPost } from 'tmw-common/utils/ajax';
+import { InputField } from 'tmw-main/components/InputField';
 
 import './suggestion-modal-content.less';
 
@@ -44,21 +45,22 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
             </div>
             <div className="suggestion-modal-content__body">
                 <form className="suggestion-modal-content__form">
-                    <input
+                    <InputField
                         className="suggestion-modal-content__address-input"
                         type="text"
                         placeholder="The website's address"
                         name="address-input"
                         value={addressInputValue}
-                        required
+                        isRequired
                         onChange={handleAddressInputChange}
                     />
-                    <textarea
+                    <InputField
+                        type="textarea"
                         className="suggestion-modal-content__description-input"
                         placeholder="A short description"
                         name="description-input"
                         value={descriptionInputValue}
-                        required
+                        isRequired
                         onChange={handleDescriptionInputChange}
                     />
                 </form>
