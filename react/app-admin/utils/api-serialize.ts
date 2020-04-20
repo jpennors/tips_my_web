@@ -124,7 +124,7 @@ export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
 
 export const serializeVisitorStatsFromAPI = (VisitorStatsFromAPI: APIVisitorStat[]): VisitorStat[] => {
     return VisitorStatsFromAPI.map(stat => ({
-        formatted_date: stat.formatted_date,
+        date: stat.date,
         visitors: stat.visitors ,
     }));
 };
