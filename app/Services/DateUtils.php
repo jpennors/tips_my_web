@@ -45,4 +45,13 @@ class DateUtils
         
         return $dates;
     }
+
+    /**
+     * Get current date with format Y-m-d
+     * 
+     */
+    public static function GetCurrentDate()
+    {
+        return Carbon::now()->format('Y-m-d');
+    }
 }
