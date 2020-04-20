@@ -138,7 +138,6 @@ export interface APIVisitorStat {
 
 export interface APISearchTagStat {
     count: number;
-    name: string;
-    slug: string;
-    parent_slug: string | null;
+    tag_id: string;
+    tag: APITag;
 }

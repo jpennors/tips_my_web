@@ -85,9 +85,10 @@ export interface VisitorStat {
 
 export interface SearchTagStat {
     count: number;
+    id: string;
     name: string;
     slug: string;
-    parent_slug: string | null;
+    parent_id: string | null;
     is_parent: boolean;
 }
 

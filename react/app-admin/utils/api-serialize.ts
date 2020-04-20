@@ -129,13 +129,16 @@ export const serializeVisitorStatsFromAPI = (VisitorStatsFromAPI: APIVisitorStat
     }));
 };
 
-export const serializeSearchTagsStatsFromAPI = (SearchTagsStatsFromAPI: APISearchTagStat[]): SearchTagStat[] => {
+export const serializeSearchTagsStatsFromAPI = (
+    SearchTagsStatsFromAPI: APISearchTagStat[],
+): SearchTagStat[] => {
     return SearchTagsStatsFromAPI.map(searchTag => ({
         count: searchTag.count,
-        name: searchTag.name,
-        slug: searchTag.slug,
-        parent_slug: searchTag.parent_slug,
-        is_parent: !searchTag.parent_slug,
+        id: searchTag.tag.id,
+        name: searchTag.tag.name,
+        slug: searchTag.tag.slug,
+        parent_id: searchTag.tag.parent_id,
+        is_parent: !searchTag.tag.parent_id,
     }));
 };
 
