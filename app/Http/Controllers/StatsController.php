@@ -33,6 +33,9 @@ class StatsController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $quantity = 10;
+        if ($request->get('quantity')) {
+            $quantity = $request->get('quantity');
+        }
 
         $trendy_resources = array(
             'like' => StatResource::getMostRecurrentResourcesByAction($start_date, $end_date, 'like', $quantity),
@@ -46,6 +49,9 @@ class StatsController extends Controller
     public function getTopAllTimeResources(Request $request)
     {
         $quantity = 10;
+        if ($request->get('quantity')) {
+            $quantity = $request->get('quantity');
+        }
         $top_resources_all_time = array();
         
         $top_resources_all_time["visits"] = Resource::orderBy('visits', 'DESC')
