@@ -12,7 +12,6 @@ import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 
 import './resource-tile.less';
-import classNames from 'classnames';
 
 interface ResourceTileProps {
     resource: Resource;
@@ -35,9 +34,9 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
         }
     };
 
-    const visitWebsite = (resource_id: string) : void => {
-        ajaxGet(`resources/visit/${resource_id}`);
-    }
+    const visitWebsite = async (resourceId: string): Promise<void> => {
+        await ajaxGet(`resources/visit/${resourceId}`);
+    };
 
     const iconUrl = resource.iconFilename ? RESOURCES_BASE_URL + resource.id : DEFAULT_RESOURCE_URL;
 
@@ -50,7 +49,12 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                     <span className="resource-tile__header-dot resource-tile__header-dot--green" />
                 </div>
             ) : null}
-            <a href={resource.url} target="_blank" rel="noopener noreferrer" onClick={() => visitWebsite(resource.id)}>
+            <a
+                href={resource.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => visitWebsite(resource.id)}
+            >
                 <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
             </a>
             <div className="resource-tile__content">
