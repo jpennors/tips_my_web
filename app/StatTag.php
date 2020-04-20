@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Services\DateUtils;
 use App\Tag;
 use App\Jobs\StatTagJob;
+use DB; 
 
 class StatTag extends Model
 {
@@ -73,7 +74,7 @@ class StatTag extends Model
             $s = new StatTag();
             $s->tag_id = $tag_id;
             $s->action = $action;
-            $s->created_date = DateUtils::GetCurrentDate();
+            $s->created_date = DateUtils::getCurrentDate();
             $s->save();
         }
     }

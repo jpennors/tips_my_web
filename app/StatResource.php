@@ -75,7 +75,7 @@ class StatResource extends Model
             $s = new StatResource();
             $s->resource_id = $resource_id;
             $s->action = $action;
-            $s->created_date = DateUtils::GetCurrentDate();
+            $s->created_date = DateUtils::getCurrentDate();
             $s->save();
         }
     }

@@ -11,8 +11,9 @@ use App\StatResource;
 
 class StatsController extends Controller
 {
-    
-    public function CountSearchTags(Request $request)
+ 
+    #region Tags
+    public function countSearchTags(Request $request)
     {
         // Date formate Y-m-d
         $start_date = $request->start_date;
@@ -22,9 +23,11 @@ class StatsController extends Controller
 
         return response()->json($search_tag_count, 200);
     }
+    #endregion
 
 
-    public function GetTopTrendyResources(Request $request)
+    #region Resources
+    public function getTopTrendyResources(Request $request)
     {
         // Date formate Y-m-d
         $start_date = $request->start_date;
@@ -40,7 +43,7 @@ class StatsController extends Controller
     }
 
 
-    public function GetTopAllTimeResources()
+    public function getTopAllTimeResources(Request $request)
     {
         $quantity = 10;
         $top_resources_all_time = array();
