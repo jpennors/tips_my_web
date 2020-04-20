@@ -34,6 +34,15 @@ class StatTag extends Model
     protected $dates = ['created_at', 'updated_at'];
 
     /**
+     * The tag that belong to the resource_tag.
+     */
+    public function tag()
+    {
+        return $this->belongsTo('App\Tag');
+    }
+    
+
+    /**
      * Action possibilities
      * 
      */
@@ -67,6 +76,25 @@ class StatTag extends Model
             $s->created_date = DateUtils::GetCurrentDate();
             $s->save();
         }
+    }
+
+
+    /**
+     * Get most recurrent tags based on specific action
+     * 
+     */
+    public static function getMostRecurrentTagsByAction($start_date, $end_date, $action)
+    {
+        return StatTag::with('tag')
+            ->where([
+                ['created_date', '>=', $start_date],
+                ['created_date', '<=', $end_date],
+                ['action', $action]])
+            ->select('tag_id', DB::raw('count(*) as count'))
+            ->groupBy('tag_id')
+            ->orderBy('count', 'DESC')
+            ->get()
+            ->toArray();
     }
 
 }
