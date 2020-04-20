@@ -24,7 +24,20 @@ class StatsController extends Controller
 
 
     public function getTopResources()
+    public function GetTopTrendyResources(Request $request)
     {
+        // Date formate Y-m-d
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $quantity = 10;
+
+        $trendy_resources = array(
+            'like' => StatResource::getMostRecurrentResourcesByAction($start_date, $end_date, 'like', $quantity),
+            'visit' => StatResource::getMostRecurrentResourcesByAction($start_date, $end_date, 'visit', $quantity)
+        );
+        
+        return response()->json($trendy_resources, 200);
+    }
 
         $top_resources_all_time = array();
         

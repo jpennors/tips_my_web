@@ -5,6 +5,7 @@ namespace App;
 use App\Jobs\StatResourceJob;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\DateUtils;
+use DB;
 
 class StatResource extends Model
 {
@@ -31,6 +32,15 @@ class StatResource extends Model
      * @var array
      */
     protected $dates = ['created_at', 'updated_at'];
+
+
+    /**
+     * The tag that belong to the resource_tag.
+     */
+    public function resource()
+    {
+        return $this->belongsTo('App\Resource');
+    }
 
 
     /**
@@ -69,4 +79,25 @@ class StatResource extends Model
             $s->save();
         }
     }
+
+    /**
+     * Get most recurrent resources based on specific action
+     * 
+     */
+    public static function getMostRecurrentResourcesByAction($start_date, $end_date, $action, $quantity)
+    {
+        return StatResource::with('resource')
+            ->where([
+                ['created_date', '>=', $start_date],
+                ['created_date', '<=', $end_date],
+                ['action', $action]])
+            ->select('resource_id', DB::raw('count(*) as count'))
+            ->groupBy('resource_id')
+            ->orderBy('count', 'DESC')
+            ->take($quantity)
+            ->get()
+            ->toArray();
+    }
+
+
 }
