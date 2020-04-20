@@ -67,10 +67,14 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('logout', 'AdminController@logout');
 
     # Log Controller
-    Route::get('visitors/current', 'LogController@getCurrentVisitor');
-    Route::post('visitors/stats', 'LogController@getVisitorNumberByDay');
     Route::post('logs', 'LogController@getLogs');
-    Route::post('stats/tags/main', 'LogController@countSearchTags');
+
+    # Stat Controller
+    Route::get('stats/visitors/current', 'StatsController@getCurrentDayVisitor');
+    Route::post('stats/visitors/period', 'StatsController@getVisitorNumberByDat');
+    Route::post('stats/tags/search', 'StatsController@countSearchTags');
+    Route::post('stats/resources/trend', 'StatsController@getTopTrendyResources');
+    Route::get('stats/resources/alltime', 'StatsController@getTopAllTimeResources');
 
 
     # Deployment
