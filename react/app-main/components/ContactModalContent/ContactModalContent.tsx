@@ -12,6 +12,8 @@ export const ContactModalContent: React.FunctionComponent = () => {
     const [emailValidationMessage, setEmailValidationMessage] = React.useState<string>('');
     const [messageValidationMessage, setMessageValidationMessage] = React.useState<string>('');
 
+    const [hasSubmitError, setHasSubmitError] = React.useState<boolean>(false);
+
     const handleEmailInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { value } = event.target;
         setEmailInputValue(value);
@@ -49,7 +51,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
             setMessageValidationMessage('');
         }
 
-        if (!isFormValid) {
+        if (isFormValid) {
             ajaxPost('contacts', payload)
                 .then(() => {
                     setEmailInputValue('');
@@ -57,12 +59,12 @@ export const ContactModalContent: React.FunctionComponent = () => {
                 })
                 .catch(error => {
                     // Additional error messages from backend validation (shouldn't happen)
-                    const errorMessages = error.response.data.errors;
-                    setEmailValidationMessage(errorMessages.email || '');
-                    setMessageValidationMessage(errorMessages.message || '');
+                    const errorMessages = error.response?.data?.errors;
+                    setEmailValidationMessage(errorMessages?.email || '');
+                    setMessageValidationMessage(errorMessages?.message || '');
+                    setHasSubmitError(true);
                 });
         }
-        // TODO: Handle ajax errors
     };
 
     return (
@@ -98,6 +100,11 @@ export const ContactModalContent: React.FunctionComponent = () => {
             <div className="contact-modal-content__buttons">
                 <BigButton content="SUBMIT" onClick={submitContactForm} />
             </div>
+            {hasSubmitError ? (
+                <div className="contact-modal-content__submit-error">
+                    We&apos;re having trouble submitting your message, please try again!
+                </div>
+            ) : null}
         </div>
     );
 };
