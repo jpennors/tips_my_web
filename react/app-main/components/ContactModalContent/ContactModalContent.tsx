@@ -49,11 +49,18 @@ export const ContactModalContent: React.FunctionComponent = () => {
             setMessageValidationMessage('');
         }
 
-        if (isFormValid) {
-            ajaxPost('contacts', payload).then(() => {
-                setEmailInputValue('');
-                setMessageInputValue('');
-            });
+        if (!isFormValid) {
+            ajaxPost('contacts', payload)
+                .then(() => {
+                    setEmailInputValue('');
+                    setMessageInputValue('');
+                })
+                .catch(error => {
+                    // Additional error messages from backend validation (shouldn't happen)
+                    const errorMessages = error.response.data.errors;
+                    setEmailValidationMessage(errorMessages.email || '');
+                    setMessageValidationMessage(errorMessages.message || '');
+                });
         }
         // TODO: Handle ajax errors
     };
