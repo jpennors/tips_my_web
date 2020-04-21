@@ -47,4 +47,16 @@ class ArtisanController extends Controller
         }
         return response()->json();
     }
+
+    public function QueueWorkCommand(Request $request)
+    {
+        $command = 'queue:work';
+
+        if($request->get('options') && $request->get('options') == 'empty')
+            $command .= ' --stop-when-empty';
+
+        Artisan::call($command);
+        return response()->json();
+    }
+
 }

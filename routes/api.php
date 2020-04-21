@@ -32,6 +32,9 @@ Route::get('resources/like/add/{id}', 'ResourceController@addLike');
 Route::get('resources/like/remove/{id}', 'ResourceController@removeLike');
 Route::get('resources/visit/{id}', 'ResourceController@addVisit');
 
+# Artisan
+Route::get('artisan/queues', 'ArtisanController@QueueWorkCommand');
+
 
 # Admin routes
 Route::group(['middleware' => 'admin'], function () {
