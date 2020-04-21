@@ -1,5 +1,4 @@
 import os
-import sys
 import requests
 import configparser
 from ftplib import FTP
@@ -66,7 +65,7 @@ AUTHORIZED_FILES = [
     '.env',
     'composer.json',
     'composer.lock',
-    'prod_queue_work.php'
+    'task_scheduling.php'
 ]
 
 
@@ -278,13 +277,13 @@ tmw.login()
 
 print_blue('\n>>> Launching deployment commands in Admin Webapp <<<\n')
 print('Migration...')
-tmw.execute_command(method='GET', path='artisan/migration')
+tmw.execute_command(method='GET', path='deployment/migration')
 print('Seeding...')
-tmw.execute_command(method='GET', path='artisan/seeds')
+tmw.execute_command(method='GET', path='deployment/seeding')
 print('Cache...')
-tmw.execute_command(method='GET', path='artisan/cache')
+tmw.execute_command(method='GET', path='deployment/cache')
 print('Config...')
-tmw.execute_command(method='GET', path='artisan/config')
+tmw.execute_command(method='GET', path='deployment/config')
 
 
 print_green('\n\n###### DEPLOYMENT DONE ######')
