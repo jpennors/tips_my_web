@@ -8,20 +8,6 @@ use Illuminate\Http\Request;
 class DeploymentController extends Controller
 {
 
-    public function DependenciesInstallationCommand(Request $request)
-    {
-        try {
-            $command = "composer install";
-            // $command = "php composer.phar install"; 
-            $path = base_path();
-            exec("cd {$path} && {$command}");
-        } catch(\Exception $e) {
-            abort(500, $e);
-        }
-        return response()->json();
-    }
-
-
     public function DatabaseMigrationCommand(Request $request)
     {
         try {
