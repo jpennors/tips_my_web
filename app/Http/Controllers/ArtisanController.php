@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Artisan;
 use Illuminate\Http\Request;
 
-class DeploymentController extends Controller
+class ArtisanController extends Controller
 {
 
     public function DatabaseMigrationCommand(Request $request)
@@ -45,6 +45,17 @@ class DeploymentController extends Controller
         } catch(\Exception $e) {
             abort(500, $e);
         }
+        return response()->json();
+    }
+
+    public function QueueWorkCommand(Request $request)
+    {
+        $command = 'queue:work';
+
+        if($request->get('options') && $request->get('options') == 'empty')
+            $command .= ' --stop-when-empty';
+
+        Artisan::call($command);
         return response()->json();
     }
 

@@ -43,7 +43,8 @@ AUTHORIZED_DIRECTORIES = [
 AUTHORIZED_FILES = [
     '.env',
     'composer.json',
-    'composer.lock'
+    'composer.lock',
+    'prod_queue_work.php'
 ]
 
 
@@ -255,13 +256,13 @@ tmw.login()
 
 print_blue('\n>>> Launching deployment commands in Admin Webapp <<<\n')
 print('Migration...')
-tmw.execute_command(method='GET', path='deployment/migration')
+tmw.execute_command(method='GET', path='artisan/migration')
 print('Seeding...')
-tmw.execute_command(method='GET', path='deployment/seeding')
+tmw.execute_command(method='GET', path='artisan/seeding')
 print('Cache...')
-tmw.execute_command(method='GET', path='deployment/cache')
+tmw.execute_command(method='GET', path='artisan/cache')
 print('Config...')
-tmw.execute_command(method='GET', path='deployment/config')
+tmw.execute_command(method='GET', path='artisan/config')
 
 
 print_green('\n\n###### DEPLOYMENT DONE ######')
