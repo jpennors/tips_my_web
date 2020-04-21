@@ -177,6 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ValidationServiceProvider::class,
         \Torann\GeoIP\GeoIPServiceProvider::class,
+        shweshi\OpenGraph\Providers\OpenGraphProvider::class,
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
         'Validation' => App\Facades\Validation::class,
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'OpenGraph' => shweshi\OpenGraph\Facades\OpenGraphFacade::class
 
     ],
 
