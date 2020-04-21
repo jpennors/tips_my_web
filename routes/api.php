@@ -72,10 +72,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('stats/tags/main', 'LogController@countSearchTags');
 
 
-    # Deployment
-    Route::get('deployment/migration', 'DeploymentController@DatabaseMigrationCommand');
-    Route::get('deployment/seeding', 'DeploymentController@DatabaseSeedingCommand');
-    Route::get('deployment/config', 'DeploymentController@ConfigClearCommand');
-    Route::get('deployment/cache', 'DeploymentController@CacheClearCommand');
+    # Artisan
+    Route::get('artisan/migration', 'ArtisanController@DatabaseMigrationCommand');
+    Route::get('artisan/seeds', 'ArtisanController@DatabaseSeedingCommand');
+    Route::get('artisan/config', 'ArtisanController@ConfigClearCommand');
+    Route::get('artisan/cache', 'ArtisanController@CacheClearCommand');
     
 });

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Artisan;
 use Illuminate\Http\Request;
 
-class DeploymentController extends Controller
+class ArtisanController extends Controller
 {
 
     public function DatabaseMigrationCommand(Request $request)
@@ -47,5 +47,4 @@ class DeploymentController extends Controller
         }
         return response()->json();
     }
-
 }

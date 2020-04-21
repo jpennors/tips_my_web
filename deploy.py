@@ -277,13 +277,13 @@ tmw.login()
 
 print_blue('\n>>> Launching deployment commands in Admin Webapp <<<\n')
 print('Migration...')
-tmw.execute_command(method='GET', path='deployment/migration')
+tmw.execute_command(method='GET', path='artisan/migration')
 print('Seeding...')
-tmw.execute_command(method='GET', path='deployment/seeding')
+tmw.execute_command(method='GET', path='artisan/seeds')
 print('Cache...')
-tmw.execute_command(method='GET', path='deployment/cache')
+tmw.execute_command(method='GET', path='artisan/cache')
 print('Config...')
-tmw.execute_command(method='GET', path='deployment/config')
+tmw.execute_command(method='GET', path='artisan/config')
 
 
 print_green('\n\n###### DEPLOYMENT DONE ######')
