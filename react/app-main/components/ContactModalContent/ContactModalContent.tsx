@@ -2,37 +2,59 @@ import * as React from 'react';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { BigButton } from 'tmw-main/components/BigButton';
 import { InputField } from 'tmw-main/components/InputField';
+import { isValidEmail } from 'tmw-main/utils/form-validation';
 
 import './contact-modal-content.less';
 
 export const ContactModalContent: React.FunctionComponent = () => {
     const [emailInputValue, setEmailInputValue] = React.useState<string>('');
     const [messageInputValue, setMessageInputValue] = React.useState<string>('');
+    const [emailValidationMessage, setEmailValidationMessage] = React.useState<string>('');
+    const [messageValidationMessage, setMessageValidationMessage] = React.useState<string>('');
 
     const handleEmailInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { value } = event.target;
-        // TODO: Add validation
         setEmailInputValue(value);
     };
 
     const handleMessageInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const { value } = event.target;
-        // TODO: Add validation
         setMessageInputValue(value);
     };
 
     const submitContactForm = async (): Promise<void> => {
-        // TODO: Add validation
         const payload = {
             email: emailInputValue,
             message: messageInputValue,
         };
 
-        ajaxPost('contacts', payload).then(() => {
-            setEmailInputValue('');
-            setMessageInputValue('');
-        });
+        let isFormValid = true;
 
+        // Email validation
+        if (!emailInputValue) {
+            setEmailValidationMessage('You need to provide an email address here');
+            isFormValid = false;
+        } else if (!isValidEmail(emailInputValue)) {
+            setEmailValidationMessage('The provided email address is not valid');
+            isFormValid = false;
+        } else {
+            setEmailValidationMessage('');
+        }
+
+        // Message validation
+        if (!messageInputValue) {
+            setMessageValidationMessage('Your message is empty!');
+            isFormValid = false;
+        } else {
+            setMessageValidationMessage('');
+        }
+
+        if (isFormValid) {
+            ajaxPost('contacts', payload).then(() => {
+                setEmailInputValue('');
+                setMessageInputValue('');
+            });
+        }
         // TODO: Handle ajax errors
     };
 
@@ -50,6 +72,8 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         value={emailInputValue}
                         isRequired
                         onChange={handleEmailInputChange}
+                        validationMessage={emailValidationMessage}
+                        isInvalid={emailValidationMessage.length > 0}
                     />
                     <InputField
                         type="textarea"
@@ -59,6 +83,8 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         value={messageInputValue}
                         isRequired
                         onChange={handleMessageInputChange}
+                        validationMessage={messageValidationMessage}
+                        isInvalid={messageValidationMessage.length > 0}
                     />
                 </form>
             </div>
