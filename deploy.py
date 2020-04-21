@@ -25,27 +25,6 @@ config = configparser.ConfigParser()
 config.read('./deploy.env.ini')
 
 
-def make_request(method, path, data=None, headers=None):
-    url = config['TMW_ADMIN']['API_URL']
-    return requests.request(method=method, url=url+path, data=data, headers=headers)
-
-print_blue('\n>>> Login to Admin Webapp <<<\n')
-token = None
-data = {
-    'username': config['TMW_ADMIN']['USERNAME'], 
-    'password': config['TMW_ADMIN']['PASSWORD']
-}
-response = make_request(method='POST', path='login', data=data)
-
-if response.status_code == 200:
-    token = response.json()['token']
-    print_green('Connection established')
-
-else :
-    print_red('Something went wrong when login into Admin Webapp..')
-    sys.exit("Deployment cancelled")
-
-
 SERVER_FILES_TO_IGNORE = [
     '.',
     '..'
@@ -65,7 +44,7 @@ AUTHORIZED_FILES = [
     '.env',
     'composer.json',
     'composer.lock',
-    'task_scheduling.php'
+    'prod_queue_work.php'
 ]
 
 
@@ -277,13 +256,13 @@ tmw.login()
 
 print_blue('\n>>> Launching deployment commands in Admin Webapp <<<\n')
 print('Migration...')
-tmw.execute_command(method='GET', path='deployment/migration')
+tmw.execute_command(method='GET', path='artisan/migration')
 print('Seeding...')
-tmw.execute_command(method='GET', path='deployment/seeding')
+tmw.execute_command(method='GET', path='artisan/seeding')
 print('Cache...')
-tmw.execute_command(method='GET', path='deployment/cache')
+tmw.execute_command(method='GET', path='artisan/cache')
 print('Config...')
-tmw.execute_command(method='GET', path='deployment/config')
+tmw.execute_command(method='GET', path='artisan/config')
 
 
 print_green('\n\n###### DEPLOYMENT DONE ######')
