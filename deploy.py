@@ -65,7 +65,8 @@ AUTHORIZED_DIRECTORIES = [
 AUTHORIZED_FILES = [
     '.env',
     'composer.json',
-    'composer.lock'
+    'composer.lock',
+    'prod_queue_work.php'
 ]
 
 
