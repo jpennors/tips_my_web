@@ -58,6 +58,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
             ajaxPost('contacts', payload)
                 .then(() => {
                     setHasSubmitSuccess(true);
+                    setHasSubmitError(false);
                 })
                 .catch(error => {
                     // Additional error messages from backend validation (shouldn't happen)
