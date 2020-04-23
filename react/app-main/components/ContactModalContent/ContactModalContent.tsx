@@ -90,6 +90,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         onChange={handleEmailInputChange}
                         validationMessage={emailValidationMessage}
                         isInvalid={emailValidationMessage.length > 0}
+                        isDisabled={isSubmitPending}
                     />
                     <InputField
                         type="textarea"
@@ -101,6 +102,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         onChange={handleMessageInputChange}
                         validationMessage={messageValidationMessage}
                         isInvalid={messageValidationMessage.length > 0}
+                        isDisabled={isSubmitPending}
                     />
                 </form>
             </div>

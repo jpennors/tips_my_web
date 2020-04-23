@@ -14,6 +14,7 @@ interface InputFieldProps {
     isFullWidth?: boolean;
     isInvalid?: boolean;
     validationMessage?: string;
+    isDisabled?: boolean;
 }
 
 export const InputField: React.FunctionComponent<InputFieldProps> = ({
@@ -27,6 +28,7 @@ export const InputField: React.FunctionComponent<InputFieldProps> = ({
     isFullWidth = true,
     isInvalid,
     validationMessage,
+    isDisabled = false,
 }) => {
     const isTextarea = type === 'textarea';
     const finalClassName = classNames('input-field', className, {
@@ -46,6 +48,7 @@ export const InputField: React.FunctionComponent<InputFieldProps> = ({
                     value={value}
                     required={isRequired}
                     onChange={onChange}
+                    disabled={isDisabled}
                 />
             ) : (
                 <input
@@ -56,6 +59,7 @@ export const InputField: React.FunctionComponent<InputFieldProps> = ({
                     value={value}
                     required={isRequired}
                     onChange={onChange}
+                    disabled={isDisabled}
                 />
             )}
             {validationMessage ? (
