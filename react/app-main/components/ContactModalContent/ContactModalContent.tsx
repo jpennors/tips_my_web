@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ajaxPost } from 'tmw-common/utils/ajax';
-import { BigButton } from 'tmw-main/components/BigButton';
 import { InputField } from 'tmw-main/components/InputField';
+import { SubmitButton } from 'tmw-main/components/SubmitButton';
 import { isValidEmail } from 'tmw-main/utils/form-validation';
 
 import './contact-modal-content.less';
@@ -13,6 +13,8 @@ export const ContactModalContent: React.FunctionComponent = () => {
     const [messageValidationMessage, setMessageValidationMessage] = React.useState<string>('');
 
     const [hasSubmitError, setHasSubmitError] = React.useState<boolean>(false);
+    const [hasSubmitSuccess, setHasSubmitSuccess] = React.useState<boolean>(false);
+    const [isSubmitPending, setIsSubmitPending] = React.useState<boolean>(false);
 
     const handleEmailInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { value } = event.target;
@@ -52,10 +54,12 @@ export const ContactModalContent: React.FunctionComponent = () => {
         }
 
         if (isFormValid) {
+            setIsSubmitPending(true);
             ajaxPost('contacts', payload)
                 .then(() => {
                     setEmailInputValue('');
                     setMessageInputValue('');
+                    setHasSubmitSuccess(true);
                 })
                 .catch(error => {
                     // Additional error messages from backend validation (shouldn't happen)
@@ -63,6 +67,9 @@ export const ContactModalContent: React.FunctionComponent = () => {
                     setEmailValidationMessage(errorMessages?.email || '');
                     setMessageValidationMessage(errorMessages?.message || '');
                     setHasSubmitError(true);
+                })
+                .finally(() => {
+                    setIsSubmitPending(false);
                 });
         }
     };
@@ -98,7 +105,11 @@ export const ContactModalContent: React.FunctionComponent = () => {
                 </form>
             </div>
             <div className="contact-modal-content__buttons">
-                <BigButton content="SUBMIT" onClick={submitContactForm} />
+                <SubmitButton
+                    onClick={submitContactForm}
+                    isValid={hasSubmitSuccess}
+                    isPending={isSubmitPending}
+                />
             </div>
             {hasSubmitError ? (
                 <div className="contact-modal-content__submit-error">
