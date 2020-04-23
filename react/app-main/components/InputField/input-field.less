@@ -7,12 +7,17 @@
         font-size: @app-font-size-medium;
         font-family: @app-font-light;
         padding: 10px;
-        background: white;
+        background-color: #f8f8f8;
         box-sizing: border-box;
         border-radius: 10px;
         border: 0;
         outline: none;
         margin-bottom: 0;
+        transition: background-color 0.3s ease-in-out;
+
+        &:focus {
+            background-color: white;
+        }
     }
 
     &__textarea {
