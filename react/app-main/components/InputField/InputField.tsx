@@ -36,6 +36,7 @@ export const InputField: React.FunctionComponent<InputFieldProps> = ({
         'input-field__input': !isTextarea,
         'input-field--full-width': isFullWidth,
         'input-field--invalid': isInvalid,
+        'input-field--disabled': isDisabled,
     });
 
     return (

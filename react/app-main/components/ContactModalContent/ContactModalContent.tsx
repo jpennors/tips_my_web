@@ -57,8 +57,6 @@ export const ContactModalContent: React.FunctionComponent = () => {
             setIsSubmitPending(true);
             ajaxPost('contacts', payload)
                 .then(() => {
-                    setEmailInputValue('');
-                    setMessageInputValue('');
                     setHasSubmitSuccess(true);
                 })
                 .catch(error => {
@@ -77,7 +75,11 @@ export const ContactModalContent: React.FunctionComponent = () => {
     return (
         <div className="contact-modal-content">
             <div className="contact-modal-content__title">Contact</div>
-            <div className="contact-modal-content__subtitle">Send us your comments!</div>
+            <div className="contact-modal-content__subtitle">
+                {!hasSubmitSuccess
+                    ? 'Send us your comments!'
+                    : 'Your message was successfully submitted!'}{' '}
+            </div>
             <div className="contact-modal-content__body">
                 <form className="contact-modal-content__form">
                     <InputField
@@ -90,7 +92,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         onChange={handleEmailInputChange}
                         validationMessage={emailValidationMessage}
                         isInvalid={emailValidationMessage.length > 0}
-                        isDisabled={isSubmitPending}
+                        isDisabled={isSubmitPending || hasSubmitSuccess}
                     />
                     <InputField
                         type="textarea"
@@ -102,7 +104,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         onChange={handleMessageInputChange}
                         validationMessage={messageValidationMessage}
                         isInvalid={messageValidationMessage.length > 0}
-                        isDisabled={isSubmitPending}
+                        isDisabled={isSubmitPending || hasSubmitSuccess}
                     />
                 </form>
             </div>
