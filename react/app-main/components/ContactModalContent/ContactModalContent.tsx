@@ -27,11 +27,6 @@ export const ContactModalContent: React.FunctionComponent = () => {
     };
 
     const submitContactForm = async (): Promise<void> => {
-        const payload = {
-            email: emailInputValue,
-            message: messageInputValue,
-        };
-
         let isFormValid = true;
 
         // Email validation
@@ -57,6 +52,11 @@ export const ContactModalContent: React.FunctionComponent = () => {
         }
 
         if (isFormValid) {
+            const payload = {
+                email: emailInputValue,
+                message: messageInputValue,
+            };
+
             setIsSubmitPending(true);
             ajaxPost('contacts', payload)
                 .then(() => {

@@ -9,3 +9,10 @@ export const isValidUrl = (url: string): boolean => {
     );
     return emailRegex.test(url);
 };
+
+export const addHttpPrefix = (url: string): string => {
+    if (url.indexOf('http://') !== 0 && url.indexOf('https://') !== 0) {
+        return `http://${url}`;
+    }
+    return url;
+};

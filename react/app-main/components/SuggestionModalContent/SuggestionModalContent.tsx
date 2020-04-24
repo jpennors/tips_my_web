@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SubmitButton } from 'tmw-main/components/SubmitButton';
-import { isValidUrl } from 'tmw-main/utils/form-validation';
+import { addHttpPrefix, isValidUrl } from 'tmw-main/utils/form-validation';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { InputField } from 'tmw-main/components/InputField';
 
@@ -29,11 +29,6 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
     };
 
     const submitSuggestionForm = async (): Promise<void> => {
-        const payload = {
-            url: addressInputValue,
-            description: descriptionInputValue,
-        };
-
         let isFormValid = true;
 
         // URL validation
@@ -61,6 +56,11 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
         }
 
         if (isFormValid) {
+            const payload = {
+                url: addHttpPrefix(addressInputValue),
+                description: descriptionInputValue,
+            };
+
             setIsSubmitPending(true);
             ajaxPost('suggestions', payload)
                 .then(() => {
