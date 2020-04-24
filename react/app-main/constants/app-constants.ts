@@ -28,6 +28,7 @@ export enum MAIN_APP_ROUTES {
     TERMS = '/terms',
     ABOUT = '/about',
     CONTACT = '/contact',
+    SUGGESTION = '/suggestion',
 }
 
 export enum VALIDATION {
