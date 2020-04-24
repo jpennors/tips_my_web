@@ -21,7 +21,7 @@ export const SubmitButton: React.FunctionComponent<SubmitButtonProps> = ({
             'submit-button--pending': isPending,
             'submit-button--valid': !isPending && isValid,
         })}
-        onClick={onClick}
+        onClick={isValid || isPending ? undefined : onClick}
     >
         <span className="submit-button__text">{isValid ? <TickIcon width={16} /> : 'SUBMIT'}</span>
     </div>
