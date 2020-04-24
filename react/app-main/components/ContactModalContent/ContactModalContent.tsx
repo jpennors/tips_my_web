@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { InputField } from 'tmw-main/components/InputField';
 import { SubmitButton } from 'tmw-main/components/SubmitButton';
+import { VALIDATION } from 'tmw-main/constants/app-constants';
 import { isValidEmail } from 'tmw-main/utils/form-validation';
 
 import './contact-modal-content.less';
@@ -36,8 +37,10 @@ export const ContactModalContent: React.FunctionComponent = () => {
         } else if (!isValidEmail(emailInputValue)) {
             setEmailValidationMessage('The provided email address is not valid');
             isFormValid = false;
-        } else if (emailInputValue.length > 150) {
-            setEmailValidationMessage("Your email can't be longer than 150 characters");
+        } else if (emailInputValue.length > VALIDATION.EMAIL_MAX_LENGTH) {
+            setEmailValidationMessage(
+                `Your email can't be longer than ${VALIDATION.EMAIL_MAX_LENGTH} characters`,
+            );
             isFormValid = false;
         } else {
             setEmailValidationMessage('');
@@ -47,8 +50,10 @@ export const ContactModalContent: React.FunctionComponent = () => {
         if (!messageInputValue) {
             setMessageValidationMessage('Your message is empty!');
             isFormValid = false;
-        } else if (messageInputValue.length > 500) {
-            setMessageValidationMessage("Your message can't be longer than 500 characters");
+        } else if (messageInputValue.length > VALIDATION.MESSAGE_MAX_LENGTH) {
+            setMessageValidationMessage(
+                `Your message can't be longer than ${VALIDATION.MESSAGE_MAX_LENGTH} characters`,
+            );
             isFormValid = false;
         } else {
             setMessageValidationMessage('');
@@ -115,7 +120,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         validationMessage={messageValidationMessage}
                         isInvalid={messageValidationMessage.length > 0}
                         isDisabled={isSubmitPending || hasSubmitSuccess}
-                        charactersCounter={500}
+                        charactersCounter={VALIDATION.MESSAGE_MAX_LENGTH}
                     />
                 </form>
             </div>

@@ -28,3 +28,11 @@ export enum MAIN_APP_ROUTES {
     TERMS = '/terms',
     ABOUT = '/about',
 }
+
+export enum VALIDATION {
+    EMAIL_MAX_LENGTH = 150,
+    URL_MAX_LENGTH = 150,
+    MESSAGE_MAX_LENGTH = 500,
+    DESCRIPTION_MAX_LENGTH = 250,
+    DESCRIPTION_MIN_LENGTH = 10,
+}

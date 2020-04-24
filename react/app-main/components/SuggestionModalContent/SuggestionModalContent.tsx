@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { SubmitButton } from 'tmw-main/components/SubmitButton';
+import { VALIDATION } from 'tmw-main/constants/app-constants';
 import { addHttpPrefix, isValidUrl } from 'tmw-main/utils/form-validation';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { InputField } from 'tmw-main/components/InputField';
@@ -38,8 +39,10 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
         } else if (!isValidUrl(addressInputValue)) {
             setAddressValidationMessage('The provided URL is not valid');
             isFormValid = false;
-        } else if (addressInputValue.length > 150) {
-            setAddressValidationMessage("The URL can't be longer than 150 characters");
+        } else if (addressInputValue.length > VALIDATION.URL_MAX_LENGTH) {
+            setAddressValidationMessage(
+                `The URL can't be longer than ${VALIDATION.URL_MAX_LENGTH} characters`,
+            );
             isFormValid = false;
         } else {
             setAddressValidationMessage('');
@@ -49,9 +52,12 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
         if (!descriptionInputValue) {
             setDescriptionValidationMessage('Please add a quick description');
             isFormValid = false;
-        } else if (descriptionInputValue.length > 250 || descriptionInputValue.length < 10) {
+        } else if (
+            descriptionInputValue.length > VALIDATION.DESCRIPTION_MAX_LENGTH ||
+            descriptionInputValue.length < VALIDATION.DESCRIPTION_MIN_LENGTH
+        ) {
             setDescriptionValidationMessage(
-                'The description should be between 10 and 250 characters',
+                `The description should be between ${VALIDATION.DESCRIPTION_MIN_LENGTH} and ${VALIDATION.DESCRIPTION_MAX_LENGTH} characters`,
             );
             isFormValid = false;
         } else {
@@ -119,7 +125,7 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                         validationMessage={descriptionValidationMessage}
                         isInvalid={descriptionValidationMessage.length > 0}
                         isDisabled={isSubmitPending || hasSubmitSuccess}
-                        charactersCounter={250}
+                        charactersCounter={VALIDATION.DESCRIPTION_MAX_LENGTH}
                     />
                 </form>
             </div>
