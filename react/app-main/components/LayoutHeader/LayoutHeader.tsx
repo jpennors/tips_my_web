@@ -27,12 +27,14 @@ export const LayoutHeader: React.FunctionComponent = () => {
         {
             id: 'share-website',
             title: 'Share a website',
-            modal: SuggestionModalContent,
+            modal: !isMobileViewport ? SuggestionModalContent : null,
+            link: isMobileViewport ? MAIN_APP_ROUTES.SUGGESTION : null,
         },
         {
             id: 'contact',
             title: 'Contact',
-            modal: ContactModalContent,
+            modal: !isMobileViewport ? ContactModalContent : null,
+            link: isMobileViewport ? MAIN_APP_ROUTES.CONTACT : null,
         },
     ];
 
