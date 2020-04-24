@@ -72,7 +72,10 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                     const errorMessages = error.response?.data?.errors;
                     setAddressValidationMessage(errorMessages?.url || '');
                     setDescriptionValidationMessage(errorMessages?.description || '');
-                    setHasSubmitError(true);
+                    if (!errorMessages?.url && !errorMessages?.description) {
+                        // Show error message when it's not a validation error
+                        setHasSubmitError(true);
+                    }
                 })
                 .finally(() => {
                     setIsSubmitPending(false);

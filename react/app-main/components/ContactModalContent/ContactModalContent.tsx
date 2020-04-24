@@ -68,7 +68,10 @@ export const ContactModalContent: React.FunctionComponent = () => {
                     const errorMessages = error.response?.data?.errors;
                     setEmailValidationMessage(errorMessages?.email || '');
                     setMessageValidationMessage(errorMessages?.message || '');
-                    setHasSubmitError(true);
+                    if (!errorMessages?.email && !errorMessages?.message) {
+                        // Show error message when it's not a validation error
+                        setHasSubmitError(true);
+                    }
                 })
                 .finally(() => {
                     setIsSubmitPending(false);
