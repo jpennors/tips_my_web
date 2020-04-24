@@ -38,6 +38,9 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
         } else if (!isValidUrl(addressInputValue)) {
             setAddressValidationMessage('The provided URL is not valid');
             isFormValid = false;
+        } else if (addressInputValue.length > 150) {
+            setAddressValidationMessage("The URL can't be longer than 150 characters");
+            isFormValid = false;
         } else {
             setAddressValidationMessage('');
         }

@@ -36,6 +36,9 @@ export const ContactModalContent: React.FunctionComponent = () => {
         } else if (!isValidEmail(emailInputValue)) {
             setEmailValidationMessage('The provided email address is not valid');
             isFormValid = false;
+        } else if (emailInputValue.length > 150) {
+            setEmailValidationMessage("Your email can't be longer than 150 characters");
+            isFormValid = false;
         } else {
             setEmailValidationMessage('');
         }
