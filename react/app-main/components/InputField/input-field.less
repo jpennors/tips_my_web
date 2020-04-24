@@ -42,12 +42,31 @@
         border: 1px solid @app-color-background-red;
     }
 
-    &__validation-message {
-        color: @app-color-background-red;
-        font-size: @app-font-size-small;
-        font-family: @app-font-medium;
-        text-align: left;
+    &__validation {
         margin-top: 4px;
         margin-left: 3px;
+        margin-right: 3px;
+        position: relative;
+
+        font-size: @app-font-size-small;
+        font-family: @app-font-medium;
+    }
+
+    &__validation-message {
+        color: @app-color-background-red;
+        text-align: left;
+        padding-right: 30px;
+    }
+
+    &__characters-counter {
+        color: #7e7e7e;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transition: color 0.2s ease-in-out;
+
+        &--error {
+            color: @app-color-background-red;
+        }
     }
 }

@@ -15,6 +15,7 @@ interface InputFieldProps {
     isInvalid?: boolean;
     validationMessage?: string;
     isDisabled?: boolean;
+    charactersCounter?: number;
 }
 
 export const InputField: React.FunctionComponent<InputFieldProps> = ({
@@ -29,6 +30,7 @@ export const InputField: React.FunctionComponent<InputFieldProps> = ({
     isInvalid,
     validationMessage,
     isDisabled = false,
+    charactersCounter,
 }) => {
     const isTextarea = type === 'textarea';
     const finalClassName = classNames('input-field', className, {
@@ -63,8 +65,22 @@ export const InputField: React.FunctionComponent<InputFieldProps> = ({
                     disabled={isDisabled}
                 />
             )}
-            {validationMessage ? (
-                <div className="input-field__validation-message">{validationMessage}</div>
+            {validationMessage || charactersCounter ? (
+                <div className="input-field__validation">
+                    {validationMessage ? (
+                        <div className="input-field__validation-message">{validationMessage}</div>
+                    ) : null}
+                    {charactersCounter !== undefined && value.length > 0 ? (
+                        <div
+                            className={classNames('input-field__characters-counter', {
+                                ['input-field__characters-counter--error']:
+                                    value.length > charactersCounter,
+                            })}
+                        >
+                            {value.length}/{charactersCounter}
+                        </div>
+                    ) : null}
+                </div>
             ) : null}
         </div>
     );

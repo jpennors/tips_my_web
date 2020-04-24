@@ -49,6 +49,9 @@ export const ContactModalContent: React.FunctionComponent = () => {
         if (!messageInputValue) {
             setMessageValidationMessage('Your message is empty!');
             isFormValid = false;
+        } else if (messageInputValue.length > 500) {
+            setMessageValidationMessage("Your message can't be longer than 500 characters");
+            isFormValid = false;
         } else {
             setMessageValidationMessage('');
         }
@@ -79,7 +82,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
             <div className="contact-modal-content__subtitle">
                 {!hasSubmitSuccess
                     ? 'Send us your comments!'
-                    : 'Your message was successfully submitted!'}{' '}
+                    : 'Your message was successfully submitted!'}
             </div>
             <div className="contact-modal-content__body">
                 <form className="contact-modal-content__form">
@@ -106,6 +109,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                         validationMessage={messageValidationMessage}
                         isInvalid={messageValidationMessage.length > 0}
                         isDisabled={isSubmitPending || hasSubmitSuccess}
+                        charactersCounter={500}
                     />
                 </form>
             </div>

@@ -51,6 +51,11 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
         if (!descriptionInputValue) {
             setDescriptionValidationMessage('Please add a quick description');
             isFormValid = false;
+        } else if (descriptionInputValue.length > 250 || descriptionInputValue.length < 10) {
+            setDescriptionValidationMessage(
+                'The description should be between 10 and 250 characters',
+            );
+            isFormValid = false;
         } else {
             setDescriptionValidationMessage('');
         }
@@ -108,6 +113,7 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                         validationMessage={descriptionValidationMessage}
                         isInvalid={descriptionValidationMessage.length > 0}
                         isDisabled={isSubmitPending || hasSubmitSuccess}
+                        charactersCounter={250}
                     />
                 </form>
             </div>
@@ -120,7 +126,7 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
             </div>
             {hasSubmitError ? (
                 <div className="contact-modal-content__submit-error">
-                    We&apos;re having trouble submitting your message, please try again!
+                    We&apos;re having trouble submitting your suggestion, please try again!
                 </div>
             ) : null}
         </div>
