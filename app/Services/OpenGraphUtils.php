@@ -8,22 +8,22 @@ use OpenGraph;
 class OpenGraphUtils
 {
 
-    protected $open_grap_data = array();
+    protected $open_graph_data = array();
 
     public function __construct($url)
     {
-        $this->open_grap_data = OpenGraph::fetch($url);
+        $this->open_graph_data = OpenGraph::fetch($url);
     }
 
     public function getOpenGraph()
     {
-        return $this->open_grap_data;
+        return $this->open_graph_data;
     }
 
     protected function getCustomField($field)
     {
-        if (array_key_exists($field, $this->open_grap_data)) {
-            return $this->open_grap_data[$field];
+        if (array_key_exists($field, $this->open_graph_data)) {
+            return $this->open_graph_data[$field];
         }
         return null;
     }
