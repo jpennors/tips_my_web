@@ -7,6 +7,32 @@ import { isValidEmail } from 'tmw-main/utils/form-validation';
 
 import './contact-modal-content.less';
 
+const getContactValidationMessages = (
+    email: string,
+    message: string,
+): { email: string; message: string } => {
+    const validationMessages = {
+        email: '',
+        message: '',
+    };
+
+    if (!email) {
+        validationMessages.email = 'You need to provide an email address here';
+    } else if (!isValidEmail(email)) {
+        validationMessages.email = 'The provided email address is not valid';
+    } else if (email.length > VALIDATION.EMAIL_MAX_LENGTH) {
+        validationMessages.email = `Your email can't be longer than ${VALIDATION.EMAIL_MAX_LENGTH} characters`;
+    }
+
+    if (!message) {
+        validationMessages.message = 'Your message is empty!';
+    } else if (message.length > VALIDATION.MESSAGE_MAX_LENGTH) {
+        validationMessages.message = `Your message can't be longer than ${VALIDATION.MESSAGE_MAX_LENGTH} characters`;
+    }
+
+    return validationMessages;
+};
+
 export const ContactModalContent: React.FunctionComponent = () => {
     const [emailInputValue, setEmailInputValue] = React.useState<string>('');
     const [messageInputValue, setMessageInputValue] = React.useState<string>('');
@@ -28,36 +54,10 @@ export const ContactModalContent: React.FunctionComponent = () => {
     };
 
     const submitContactForm = async (): Promise<void> => {
-        let isFormValid = true;
-
-        // Email validation
-        if (!emailInputValue) {
-            setEmailValidationMessage('You need to provide an email address here');
-            isFormValid = false;
-        } else if (!isValidEmail(emailInputValue)) {
-            setEmailValidationMessage('The provided email address is not valid');
-            isFormValid = false;
-        } else if (emailInputValue.length > VALIDATION.EMAIL_MAX_LENGTH) {
-            setEmailValidationMessage(
-                `Your email can't be longer than ${VALIDATION.EMAIL_MAX_LENGTH} characters`,
-            );
-            isFormValid = false;
-        } else {
-            setEmailValidationMessage('');
-        }
-
-        // Message validation
-        if (!messageInputValue) {
-            setMessageValidationMessage('Your message is empty!');
-            isFormValid = false;
-        } else if (messageInputValue.length > VALIDATION.MESSAGE_MAX_LENGTH) {
-            setMessageValidationMessage(
-                `Your message can't be longer than ${VALIDATION.MESSAGE_MAX_LENGTH} characters`,
-            );
-            isFormValid = false;
-        } else {
-            setMessageValidationMessage('');
-        }
+        const validationMessages = getContactValidationMessages(emailInputValue, messageInputValue);
+        const isFormValid = !validationMessages.email && !validationMessages.message;
+        setEmailValidationMessage(validationMessages.email);
+        setMessageValidationMessage(validationMessages.message);
 
         if (isFormValid) {
             const payload = {

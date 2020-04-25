@@ -7,6 +7,35 @@ import { InputField } from 'tmw-main/components/InputField';
 
 import './suggestion-modal-content.less';
 
+const getSuggestionValidationMessages = (
+    address: string,
+    description: string,
+): { address: string; description: string } => {
+    const validationMessages = {
+        address: '',
+        description: '',
+    };
+
+    if (!address) {
+        validationMessages.address = "You need to provide the website's url here";
+    } else if (!isValidUrl(address)) {
+        validationMessages.address = 'The provided URL is not valid';
+    } else if (address.length > VALIDATION.URL_MAX_LENGTH) {
+        validationMessages.address = `The URL can't be longer than ${VALIDATION.URL_MAX_LENGTH} characters`;
+    }
+
+    if (!description) {
+        validationMessages.description = 'Please add a quick description';
+    } else if (
+        description.length > VALIDATION.DESCRIPTION_MAX_LENGTH ||
+        description.length < VALIDATION.DESCRIPTION_MIN_LENGTH
+    ) {
+        validationMessages.description = `The description should be between ${VALIDATION.DESCRIPTION_MIN_LENGTH} and ${VALIDATION.DESCRIPTION_MAX_LENGTH} characters`;
+    }
+
+    return validationMessages;
+};
+
 export const SuggestionModalContent: React.FunctionComponent = () => {
     const [addressInputValue, setAddressInputValue] = React.useState<string>('');
     const [descriptionInputValue, setDescriptionInputValue] = React.useState<string>('');
@@ -30,39 +59,13 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
     };
 
     const submitSuggestionForm = async (): Promise<void> => {
-        let isFormValid = true;
-
-        // URL validation
-        if (!addressInputValue) {
-            setAddressValidationMessage("You need to provide the website's url here");
-            isFormValid = false;
-        } else if (!isValidUrl(addressInputValue)) {
-            setAddressValidationMessage('The provided URL is not valid');
-            isFormValid = false;
-        } else if (addressInputValue.length > VALIDATION.URL_MAX_LENGTH) {
-            setAddressValidationMessage(
-                `The URL can't be longer than ${VALIDATION.URL_MAX_LENGTH} characters`,
-            );
-            isFormValid = false;
-        } else {
-            setAddressValidationMessage('');
-        }
-
-        // Description validation
-        if (!descriptionInputValue) {
-            setDescriptionValidationMessage('Please add a quick description');
-            isFormValid = false;
-        } else if (
-            descriptionInputValue.length > VALIDATION.DESCRIPTION_MAX_LENGTH ||
-            descriptionInputValue.length < VALIDATION.DESCRIPTION_MIN_LENGTH
-        ) {
-            setDescriptionValidationMessage(
-                `The description should be between ${VALIDATION.DESCRIPTION_MIN_LENGTH} and ${VALIDATION.DESCRIPTION_MAX_LENGTH} characters`,
-            );
-            isFormValid = false;
-        } else {
-            setDescriptionValidationMessage('');
-        }
+        const validationMessages = getSuggestionValidationMessages(
+            addressInputValue,
+            descriptionInputValue,
+        );
+        const isFormValid = !validationMessages.address && !validationMessages.description;
+        setAddressValidationMessage(validationMessages.address);
+        setDescriptionValidationMessage(validationMessages.description);
 
         if (isFormValid) {
             const payload = {
