@@ -27,13 +27,13 @@ export const LayoutHeader: React.FunctionComponent = () => {
         {
             id: 'share-website',
             title: 'Share a website',
-            modal: !isMobileViewport ? SuggestionModalContent : null,
+            modalContent: !isMobileViewport ? SuggestionModalContent : null,
             link: isMobileViewport ? MAIN_APP_ROUTES.SUGGESTION : null,
         },
         {
             id: 'contact',
             title: 'Contact',
-            modal: !isMobileViewport ? ContactModalContent : null,
+            modalContent: !isMobileViewport ? ContactModalContent : null,
             link: isMobileViewport ? MAIN_APP_ROUTES.CONTACT : null,
         },
     ];
@@ -49,14 +49,20 @@ export const LayoutHeader: React.FunctionComponent = () => {
                 </p>
             )}
             <div className="layout-header__links">
-                {links.map(({ title, modal: Modal, link, id }) => {
-                    if (Modal) {
+                {links.map(({ title, modalContent: ModalContent, link, id }) => {
+                    if (ModalContent) {
                         return (
                             <HeaderModal
                                 key={id}
-                                content={<Modal />}
                                 target={<a className="layout-header__link">{title}</a>}
-                            />
+                            >
+                                {(closeModalAction): React.ReactNode => (
+                                    <ModalContent
+                                        finishedAction={closeModalAction}
+                                        finishedLabel="CLOSE"
+                                    />
+                                )}
+                            </HeaderModal>
                         );
                     } else if (link) {
                         return (

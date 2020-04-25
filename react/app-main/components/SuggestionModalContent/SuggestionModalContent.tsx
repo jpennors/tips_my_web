@@ -36,7 +36,15 @@ const getSuggestionValidationMessages = (
     return validationMessages;
 };
 
-export const SuggestionModalContent: React.FunctionComponent = () => {
+interface SuggestionModalContentProps {
+    finishedAction: () => void;
+    finishedLabel: string;
+}
+
+export const SuggestionModalContent: React.FunctionComponent<SuggestionModalContentProps> = ({
+    finishedAction,
+    finishedLabel,
+}) => {
     const [addressInputValue, setAddressInputValue] = React.useState<string>('');
     const [descriptionInputValue, setDescriptionInputValue] = React.useState<string>('');
     const [addressValidationMessage, setAddressValidationMessage] = React.useState<string>('');
@@ -137,6 +145,8 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                     onClick={submitSuggestionForm}
                     isValid={hasSubmitSuccess}
                     isPending={isSubmitPending}
+                    finishedLabel={finishedLabel}
+                    finishedAction={finishedAction}
                 />
             </div>
             {hasSubmitError ? (

@@ -8,12 +8,16 @@ interface SubmitButtonProps {
     onClick?: () => void;
     isValid?: boolean;
     isPending?: boolean;
+    finishedLabel: string;
+    finishedAction: () => void;
 }
 
 export const SubmitButton: React.FunctionComponent<SubmitButtonProps> = ({
     onClick,
     isValid,
     isPending,
+    finishedLabel,
+    finishedAction,
 }) => {
     const [isFinished, setIsFinished] = React.useState<boolean>(false);
 
@@ -25,7 +29,7 @@ export const SubmitButton: React.FunctionComponent<SubmitButtonProps> = ({
         }
     }, [isValid]);
 
-    const buttonLabel = isFinished ? 'CLOSE' : isValid ? <TickIcon width={16} /> : 'SUBMIT';
+    const buttonLabel = isFinished ? finishedLabel : isValid ? <TickIcon width={16} /> : 'SUBMIT';
 
     return (
         <div
@@ -37,7 +41,9 @@ export const SubmitButton: React.FunctionComponent<SubmitButtonProps> = ({
             })}
             onClick={isValid || isPending ? undefined : onClick}
         >
-            <span className="submit-button__text">{buttonLabel}</span>
+            <span className="submit-button__text" onClick={isFinished ? finishedAction : undefined}>
+                {buttonLabel}
+            </span>
         </div>
     );
 };

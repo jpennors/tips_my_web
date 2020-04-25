@@ -33,7 +33,15 @@ const getContactValidationMessages = (
     return validationMessages;
 };
 
-export const ContactModalContent: React.FunctionComponent = () => {
+interface ContactModalContentProps {
+    finishedAction: () => void;
+    finishedLabel: string;
+}
+
+export const ContactModalContent: React.FunctionComponent<ContactModalContentProps> = ({
+    finishedAction,
+    finishedLabel,
+}) => {
     const [emailInputValue, setEmailInputValue] = React.useState<string>('');
     const [messageInputValue, setMessageInputValue] = React.useState<string>('');
     const [emailValidationMessage, setEmailValidationMessage] = React.useState<string>('');
@@ -129,6 +137,8 @@ export const ContactModalContent: React.FunctionComponent = () => {
                     onClick={submitContactForm}
                     isValid={hasSubmitSuccess}
                     isPending={isSubmitPending}
+                    finishedLabel={finishedLabel}
+                    finishedAction={finishedAction}
                 />
             </div>
             {hasSubmitError ? (
