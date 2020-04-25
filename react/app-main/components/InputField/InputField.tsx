@@ -4,7 +4,7 @@ import * as classNames from 'classnames';
 import './input-field.less';
 
 interface InputFieldProps {
-    type: 'text' | 'number' | 'textarea';
+    type: 'text' | 'number' | 'email' | 'textarea';
     name: string;
     value: string;
     isRequired?: boolean;

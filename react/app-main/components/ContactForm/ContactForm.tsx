@@ -104,10 +104,10 @@ export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
                     : 'Your message was successfully submitted!'}
             </div>
             <div className="contact-form__body">
-                <form className="contact-form__form">
+                <form className="contact-form__form" autoComplete="off">
                     <InputField
                         className="contact-form__email-input"
-                        type="text"
+                        type="email"
                         placeholder="Your email"
                         name="email-input"
                         value={emailInputValue}

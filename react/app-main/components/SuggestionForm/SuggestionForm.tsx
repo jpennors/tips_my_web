@@ -112,7 +112,7 @@ export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps
                     : 'Your suggestion was successfully submitted!'}
             </div>
             <div className="suggestion-form__body">
-                <form className="suggestion-form__form">
+                <form className="suggestion-form__form" autoComplete="off">
                     <InputField
                         className="suggestion-form__address-input"
                         type="text"
