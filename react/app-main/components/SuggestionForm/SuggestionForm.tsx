@@ -5,9 +5,46 @@ import { addHttpPrefix, isValidUrl } from 'tmw-main/utils/form-validation';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { InputField } from 'tmw-main/components/InputField';
 
-import './suggestion-modal-content.less';
+import './suggestion-form.less';
 
-export const SuggestionModalContent: React.FunctionComponent = () => {
+const getSuggestionValidationMessages = (
+    address: string,
+    description: string,
+): { address: string; description: string } => {
+    const validationMessages = {
+        address: '',
+        description: '',
+    };
+
+    if (!address) {
+        validationMessages.address = "You need to provide the website's url here";
+    } else if (!isValidUrl(address)) {
+        validationMessages.address = 'The provided URL is not valid';
+    } else if (address.length > VALIDATION.URL_MAX_LENGTH) {
+        validationMessages.address = `The URL can't be longer than ${VALIDATION.URL_MAX_LENGTH} characters`;
+    }
+
+    if (!description) {
+        validationMessages.description = 'Please add a quick description';
+    } else if (
+        description.length > VALIDATION.DESCRIPTION_MAX_LENGTH ||
+        description.length < VALIDATION.DESCRIPTION_MIN_LENGTH
+    ) {
+        validationMessages.description = `The description should be between ${VALIDATION.DESCRIPTION_MIN_LENGTH} and ${VALIDATION.DESCRIPTION_MAX_LENGTH} characters`;
+    }
+
+    return validationMessages;
+};
+
+interface SuggestionModalContentProps {
+    finishedAction: () => void;
+    finishedLabel: string;
+}
+
+export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps> = ({
+    finishedAction,
+    finishedLabel,
+}) => {
     const [addressInputValue, setAddressInputValue] = React.useState<string>('');
     const [descriptionInputValue, setDescriptionInputValue] = React.useState<string>('');
     const [addressValidationMessage, setAddressValidationMessage] = React.useState<string>('');
@@ -30,39 +67,13 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
     };
 
     const submitSuggestionForm = async (): Promise<void> => {
-        let isFormValid = true;
-
-        // URL validation
-        if (!addressInputValue) {
-            setAddressValidationMessage("You need to provide the website's url here");
-            isFormValid = false;
-        } else if (!isValidUrl(addressInputValue)) {
-            setAddressValidationMessage('The provided URL is not valid');
-            isFormValid = false;
-        } else if (addressInputValue.length > VALIDATION.URL_MAX_LENGTH) {
-            setAddressValidationMessage(
-                `The URL can't be longer than ${VALIDATION.URL_MAX_LENGTH} characters`,
-            );
-            isFormValid = false;
-        } else {
-            setAddressValidationMessage('');
-        }
-
-        // Description validation
-        if (!descriptionInputValue) {
-            setDescriptionValidationMessage('Please add a quick description');
-            isFormValid = false;
-        } else if (
-            descriptionInputValue.length > VALIDATION.DESCRIPTION_MAX_LENGTH ||
-            descriptionInputValue.length < VALIDATION.DESCRIPTION_MIN_LENGTH
-        ) {
-            setDescriptionValidationMessage(
-                `The description should be between ${VALIDATION.DESCRIPTION_MIN_LENGTH} and ${VALIDATION.DESCRIPTION_MAX_LENGTH} characters`,
-            );
-            isFormValid = false;
-        } else {
-            setDescriptionValidationMessage('');
-        }
+        const validationMessages = getSuggestionValidationMessages(
+            addressInputValue,
+            descriptionInputValue,
+        );
+        const isFormValid = !validationMessages.address && !validationMessages.description;
+        setAddressValidationMessage(validationMessages.address);
+        setDescriptionValidationMessage(validationMessages.description);
 
         if (isFormValid) {
             const payload = {
@@ -93,17 +104,17 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
     };
 
     return (
-        <div className="suggestion-modal-content">
-            <div className="suggestion-modal-content__title">Share a website</div>
-            <div className="suggestion-modal-content__subtitle">
+        <div className="suggestion-form">
+            <div className="suggestion-form__title">Share a website</div>
+            <div className="suggestion-form__subtitle">
                 {!hasSubmitSuccess
-                    ? 'Share your favorite resources with the community!'
-                    : 'Your suggestion was successfully submitted!'}
+                    ? 'Share your favorite resources with the community'
+                    : 'Your suggestion was successfully submitted'}
             </div>
-            <div className="suggestion-modal-content__body">
-                <form className="suggestion-modal-content__form">
+            <div className="suggestion-form__body">
+                <form className="suggestion-form__form" autoComplete="off">
                     <InputField
-                        className="suggestion-modal-content__address-input"
+                        className="suggestion-form__address-input"
                         type="text"
                         placeholder="The website's address"
                         name="address-input"
@@ -116,7 +127,7 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                     />
                     <InputField
                         type="textarea"
-                        className="suggestion-modal-content__description-input"
+                        className="suggestion-form__description-input"
                         placeholder="A short description"
                         name="description-input"
                         value={descriptionInputValue}
@@ -129,11 +140,13 @@ export const SuggestionModalContent: React.FunctionComponent = () => {
                     />
                 </form>
             </div>
-            <div className="suggestion-modal-content__buttons">
+            <div className="suggestion-form__buttons">
                 <SubmitButton
                     onClick={submitSuggestionForm}
                     isValid={hasSubmitSuccess}
                     isPending={isSubmitPending}
+                    finishedLabel={finishedLabel}
+                    finishedAction={finishedAction}
                 />
             </div>
             {hasSubmitError ? (

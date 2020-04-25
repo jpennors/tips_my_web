@@ -5,9 +5,43 @@ import { SubmitButton } from 'tmw-main/components/SubmitButton';
 import { VALIDATION } from 'tmw-main/constants/app-constants';
 import { isValidEmail } from 'tmw-main/utils/form-validation';
 
-import './contact-modal-content.less';
+import './contact-form.less';
 
-export const ContactModalContent: React.FunctionComponent = () => {
+const getContactValidationMessages = (
+    email: string,
+    message: string,
+): { email: string; message: string } => {
+    const validationMessages = {
+        email: '',
+        message: '',
+    };
+
+    if (!email) {
+        validationMessages.email = 'You need to provide an email address here';
+    } else if (!isValidEmail(email)) {
+        validationMessages.email = 'The provided email address is not valid';
+    } else if (email.length > VALIDATION.EMAIL_MAX_LENGTH) {
+        validationMessages.email = `Your email can't be longer than ${VALIDATION.EMAIL_MAX_LENGTH} characters`;
+    }
+
+    if (!message) {
+        validationMessages.message = 'Your message is empty!';
+    } else if (message.length > VALIDATION.MESSAGE_MAX_LENGTH) {
+        validationMessages.message = `Your message can't be longer than ${VALIDATION.MESSAGE_MAX_LENGTH} characters`;
+    }
+
+    return validationMessages;
+};
+
+interface ContactFormProps {
+    finishedAction: () => void;
+    finishedLabel: string;
+}
+
+export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
+    finishedAction,
+    finishedLabel,
+}) => {
     const [emailInputValue, setEmailInputValue] = React.useState<string>('');
     const [messageInputValue, setMessageInputValue] = React.useState<string>('');
     const [emailValidationMessage, setEmailValidationMessage] = React.useState<string>('');
@@ -28,36 +62,10 @@ export const ContactModalContent: React.FunctionComponent = () => {
     };
 
     const submitContactForm = async (): Promise<void> => {
-        let isFormValid = true;
-
-        // Email validation
-        if (!emailInputValue) {
-            setEmailValidationMessage('You need to provide an email address here');
-            isFormValid = false;
-        } else if (!isValidEmail(emailInputValue)) {
-            setEmailValidationMessage('The provided email address is not valid');
-            isFormValid = false;
-        } else if (emailInputValue.length > VALIDATION.EMAIL_MAX_LENGTH) {
-            setEmailValidationMessage(
-                `Your email can't be longer than ${VALIDATION.EMAIL_MAX_LENGTH} characters`,
-            );
-            isFormValid = false;
-        } else {
-            setEmailValidationMessage('');
-        }
-
-        // Message validation
-        if (!messageInputValue) {
-            setMessageValidationMessage('Your message is empty!');
-            isFormValid = false;
-        } else if (messageInputValue.length > VALIDATION.MESSAGE_MAX_LENGTH) {
-            setMessageValidationMessage(
-                `Your message can't be longer than ${VALIDATION.MESSAGE_MAX_LENGTH} characters`,
-            );
-            isFormValid = false;
-        } else {
-            setMessageValidationMessage('');
-        }
+        const validationMessages = getContactValidationMessages(emailInputValue, messageInputValue);
+        const isFormValid = !validationMessages.email && !validationMessages.message;
+        setEmailValidationMessage(validationMessages.email);
+        setMessageValidationMessage(validationMessages.message);
 
         if (isFormValid) {
             const payload = {
@@ -88,18 +96,18 @@ export const ContactModalContent: React.FunctionComponent = () => {
     };
 
     return (
-        <div className="contact-modal-content">
-            <div className="contact-modal-content__title">Contact</div>
-            <div className="contact-modal-content__subtitle">
+        <div className="contact-form">
+            <div className="contact-form__title">Contact</div>
+            <div className="contact-form__subtitle">
                 {!hasSubmitSuccess
-                    ? 'Send us your comments!'
-                    : 'Your message was successfully submitted!'}
+                    ? 'Give us your feedback!'
+                    : 'Your message was successfully submitted'}
             </div>
-            <div className="contact-modal-content__body">
-                <form className="contact-modal-content__form">
+            <div className="contact-form__body">
+                <form className="contact-form__form" autoComplete="off">
                     <InputField
-                        className="contact-modal-content__email-input"
-                        type="text"
+                        className="contact-form__email-input"
+                        type="email"
                         placeholder="Your email"
                         name="email-input"
                         value={emailInputValue}
@@ -111,7 +119,7 @@ export const ContactModalContent: React.FunctionComponent = () => {
                     />
                     <InputField
                         type="textarea"
-                        className="contact-modal-content__message-input"
+                        className="contact-form__message-input"
                         placeholder="Tell us what you think"
                         name="messageInput"
                         value={messageInputValue}
@@ -124,15 +132,17 @@ export const ContactModalContent: React.FunctionComponent = () => {
                     />
                 </form>
             </div>
-            <div className="contact-modal-content__buttons">
+            <div className="contact-form__buttons">
                 <SubmitButton
                     onClick={submitContactForm}
                     isValid={hasSubmitSuccess}
                     isPending={isSubmitPending}
+                    finishedLabel={finishedLabel}
+                    finishedAction={finishedAction}
                 />
             </div>
             {hasSubmitError ? (
-                <div className="contact-modal-content__submit-error">
+                <div className="contact-form__submit-error">
                     We&apos;re having trouble submitting your message, please try again!
                 </div>
             ) : null}
