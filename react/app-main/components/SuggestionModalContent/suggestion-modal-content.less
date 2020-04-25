@@ -4,52 +4,32 @@
     font-family: @app-font-regular;
     text-align: center;
     color: black;
+    width: 350px;
 
     &__title {
         font-family: @app-font-medium;
-        font-size: 20px;
+        font-size: @app-font-size-large;
         margin-bottom: 3px;
     }
 
     &__subtitle {
-        font-size: 16px;
+        font-family: @app-font-regular;
+        font-size: @app-font-size-medium;
         margin-bottom: 15px;
     }
 
     &__body {
-        font-size: 13px;
+        font-size: @app-font-size-medium;
     }
 
     &__address-input {
-        margin-bottom: 15px;
-        padding: 10px;
-        width: 100%;
-        height: 40px;
-        background: white;
-        box-sizing: border-box;
-        border-radius: 10px;
-        border: 0;
-        outline: none;
-        font-size: 13px;
-        font-family: @app-font-light;
     }
 
     &__description-input {
-        padding: 10px;
-        width: 100%;
         height: 120px;
-        background: white;
-        box-sizing: border-box;
-        border-radius: 10px;
-        border: 0;
-        resize: none;
-        outline: none;
-        font-size: 13px;
-        font-family: @app-font-light;
     }
 
     &__buttons {
-        margin-top: 15px;
         height: 40px;
         display: flex;
         flex-direction: row;
@@ -57,5 +37,13 @@
         justify-content: center;
         align-content: stretch;
         align-items: center;
+    }
+
+    &__submit-error {
+        color: @app-color-background-red;
+        font-size: @app-font-size-medium;
+        font-family: @app-font-regular;
+        text-align: center;
+        margin-top: 10px;
     }
 }

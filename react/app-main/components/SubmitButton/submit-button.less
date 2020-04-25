@@ -1,0 +1,64 @@
+@import '../../constants/ui-constants';
+
+.submit-button {
+    font-family: @app-font-medium;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 10px;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 38px;
+    width: 120px;
+    color: white;
+
+    &--waiting {
+        box-shadow: 2px 2px 10px 1px rgba(85,85,85,0.20);
+        transition: all .15s ease-in-out;
+        cursor: pointer;
+        background-color: @app-color-background-red;
+        background-image: linear-gradient(-240deg, @app-color-background-red, @app-color-background-orange);
+
+        &:hover {
+            transform: scale(1.03);
+        }
+
+        &:active {
+            transform: scale(0.97);
+        }
+    }
+
+    &--pending {
+        transition: all 0.20s ease-in-out;
+        width: 38px;
+        background: rgba(0, 0, 0, 0);
+        box-shadow: none;
+
+        border: 3px solid @app-color-background-red;
+        border-right: 3px solid @app-color-light-grey-1;
+        animation: submit-button-loading-animation .8s linear infinite;
+        animation-delay: 0.20s;
+
+        .submit-button__text {
+            opacity: 0;
+        }
+    }
+
+    &--valid {
+        transition: all 0.20s ease-in-out;
+        background: @app-color-green;
+        box-shadow: none;
+    }
+
+    @keyframes submit-button-loading-animation {
+        0% {
+            transform: rotateZ(0deg);
+        }
+        100% {
+            transform: rotateZ(360deg);
+        }
+    }
+}
