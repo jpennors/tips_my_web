@@ -5,7 +5,7 @@ import { SubmitButton } from 'tmw-main/components/SubmitButton';
 import { VALIDATION } from 'tmw-main/constants/app-constants';
 import { isValidEmail } from 'tmw-main/utils/form-validation';
 
-import './contact-modal-content.less';
+import './contact-form.less';
 
 const getContactValidationMessages = (
     email: string,
@@ -33,12 +33,12 @@ const getContactValidationMessages = (
     return validationMessages;
 };
 
-interface ContactModalContentProps {
+interface ContactFormProps {
     finishedAction: () => void;
     finishedLabel: string;
 }
 
-export const ContactModalContent: React.FunctionComponent<ContactModalContentProps> = ({
+export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
     finishedAction,
     finishedLabel,
 }) => {
@@ -96,17 +96,17 @@ export const ContactModalContent: React.FunctionComponent<ContactModalContentPro
     };
 
     return (
-        <div className="contact-modal-content">
-            <div className="contact-modal-content__title">Contact</div>
-            <div className="contact-modal-content__subtitle">
+        <div className="contact-form">
+            <div className="contact-form__title">Contact</div>
+            <div className="contact-form__subtitle">
                 {!hasSubmitSuccess
                     ? 'Send us your comments!'
                     : 'Your message was successfully submitted!'}
             </div>
-            <div className="contact-modal-content__body">
-                <form className="contact-modal-content__form">
+            <div className="contact-form__body">
+                <form className="contact-form__form">
                     <InputField
-                        className="contact-modal-content__email-input"
+                        className="contact-form__email-input"
                         type="text"
                         placeholder="Your email"
                         name="email-input"
@@ -119,7 +119,7 @@ export const ContactModalContent: React.FunctionComponent<ContactModalContentPro
                     />
                     <InputField
                         type="textarea"
-                        className="contact-modal-content__message-input"
+                        className="contact-form__message-input"
                         placeholder="Tell us what you think"
                         name="messageInput"
                         value={messageInputValue}
@@ -132,7 +132,7 @@ export const ContactModalContent: React.FunctionComponent<ContactModalContentPro
                     />
                 </form>
             </div>
-            <div className="contact-modal-content__buttons">
+            <div className="contact-form__buttons">
                 <SubmitButton
                     onClick={submitContactForm}
                     isValid={hasSubmitSuccess}
@@ -142,7 +142,7 @@ export const ContactModalContent: React.FunctionComponent<ContactModalContentPro
                 />
             </div>
             {hasSubmitError ? (
-                <div className="contact-modal-content__submit-error">
+                <div className="contact-form__submit-error">
                     We&apos;re having trouble submitting your message, please try again!
                 </div>
             ) : null}

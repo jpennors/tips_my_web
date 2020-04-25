@@ -5,7 +5,7 @@ import { addHttpPrefix, isValidUrl } from 'tmw-main/utils/form-validation';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { InputField } from 'tmw-main/components/InputField';
 
-import './suggestion-modal-content.less';
+import './suggestion-form.less';
 
 const getSuggestionValidationMessages = (
     address: string,
@@ -41,7 +41,7 @@ interface SuggestionModalContentProps {
     finishedLabel: string;
 }
 
-export const SuggestionModalContent: React.FunctionComponent<SuggestionModalContentProps> = ({
+export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps> = ({
     finishedAction,
     finishedLabel,
 }) => {
@@ -104,17 +104,17 @@ export const SuggestionModalContent: React.FunctionComponent<SuggestionModalCont
     };
 
     return (
-        <div className="suggestion-modal-content">
-            <div className="suggestion-modal-content__title">Share a website</div>
-            <div className="suggestion-modal-content__subtitle">
+        <div className="suggestion-form">
+            <div className="suggestion-form__title">Share a website</div>
+            <div className="suggestion-form__subtitle">
                 {!hasSubmitSuccess
                     ? 'Share your favorite resources with the community!'
                     : 'Your suggestion was successfully submitted!'}
             </div>
-            <div className="suggestion-modal-content__body">
-                <form className="suggestion-modal-content__form">
+            <div className="suggestion-form__body">
+                <form className="suggestion-form__form">
                     <InputField
-                        className="suggestion-modal-content__address-input"
+                        className="suggestion-form__address-input"
                         type="text"
                         placeholder="The website's address"
                         name="address-input"
@@ -127,7 +127,7 @@ export const SuggestionModalContent: React.FunctionComponent<SuggestionModalCont
                     />
                     <InputField
                         type="textarea"
-                        className="suggestion-modal-content__description-input"
+                        className="suggestion-form__description-input"
                         placeholder="A short description"
                         name="description-input"
                         value={descriptionInputValue}
@@ -140,7 +140,7 @@ export const SuggestionModalContent: React.FunctionComponent<SuggestionModalCont
                     />
                 </form>
             </div>
-            <div className="suggestion-modal-content__buttons">
+            <div className="suggestion-form__buttons">
                 <SubmitButton
                     onClick={submitSuggestionForm}
                     isValid={hasSubmitSuccess}

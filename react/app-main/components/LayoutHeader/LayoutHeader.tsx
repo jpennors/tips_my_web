@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { ContactModalContent } from 'tmw-main/components/ContactModalContent';
+import { ContactForm } from 'tmw-main/components/ContactForm';
 import { HeaderModal } from 'tmw-main/components/HeaderModal';
-import { SuggestionModalContent } from 'tmw-main/components/SuggestionModalContent';
+import { SuggestionForm } from 'tmw-main/components/SuggestionForm';
 import { MAIN_APP_ROUTES, VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { MagnifyingGlassIcon } from 'tmw-main/icons/MagnifyingGlassIcon';
@@ -27,13 +27,13 @@ export const LayoutHeader: React.FunctionComponent = () => {
         {
             id: 'share-website',
             title: 'Share a website',
-            modalContent: !isMobileViewport ? SuggestionModalContent : null,
+            modalContent: !isMobileViewport ? SuggestionForm : null,
             link: isMobileViewport ? MAIN_APP_ROUTES.SUGGESTION : null,
         },
         {
             id: 'contact',
             title: 'Contact',
-            modalContent: !isMobileViewport ? ContactModalContent : null,
+            modalContent: !isMobileViewport ? ContactForm : null,
             link: isMobileViewport ? MAIN_APP_ROUTES.CONTACT : null,
         },
     ];
