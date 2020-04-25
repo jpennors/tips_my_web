@@ -100,8 +100,8 @@ export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
             <div className="contact-form__title">Contact</div>
             <div className="contact-form__subtitle">
                 {!hasSubmitSuccess
-                    ? 'Send us your comments!'
-                    : 'Your message was successfully submitted!'}
+                    ? 'Give us your feedback!'
+                    : 'Your message was successfully submitted'}
             </div>
             <div className="contact-form__body">
                 <form className="contact-form__form" autoComplete="off">

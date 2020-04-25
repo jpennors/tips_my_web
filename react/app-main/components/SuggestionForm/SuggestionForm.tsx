@@ -108,8 +108,8 @@ export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps
             <div className="suggestion-form__title">Share a website</div>
             <div className="suggestion-form__subtitle">
                 {!hasSubmitSuccess
-                    ? 'Share your favorite resources with the community!'
-                    : 'Your suggestion was successfully submitted!'}
+                    ? 'Share your favorite resources with the community'
+                    : 'Your suggestion was successfully submitted'}
             </div>
             <div className="suggestion-form__body">
                 <form className="suggestion-form__form" autoComplete="off">
