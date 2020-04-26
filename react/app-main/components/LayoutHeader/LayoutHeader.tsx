@@ -41,11 +41,15 @@ export const LayoutHeader: React.FunctionComponent = () => {
     return (
         <div className="layout-header">
             {!isMobileViewport ? (
-                <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
+                <Link to={MAIN_APP_ROUTES.HOME}>
+                    <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
+                </Link>
             ) : (
                 <p className="layout-header__logo-name">
-                    <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
-                    TipsMyWeb
+                    <Link to={MAIN_APP_ROUTES.HOME}>
+                        <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
+                        TipsMyWeb
+                    </Link>
                 </p>
             )}
             <div className="layout-header__links">
