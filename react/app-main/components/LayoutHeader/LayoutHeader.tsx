@@ -16,12 +16,8 @@ export const LayoutHeader: React.FunctionComponent = () => {
     const links = [
         {
             id: 'new-search',
-            title: (
-                <>
-                    <MagnifyingGlassIcon width={10} />
-                    &nbsp; New search
-                </>
-            ),
+            title: 'New search',
+            icon: <MagnifyingGlassIcon />,
             link: MAIN_APP_ROUTES.SEARCH,
         },
         {
@@ -53,17 +49,17 @@ export const LayoutHeader: React.FunctionComponent = () => {
                 </p>
             )}
             <div className="layout-header__links">
-                {links.map(({ title, modalContent: ModalContent, link, id }) => {
+                {links.map(({ title, modalContent: ModalContent, link, id, icon }) => {
+                    const linkItem = (
+                        <a className="layout-header__link">
+                            {icon ? <span className="layout-header__link-icon">{icon}</span> : null}{' '}
+                            <span className="layout-header__link--underline-effect">{title}</span>
+                        </a>
+                    );
+
                     if (ModalContent) {
                         return (
-                            <HeaderModal
-                                key={id}
-                                target={
-                                    <a className="layout-header__link">
-                                        <span data-content={title}>{title}</span>
-                                    </a>
-                                }
-                            >
+                            <HeaderModal key={id} target={linkItem}>
                                 {(closeModalAction): React.ReactNode => (
                                     <ModalContent
                                         finishedAction={closeModalAction}
@@ -73,11 +69,7 @@ export const LayoutHeader: React.FunctionComponent = () => {
                             </HeaderModal>
                         );
                     } else if (link) {
-                        return (
-                            <Link key={id} to={link} className="layout-header__link">
-                                <span data-content={title}>{title}</span>
-                            </Link>
-                        );
+                        return linkItem;
                     }
                     return null;
                 })}

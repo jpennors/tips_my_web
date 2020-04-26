@@ -45,25 +45,36 @@
         }
     }
 
+    &__link-icon {
+        display: inline-flex;
+        align-self: center;
+
+        svg {
+            height:1em;
+            width:1em;
+
+            top: 2px;
+            position: relative;
+        }
+    }
+
     &__link {
         font-family: @app-font-medium;
         font-size: @app-font-size-medium;
         text-decoration: none;
         color: white;
-        vertical-align: middle;
         margin-left: 20px;
         cursor: pointer;
 
-        position: relative;
-        transition: clip-path 275ms ease;
-        &:hover span::before {
+        &:hover &--underline-effect::before {
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
-        span {
+        &--underline-effect {
             position: relative;
             display: inline-block;
             color: white;
+
             &::before {
                 position: absolute;
                 height: 2px;
