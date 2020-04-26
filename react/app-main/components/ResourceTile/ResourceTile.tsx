@@ -58,30 +58,21 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                 <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
             </a>
             <div className="resource-tile__content">
-                <div className="resource-tile__pricing">
+                <div className="resource-tile__title-float-right">
                     <ResourcePricingPill pricing={resource.pricing} />
+                    <span className="resource-tile__like-resource-button">
+                        <img
+                            src={isLiked ? '/images/heart-full.svg' : '/images/heart.svg'}
+                            alt={isLiked ? 'Unlike' : 'Like'}
+                            height="15px"
+                            onClick={likeResource}
+                        />
+                    </span>
                 </div>
                 <p className="resource-tile__title">{resource.name}</p>
                 <p className="resource-tile__description">{resource.description}</p>
             </div>
             <div className="resource-tile__actions">
-                <a role="button" className="resource-tile__like-resource-button">
-                    {isLiked ? (
-                        <img
-                            src={'/images/heart-full.svg'}
-                            alt="Unlike"
-                            height="15px"
-                            onClick={likeResource}
-                        />
-                    ) : (
-                        <img
-                            src={'/images/heart.svg'}
-                            alt="Like"
-                            height="15px"
-                            onClick={likeResource}
-                        />
-                    )}
-                </a>
                 <a
                     href={resource.url}
                     onClick={() => visitWebsite(resource.id)}
