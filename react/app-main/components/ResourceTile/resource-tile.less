@@ -110,6 +110,7 @@
         position: absolute;
         bottom: -10px;
         right: 20px;
+        overflow: hidden;
 
         font-family: @app-font-regular;
         font-size: 12px;
@@ -120,5 +121,28 @@
         background-color: white;
         filter: drop-shadow(2px 2px 3px rgba(46,46,46,0.50));
         border-radius: 13px;
+
+        &:hover .resource-tile__visit-resource-button-icon svg {
+            margin-right: 1em;
+            opacity: 1;
+            transform: translateX(0px) rotateZ(180deg);
+        }
+    }
+
+    &__visit-resource-button-icon {
+        display: inline-flex;
+        align-self: center;
+        margin-left: 0.5em;
+        margin-right: -1.5em;
+
+        svg {
+            width: 1em;
+            transform: translateX(10px) rotateZ(180deg);
+            transition: all .15s cubic-bezier(.14, .59, 1, 1.01);
+            opacity: 0;
+
+            top: 2px;
+            position: relative;
+        }
     }
 }

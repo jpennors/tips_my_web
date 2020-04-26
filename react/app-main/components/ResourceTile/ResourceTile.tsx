@@ -12,6 +12,7 @@ import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 
 import './resource-tile.less';
+import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
 
 interface ResourceTileProps {
     resource: Resource;
@@ -82,6 +83,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                 className="resource-tile__visit-resource-button"
             >
                 Open website
+                <span className="resource-tile__visit-resource-button-icon"><ArrowIcon fill="#434343" /></span>
             </a>
         </div>
     );
