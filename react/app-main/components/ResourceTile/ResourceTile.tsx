@@ -53,7 +53,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                 href={resource.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => visitWebsite(resource.id)}
+                onClick={(): Promise<void> => visitWebsite(resource.id)}
             >
                 <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
             </a>
@@ -75,7 +75,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
             <div className="resource-tile__actions">
                 <a
                     href={resource.url}
-                    onClick={() => visitWebsite(resource.id)}
+                    onClick={(): Promise<void> => visitWebsite(resource.id)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="resource-tile__visit-resource-button"
