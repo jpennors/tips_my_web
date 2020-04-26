@@ -58,7 +58,11 @@ export const LayoutHeader: React.FunctionComponent = () => {
                         return (
                             <HeaderModal
                                 key={id}
-                                target={<a className="layout-header__link">{title}</a>}
+                                target={
+                                    <a className="layout-header__link">
+                                        <span data-content={title}>{title}</span>
+                                    </a>
+                                }
                             >
                                 {(closeModalAction): React.ReactNode => (
                                     <ModalContent
@@ -71,7 +75,7 @@ export const LayoutHeader: React.FunctionComponent = () => {
                     } else if (link) {
                         return (
                             <Link key={id} to={link} className="layout-header__link">
-                                {title}
+                                <span data-content={title}>{title}</span>
                             </Link>
                         );
                     }

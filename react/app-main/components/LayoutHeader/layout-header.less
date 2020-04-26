@@ -54,9 +54,29 @@
         margin-left: 20px;
         cursor: pointer;
 
-        &:hover {
-            text-decoration: underline;
+        position: relative;
+        transition: clip-path 275ms ease;
+        &:hover span::before {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        span {
+            position: relative;
+            display: inline-block;
             color: white;
+            &::before {
+                position: absolute;
+                height: 2px;
+                margin: 0 auto;
+                content: '';
+                left: 0;
+                right: 0;
+                width: 100%;
+                background-color: white;
+                bottom: -3px;
+                clip-path: polygon(0 0, 0 0, 0% 100%, 0 100%);
+                transition: clip-path 275ms ease;
+            }
         }
 
         @media (max-width: @app-viewport-breakpoint-mobile) {
