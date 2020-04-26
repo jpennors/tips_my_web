@@ -1,18 +1,21 @@
 @import '../../constants/ui-constants';
 
 .resource-tile {
-    background: white;
+    position: relative;
     display: inline-block;
-    width: 320px;
     margin: 20px;
-    filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
-    vertical-align: middle;
-    border-radius: 5px;
-    overflow: hidden;
+    width: 320px;
 
     @media (max-width: @app-viewport-breakpoint-mobile) {
         width: 95%;
         margin: 10px 0;
+    }
+
+    &__container {
+        filter: drop-shadow(3px 3px 3px rgba(46,46,46,0.30));
+        background: white;
+        border-radius: 5px;
+        overflow: hidden;
     }
 
     &__header {
@@ -54,7 +57,7 @@
     }
 
     &__content {
-        height: 100px;
+        height: 140px;
         margin-top: 12px;
         margin-left: 15px;
         margin-right: 15px;
@@ -88,16 +91,6 @@
         overflow-wrap: break-word;
     }
 
-    &__actions {
-        margin: 10px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: flex-end;
-        align-content: stretch;
-        align-items: center;
-    }
-
     &__like-resource-button {
         margin-left: 10px;
         padding-top: 2px;
@@ -114,18 +107,18 @@
     }
 
     &__visit-resource-button {
-        font-size: 10px;
-        color: white;
-        background-color: @app-color-green;
-        border-radius: 2px;
-        margin-left: 15px;
-        padding: 3px 20px;
+        position: absolute;
+        bottom: -10px;
+        right: 20px;
+
         font-family: @app-font-regular;
+        font-size: 12px;
+        padding: 6px 20px;
         text-decoration: none;
 
-        &:hover {
-            color: white;
-            background-color: @app-color-green-2;
-        }
+        color: #434343;
+        background-color: white;
+        filter: drop-shadow(2px 2px 3px rgba(46,46,46,0.50));
+        border-radius: 13px;
     }
 }
