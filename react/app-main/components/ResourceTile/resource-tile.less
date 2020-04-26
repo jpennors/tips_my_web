@@ -9,6 +9,10 @@
 
     &:hover {
         transform: translateY(-8px);
+
+        .resource-tile__icon {
+            opacity: 1;
+        }
     }
 
     @media (max-width: @app-viewport-breakpoint-mobile) {
@@ -55,9 +59,14 @@
         width: 100%;
         height: 140px;
         object-fit: cover;
+        background: white;
+
+        transition: opacity .3s @app-curve-in-out-cubic;
+        opacity: 0.85;
 
         @media (max-width: @app-viewport-breakpoint-mobile) {
             height: 30vw;
+            opacity: 1;
         }
     }
 
