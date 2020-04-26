@@ -51,14 +51,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                         <span className="resource-tile__header-dot resource-tile__header-dot--green" />
                     </div>
                 ) : null}
-                <a
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(): Promise<void> => visitWebsite(resource.id)}
-                >
-                    <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
-                </a>
+                <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
                 <div className="resource-tile__content">
                     <div className="resource-tile__title-float-right">
                         <ResourcePricingPill pricing={resource.pricing} />
@@ -83,7 +76,9 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                 className="resource-tile__visit-resource-button"
             >
                 Open website
-                <span className="resource-tile__visit-resource-button-icon"><ArrowIcon fill="#434343" /></span>
+                <span className="resource-tile__visit-resource-button-icon">
+                    <ArrowIcon fill="#434343" />
+                </span>
             </a>
         </div>
     );
