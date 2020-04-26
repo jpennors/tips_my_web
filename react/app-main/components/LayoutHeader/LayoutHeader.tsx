@@ -52,7 +52,7 @@ export const LayoutHeader: React.FunctionComponent = () => {
                 {links.map(({ title, modalContent: ModalContent, link, id, icon }) => {
                     const linkItem = (
                         <a className="layout-header__link">
-                            {icon ? <span className="layout-header__link-icon">{icon}</span> : null}{' '}
+                            {icon ? <span className="layout-header__link-icon">{icon}</span> : null}
                             <span className="layout-header__link--underline-effect">{title}</span>
                         </a>
                     );
