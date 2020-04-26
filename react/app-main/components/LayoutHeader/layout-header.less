@@ -4,6 +4,15 @@
     width: 88%;
     margin: auto auto 10px;
     padding-top: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: @app-viewport-breakpoint-mobile) {
+        flex-direction: column;
+    }
 
     &__logo {
         width: 80px;
@@ -23,12 +32,9 @@
     }
 
     &__links {
-        float: right;
         text-align: right;
-        margin-top: 28px;
 
         @media (max-width: @app-viewport-breakpoint-mobile) {
-            float: none;
             text-align: center;
             margin-top: 15px;
         }
