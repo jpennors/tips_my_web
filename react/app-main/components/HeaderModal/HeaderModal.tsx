@@ -40,7 +40,7 @@ export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({ childre
                 )}
             </Reference>
             {isOpen ? (
-                <Popper placement="bottom" modifiers={{ preventOverflow: { padding: 20 } }}>
+                <Popper placement="bottom" modifiers={{ preventOverflow: { padding: 80 } }}>
                     {({ ref, style, placement, arrowProps }): React.ReactNode => (
                         <div
                             ref={ref}
