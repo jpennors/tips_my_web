@@ -12,6 +12,7 @@ import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 
 import './resource-tile.less';
+import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
 
 interface ResourceTileProps {
     resource: Resource;
@@ -42,56 +43,43 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
 
     return (
         <div className="resource-tile">
-            {!isMobileViewport ? (
-                <div className="resource-tile__header">
-                    <span className="resource-tile__header-dot resource-tile__header-dot--red" />
-                    <span className="resource-tile__header-dot resource-tile__header-dot--yellow" />
-                    <span className="resource-tile__header-dot resource-tile__header-dot--green" />
+            <div className="resource-tile__container">
+                {!isMobileViewport ? (
+                    <div className="resource-tile__header">
+                        <span className="resource-tile__header-dot resource-tile__header-dot--red" />
+                        <span className="resource-tile__header-dot resource-tile__header-dot--yellow" />
+                        <span className="resource-tile__header-dot resource-tile__header-dot--green" />
+                    </div>
+                ) : null}
+                <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
+                <div className="resource-tile__content">
+                    <div className="resource-tile__title-float-right">
+                        <ResourcePricingPill pricing={resource.pricing} />
+                        <span className="resource-tile__like-resource-button">
+                            <img
+                                src={isLiked ? '/images/heart-full.svg' : '/images/heart.svg'}
+                                alt={isLiked ? 'Unlike' : 'Like'}
+                                height="15px"
+                                onClick={likeResource}
+                            />
+                        </span>
+                    </div>
+                    <p className="resource-tile__title">{resource.name}</p>
+                    <p className="resource-tile__description">{resource.description}</p>
                 </div>
-            ) : null}
+            </div>
             <a
                 href={resource.url}
+                onClick={(): Promise<void> => visitWebsite(resource.id)}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => visitWebsite(resource.id)}
+                className="resource-tile__visit-resource-button"
             >
-                <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
+                Open website
+                <span className="resource-tile__visit-resource-button-icon">
+                    <ArrowIcon fill="#434343" />
+                </span>
             </a>
-            <div className="resource-tile__content">
-                <div className="resource-tile__pricing">
-                    <ResourcePricingPill pricing={resource.pricing} />
-                </div>
-                <p className="resource-tile__title">{resource.name}</p>
-                <p className="resource-tile__description">{resource.description}</p>
-            </div>
-            <div className="resource-tile__actions">
-                <a role="button" className="resource-tile__like-resource-button">
-                    {isLiked ? (
-                        <img
-                            src={'/images/heart-full.svg'}
-                            alt="Unlike"
-                            height="15px"
-                            onClick={likeResource}
-                        />
-                    ) : (
-                        <img
-                            src={'/images/heart.svg'}
-                            alt="Like"
-                            height="15px"
-                            onClick={likeResource}
-                        />
-                    )}
-                </a>
-                <a
-                    href={resource.url}
-                    onClick={() => visitWebsite(resource.id)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="resource-tile__visit-resource-button"
-                >
-                    Visit →
-                </a>
-            </div>
         </div>
     );
 };

@@ -24,7 +24,6 @@ export const ResourceTilePlaceholder: React.FunctionComponent = () => {
                 <div className="resource-tile-placeholder__description-2 resource-tile-placeholder__loading" />
                 <div className="resource-tile-placeholder__description-3 resource-tile-placeholder__loading" />
             </div>
-            <div className="resource-tile-placeholder__actions" />
         </div>
     );
 };
