@@ -51,15 +51,18 @@ export const LayoutHeader: React.FunctionComponent = () => {
             <div className="layout-header__links">
                 {links.map(({ title, modalContent: ModalContent, link, id, icon }) => {
                     const linkItem = (
-                        <a className="layout-header__link">
+                        <>
                             {icon ? <span className="layout-header__link-icon">{icon}</span> : null}
                             <span className="layout-header__link--underline-effect">{title}</span>
-                        </a>
+                        </>
                     );
 
                     if (ModalContent) {
                         return (
-                            <HeaderModal key={id} target={linkItem}>
+                            <HeaderModal
+                                key={id}
+                                target={<a className="layout-header__link">{linkItem}</a>}
+                            >
                                 {(closeModalAction): React.ReactNode => (
                                     <ModalContent
                                         finishedAction={closeModalAction}
@@ -69,7 +72,11 @@ export const LayoutHeader: React.FunctionComponent = () => {
                             </HeaderModal>
                         );
                     } else if (link) {
-                        return linkItem;
+                        return (
+                            <Link key={id} to={link} className="layout-header__link">
+                                {linkItem}
+                            </Link>
+                        );
                     }
                     return null;
                 })}
