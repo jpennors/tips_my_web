@@ -10,7 +10,7 @@ export const NotFoundErrorPage: React.FunctionComponent = () => {
         <div className="not-found-error-page">
             <div className="not-found-error-page__content">
                 <img
-                    src="/images/not-found-image.svg"
+                    src="/images/not-found-error.svg"
                     alt="Not Found"
                     className="not-found-error-page__image"
                 />
