@@ -2,9 +2,6 @@
 
 .not-found-error-page {
     color: white;
-    font-size: @app-font-size-extra-large;
-    font-family: @app-font-medium;
-
     margin: auto;
     width: 75%;
 
@@ -21,8 +18,16 @@
         width: 300px;
     }
 
-    &__text {
+    &__title {
         margin-top: 20px;
+        font-size: @app-font-size-extra-large;
+        font-family: @app-font-medium;
+    }
+
+    &__subtitle {
+        margin-top: 5px;
+        font-size: @app-font-size-large;
+        font-family: @app-font-light;
     }
 
     &__back-button {

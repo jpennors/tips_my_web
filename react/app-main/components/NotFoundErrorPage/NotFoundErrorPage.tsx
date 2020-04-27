@@ -14,7 +14,8 @@ export const NotFoundErrorPage: React.FunctionComponent = () => {
                     alt="Not Found"
                     className="not-found-error-page__image"
                 />
-                <div className="not-found-error-page__text">Page not found</div>
+                <div className="not-found-error-page__title">Page not found</div>
+                <div className="not-found-error-page__subtitle">We sincerely apologize</div>
             </div>
             <div className="not-found-error-page__back-button">
                 <Link to={MAIN_APP_ROUTES.HOME}>
