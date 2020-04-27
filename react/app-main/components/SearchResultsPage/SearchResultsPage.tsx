@@ -56,7 +56,17 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                 isLoading={isLoading}
                 primarySearchTag={primarySearchTag}
             />
-            <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
+            {isLoading || hasResults ? (
+                <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
+            ) : (
+                <div className="search-results-page__no-results">
+                    <img
+                        src="/images/no-results-error.svg"
+                        alt="Not Found"
+                        className="search-results-page__no-results-image"
+                    />
+                </div>
+            )}
         </div>
     );
 };
