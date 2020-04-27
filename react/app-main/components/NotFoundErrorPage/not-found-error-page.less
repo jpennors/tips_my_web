@@ -1,0 +1,32 @@
+@import '../../constants/ui-constants';
+
+.not-found-error-page {
+    color: white;
+    font-size: @app-font-size-extra-large;
+    font-family: @app-font-medium;
+
+    margin: auto;
+    width: 75%;
+
+    @media (max-width: @app-viewport-breakpoint-mobile) {
+        width: 85%;
+    }
+
+    &__content {
+        text-align: center;
+    }
+
+    &__image {
+        margin-top: 50px;
+        width: 400px;
+    }
+
+    &__text {
+        margin-top: 20px;
+    }
+
+    &__back-button {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
