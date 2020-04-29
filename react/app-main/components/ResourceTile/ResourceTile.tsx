@@ -25,6 +25,8 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
     const [cookies, setCookie] = useCookies([resource.id]);
     const isLiked = cookies[resource.id] === 'true';
 
+    const [isImageLinkBroken, setIsImageLinkBroken] = React.useState<boolean>(false);
+
     const likeResource = async (): Promise<void> => {
         if (isLiked) {
             setCookie(resource.id, 'false', { path: '/' });
@@ -39,7 +41,16 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
         await ajaxGet(`resources/visit/${resourceId}`);
     };
 
-    const iconUrl = resource.iconFilename ? RESOURCES_BASE_URL + resource.id : DEFAULT_RESOURCE_URL;
+    const iconUrl =
+        resource.iconFilename && !isImageLinkBroken
+            ? RESOURCES_BASE_URL + resource.id
+            : DEFAULT_RESOURCE_URL;
+
+    const onImageLoadingFailed = (): void => {
+        if (!isImageLinkBroken) {
+            setIsImageLinkBroken(true);
+        }
+    };
 
     return (
         <div className="resource-tile">
@@ -51,7 +62,12 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                         <span className="resource-tile__header-dot resource-tile__header-dot--green" />
                     </div>
                 ) : null}
-                <img src={iconUrl} alt={resource.name} className="resource-tile__icon" />
+                <img
+                    src={iconUrl}
+                    alt={resource.name}
+                    className="resource-tile__icon"
+                    onError={onImageLoadingFailed}
+                />
                 <div className="resource-tile__content">
                     <div className="resource-tile__title-float-right">
                         <ResourcePricingPill pricing={resource.pricing} />
