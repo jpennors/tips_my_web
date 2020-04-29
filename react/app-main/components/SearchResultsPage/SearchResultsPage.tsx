@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router';
 import { APIBasicTag } from 'tmw-admin/constants/api-types';
+import { DocumentHead } from 'tmw-main/components/DocumentHead';
 import { SearchResultsPageTitle } from 'tmw-main/components/SearchResultsPageTitle';
 import { APIResource } from 'tmw-main/constants/api-types';
 import { PrimaryTag, Resource } from 'tmw-main/constants/app-types';
@@ -50,6 +51,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
 
     return (
         <div className="search-results-page">
+            <DocumentHead title={primarySearchTag?.name || 'Search'} />
             {!isMobileViewport ? <div className="search-results-page__top-spacing" /> : null}
             <SearchResultsPageTitle
                 hasResults={hasResults}

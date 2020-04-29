@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { BigButton } from 'tmw-main/components/BigButton';
+import { DocumentHead } from 'tmw-main/components/DocumentHead';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 
 import './not-found-error-page.less';
@@ -8,6 +9,7 @@ import './not-found-error-page.less';
 export const NotFoundErrorPage: React.FunctionComponent = () => {
     return (
         <div className="not-found-error-page">
+            <DocumentHead title="Page not found" />
             <div className="not-found-error-page__content">
                 <img
                     src="/images/not-found-error.svg"

@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { DocumentHead } from 'tmw-main/components/DocumentHead';
 
 import './about-page.less';
 
 export const AboutPage: React.FunctionComponent = () => {
     return (
         <div className="about-page">
+            <DocumentHead title="About" />
             <div className="about-page__header">About us</div>
             <div className="about-page__content">
                 <p>
