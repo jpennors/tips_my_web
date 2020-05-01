@@ -28,7 +28,7 @@ class Tag extends Model
     *
     * @var array
     */
-    protected $fillable = ['name', 'parent_id'];
+    protected $fillable = ['name', 'primary'];
 
 
     /**
@@ -72,13 +72,6 @@ class Tag extends Model
         return $this->hasMany('App\ResourceTag');
     }
 
-    /**
-     * The parent tag id
-     */
-    public function parent(){
-        return $this->belongsTo('App\Tag', 'parent_id');
-    }
-
 
     /**
      * Disable a tag
@@ -98,4 +91,20 @@ class Tag extends Model
     }
 
 
+    /**
+     * Tag is primary
+     */
+    public function setTagIsPrimary(){
+        $this->primary = true;
+        $this->save();
+    }
+
+
+    /**
+     * Tag is not primary
+     */
+    public function setTagIsSecondary(){
+        $this->primary = false;
+        $this->save();
+    }
 }
