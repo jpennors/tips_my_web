@@ -107,4 +107,60 @@ class Tag extends Model
         $this->primary = false;
         $this->save();
     }
+
+
+    /**
+     * Function to load main tags for public
+     */
+    public static function loadMainTags()
+    {
+
+        $main_tags = array();
+        $tags = Tag::with('resource_tags')->withCount('resource_tags')->get();
+        $reconstructed_resources = array()
+
+        foreach ($tags as $tag) {
+
+            // Create new tag keys
+            if ($tag->resource_tags_count > 5 && !$array_key_exists($tag->id, $main_tags)) {
+                $main_tags[$r->tag->id] = array(
+                    'id'        =>  $tag->id,
+                    'name'      =>  $tag->name,
+                    'slug'      =>  $tag->slug,
+                    'primary'   =>  $tag->primary
+                    'related_weight'   =>  array()
+                );
+            }
+
+            // Reconstruct resources with resources_tags attribute
+            foreach ($tag->resource_tags as $rt){
+                if (array_key_exists($rt->resource_id, $reconstructed_resources)) {
+                    array_push($reconstructed_resources[$rt->resource_id], $rt->tag_id);
+                } else {
+                    $reconstructed_resources[$rt->resource_id] = array();
+                }
+
+                if ($rt->tag_id !== $tag->id) {
+                    
+                }
+            }
+        }
+
+        // Insert into each tag related tags
+        foreach (array_keys($reconstructed_resources) as $resource_id){
+            foreach($reconstructed_resources[$resource_id] as $tag_id_key){
+                foreach($reconstructed_resources[$resource_id] as $tag_id_related){
+                    if ($tag_id_key !== $tag_id_related) {
+                        if (array_key_exists($tag_id_related, $main_tags[$tag_id_key]['related_weight'])) {
+                            $main_tags[$tag_id_key]['related_weight'][$tag_id_related] += 1;
+                        } else {
+                            $main_tags[$tag_id_key]['related_weight'][$tag_id_related] = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $main_tags;
+    }
 }

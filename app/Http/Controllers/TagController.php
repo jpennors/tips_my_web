@@ -17,7 +17,7 @@ class TagController extends Controller
      */
     public function indexPublic(Request $request)
     {
-        $tags = Tag::with('resource_tags')->withCount('resource_tags')->having('resource_tags_count', '>=', 5)->get();
+        $tags = Tag::loadMainTags();
 
         return response()->json($tags, 200);
     }
