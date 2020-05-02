@@ -157,9 +157,12 @@ class Tag extends Model
 
         foreach ($tags as $tag) {
 
+            if (!$tag->isTagPublic()) 
+                continue;
+
             // Create new tag keys
-            if ($tag->resource_tags_count > 5 && !$array_key_exists($tag->id, $main_tags)) {
-                $main_tags[$r->tag->id] = array(
+            if (!array_key_exists($tag->id, $main_tags)) {
+                $main_tags[$tag->id] = array(
                     'id'        =>  $tag->id,
                     'name'      =>  $tag->name,
                     'slug'      =>  $tag->slug,
