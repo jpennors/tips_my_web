@@ -153,7 +153,7 @@ class Tag extends Model
 
         $main_tags = array();
         $tags = Tag::with('resource_tags')->withCount('resource_tags')->get();
-        $reconstructed_resources = array()
+        $reconstructed_resources = array();
 
         foreach ($tags as $tag) {
 
@@ -163,8 +163,8 @@ class Tag extends Model
                     'id'        =>  $tag->id,
                     'name'      =>  $tag->name,
                     'slug'      =>  $tag->slug,
-                    'primary'   =>  $tag->primary
-                    'related_weight'   =>  array()
+                    'primary'   =>  $tag->primary,
+                    'related_weight'   =>  array(),
                 );
             }
 
@@ -173,7 +173,7 @@ class Tag extends Model
                 if (array_key_exists($rt->resource_id, $reconstructed_resources)) {
                     array_push($reconstructed_resources[$rt->resource_id], $rt->tag_id);
                 } else {
-                    $reconstructed_resources[$rt->resource_id] = array();
+                    $reconstructed_resources[$rt->resource_id] = [$rt->tag_id];
                 }
 
                 if ($rt->tag_id !== $tag->id) {
