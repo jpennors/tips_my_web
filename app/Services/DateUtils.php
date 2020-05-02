@@ -7,25 +7,21 @@ use Illuminate\Support\Carbon;
 class DateUtils
 {
 
-
     /**
-     * Get data structure to
-     * retrieve stats about visitors
+     * Get custom data range
      * 
      */
-    public static function getVisitsDateRange($start_date, $end_date){
-
+    public static function getCustomDataRange($start_date, $end_date, array $data_structure)
+    {
         $date_range = DateUtils::getDateRange($start_date, $end_date);
-        $visits_date_range = array();
+        $custom_data_range = array();
 
         foreach ($date_range as $date) {
-            $visits_date_range[$date] = array(
-                    "formatted_date" => Carbon::createFromFormat('Y-m-d', $date)->format('d/m'),
-                    "visitors"  => 0
-            );     
+            $custom_data_range[$date] = $data_structure;
+            $custom_data_range[$date]['date'] = $date;
         }
 
-        return $visits_date_range;
+        return $custom_data_range;
     }
 
 
@@ -44,5 +40,15 @@ class DateUtils
         }
         
         return $dates;
+    }
+
+
+    /**
+     * Get current date with format Y-m-d
+     * 
+     */
+    public static function getCurrentDate()
+    {
+        return Carbon::now()->format('Y-m-d');
     }
 }

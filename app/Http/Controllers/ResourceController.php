@@ -9,7 +9,7 @@ use App\Tag;
 use App\Price;
 use App\Type;
 use App\Http\Requests\ResourceRequest;
-
+use App\StatResource;
 
 class ResourceController extends Controller
 {
@@ -213,6 +213,7 @@ class ResourceController extends Controller
         $resource = Resource::findOrFail($id);
         $resource->like += 1;
         $resource->save();
+        StatResource::launchStatResourceJob($resource->id, 'like');
         return response()->json();
     }
 
@@ -232,6 +233,7 @@ class ResourceController extends Controller
         $resource = Resource::findOrFail($id);
         $resource->visits += 1;
         $resource->save();
+        StatResource::launchStatResourceJob($resource->id, 'visit');
         return response()->json();
     }
 
