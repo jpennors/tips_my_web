@@ -5,5 +5,12 @@ export function getApiDateFormat(date: Date) {
     const month_number = ("0" + (date.getMonth() + 1)).slice(-2)
     const year = date.getFullYear();
 
-    return year + "-" + month_number + "-" + day;
+    return year + '-' + month_number + '-' + day;
+}
+
+export function getTimeFromApiDate(apiDate: Date){
+    const date = new Date(apiDate);
+    return (
+        ('0' + (date.getHours() + 1)).slice(-2) + ':' + ('0' + (date.getMinutes() + 1)).slice(-2)
+    );
 }
