@@ -5,7 +5,7 @@ import { VisitorsChart } from 'tmw-admin/components/OverviewPage'
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { serializeLogsFromAPI, serializeVisitorStatsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
-import { getApiDateFormat } from '../../../common/utils/date';
+import { getApiDateFormat, getTimeFromApiDate } from '../../../common/utils/date';
 import { Log } from 'tmw-admin/constants/app-types';
 
 
@@ -96,6 +96,7 @@ export const OverviewPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>Level</Table.HeaderCell>
                             <Table.HeaderCell>Route</Table.HeaderCell>
                             <Table.HeaderCell>Localisation</Table.HeaderCell>
+                            <Table.HeaderCell>Time</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -122,6 +123,9 @@ export const OverviewPage: React.FunctionComponent = () => {
                                     ) : (
                                         '--'
                                     )}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    <span>{getTimeFromApiDate(log.createdAt)}</span>
                                 </Table.Cell>
                             </Table.Row>
                         ))}
