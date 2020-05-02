@@ -26,8 +26,6 @@ class AlterTagsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tags', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }
