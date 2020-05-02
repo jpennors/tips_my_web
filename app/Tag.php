@@ -39,7 +39,22 @@ class Tag extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
 
+    /**
+     * Define hidden attributes
+     * 
+     * @var array
+     */
     protected $hidden = ['resource_tags_count'];
+
+
+    /**
+     * Define threshold tags
+     * need to appear in ResourceTag
+     * 
+     * @var int
+     */
+    protected $threshold_resource_tags_count = 5;
+    
 
 
     /**
@@ -53,6 +68,27 @@ class Tag extends Model
             ->usingSeparator('-')
             ->doNotGenerateSlugsOnUpdate() // To guarantee that shareable URLs won't change
             ->slugsShouldBeNoLongerThan(50);
+    }
+
+
+    /**
+     * Function to check if tag may be in main app
+     * Tag may be disabled
+     * Tag may have too few linked Resources
+     * 
+     */
+    public function isTagPublic()
+    {
+        if ($this->disabled)
+            return false;
+
+        if (config('app.env') != 'production')
+            return true;
+
+        if ($this->resource_tags_count && $this->resource_tags_count > $this->threshold_resource_tags_count)
+            return true;
+        
+        return false;
     }
 
 
