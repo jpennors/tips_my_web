@@ -9,7 +9,7 @@ import { SearchTagStat } from 'tmw-admin/constants/app-types';
 
 export const SearchTagsChart: React.FunctionComponent = () => {
     const [parentTagOptions, setParentTagOptions] = React.useState<InputSelectOption[]>([]);
-    const [selectedTagOption, setselectedTagOption] = React.useState<string>('parent_id');
+    const [selectedTagOption, setselectedTagOption] = React.useState<string>('primaries');
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [searchTagsStats, setSearchTagsStats] = React.useState<SearchTagStat[]>([]);
     const [chart, setChart] = React.useState<Chart>();
@@ -17,18 +17,19 @@ export const SearchTagsChart: React.FunctionComponent = () => {
     const getParentTagOptions = (): InputSelectOption[] => {
         let options: InputSelectOption[] = [
             {
-                key: 'parent_id',
-                value: 'parent_id',
+                key: 'primaries',
+                value: 'primaries',
                 text: 'Tags principaux',
             },
         ];
-        
+
         options = options.concat(
             convertToSelectOptions(
-                searchTagsStats.filter(t => t.is_parent),
+                searchTagsStats.filter(t => t.primary),
                 'id',
                 'name',
-            ));
+            ),
+        );
 
         return options;
     };
@@ -41,7 +42,7 @@ export const SearchTagsChart: React.FunctionComponent = () => {
     const updateChartData = (selectedTagOption: string): void => {
         let labels: string[] = [];
         let data: number[] = [];
-        if (selectedTagOption === 'parent_id') {
+        if (selectedTagOption === 'primaries') {
             labels = selectDefaultLabels();
             data = selectDefaultData();
         } else {
@@ -52,23 +53,19 @@ export const SearchTagsChart: React.FunctionComponent = () => {
     };
 
     const selectLabels = (tag_id: string): string[] => {
-        return searchTagsStats
-            .filter(t => t.parent_id === tag_id || t.id === tag_id)
-            .map(t => t.name);
+        return searchTagsStats.filter(t => t.id === tag_id).map(t => t.name);
     };
 
     const selectDefaultLabels = (): string[] => {
-        return searchTagsStats.filter(t => t.is_parent).map(t => t.name);
+        return searchTagsStats.filter(t => t.primary).map(t => t.name);
     };
 
     const selectData = (tag_id: string): number[] => {
-        return searchTagsStats
-            .filter(t => t.parent_id === tag_id || t.id === tag_id)
-            .map(t => t.count);
+        return searchTagsStats.filter(t => t.id === tag_id).map(t => t.count);
     };
 
     const selectDefaultData = (): number[] => {
-        return searchTagsStats.filter(t => t.is_parent).map(t => t.count);
+        return searchTagsStats.filter(t => t.primary).map(t => t.count);
     };
 
     const updateChart = (labels: string[], data: number[]): void => {
@@ -94,8 +91,8 @@ export const SearchTagsChart: React.FunctionComponent = () => {
             .then(res => {
                 const searchTagsStatsResults = serializeSearchTagsStatsFromAPI(res.data);
                 setSearchTagsStats(searchTagsStatsResults);
-                const labels = searchTagsStatsResults.filter(t => t.is_parent).map(t => t.name);
-                const data = searchTagsStatsResults.filter(t => t.is_parent).map(t => t.count);
+                const labels = searchTagsStatsResults.filter(t => t.primary).map(t => t.name);
+                const data = searchTagsStatsResults.filter(t => t.primary).map(t => t.count);
                 setChart(
                     new Chart('search_tags', {
                         type: 'bar',

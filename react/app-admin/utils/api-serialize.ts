@@ -56,10 +56,9 @@ export const serializeTagsFromAPI = (tagsFromAPI: Array<APITag | APIBasicTag>): 
         id: tag.id,
         name: tag.name,
         slug: tag.slug,
-        parentId: 'parent' in tag && tag.parent ? tag.parent.id : null,
-        parentName: 'parent' in tag && tag.parent ? tag.parent.name : null,
+        primary: tag.primary,
         disabled: tag.disabled,
-        deleted_at: tag.deleted_at,
+        deletedAt: tag.deleted_at,
     }));
 };
 
@@ -122,10 +121,12 @@ export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
     }));
 };
 
-export const serializeVisitorStatsFromAPI = (VisitorStatsFromAPI: APIVisitorStat[]): VisitorStat[] => {
+export const serializeVisitorStatsFromAPI = (
+    VisitorStatsFromAPI: APIVisitorStat[],
+): VisitorStat[] => {
     return VisitorStatsFromAPI.map(stat => ({
         date: stat.date,
-        visitors: stat.visitors ,
+        visitors: stat.visitors,
     }));
 };
 
@@ -137,8 +138,7 @@ export const serializeSearchTagsStatsFromAPI = (
         id: searchTag.tag.id,
         name: searchTag.tag.name,
         slug: searchTag.tag.slug,
-        parent_id: searchTag.tag.parent_id,
-        is_parent: !searchTag.tag.parent_id,
+        primary: searchTag.tag.primary
     }));
 };
 
@@ -159,7 +159,7 @@ export const serializeResourceToAPI = (resource: Partial<Resource>): Partial<API
         tags: resource.tags
             ? resource.tags.map(tag => ({
                 tag_id: tag.tagId,
-                  belonging: tag.belonging,
+                belonging: tag.belonging,
               }))
             : [],
     };
@@ -168,8 +168,6 @@ export const serializeResourceToAPI = (resource: Partial<Resource>): Partial<API
 export const serializeTagToAPI = (tag: Partial<Tag>): Partial<APITag> => {
     return {
         name: tag.name,
-        parent_id: tag.parentId,
+        primary: tag.primary,
     };
 };
-
-

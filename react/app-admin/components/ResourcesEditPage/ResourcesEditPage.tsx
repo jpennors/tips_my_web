@@ -132,7 +132,7 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
     const fetchTagOptions = async (): Promise<void> => {
         return ajaxGet('tags')
             .then(res => {
-                const tags = serializeTagsFromAPI(res.data).filter(tag => !tag.deleted_at);
+                const tags = serializeTagsFromAPI(res.data).filter(tag => !tag.deletedAt);
                 setTagOptions(convertToSelectOptions(tags, 'id', 'name'));
                 setTagsMap(buildTagsMap(tags));
             })

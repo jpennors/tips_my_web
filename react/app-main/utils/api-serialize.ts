@@ -10,7 +10,7 @@ export const serializeTagsFromAPI = (tagsFromAPI: APIBasicTag[] | APITag[]): Tag
     tagsFromAPI.forEach((tag: APIBasicTag | APITag) => {
         if (tag.id in tagsMap) {
             console.error('Some tags have the same ID!');
-        } else if (tag.parent_id) {
+        } else if (!tag.primary) {
             secondaryTags.push(tag);
         } else {
             tagsMap[tag.id] = {
@@ -22,22 +22,22 @@ export const serializeTagsFromAPI = (tagsFromAPI: APIBasicTag[] | APITag[]): Tag
         }
     });
 
-    secondaryTags.forEach((tag: APIBasicTag | APITag) => {
-        const parentTagId = tag.parent_id;
-        if (parentTagId) {
-            const parentTag = 'parent' in tag ? tag.parent : tagsMap[parentTagId];
-            if (parentTag.id in tagsMap) {
-                tagsMap[parentTag.id].secondaryTags.push(tag);
-            } else {
-                tagsMap[parentTag.id] = {
-                    id: parentTag.id,
-                    name: parentTag.name,
-                    slug: parentTag.slug,
-                    secondaryTags: [tag],
-                };
-            }
-        }
-    });
+    // secondaryTags.forEach((tag: APIBasicTag | APITag) => {
+    //     const parentTagId = tag.parent_id;
+    //     if (parentTagId) {
+    //         const parentTag = 'parent' in tag ? tag.parent : tagsMap[parentTagId];
+    //         if (parentTag.id in tagsMap) {
+    //             tagsMap[parentTag.id].secondaryTags.push(tag);
+    //         } else {
+    //             tagsMap[parentTag.id] = {
+    //                 id: parentTag.id,
+    //                 name: parentTag.name,
+    //                 slug: parentTag.slug,
+    //                 secondaryTags: [tag],
+    //             };
+    //         }
+    //     }
+    // });
 
     return tagsMap;
 };

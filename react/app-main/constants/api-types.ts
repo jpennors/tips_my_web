@@ -10,11 +10,10 @@ interface APIBasicModel {
 interface APIBasicTag extends APIBasicModel {
     name: string;
     slug: string;
-    parent_id: string | null;
+    primary: boolean;
 }
 
 export interface APITag extends APIBasicTag {
-    parent: APIBasicTag;
     resource_tags: APITag[];
 }
 
