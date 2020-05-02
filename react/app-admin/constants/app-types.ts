@@ -76,6 +76,7 @@ export interface Log {
     geoipCountry: string | null;
     geoipStateName: string | null;
     geoipCity: string | null;
+    createdAt: Date;
 }
 
 export interface VisitorStat {
