@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PriceTableSeeder::class);
         $this->call(TypeTableSeeder::class);
+        $this->call(ResourceTagTablesSeeder::class);
 
     }
 }
