@@ -95,6 +95,42 @@ export const TagsPage: React.FunctionComponent = () => {
             });
     };
 
+    const setTagPrimary = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setIsLoading(true);
+        ajaxGet(`tags/primary/${tagId}`)
+            .then(() => {
+                setSuccessMessage('The tag "' + tagName + '" was successfully set as primary.');
+                return fetchTags();
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to set the tag "' + tagName + ' as primary".');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+    const setTagSeondary = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setIsLoading(true);
+        ajaxGet(`tags/secondary/${tagId}`)
+            .then(() => {
+                setSuccessMessage('The tag "' + tagName + '" was successfully set as secondary.');
+                return fetchTags();
+            })
+            .catch(() => {
+                setErrorMessage(
+                    'Error while trying to set the tag "' + tagName + ' as secondary".',
+                );
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
     React.useEffect(() => {
         fetchTags().finally(() => {
             setIsLoading(false);
@@ -146,9 +182,24 @@ export const TagsPage: React.FunctionComponent = () => {
                                 <Table.Cell>{tag.slug}</Table.Cell>
                                 <Table.Cell>
                                     {tag.primary ? (
-                                        <Label color="red">Primary</Label>
+                                        <Label
+                                            as="a"
+                                            color="teal"
+                                            onClick={(): void => {
+                                                setTagSeondary(tag.id, tag.name);
+                                            }}
+                                        >
+                                            Primary
+                                        </Label>
                                     ) : (
-                                        <Label color="red">Secondary</Label>
+                                        <Label
+                                            as="a"
+                                            onClick={(): void => {
+                                                setTagPrimary(tag.id, tag.name);
+                                            }}
+                                        >
+                                            Secondary
+                                        </Label>
                                     )}
                                 </Table.Cell>
                                 <Table.Cell>
