@@ -76,7 +76,7 @@ export const SearchTagsChart: React.FunctionComponent = () => {
         while (chart?.data.labels != null && chart.data.labels.length > 0) {
             chart.data.labels.pop();
         }
-        labels.map(l => chart?.data.labels?.push(l));
+        labels.forEach(l => chart?.data.labels?.push(l));
         chart?.data.datasets?.forEach(dataset => {
             dataset.data = data;
         });
