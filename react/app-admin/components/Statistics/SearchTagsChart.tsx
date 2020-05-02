@@ -15,21 +15,20 @@ export const SearchTagsChart: React.FunctionComponent = () => {
     const [chart, setChart] = React.useState<Chart>();
 
     const getParentTagOptions = (): InputSelectOption[] => {
-        const options: InputSelectOption[] = [
+        let options: InputSelectOption[] = [
             {
                 key: 'parent_id',
                 value: 'parent_id',
                 text: 'Tags principaux',
             },
         ];
-        searchTagsStats.filter(t => t.is_parent)
-            .map(t =>
-            options.push({
-                key: t.id,
-                value: t.id,
-                text: t.name,
-            }),
-        );
+        
+        options = options.concat(
+            convertToSelectOptions(
+                searchTagsStats.filter(t => t.is_parent),
+                'id',
+                'name',
+            ));
 
         return options;
     };
