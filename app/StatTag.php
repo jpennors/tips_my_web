@@ -63,7 +63,7 @@ class StatTag extends Model
 
 
     /**
-     * Method to save specifique action on Resource
+     * Method to save specific action on Resource
      * 
      */
     public static function saveAction($tag_id, $action)
