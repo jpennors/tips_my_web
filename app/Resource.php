@@ -11,6 +11,7 @@ use App\Tag;
 use App\Jobs\ImportImage;
 use File;
 use Storage;
+use App\Services\OpenGraphUtils;
 
 class Resource extends Model
 {
@@ -224,27 +225,15 @@ class Resource extends Model
         {
             try {
                 // Retrieve image
-                $html = file_get_contents($provided_resource['url']);
+                $og = new OpenGraphUtils($provided_resource['url']);
+                $image_url = $og->getImageUrl();
                 
-                // Research meta property in source code to get image
-                $img_meta_property = "og:image";
-                
-                if (($pos = strpos($html, $img_meta_property)) !== FALSE) {
-                    // If property found, try to get content of it
-                    $html = substr($html, $pos);
-                    $img_meta_property_attribute = "content=";
-                    if (($pos = strpos($html, "content=")) !== FALSE) {
 
-                        $html = substr($html, $pos + strlen($img_meta_property_attribute) + 1);
-                        $pos = strpos($html, " ");
-                        $image_url = substr($html, 0, $pos - 1);
-
-                        // Retrieve extension
-                        $extension = Resource::getImageExtensionFromUrl($image_url);
-                        if ($extension) {
-                            $filename = $this->id.".".$extension;
-                            $new_image = file_get_contents($image_url);
-                        }
+                if ($image_url) {
+                    $extension = Resource::getImageExtensionFromUrl($image_url);
+                    if ($extension) {
+                        $filename = $this->id.".".$extension;
+                        $new_image = file_get_contents($image_url);
                     }
                 }
 

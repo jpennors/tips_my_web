@@ -19,7 +19,7 @@ export enum LOCALES {
 }
 
 export const RESOURCES_BASE_URL = '/api/resources/image/';
-export const DEFAULT_RESOURCE_URL = '/images/default-resource-img.jpg';
+export const DEFAULT_RESOURCE_URL = '/images/default-resource-img.svg';
 
 export enum MAIN_APP_ROUTES {
     HOME = '/',
@@ -27,4 +27,14 @@ export enum MAIN_APP_ROUTES {
     RESULTS = '/results/:searchTags',
     TERMS = '/terms',
     ABOUT = '/about',
+    CONTACT = '/contact',
+    SUGGESTION = '/suggestion',
+}
+
+export enum VALIDATION {
+    EMAIL_MAX_LENGTH = 150,
+    URL_MAX_LENGTH = 150,
+    MESSAGE_MAX_LENGTH = 500,
+    DESCRIPTION_MAX_LENGTH = 250,
+    DESCRIPTION_MIN_LENGTH = 10,
 }

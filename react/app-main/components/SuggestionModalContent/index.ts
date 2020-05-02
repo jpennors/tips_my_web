@@ -1,1 +1,0 @@
-export { SuggestionModalContent } from './SuggestionModalContent';

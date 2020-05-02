@@ -4,6 +4,15 @@
     width: 88%;
     margin: auto auto 10px;
     padding-top: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: @app-viewport-breakpoint-mobile) {
+        flex-direction: column;
+    }
 
     &__logo {
         width: 80px;
@@ -20,17 +29,33 @@
         color: white;
         text-align: center;
         margin: 0;
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
     }
 
     &__links {
-        float: right;
         text-align: right;
-        margin-top: 28px;
 
         @media (max-width: @app-viewport-breakpoint-mobile) {
-            float: none;
             text-align: center;
             margin-top: 15px;
+        }
+    }
+
+    &__link-icon {
+        display: inline-flex;
+        align-self: center;
+        margin-right: 4px;
+
+        svg {
+            height:1em;
+            width:1em;
+
+            top: 2px;
+            position: relative;
         }
     }
 
@@ -39,13 +64,31 @@
         font-size: @app-font-size-medium;
         text-decoration: none;
         color: white;
-        vertical-align: middle;
         margin-left: 20px;
         cursor: pointer;
 
-        &:hover {
-            text-decoration: underline;
+        &:hover &--underline-effect::before {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        &--underline-effect {
+            position: relative;
+            display: inline-block;
             color: white;
+
+            &::before {
+                position: absolute;
+                height: 2px;
+                margin: 0 auto;
+                content: '';
+                left: 0;
+                right: 0;
+                width: 100%;
+                background-color: white;
+                bottom: -3px;
+                clip-path: polygon(0 0, 0 0, 0% 100%, 0 100%);
+                transition: clip-path 275ms ease;
+            }
         }
 
         @media (max-width: @app-viewport-breakpoint-mobile) {

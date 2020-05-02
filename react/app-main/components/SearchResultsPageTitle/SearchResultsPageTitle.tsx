@@ -23,13 +23,13 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
                         <span className="search-results-page-title__title-emphasis">workflow!</span>
                     </>
                 ) : (
-                    <>We didn`&apost find any resource for these tags...</>
+                    <>{"We didn't find any resource for these tags..."}</>
                 )}
             </div>
             <div className="search-results-page-title__subtitle">
                 {isLoading ? (
                     'Looking for great resources...'
-                ) : primarySearchTag ? (
+                ) : hasResults && primarySearchTag ? (
                     <>
                         <span className="search-results-page-title__primary-search-tag-separator">
                             /
@@ -49,7 +49,7 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
                         ))}
                     </>
                 ) : (
-                    'Please refine your search'
+                    'Please try to broaden the scope of your search'
                 )}
             </div>
         </>

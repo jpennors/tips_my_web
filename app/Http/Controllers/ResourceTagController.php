@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ResourceTag;
 use App\Resource;
+use App\StatTag;
 use App\Tag;
 
 class ResourceTagController extends Controller
@@ -19,16 +20,21 @@ class ResourceTagController extends Controller
     {
         // Retrieve tags id of requested tags
         $search_tags_slugs = $request->tags;
-        $tags_id = Tag::whereIn('slug', $search_tags_slugs)
+        $tag_ids = Tag::whereIn('slug', $search_tags_slugs)
             ->pluck('id')
             ->toArray();
+        
+        // Stats, search tags
+        foreach ($tag_ids as $tag_id) {
+            StatTag::launchStatTagJob($tag_id, 'search');
+        }
 
         // Get associated tags names
         $tags = Tag::whereIn('slug', $search_tags_slugs)
             ->get();
 
-        // Retrieve all concerning resources
-        $resource_tags = ResourceTag::with('resource')->whereIn('tag_id', $tags_id)->get();
+        // Retrieve all concerning resources 
+        $resource_tags = ResourceTag::with('resource')->whereIn('tag_id', $tag_ids)->get();
 
         // Return ordered recommendation
         return response()->json([

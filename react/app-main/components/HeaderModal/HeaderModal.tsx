@@ -4,11 +4,11 @@ import { Manager, Reference, Popper } from 'react-popper';
 import './header-modal.less';
 
 interface HeaderModalProps {
-    content: React.ReactNode;
+    children: (closeModalAction: () => void) => React.ReactNode;
     target: React.ReactNode;
 }
 
-export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({ content, target }) => {
+export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({ children, target }) => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const toggleIsOpen = (): void => {
         setIsOpen(!isOpen);
@@ -40,7 +40,7 @@ export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({ content
                 )}
             </Reference>
             {isOpen ? (
-                <Popper placement="bottom" modifiers={{ preventOverflow: { padding: 20 } }}>
+                <Popper placement="bottom" modifiers={{ preventOverflow: { padding: 80 } }}>
                     {({ ref, style, placement, arrowProps }): React.ReactNode => (
                         <div
                             ref={ref}
@@ -49,7 +49,7 @@ export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({ content
                             className="header-modal"
                         >
                             <div ref={modalRef} className="header-modal__container">
-                                {content}
+                                {children((): void => setIsOpen(false))}
                             </div>
                             <div
                                 ref={arrowProps.ref}

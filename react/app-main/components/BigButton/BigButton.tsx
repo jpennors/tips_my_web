@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
 
 import './big-button.less';
 
@@ -19,5 +20,8 @@ export const BigButton: React.FunctionComponent<BigButtonProps> = ({
         onClick={onClick}
     >
         {content}
+        <span className="big-button__icon">
+            <ArrowIcon fill="#F46D7B" />
+        </span>
     </span>
 );
