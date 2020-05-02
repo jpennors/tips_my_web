@@ -200,6 +200,6 @@ class Tag extends Model
             }
         }
 
-        return $main_tags;
+        return array_values($main_tags);
     }
 }
