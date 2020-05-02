@@ -204,7 +204,7 @@ export const TagsPage: React.FunctionComponent = () => {
                                 </Table.Cell>
                                 <Table.Cell>
                                     {tag.deletedAt ? (
-                                        <Label color="red">Deleted</Label>
+                                        <Label>Deleted</Label>
                                     ) : tag.disabled ? (
                                         <Label
                                             as="a"
