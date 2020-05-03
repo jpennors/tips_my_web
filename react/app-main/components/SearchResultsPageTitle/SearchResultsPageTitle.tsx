@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { PrimaryTag } from 'tmw-main/constants/app-types';
+import { BasicTag } from 'tmw-main/constants/app-types';
 
 import './search-results-page-title.less';
 
 interface SearchResultsPageTitleProps {
     hasResults: boolean;
     isLoading: boolean;
-    primarySearchTag: PrimaryTag | undefined;
+    mainSearchTag: BasicTag | undefined;
+    relatedSearchTags: BasicTag[];
 }
 
 export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTitleProps> = ({
     hasResults,
     isLoading,
-    primarySearchTag,
+    mainSearchTag,
+    relatedSearchTags
 }) => {
     return (
         <>
@@ -29,15 +31,15 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
             <div className="search-results-page-title__subtitle">
                 {isLoading ? (
                     'Looking for great resources...'
-                ) : hasResults && primarySearchTag ? (
+                ) : hasResults && mainSearchTag ? (
                     <>
                         <span className="search-results-page-title__primary-search-tag-separator">
                             /
                         </span>
                         <span className="search-results-page-title__primary-search-tag">
-                            {primarySearchTag.name}
+                            {mainSearchTag.name}
                         </span>
-                        {primarySearchTag.secondaryTags.map(tag => (
+                        {relatedSearchTags.map(tag => (
                             <React.Fragment key={tag.id}>
                                 <span className="search-results-page-title__secondary-search-tag-separator">
                                     /
