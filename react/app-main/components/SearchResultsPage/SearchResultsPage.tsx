@@ -3,9 +3,9 @@ import { useParams } from 'react-router';
 import { APIBasicTag } from 'tmw-admin/constants/api-types';
 import { SearchResultsPageTitle } from 'tmw-main/components/SearchResultsPageTitle';
 import { APIResource } from 'tmw-main/constants/api-types';
-import { PrimaryTag, Resource } from 'tmw-main/constants/app-types';
+import { BasicTag, Resource } from 'tmw-main/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
-import { serializeResourcesFromAPI, serializeTagsFromAPI } from 'tmw-main/utils/api-serialize';
+import { serializeResourcesFromAPI, serializeMainTagsFromAPI, serializeBasicTagsFromAPI } from 'tmw-main/utils/api-serialize';
 import { parseSearchTags } from 'tmw-main/utils/tags-search-url';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
@@ -19,7 +19,8 @@ export const SearchResultsPage: React.FunctionComponent = () => {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [resultResources, setResultResources] = React.useState<Resource[]>([]);
-    const [primarySearchTag, setPrimarySearchTag] = React.useState<PrimaryTag>();
+    const [mainSearchTag, setMainSearchTag] = React.useState<BasicTag>();
+    const [relatedSearchTags, setRelatedSearchTags] = React.useState<BasicTag[]>([]);
 
     const { searchTags } = useParams();
 
@@ -30,9 +31,12 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                 const serializedResources = serializeResourcesFromAPI(
                     response.data.resources || [],
                 );
-                const tagsMap = serializeTagsFromAPI(response.data.tags || []);
                 setResultResources(serializedResources);
-                setPrimarySearchTag(tagsMap[Object.keys(tagsMap)[0]]);
+                const tags = serializeBasicTagsFromAPI(response.data.tags || []);
+                if (tags.length > 0) {
+                    setMainSearchTag(tags[0]);
+                    setRelatedSearchTags(tags.splice(0,1));
+                }
             })
             .catch(() => {
                 // TODO: Add errors and no-results handling
@@ -54,7 +58,8 @@ export const SearchResultsPage: React.FunctionComponent = () => {
             <SearchResultsPageTitle
                 hasResults={hasResults}
                 isLoading={isLoading}
-                primarySearchTag={primarySearchTag}
+                mainSearchTag={mainSearchTag}
+                relatedSearchTags={relatedSearchTags}
             />
             {isLoading || hasResults ? (
                 <SearchResultsList resultsList={resultResources} isLoading={isLoading} />

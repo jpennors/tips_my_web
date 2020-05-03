@@ -21,10 +21,9 @@ export interface Tag {
     id: string;
     name: string;
     slug: string;
-    parentName: string | null;
-    parentId: string | null;
+    primary: boolean;
     disabled: boolean;
-    deleted_at: Date | null;
+    deletedAt: Date | null;
 }
 
 export interface ResourceTag {
@@ -89,7 +88,6 @@ export interface SearchTagStat {
     id: string;
     name: string;
     slug: string;
-    parent_id: string | null;
-    is_parent: boolean;
+    primary: boolean;
 }
 

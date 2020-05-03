@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { TagsLaunchBar } from 'tmw-main/components/TagsLaunchBar';
 import { MAIN_APP_ROUTES, SIZES } from 'tmw-main/constants/app-constants';
-import { serializeTagsFromAPI } from 'tmw-main/utils/api-serialize';
-import { PrimaryTag, SecondaryTag, TagsMap } from 'tmw-main/constants/app-types';
+import { serializeMainTagsFromAPI } from 'tmw-main/utils/api-serialize';
+import { MainTag, RelatedTag } from 'tmw-main/constants/app-types';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Tag } from 'tmw-main/components/Tag';
 import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
@@ -14,52 +14,52 @@ import './tags-selector.less';
 
 export const TagsSelector: React.FunctionComponent = () => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
-    const [primaryTag, setPrimaryTag] = React.useState<PrimaryTag>();
-    const [secondaryTags, setSecondaryTags] = React.useState<SecondaryTag[]>([]);
-    const [tagsMap, setTagsMap] = React.useState<TagsMap>({});
+    const [tags, setTags] = React.useState<MainTag[]>([]);
+    const [selectedRelatedTags, setSelectedRelatedTags] = React.useState<RelatedTag[]>([]);
+    const [selectedMainTag, setSelectedMainTag] = React.useState<MainTag>();
 
     const history = useHistory();
 
     const fetchTagOptions = (): Promise<void> => {
         return ajaxGet('main/tags')
             .then(res => {
-                const newTagsMap = serializeTagsFromAPI(res.data || []);
-                setTagsMap(newTagsMap);
+                const newTags = serializeMainTagsFromAPI(res.data || []);
+                setTags(newTags);
             })
             .catch(() => {
                 // TODO: Handle errors / no tags
             });
     };
 
-    const addSecondaryTag = (selectedTag: SecondaryTag): void => {
-        setSecondaryTags(secondaryTags.concat([selectedTag]));
+    const addRelatedTag = (selectedTag: RelatedTag): void => {
+        setSelectedRelatedTags(selectedRelatedTags.concat([selectedTag]));
     };
 
-    const removeSecondaryTag = (selectedTag: SecondaryTag): void => {
-        setSecondaryTags(secondaryTags.filter(tag => tag.id !== selectedTag.id));
+    const removeRelatedTag = (selectedTag: RelatedTag): void => {
+        setSelectedRelatedTags(selectedRelatedTags.filter(tag => tag.id !== selectedTag.id));
     };
 
-    const onSecondaryTagClick = (selectedTag: SecondaryTag): void => {
-        const index = secondaryTags.map(tag => tag.id).indexOf(selectedTag.id);
+    const onRelatedTagClick = (selectedTag: RelatedTag): void => {
+        const index = selectedRelatedTags.map(tag => tag.id).indexOf(selectedTag.id);
         if (index === -1) {
-            addSecondaryTag(selectedTag);
+            addRelatedTag(selectedTag);
         } else {
-            removeSecondaryTag(selectedTag);
+            removeRelatedTag(selectedTag);
         }
     };
 
-    const onPrimaryTagClick = (selectedTag: PrimaryTag): void => {
-        if (primaryTag) {
-            setPrimaryTag(undefined);
-            setSecondaryTags([]);
+    const onMainTagClick = (selectedTag: MainTag): void => {
+        if (selectedMainTag) {
+            setSelectedMainTag(undefined);
+            setSelectedRelatedTags([]);
         } else {
-            setPrimaryTag(selectedTag);
+            setSelectedMainTag(selectedTag);
         }
     };
 
     const launchSearch = (): void => {
-        if (primaryTag) {
-            const selectedTags = [primaryTag, ...secondaryTags];
+        if (selectedMainTag) {
+            const selectedTags = [selectedMainTag, ...selectedRelatedTags];
             const selectedTagSlugs = selectedTags.map(tag => tag.slug);
             const searchRoute = MAIN_APP_ROUTES.RESULTS.replace(
                 ':searchTags',
@@ -76,8 +76,8 @@ export const TagsSelector: React.FunctionComponent = () => {
     }, []);
 
     let barPercentage = 0;
-    barPercentage += primaryTag ? 40 : 0;
-    barPercentage += secondaryTags.length * 20;
+    barPercentage += selectedMainTag ? 40 : 0;
+    barPercentage += selectedRelatedTags.length * 20;
 
     return (
         <div className="tags-selector">
@@ -90,16 +90,16 @@ export const TagsSelector: React.FunctionComponent = () => {
                 </div>
             ) : (
                 <div className="tags-selector__container">
-                    {primaryTag && (
+                    {selectedMainTag && (
                         <div className="tags-selector__selected-primary-tag">
                             <span
                                 className="tags-selector__selected-primary-tag-arrow"
-                                onClick={(): void => onPrimaryTagClick(primaryTag)}
+                                onClick={(): void => onMainTagClick(selectedMainTag)}
                             >
                                 <ArrowIcon width={20} />
                             </span>
                             <Tag
-                                content={primaryTag.name}
+                                content={selectedMainTag.name}
                                 isSelected={false}
                                 size={SIZES.LARGE}
                                 clickable={false}
@@ -107,24 +107,25 @@ export const TagsSelector: React.FunctionComponent = () => {
                         </div>
                     )}
                     <div className="tags-selector__tag-options">
-                        {primaryTag
-                            ? primaryTag.secondaryTags.map((tag: SecondaryTag) => (
+                        {selectedMainTag
+                            ? selectedMainTag.relatedTags.map((tag: RelatedTag) => (
                                 <Tag
                                     key={tag.id}
                                     content={tag.name}
-                                    isSelected={secondaryTags.map(tag => tag.id).includes(tag.id)}
-                                    onClickCallback={(): void => onSecondaryTagClick(tag)}
+                                    isSelected={selectedRelatedTags
+                                        .map(tag => tag.id)
+                                        .includes(tag.id)}
+                                    onClickCallback={(): void => onRelatedTagClick(tag)}
                                     size={SIZES.MEDIUM}
                                 />
                               ))
-                            : Object.keys(tagsMap).map((tagId: string) => {
-                                const tag = tagsMap[tagId];
+                            : tags.map((tag) => {
                                 return (
                                     <Tag
                                         key={tag.id}
                                         content={tag.name}
                                         isSelected={false}
-                                        onClickCallback={(): void => onPrimaryTagClick(tag)}
+                                        onClickCallback={(): void => onMainTagClick(tag)}
                                         size={SIZES.MEDIUM}
                                     />
                                 );

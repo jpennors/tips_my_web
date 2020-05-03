@@ -30,10 +30,9 @@ class TagRequest extends FormRequest
                 'between:3,40',
                 'unique:tags,name,'.\Request::instance()->id.',id',
             ],
-            'parent_id'  =>  [
-                'nullable',
-                'exists:tags,id',
-            ],
+            'primary' => [
+                'boolean'
+            ]
         ];
     }
 }

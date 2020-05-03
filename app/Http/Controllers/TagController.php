@@ -10,16 +10,6 @@ use App\Http\Requests\TagRequest;
 class TagController extends Controller
 {
 
-
-    /**
-     * Check if parent_id tag does not have a parent itself
-     */
-    protected function isParentTagIdSecondary($parent_tag_id)
-    {
-        $parent_tag = Tag::find($parent_tag_id);
-        return $parent_tag->parent_id != null;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +17,7 @@ class TagController extends Controller
      */
     public function indexPublic(Request $request)
     {
-        $tags = Tag::with('parent', 'resource_tags')->withCount('resource_tags')->having('resource_tags_count', '>=', 5)->get();
+        $tags = Tag::loadMainTags();
 
         return response()->json($tags, 200);
     }
@@ -40,7 +30,7 @@ class TagController extends Controller
      */
     public function index(Request $request)
     {
-        $tags = Tag::withTrashed()->with('parent', 'resource_tags')->get();
+        $tags = Tag::withTrashed()->with('resource_tags')->get();
 
         return response()->json($tags, 200);
     }
@@ -54,11 +44,6 @@ class TagController extends Controller
      */
     public function store(TagRequest $request)
     {
-
-        // Check if the parent tag is not already a secondary tag (meaning it has already itself a parent tag)
-        if ($request->parent_id && $this->isParentTagIdSecondary($request->parent_id)) {
-            return response()->json(["parent_id" => ["The parent tag is already a secondary tag."]], 422);
-        }
 
         // Instance creation
         $tag = new Tag();
@@ -74,6 +59,7 @@ class TagController extends Controller
 
         return response()->json(Tag::find($tag->id), 201);
     }
+    
 
     /**
      * Display the specified resource.
@@ -87,6 +73,7 @@ class TagController extends Controller
         return response()->json($tag, 200);
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -96,12 +83,6 @@ class TagController extends Controller
      */
     public function update(TagRequest $request, $id)
     {
-
-
-        // Check if the parent tag is not already a secondary tag (meaning it has already itself a parent tag)
-        if ($request->parent_id && $this->isParentTagIdSecondary($request->parent_id)) {
-            return response()->json(["parent_id" => ["The parent tag is already a secondary tag."]], 422);
-        }
 
         $tag = Tag::findOrFail($id);
 
@@ -114,6 +95,7 @@ class TagController extends Controller
         }
         return response()->json($tag, 200);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -140,20 +122,12 @@ class TagController extends Controller
         return response()->json();
     }
 
+
     public function importTags(Request $request){
 
         foreach ($request->data as $tag) {
 
             $t = Tag::withTrashed()->where('name', $tag['name'])->get()->first();
-
-            $parent_tag_id = null;
-            if(array_key_exists('parent', $tag)){
-                $parent_tag = Tag::withTrashed()->where('name', $tag['parent'])->get()->first();
-                if ($parent_tag) {
-                    $parent_tag_id = $parent_tag->id;
-                }
-            }
-            $tag['parent_id'] = $parent_tag_id;
 
             // To DO vérification
 
@@ -166,7 +140,7 @@ class TagController extends Controller
             }
 
             $t->name = $tag['name'];
-            $t->parent_id = $tag['parent_id'];
+            $t->primary = $tag['primary'];
             $t->save();
         }
 
@@ -189,6 +163,24 @@ class TagController extends Controller
         $tag->enableTag();
 
         return response()->json($tag, 200);
+    }
+
+
+    public function tagIsPrimary(Request $request, $id)
+    {
+        $tag = Tag::findOrFail($id);
+        $tag->setTagIsPrimary();
+
+        return response()->json();
+    }
+
+
+    public function tagIsSecondary(Request $request, $id)
+    {
+        $tag = Tag::findOrFail($id);
+        $tag->setTagIsSecondary();
+
+        return response()->json();
     }
 
     
