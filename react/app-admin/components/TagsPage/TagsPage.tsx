@@ -186,7 +186,7 @@ export const TagsPage: React.FunctionComponent = () => {
                                             as="a"
                                             color="teal"
                                             onClick={(): void => {
-                                                setTagSeondary(tag.id, tag.name);
+                                                setTagSecondary(tag.id, tag.name);
                                             }}
                                         >
                                             Primary
