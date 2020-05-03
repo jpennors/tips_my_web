@@ -42,9 +42,13 @@ class ResourceTagController extends Controller
             StatTag::launchStatTagJob($tag_id, 'search');
         }
 
-
-        // Retrieve all concerning resources 
-        $resource_tags = ResourceTag::with('resource')->whereIn('tag_id', $tag_ids)->get();
+        // Retrieve all concerning resources by search
+        $resources = Resource::with('resource_tags', 'price')
+            ->whereHas('resource_tags', function($q) use ($tag_ids){
+                $q->whereIn('tag_id', $tag_ids);
+            })
+            ->get()
+            ->toArray();
 
         // Return ordered recommendation
         return response()->json([
