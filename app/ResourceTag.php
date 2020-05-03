@@ -162,7 +162,8 @@ class ResourceTag extends Model
         return ResourceTag::$scoringPrice[$price];
     }
 
-     /**
+
+    /**
      * Scoring interface values
      * 
      */
@@ -171,7 +172,6 @@ class ResourceTag extends Model
         2   =>  7,
         3   =>  10,
     );
-
 
     /**
      * Compute Interface Score
@@ -186,6 +186,13 @@ class ResourceTag extends Model
         return ResourceTag::$scoringInterface[$interface];
     }
 
+
+    /**
+     * Like and Score Factors in Public Score
+     * 
+     */
+    protected static $like_score_factor = 0.5;
+    protected static $visit_score_factor = 0.5;
 
     /**
      * Compute Like Score
@@ -231,75 +238,55 @@ class ResourceTag extends Model
      * Compute resources recommendation
      * 
      */
-    public static function getRecommendedResources($resource_tags)
+    public static function getRecommendedResources($resources, $search_tag_ids)
     {
-        $resources = array();
         $total_likes = 0;
         $total_visits = 0;
+
+        // Count number of likes, visit
+        // Create data strcture for resouce tags
+        foreach ($resources as &$resource) {
+
+                $resource_tags_dict = array();
+                foreach ($resource['resource_tags'] as $rt) {
+                    $resource_tags_dict[$rt['tag_id']] = $rt['belonging'];
+                }
+                $resource['resource_tags_dict'] = $resource_tags_dict;
+                
                 $total_likes += $resource['like'];
                 $total_visits += $resource['visits'];
 
-        // Create data structure for resources
-        foreach ($resource_tags as $resource_tag) {
-            $resource_id = $resource_tag->resource->id;
-            
-            if (!array_key_exists($resource_id, $resources)) {
-                $resources[$resource_id] = array(
-                    "id"            =>  $resource_tag->resource->id,
-                    "name"          =>  $resource_tag->resource->name,
-                    "description"   =>  $resource_tag->resource->description,
-                    "url"           =>  $resource_tag->resource->url,
-                    "image"         =>  $resource_tag->resource->image,
-                    "language"      =>  $resource_tag->resource->language,
-                    "score"         =>  $resource_tag->resource->score,
-                    "like"          =>  $resource_tag->resource->like,
-                    "price"         =>  $resource_tag->resource->price,
-                    "price_slug"    =>  $resource_tag->resource->price->slug,
-                    "type"          =>  $resource_tag->resource->type->name,
-                    "interface"     => $resource_tag->resource->interface,
-                    "belonging"     =>  array($resource_tag->belonging),
-                    "final_score"   => 0,
-                );
-            } else {
-                array_push($resources[$resource_id]["belonging"], $resource_tag->belonging);
             }
-        }
 
         // Compute scoring 
-        $scoringWeight = ResourceTag::$scoringWeight;
-        $scoringPrice = ResourceTag::$scoringPrice;
-        $factor = array_sum($scoringWeight);
-
         foreach ($resources as &$resource) {
             
-            $belonging_score = array_sum($resource["belonging"]) / sizeof($resource["belonging"]);
-            $price_score = $scoringPrice[$resource["price_slug"]];
-            $interface_score = ResourceTag::computeInterfaceScore($resource["interface"]);
-
-            $final_score = round(((
-                $resource["score"] * $scoringWeight["score"] +
-                $belonging_score * $scoringWeight["belonging"] +
-                $like_score * $scoringWeight["like"] +
-                $price_score * $scoringWeight["price"] +
-                $interface_score * $scoringWeight["interface"]
-            ) / $factor) * 10, 2);
-
-            $resource["final_score"] = $final_score;
+            $resource_score = $resource["score"];
+            $belonging_score = ResourceTag::computeBelongingScore($resource['resource_tags_dict'], $search_tag_ids);
             $public_score = ResourceTag::computePublicScore($resource['like'], $resource['visits'], $total_likes, $total_visits);
+            $price_score = ResourceTag::computePriceScore($resource['price']['slug']);
+            $interface_score = ResourceTag::computeInterfaceScore($resource['interface']);
+
+            $resource['final_score'] = ResourceTag::computeFinalScore($resource_score, $belonging_score, $public_score,
+                $price_score, $interface_score);
+
         }
 
         // Order resources by final score (descending)
         usort($resources ,function($first,$second){
-            return $first["final_score"] < $second["final_score"];
+            return $first['final_score'] < $second['final_score'];
         });
 
         // Remove useless attributes
         foreach ($resources as &$resource) {
-            unset($resource["like"]);
-            unset($resource["score"]);
-            unset($resource["price_slug"]);
-            unset($resource["interface"]);
-            unset($resource["belonging"]);
+            unset($resource['like']);
+            unset($resource['score']);
+            unset($resource['price_slug']);
+            unset($resource['interface']);
+            unset($resource['belonging']);
+            unset($resource['resource_tags']);
+            unset($resource['resource_tags_dict']);
+            unset($resource['price']);
             unset($resource["final_score"]);
         }
 

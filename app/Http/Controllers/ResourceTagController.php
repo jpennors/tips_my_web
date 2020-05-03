@@ -52,8 +52,8 @@ class ResourceTagController extends Controller
 
         // Return ordered recommendation
         return response()->json([
-            "resources" => ResourceTag::getRecommendedResources($resource_tags),
-            "tags" => $tags,
+            "resources" => ResourceTag::getRecommendedResources($resources, $tag_ids),
+            "tags" => $search_tags,
         ], 200);
     }
 
