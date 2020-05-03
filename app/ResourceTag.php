@@ -191,10 +191,21 @@ class ResourceTag extends Model
      * Compute Like Score
      * 
      */
-    protected static function computeLikeScore($like, $total_like)
+    protected static function computePublicScore($like, $visits, $total_likes, $total_visits)
     {
-        if (!$total_like) {
-            return 0;
+        $like_score = 0;
+        if ($total_likes)
+            $like_score = $like / $total_likes;
+        
+        $visit_score = 0;
+        if ($total_visits)
+            $visit_score = $visits / $total_visits;
+    
+        return (
+            $like_score * ResourceTag::$like_score_factor + 
+            $visit_score * ResourceTag::$visit_score_factor);
+    }
+
         }
 
         return ($like / $total_like) * 10;
@@ -209,6 +220,9 @@ class ResourceTag extends Model
     {
         $resources = array();
         $total_likes = 0;
+        $total_visits = 0;
+                $total_likes += $resource['like'];
+                $total_visits += $resource['visits'];
 
         // Create data structure for resources
         foreach ($resource_tags as $resource_tag) {
@@ -231,7 +245,6 @@ class ResourceTag extends Model
                     "belonging"     =>  array($resource_tag->belonging),
                     "final_score"   => 0,
                 );
-                $total_likes += $resource_tag->resource->like;
             } else {
                 array_push($resources[$resource_id]["belonging"], $resource_tag->belonging);
             }
@@ -245,7 +258,6 @@ class ResourceTag extends Model
         foreach ($resources as &$resource) {
             
             $belonging_score = array_sum($resource["belonging"]) / sizeof($resource["belonging"]);
-            $like_score = ResourceTag::computeLikeScore($resource["like"], $total_likes);
             $price_score = $scoringPrice[$resource["price_slug"]];
             $interface_score = ResourceTag::computeInterfaceScore($resource["interface"]);
 
@@ -258,6 +270,7 @@ class ResourceTag extends Model
             ) / $factor) * 10, 2);
 
             $resource["final_score"] = $final_score;
+            $public_score = ResourceTag::computePublicScore($resource['like'], $resource['visits'], $total_likes, $total_visits);
         }
 
         // Order resources by final score (descending)
