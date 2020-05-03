@@ -42,7 +42,7 @@ class ResourceTagController extends Controller
         $tag_ids = array_map(function($t){return $t['id'];}, $search_tags);
 
         if (sizeof($tag_ids) == 0) {
-            return response()->json(array("error" => "There is no search tag valid."), 409); 
+            return response()->json(array("error" => "There is no valid search tag."), 409); 
         }
 
         // Split tags into main and related ones
