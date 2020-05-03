@@ -290,6 +290,6 @@ class ResourceTag extends Model
             unset($resource["final_score"]);
         }
 
-        return $resources;
+        return array_slice($resources, 0, 20);
     }
 }
