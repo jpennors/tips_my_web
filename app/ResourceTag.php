@@ -218,19 +218,23 @@ class ResourceTag extends Model
      * Compute Tags Beloging Score
      * 
      */
-    protected static function computeBelongingScore($resource_tags_dict, $search_tag_ids)
+    protected static function computeBelongingScore($resource_tags_dict, $main_tag_id, $related_tag_ids)
     {
-        $matched_ids = array_intersect(array_keys($resource_tags_dict), $search_tag_ids);
-        $unmatched_ids_from_research = array_diff(array_keys($resource_tags_dict), $search_tag_ids);        
-        $unmatched_ids_from_resource = array_diff($search_tag_ids, array_keys($resource_tags_dict));
+        // Main tags
+        $belonging_score = $resource_tags_dict[$main_tag_id] * 2;
+        $tag_ids_weight = 2;
 
-        $count_all_ids = sizeof($matched_ids) + sizeof($unmatched_ids_from_research) + sizeof($unmatched_ids_from_resource) * 0.5;
-        $belonging_score = 0;
+        // Related tag 
+        unset($resource_tags_dict[$main_tag_id]);
+        $matched_ids = array_intersect(array_keys($resource_tags_dict), $related_tag_ids);
+        $unmatched_ids_from_research = array_diff(array_keys($resource_tags_dict), $related_tag_ids);        
+
+        $tag_ids_weight += (sizeof($matched_ids) + sizeof($unmatched_ids_from_research) * 0.5);
         foreach ($matched_ids as $match_id) {
             $belonging_score += $resource_tags_dict[$match_id];
         }
 
-        return $belonging_score / $count_all_ids;
+        return $belonging_score / $tag_ids_weight;
     }
 
 
@@ -238,7 +242,7 @@ class ResourceTag extends Model
      * Compute resources recommendation
      * 
      */
-    public static function getRecommendedResources($resources, $search_tag_ids)
+    public static function getRecommendedResources($resources, $main_tag_id, $related_tag_ids)
     {
         $total_likes = 0;
         $total_visits = 0;
@@ -262,7 +266,7 @@ class ResourceTag extends Model
         foreach ($resources as &$resource) {
             
             $resource_score = $resource["score"];
-            $belonging_score = ResourceTag::computeBelongingScore($resource['resource_tags_dict'], $search_tag_ids);
+            $belonging_score = ResourceTag::computeBelongingScore($resource['resource_tags_dict'], $main_tag_id, $related_tag_ids);
             $public_score = ResourceTag::computePublicScore($resource['like'], $resource['visits'], $total_likes, $total_visits);
             $price_score = ResourceTag::computePriceScore($resource['price']['slug']);
             $interface_score = ResourceTag::computeInterfaceScore($resource['interface']);
