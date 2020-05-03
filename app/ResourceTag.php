@@ -103,13 +103,32 @@ class ResourceTag extends Model
      * Scoring weight values
      * 
      */
-    protected static $scoringWeight = array(
-        "score"         =>  10,
-        "belonging"     =>  8,
-        "like"         =>  7,
-        "price"         =>  6,
-        "interface"     =>  3,
+    protected static $finalScoringWeight = array(
+        'score'         =>  10,
+        'belonging'     =>  8,
+        'public'        =>  7,
+        'price'         =>  6,
+        'interface'     =>  3,
     );
+
+    /**
+     * Compute final score with scoring weight
+     * 
+     */
+    protected static function computeFinalScore($resource_score, $belonging_score, $public_score,
+        $price_score, $interface_score)
+    {
+        $scoringWeight = ResourceTag::$finalScoringWeight;
+        $factor = array_sum($scoringWeight);
+
+        return round(((
+            $resource_score * $scoringWeight['score'] +
+            $belonging_score * $scoringWeight['belonging'] +
+            $public_score * $scoringWeight["public"] +
+            $price_score * $scoringWeight["price"] +
+            $interface_score * $scoringWeight["interface"]
+        ) / $factor) * 10, 2);
+    }
 
 
     /**
