@@ -112,7 +112,7 @@ export const TagsPage: React.FunctionComponent = () => {
             });
     };
 
-    const setTagSeondary = async (tagId: string, tagName: string): Promise<void> => {
+    const setTagSecondary = async (tagId: string, tagName: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
         setIsLoading(true);
