@@ -7,6 +7,7 @@ use App\ResourceTag;
 use App\Resource;
 use App\StatTag;
 use App\Tag;
+use DB;
 
 class ResourceTagController extends Controller
 {
@@ -18,20 +19,29 @@ class ResourceTagController extends Controller
      */
     public function search(Request $request)
     {
-        // Retrieve tags id of requested tags
         $search_tags_slugs = $request->tags;
-        $tag_ids = Tag::whereIn('slug', $search_tags_slugs)
-            ->pluck('id')
+
+        // Get associated & ordered tags objects
+        $slugs_ordered = implode(',', 
+            array_map(function($slug){return '"'.$slug.'"';}, $search_tags_slugs)
+        );
+        $search_tags = Tag::whereIn('slug', $search_tags_slugs)
+            ->where([
+                ['disabled', false],
+                ['deleted_at', null]
+            ])
+            ->orderBy(DB::raw('FIELD(slug, '.$slugs_ordered.')'))
+            ->get(['id', 'name', 'slug'])
             ->toArray();
-        
+
+        // Retrieve tags id of requested tags
+        $tag_ids = array_map(function($t){return $t['id'];}, $search_tags);
+
         // Stats, search tags
         foreach ($tag_ids as $tag_id) {
             StatTag::launchStatTagJob($tag_id, 'search');
         }
 
-        // Get associated tags names
-        $tags = Tag::whereIn('slug', $search_tags_slugs)
-            ->get();
 
         // Retrieve all concerning resources 
         $resource_tags = ResourceTag::with('resource')->whereIn('tag_id', $tag_ids)->get();
