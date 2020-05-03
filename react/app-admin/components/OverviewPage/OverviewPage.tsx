@@ -16,7 +16,8 @@ export const OverviewPage: React.FunctionComponent = () => {
     const hasError = errorMessage.length > 0;
 
     const fetchVisitorNumbers = async (): Promise<void> => {
-        return ajaxGet('visitors/current')
+
+        return ajaxGet('stats/visitors/current')
             .then(res => {
                 setVisitorNumbers(res.data.visitors);
             })

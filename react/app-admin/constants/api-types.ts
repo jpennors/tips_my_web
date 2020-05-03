@@ -132,13 +132,12 @@ export interface APILog {
 }
 
 export interface APIVisitorStat {
-    formatted_date: Date;
+    date: Date;
     visitors: number;
 }
 
 export interface APISearchTagStat {
     count: number;
-    name: string;
-    slug: string;
-    parent_slug: string | null;
+    tag_id: string;
+    tag: APITag;
 }

@@ -125,18 +125,21 @@ export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
 
 export const serializeVisitorStatsFromAPI = (VisitorStatsFromAPI: APIVisitorStat[]): VisitorStat[] => {
     return VisitorStatsFromAPI.map(stat => ({
-        formatted_date: stat.formatted_date,
+        date: stat.date,
         visitors: stat.visitors ,
     }));
 };
 
-export const serializeSearchTagsStatsFromAPI = (SearchTagsStatsFromAPI: APISearchTagStat[]): SearchTagStat[] => {
+export const serializeSearchTagsStatsFromAPI = (
+    SearchTagsStatsFromAPI: APISearchTagStat[],
+): SearchTagStat[] => {
     return SearchTagsStatsFromAPI.map(searchTag => ({
         count: searchTag.count,
-        name: searchTag.name,
-        slug: searchTag.slug,
-        parent_slug: searchTag.parent_slug,
-        is_parent: !searchTag.parent_slug,
+        id: searchTag.tag.id,
+        name: searchTag.tag.name,
+        slug: searchTag.tag.slug,
+        parent_id: searchTag.tag.parent_id,
+        is_parent: !searchTag.tag.parent_id,
     }));
 };
 

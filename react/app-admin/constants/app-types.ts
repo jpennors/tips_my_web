@@ -80,15 +80,16 @@ export interface Log {
 }
 
 export interface VisitorStat {
-    formatted_date: Date;
+    date: Date;
     visitors: number;
 }
 
 export interface SearchTagStat {
     count: number;
+    id: string;
     name: string;
     slug: string;
-    parent_slug: string | null;
+    parent_id: string | null;
     is_parent: boolean;
 }
 
