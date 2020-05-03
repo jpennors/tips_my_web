@@ -206,9 +206,24 @@ class ResourceTag extends Model
             $visit_score * ResourceTag::$visit_score_factor);
     }
 
+
+    /**
+     * Compute Tags Beloging Score
+     * 
+     */
+    protected static function computeBelongingScore($resource_tags_dict, $search_tag_ids)
+    {
+        $matched_ids = array_intersect(array_keys($resource_tags_dict), $search_tag_ids);
+        $unmatched_ids_from_research = array_diff(array_keys($resource_tags_dict), $search_tag_ids);        
+        $unmatched_ids_from_resource = array_diff($search_tag_ids, array_keys($resource_tags_dict));
+
+        $count_all_ids = sizeof($matched_ids) + sizeof($unmatched_ids_from_research) + sizeof($unmatched_ids_from_resource) * 0.5;
+        $belonging_score = 0;
+        foreach ($matched_ids as $match_id) {
+            $belonging_score += $resource_tags_dict[$match_id];
         }
 
-        return ($like / $total_like) * 10;
+        return $belonging_score / $count_all_ids;
     }
 
 
