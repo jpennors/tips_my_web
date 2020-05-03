@@ -136,19 +136,31 @@ class ResourceTag extends Model
      * 
      */
     protected static $scoringPrice = array(
-        "free"              =>  10,
-        "freemium"          =>  8,
-        "cost_1"            =>  6,
-        "cost_2"            =>  4,
-        "cost_3"            =>  2,
-        "purchase_1"        =>  5,
-        "free_freemium"     =>  9,
-        "free_cost_1"       =>  7,
-        "free_cost_2"       =>  5,
-        "free_const_3"      =>  3,
-        "free_purchase_1"   =>  6,
+        'free'              =>  10,
+        'freemium'          =>  8,
+        'cost_1'            =>  6,
+        'cost_2'            =>  4,
+        'cost_3'            =>  2,
+        'purchase_1'        =>  5,
+        'free_freemium'     =>  9,
+        'free_cost_1'       =>  7,
+        'free_cost_2'       =>  5,
+        'free_const_3'      =>  3,
+        'free_purchase_1'   =>  6,
     );
 
+    /**
+     * Compute Price Score
+     * 
+     */
+    protected static function computePriceScore($price)
+    {
+        if (!array_key_exists($price, ResourceTag::$scoringPrice)) {
+            return 0;
+        }
+
+        return ResourceTag::$scoringPrice[$price];
+    }
 
      /**
      * Scoring interface values
