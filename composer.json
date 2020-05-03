@@ -15,7 +15,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "nesbot/carbon": "1.37",
+        "nesbot/carbon": "^2.32",
         "shweshi/opengraph": "^1.0",
         "spatie/laravel-sluggable": "^2.2",
         "torann/geoip": "1.1.0",
