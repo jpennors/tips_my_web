@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { serializeVisitorStatsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxPost } from 'tmw-common/utils/ajax';
-import { getApiDateFormat } from '../../../common/utils/date';
+import { getApiDateFormat } from 'tmw-common/utils/date';
 import {Chart} from 'chart.js';
 
 
