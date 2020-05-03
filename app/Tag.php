@@ -167,7 +167,7 @@ class Tag extends Model
                     'name'      =>  $tag->name,
                     'slug'      =>  $tag->slug,
                     'primary'   =>  $tag->primary,
-                    'related_weight'   =>  array(),
+                    'related_tags'   =>  array(),
                 );
             }
 
@@ -178,28 +178,41 @@ class Tag extends Model
                 } else {
                     $reconstructed_resources[$rt->resource_id] = [$rt->tag_id];
                 }
-
-                if ($rt->tag_id !== $tag->id) {
-                    
-                }
             }
         }
 
-        // Insert into each tag related tags
+        // Insert into each primary tag related tags
         foreach (array_keys($reconstructed_resources) as $resource_id){
             foreach($reconstructed_resources[$resource_id] as $tag_id_key){
                 foreach($reconstructed_resources[$resource_id] as $tag_id_related){
+                    
                     if ($tag_id_key !== $tag_id_related) {
-                        if (array_key_exists($tag_id_related, $main_tags[$tag_id_key]['related_weight'])) {
-                            $main_tags[$tag_id_key]['related_weight'][$tag_id_related] += 1;
+                        
+                        if (array_key_exists($tag_id_related, $main_tags[$tag_id_key]['related_tags'])) {
+                            $main_tags[$tag_id_key]['related_tags'][$tag_id_related]['weight'] += 1;
                         } else {
-                            $main_tags[$tag_id_key]['related_weight'][$tag_id_related] = 1;
+                            $main_tags[$tag_id_key]['related_tags'][$tag_id_related] = array(
+                                'id'        =>  $tag_id_related,
+                                'name'      =>  $main_tags[$tag_id_related]['name'],
+                                'slug'      =>  $main_tags[$tag_id_related]['slug'],
+                                'weight'    =>  1,
+                            );
                         }
                     }
                 }
             }
         }
 
-        return array_values($main_tags);
+        // Only takes values from related_tags array
+        foreach ($main_tags as &$tag) {
+            if ($tag['primary']) {
+                $tag['related_tags'] = array_values($tag['related_tags']);
+            }
+        }
+
+        // Filter primary tag and take only values from main_tags array
+        return array_values(array_filter($main_tags, function($tag){
+            return $tag['primary'];
+        }));
     }
 }
