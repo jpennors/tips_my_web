@@ -119,6 +119,7 @@ export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
         geoipCountry: log.geoip?.country,
         geoipStateName: log.geoip?.state_name,
         geoipTimezone: log.geoip?.timezone,
+        createdAt: log.created_at,
     }));
 };
 
