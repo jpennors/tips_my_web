@@ -1,17 +1,17 @@
 import { LOCALES, PRICING_OPTIONS } from 'tmw-main/constants/app-constants';
 
-export interface SecondaryTag {
+export interface BasicTag {
     id: string;
     name: string;
     slug: string;
 }
 
-export interface PrimaryTag extends SecondaryTag {
-    secondaryTags: SecondaryTag[];
+export interface RelatedTag extends BasicTag {
+    weight: number;
 }
 
-export interface TagsMap {
-    [id: string]: PrimaryTag;
+export interface MainTag extends BasicTag {
+    relatedTags: RelatedTag[];
 }
 
 export interface Resource {

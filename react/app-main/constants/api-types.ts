@@ -7,14 +7,18 @@ interface APIBasicModel {
     deleted_at?: Date | null;
 }
 
-interface APIBasicTag extends APIBasicModel {
+export interface APIBasicTag extends APIBasicModel {
     name: string;
     slug: string;
-    primary: boolean;
 }
 
-export interface APITag extends APIBasicTag {
-    resource_tags: APITag[];
+export interface APIRelatedTag extends APIBasicTag {
+    weight: number;
+}
+
+export interface APIMainTag extends APIBasicTag {
+    primary:boolean;
+    related_tags: APIRelatedTag[];
 }
 
 export interface APIPrice extends APIBasicModel {
