@@ -44,6 +44,12 @@ class ResourceTagController extends Controller
         if (sizeof($tag_ids) == 0) {
             return response()->json(array("error" => "There is no search tag valid."), 409); 
         }
+
+        // Split tags into main and related ones
+        $main_tag_id = $tag_ids[0];
+        array_splice($tag_ids, 0, 1);
+        $related_tag_ids = $tag_ids;
+
         // Stats, search tags
         foreach ($tag_ids as $tag_id) {
             StatTag::launchStatTagJob($tag_id, 'search');
@@ -51,8 +57,13 @@ class ResourceTagController extends Controller
 
         // Retrieve all concerning resources by search
         $resources = Resource::with('resource_tags', 'price')
-            ->whereHas('resource_tags', function($q) use ($tag_ids){
-                $q->whereIn('tag_id', $tag_ids);
+            ->whereHas('resource_tags', function($q) use ($main_tag_id, $related_tag_ids){
+                $q->where('tag_id', $main_tag_id);
+            })
+            ->whereHas('resource_tags', function($q) use ($main_tag_id, $related_tag_ids){
+                if (sizeof($related_tag_ids) > 0) {
+                    $q->whereIn('tag_id', $related_tag_ids);
+                }
             })
             ->get()
             ->toArray();
