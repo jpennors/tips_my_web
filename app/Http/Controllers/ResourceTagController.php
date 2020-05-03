@@ -21,6 +21,10 @@ class ResourceTagController extends Controller
     {
         $search_tags_slugs = $request->tags;
 
+        if (sizeof($search_tags_slugs) == 0) {
+            return response()->json(array("error" => "There is no search tag."), 409); 
+        }
+
         // Get associated & ordered tags objects
         $slugs_ordered = implode(',', 
             array_map(function($slug){return '"'.$slug.'"';}, $search_tags_slugs)
@@ -37,6 +41,9 @@ class ResourceTagController extends Controller
         // Retrieve tags id of requested tags
         $tag_ids = array_map(function($t){return $t['id'];}, $search_tags);
 
+        if (sizeof($tag_ids) == 0) {
+            return response()->json(array("error" => "There is no search tag valid."), 409); 
+        }
         // Stats, search tags
         foreach ($tag_ids as $tag_id) {
             StatTag::launchStatTagJob($tag_id, 'search');
