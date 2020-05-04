@@ -57,10 +57,10 @@ class ResourceTagController extends Controller
 
         // Retrieve all concerning resources by search
         $resources = Resource::with('resource_tags', 'price')
-            ->whereHas('resource_tags', function($q) use ($main_tag_id, $related_tag_ids){
+            ->whereHas('resource_tags', function($q) use ($main_tag_id){
                 $q->where('tag_id', $main_tag_id);
             })
-            ->whereHas('resource_tags', function($q) use ($main_tag_id, $related_tag_ids){
+            ->whereHas('resource_tags', function($q) use ($related_tag_ids){
                 if (sizeof($related_tag_ids) > 0) {
                     $q->whereIn('tag_id', $related_tag_ids);
                 }
