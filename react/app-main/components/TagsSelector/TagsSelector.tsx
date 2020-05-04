@@ -24,6 +24,7 @@ export const TagsSelector: React.FunctionComponent = () => {
         return ajaxGet('main/tags')
             .then(res => {
                 const newTags = serializeMainTagsFromAPI(res.data || []);
+                console.log(newTags.filter(tag => tag.primary));
                 setTags(newTags);
             })
             .catch(() => {
@@ -118,18 +119,20 @@ export const TagsSelector: React.FunctionComponent = () => {
                                     onClickCallback={(): void => onRelatedTagClick(tag)}
                                     size={SIZES.MEDIUM}
                                 />
-                              ))
-                            : tags.map((tag) => {
-                                return (
-                                    <Tag
-                                        key={tag.id}
-                                        content={tag.name}
-                                        isSelected={false}
-                                        onClickCallback={(): void => onMainTagClick(tag)}
-                                        size={SIZES.MEDIUM}
-                                    />
-                                );
-                            })}
+                            ))
+                            : tags
+                                .filter(tag => tag.primary)
+                                .map((tag) => {
+                                    return (
+                                        <Tag
+                                            key={tag.id}
+                                            content={tag.name}
+                                            isSelected={false}
+                                            onClickCallback={(): void => onMainTagClick(tag)}
+                                            size={SIZES.MEDIUM}
+                                        />
+                                    );
+                                  })}
                     </div>
                 </div>
             )}
