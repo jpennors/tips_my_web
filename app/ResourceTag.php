@@ -215,7 +215,7 @@ class ResourceTag extends Model
 
 
     /**
-     * Compute Tags Beloging Score
+     * Compute Tags Belonging Score
      * 
      */
     protected static function computeBelongingScore($resource_tags_dict, $main_tag_id, $related_tag_ids)
