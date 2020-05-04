@@ -24,7 +24,6 @@ export const TagsSelector: React.FunctionComponent = () => {
         return ajaxGet('main/tags')
             .then(res => {
                 const newTags = serializeMainTagsFromAPI(res.data || []);
-                console.log(newTags.filter(tag => tag.primary));
                 setTags(newTags);
             })
             .catch(() => {
