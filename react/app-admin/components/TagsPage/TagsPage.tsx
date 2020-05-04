@@ -44,7 +44,6 @@ export const TagsPage: React.FunctionComponent = () => {
             });
     };
 
-
     const disableTag = async (tagId: string, tagName: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
@@ -61,7 +60,6 @@ export const TagsPage: React.FunctionComponent = () => {
                 setIsLoading(false);
             });
     };
-
 
     const enableTag = async (tagId: string, tagName: string): Promise<void> => {
         setSuccessMessage('');
@@ -80,7 +78,6 @@ export const TagsPage: React.FunctionComponent = () => {
             });
     };
 
-
     const restoreTag = async (tagId: string, tagName: string): Promise<void> => {
         setSuccessMessage('');
         setErrorMessage('');
@@ -92,6 +89,42 @@ export const TagsPage: React.FunctionComponent = () => {
             })
             .catch(() => {
                 setErrorMessage('Error while trying to restore the tag "' + tagName + '".');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+    const setTagPrimary = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setIsLoading(true);
+        ajaxGet(`tags/primary/${tagId}`)
+            .then(() => {
+                setSuccessMessage('The tag "' + tagName + '" was successfully set as primary.');
+                return fetchTags();
+            })
+            .catch(() => {
+                setErrorMessage('Error while trying to set the tag "' + tagName + ' as primary".');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+    const setTagSecondary = async (tagId: string, tagName: string): Promise<void> => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setIsLoading(true);
+        ajaxGet(`tags/secondary/${tagId}`)
+            .then(() => {
+                setSuccessMessage('The tag "' + tagName + '" was successfully set as secondary.');
+                return fetchTags();
+            })
+            .catch(() => {
+                setErrorMessage(
+                    'Error while trying to set the tag "' + tagName + ' as secondary".',
+                );
             })
             .finally(() => {
                 setIsLoading(false);
@@ -132,7 +165,7 @@ export const TagsPage: React.FunctionComponent = () => {
                         <Table.Row>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Slug</Table.HeaderCell>
-                            <Table.HeaderCell>Parent</Table.HeaderCell>
+                            <Table.HeaderCell>Type</Table.HeaderCell>
                             <Table.HeaderCell>Visibility</Table.HeaderCell>
                             <Table.HeaderCell collapsing textAlign="center">
                                 Edit
@@ -147,58 +180,75 @@ export const TagsPage: React.FunctionComponent = () => {
                             <Table.Row key={tag.id}>
                                 <Table.Cell>{tag.name}</Table.Cell>
                                 <Table.Cell>{tag.slug}</Table.Cell>
-                                <Table.Cell disabled={!tag.parentName}>
-                                    {tag.parentName ? (
-                                        <Label size="small">{tag.parentName}</Label>
+                                <Table.Cell>
+                                    {tag.primary ? (
+                                        <Label
+                                            as="a"
+                                            color="teal"
+                                            onClick={(): void => {
+                                                setTagSecondary(tag.id, tag.name);
+                                            }}
+                                        >
+                                            Primary
+                                        </Label>
                                     ) : (
-                                        'No parent'
+                                        <Label
+                                            as="a"
+                                            onClick={(): void => {
+                                                setTagPrimary(tag.id, tag.name);
+                                            }}
+                                        >
+                                            Secondary
+                                        </Label>
                                     )}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {tag.deleted_at ? (
-                                        <Label color="red">Deleted</Label>
+                                    {tag.deletedAt ? (
+                                        <Label>Deleted</Label>
+                                    ) : tag.disabled ? (
+                                        <Label
+                                            as="a"
+                                            color="yellow"
+                                            onClick={(): void => {
+                                                enableTag(tag.id, tag.name);
+                                            }}
+                                        >
+                                            Disabled
+                                        </Label>
                                     ) : (
-                                        tag.disabled ? (
-                                            <Label 
-                                                as="a"
-                                                color="yellow"
-                                                onClick={(): void => {
-                                                    enableTag(tag.id, tag.name);
-                                                }}
-                                            >
-                                                Disabled
-                                            </Label>
-                                        ) : (
-                                            <Label
-                                                as="a" 
-                                                color="teal"
-                                                onClick={(): void => {
-                                                    disableTag(tag.id, tag.name);
-                                                }}
-                                            >
-                                                Available
-                                            </Label>
-                                        )
+                                        <Label
+                                            as="a"
+                                            color="teal"
+                                            onClick={(): void => {
+                                                disableTag(tag.id, tag.name);
+                                            }}
+                                        >
+                                            Available
+                                        </Label>
                                     )}
                                 </Table.Cell>
                                 <Table.Cell textAlign="center">
-                                    {tag.deleted_at ? (''):(
-                                        <Link to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}>
+                                    {tag.deletedAt ? (
+                                        ''
+                                    ) : (
+                                        <Link
+                                            to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}
+                                        >
                                             <Icon name="edit" color="blue" link />
                                         </Link>
                                     )}
                                 </Table.Cell>
                                 <Table.Cell textAlign="center">
-                                    {tag.deleted_at ? (
-                                        <Label 
-                                            as='a'
+                                    {tag.deletedAt ? (
+                                        <Label
+                                            as="a"
                                             onClick={(): void => {
                                                 restoreTag(tag.id, tag.name);
                                             }}
                                         >
                                             Restore
                                         </Label>
-                                    ):(
+                                    ) : (
                                         <Icon
                                             name="trash alternate"
                                             color="red"

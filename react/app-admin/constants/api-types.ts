@@ -34,7 +34,7 @@ export interface APIBasicTag {
     id: string;
     name: string;
     slug: string;
-    parent_id: string | null;
+    primary: boolean;
     disabled: boolean;
     created_at: Date;
     updated_at: Date | null;
@@ -42,15 +42,6 @@ export interface APIBasicTag {
 }
 
 export interface APITag extends APIBasicTag {
-    parent: {
-        id: string;
-        name: string;
-        parent_id: string | null;
-        disabled: boolean;
-        created_at: Date;
-        updated_at: Date | null;
-        deleted_at: Date | null;
-    } | null;
     resource_tags: APIBasicTag[]; // Duplicate of the same tag object ??
 }
 
