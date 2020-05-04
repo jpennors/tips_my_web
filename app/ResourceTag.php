@@ -290,7 +290,6 @@ class ResourceTag extends Model
             unset($resource['belonging']);
             unset($resource['resource_tags']);
             unset($resource['resource_tags_dict']);
-            unset($resource['price']);
             unset($resource["final_score"]);
         }
 
