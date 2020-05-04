@@ -84,7 +84,7 @@ export const OverviewPage: React.FunctionComponent = () => {
             {isLoading ? (
                 ''
             ) : (
-                <Table celled striped selectable unstackable>
+                <Table celled fixed striped selectable unstackable>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Description</Table.HeaderCell>

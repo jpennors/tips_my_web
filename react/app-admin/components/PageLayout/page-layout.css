@@ -11,4 +11,6 @@
 
 .page-layout__main-content {
     flex-grow: 1;
+    width: 100%;
+    min-width: 1px;
 }
