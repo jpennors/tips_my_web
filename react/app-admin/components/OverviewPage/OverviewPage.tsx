@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Message, Loader, Table, Label } from 'semantic-ui-react';
+import { Message, Loader, Table, Label, Popup } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { VisitorsChart } from 'tmw-admin/components/OverviewPage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
@@ -16,7 +16,6 @@ export const OverviewPage: React.FunctionComponent = () => {
     const hasError = errorMessage.length > 0;
 
     const fetchVisitorNumbers = async (): Promise<void> => {
-
         return ajaxGet('stats/visitors/current')
             .then(res => {
                 setVisitorNumbers(res.data.visitors);
@@ -97,7 +96,10 @@ export const OverviewPage: React.FunctionComponent = () => {
                     <Table.Body>
                         {logs.map(log => (
                             <Table.Row key={log.id}>
-                                <Table.Cell>{log.description}</Table.Cell>
+                                <Popup
+                                    content={log.description}
+                                    trigger={<Table.Cell>{log.description}</Table.Cell>}
+                                />
                                 <Table.Cell>
                                     <Label color={getLabelColor(log.level)}>{log.level}</Label>
                                 </Table.Cell>
