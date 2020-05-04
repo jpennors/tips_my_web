@@ -28,7 +28,7 @@ class Tag extends Model
     *
     * @var array
     */
-    protected $fillable = ['name', 'parent_id'];
+    protected $fillable = ['name', 'primary'];
 
 
     /**
@@ -39,7 +39,22 @@ class Tag extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
 
+    /**
+     * Define hidden attributes
+     * 
+     * @var array
+     */
     protected $hidden = ['resource_tags_count'];
+
+
+    /**
+     * Define threshold tags
+     * need to appear in ResourceTag
+     * 
+     * @var int
+     */
+    protected $threshold_resource_tags_count = 5;
+    
 
 
     /**
@@ -57,6 +72,27 @@ class Tag extends Model
 
 
     /**
+     * Function to check if tag may be in main app
+     * Tag may be disabled
+     * Tag may have too few linked Resources
+     * 
+     */
+    public function isTagPublic()
+    {
+        if ($this->disabled)
+            return false;
+
+        if (config('app.env') != 'production')
+            return true;
+
+        if ($this->resource_tags_count && $this->resource_tags_count > $this->threshold_resource_tags_count)
+            return true;
+        
+        return false;
+    }
+
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
@@ -70,13 +106,6 @@ class Tag extends Model
     public function resource_tags()
     {
         return $this->hasMany('App\ResourceTag');
-    }
-
-    /**
-     * The parent tag id
-     */
-    public function parent(){
-        return $this->belongsTo('App\Tag', 'parent_id');
     }
 
 
@@ -98,4 +127,95 @@ class Tag extends Model
     }
 
 
+    /**
+     * Tag is primary
+     */
+    public function setTagIsPrimary(){
+        $this->primary = true;
+        $this->save();
+    }
+
+
+    /**
+     * Tag is not primary
+     */
+    public function setTagIsSecondary(){
+        $this->primary = false;
+        $this->save();
+    }
+
+
+    /**
+     * Function to load main tags for public
+     */
+    public static function loadMainTags()
+    {
+
+        $main_tags = array();
+        $tags = Tag::with('resource_tags')->withCount('resource_tags')->get();
+        $reconstructed_resources = array();
+
+        foreach ($tags as $tag) {
+
+            if (!$tag->isTagPublic()) 
+                continue;
+
+            // Create new tag keys
+            if (!array_key_exists($tag->id, $main_tags)) {
+                $main_tags[$tag->id] = array(
+                    'id'        =>  $tag->id,
+                    'name'      =>  $tag->name,
+                    'slug'      =>  $tag->slug,
+                    'primary'   =>  $tag->primary,
+                    'related_tags'   =>  array(),
+                );
+            }
+
+            // Reconstruct resources with resources_tags attribute
+            foreach ($tag->resource_tags as $rt){
+                if (array_key_exists($rt->resource_id, $reconstructed_resources)) {
+                    array_push($reconstructed_resources[$rt->resource_id], $rt->tag_id);
+                } else {
+                    $reconstructed_resources[$rt->resource_id] = [$rt->tag_id];
+                }
+            }
+        }
+
+        // Insert into each primary tag related tags
+        foreach (array_keys($reconstructed_resources) as $resource_id){
+            foreach($reconstructed_resources[$resource_id] as $tag_id_key){
+                foreach($reconstructed_resources[$resource_id] as $tag_id_related){
+                    // $main_tags[$tag_id_key]['primary']
+                    if ($tag_id_key !== $tag_id_related) {
+                        
+                        if (array_key_exists($tag_id_related, $main_tags[$tag_id_key]['related_tags'])) {
+                            $main_tags[$tag_id_key]['related_tags'][$tag_id_related]['weight'] += 1;
+                        } else {
+                            $main_tags[$tag_id_key]['related_tags'][$tag_id_related] = array(
+                                'id'        =>  $tag_id_related,
+                                'name'      =>  $main_tags[$tag_id_related]['name'],
+                                'slug'      =>  $main_tags[$tag_id_related]['slug'],
+                                'weight'    =>  1,
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        // Only takes values from related_tags array
+        foreach ($main_tags as &$tag) {
+            // if ($tag['primary']) {
+                // $tag['related_tags'] = array_values($tag['related_tags']);
+            // }
+            $tag['related_tags'] = array_values($tag['related_tags']);
+        }
+
+        // Filter primary tag and take only values from main_tags array
+        
+        return array_values($main_tags);
+        // return array_values(array_filter($main_tags, function($tag){
+        //     return $tag['primary'];
+        // }));
+    }
 }

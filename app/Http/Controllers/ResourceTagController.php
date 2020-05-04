@@ -7,6 +7,7 @@ use App\ResourceTag;
 use App\Resource;
 use App\StatTag;
 use App\Tag;
+use DB;
 
 class ResourceTagController extends Controller
 {
@@ -29,8 +30,12 @@ class ResourceTagController extends Controller
             StatTag::launchStatTagJob($tag_id, 'search');
         }
 
-        // Get associated tags names
+        // Get associated ordered tags names
+        $slugs_ordered = implode(',', 
+            array_map(function($slug){return '"'.$slug.'"';}, $search_tags_slugs)
+        );
         $tags = Tag::whereIn('slug', $search_tags_slugs)
+            ->orderBy(DB::raw('FIELD(slug, '.$slugs_ordered.')'))
             ->get();
 
         // Retrieve all concerning resources 

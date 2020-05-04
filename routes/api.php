@@ -56,6 +56,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('tags/disable/{id}', 'TagController@disableTag');
     Route::get('tags/enable/{id}', 'TagController@enableTag');
     Route::get('tags/restore/{id}', 'TagController@restoreTag');
+    Route::get('tags/primary/{id}', 'TagController@tagIsPrimary');
+    Route::get('tags/secondary/{id}', 'TagController@tagIsSecondary');
 
     # Suggestions
     Route::apiResource('suggestions', 'SuggestionController')->only(['index', 'destroy']);
