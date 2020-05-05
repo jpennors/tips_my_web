@@ -11,6 +11,7 @@ export interface RelatedTag extends BasicTag {
 }
 
 export interface MainTag extends BasicTag {
+    primary: boolean,
     relatedTags: RelatedTag[];
 }
 
