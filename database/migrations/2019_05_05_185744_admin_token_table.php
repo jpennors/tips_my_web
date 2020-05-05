@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RenameLogsTable extends Migration
+class AdminTokenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,12 @@ class RenameLogsTable extends Migration
      */
     public function up()
     {
-        Schema::rename('logs', 'admin_token');
+        Schema::create('admin_token', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('token');
+            $table->boolean('disabled')->default(false);
+            $table->timestamps();
+        });
     }
 
     /**

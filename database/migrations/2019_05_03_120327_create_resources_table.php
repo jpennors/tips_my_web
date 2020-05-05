@@ -23,7 +23,7 @@ class CreateResourcesTable extends Migration
             $table->text('description')->nullable();
             $table->string('url', 150)->unique();
             $table->string('image', 100)->nullable();
-            $table->string('language', 5);
+            $table->string('language', 30);
             $table->smallInteger('score')->nullable();
             $table->smallInteger('interface')->nullable();
             $table->uuid('price_id');
@@ -31,8 +31,8 @@ class CreateResourcesTable extends Migration
             $table->uuid('type_id');
             $table->foreign('type_id')->references('id')->on('types');
             $table->integer('like')->default(0);
+            $table->integer('visits')->default(0);
             $table->timestamps();
-            $table->softDeletes();
         });        
 
     }
