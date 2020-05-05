@@ -152,7 +152,9 @@ class ResourceTagTablesSeeder extends Seeder
 
             $primary_tags = [
                 'Graphic Design',
-                'Architecture'
+                'Architecture',
+                'Productivity',
+                'Streaming'
             ];
 
             foreach($primary_tags as $tag_name){
