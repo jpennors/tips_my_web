@@ -16,7 +16,7 @@ class PriceTableSeeder extends Seeder
         $prices = [
             'Free'                      =>  'free',
             'Freemium'                  =>  'freemium',
-            '$'                         =>  'const_1',
+            '$'                         =>  'cost_1',
             '$$'                        =>  'cost_2',
             '$$$'                       =>  'cost_3',
             'One-time purchase'         =>  'purchase_1',
