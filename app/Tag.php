@@ -93,6 +93,23 @@ class Tag extends Model
 
 
     /**
+     * Function that check if related tag may
+     * be in main app
+     * 
+     */
+    public static function isRelatedTagPublic($related_tag_weight)
+    {
+        if (config('app.env') != 'production') {
+            return true;
+        }
+
+        if ($related_tag_weight > 2) {
+            return true;
+        }
+
+        return false;
+    }
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
@@ -206,6 +223,8 @@ class Tag extends Model
 
         // Only takes values from related_tags array
         foreach ($main_tags as &$tag) {
+            foreach ($tag['related_tags'] as $related_tag_id => $related_tag) {
+                if(!Tag::isRelatedTagPublic($related_tag['weight']))
             $tag['related_tags'] = array_values($tag['related_tags']);
         }
         
