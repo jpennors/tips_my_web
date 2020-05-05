@@ -77,7 +77,7 @@ class Tag extends Model
      * Tag may have too few linked Resources
      * 
      */
-    public function isTagPublic()
+    public function isMainTagPublic()
     {
         if ($this->disabled)
             return false;
@@ -157,7 +157,7 @@ class Tag extends Model
 
         foreach ($tags as $tag) {
 
-            if (!$tag->isTagPublic()) 
+            if (!$tag->isMainTagPublic()) 
                 continue;
 
             // Create new tag keys
