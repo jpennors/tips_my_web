@@ -36,7 +36,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                 const tags = serializeBasicTagsFromAPI(response.data.tags || []);
                 if (tags.length > 0) {
                     setMainSearchTag(tags[0]);
-                    setRelatedSearchTags(tags.splice(0, 1));
+                    setRelatedSearchTags(tags.slice(1));
                 }
             })
             .catch(() => {
