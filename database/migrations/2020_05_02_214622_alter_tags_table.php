@@ -15,6 +15,7 @@ class AlterTagsTable extends Migration
     {
         Schema::table('tags', function (Blueprint $table) {
             $table->boolean('primary')->default(false);
+            $table->dropForeign(['parent_id']);
             $table->dropColumn('parent_id');
         });
     }
