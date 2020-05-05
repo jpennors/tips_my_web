@@ -77,17 +77,39 @@ class Tag extends Model
      * Tag may have too few linked Resources
      * 
      */
-    public function isTagPublic()
+    public function isMainTagPublic()
     {
-        if ($this->disabled)
+        if ($this->disabled) {
             return false;
+        }
 
-        if (config('app.env') != 'production')
+        if (config('app.env') != 'production') {
             return true;
+        }
 
-        if ($this->resource_tags_count && $this->resource_tags_count > $this->threshold_resource_tags_count)
+        if ($this->resource_tags_count && $this->resource_tags_count > $this->threshold_resource_tags_count) {
             return true;
+        }
         
+        return false;
+    }
+
+
+    /**
+     * Function that check if related tag may
+     * be in main app
+     * 
+     */
+    public static function isRelatedTagPublic($related_tag_weight)
+    {
+        if (config('app.env') != 'production') {
+            return true;
+        }
+
+        if ($related_tag_weight > 2) {
+            return true;
+        }
+
         return false;
     }
 
@@ -157,8 +179,9 @@ class Tag extends Model
 
         foreach ($tags as $tag) {
 
-            if (!$tag->isTagPublic()) 
+            if (!$tag->isMainTagPublic()) {
                 continue;
+            }
 
             // Create new tag keys
             if (!array_key_exists($tag->id, $main_tags)) {
@@ -185,8 +208,9 @@ class Tag extends Model
         foreach (array_keys($reconstructed_resources) as $resource_id){
             foreach($reconstructed_resources[$resource_id] as $tag_id_key){
                 foreach($reconstructed_resources[$resource_id] as $tag_id_related){
-                    // $main_tags[$tag_id_key]['primary']
-                    if ($tag_id_key !== $tag_id_related) {
+                    if ($tag_id_key !== $tag_id_related 
+                        && array_key_exists($tag_id_related, $main_tags) 
+                        && array_key_exists($tag_id_key, $main_tags)) {
                         
                         if (array_key_exists($tag_id_related, $main_tags[$tag_id_key]['related_tags'])) {
                             $main_tags[$tag_id_key]['related_tags'][$tag_id_related]['weight'] += 1;
@@ -205,17 +229,14 @@ class Tag extends Model
 
         // Only takes values from related_tags array
         foreach ($main_tags as &$tag) {
-            // if ($tag['primary']) {
-                // $tag['related_tags'] = array_values($tag['related_tags']);
-            // }
+            foreach ($tag['related_tags'] as $related_tag_id => $related_tag) {
+                if(!Tag::isRelatedTagPublic($related_tag['weight'])) {
+                    unset($tag['related_tags'][$related_tag_id]);
+                }
+            }
             $tag['related_tags'] = array_values($tag['related_tags']);
         }
-
-        // Filter primary tag and take only values from main_tags array
         
         return array_values($main_tags);
-        // return array_values(array_filter($main_tags, function($tag){
-        //     return $tag['primary'];
-        // }));
     }
 }
