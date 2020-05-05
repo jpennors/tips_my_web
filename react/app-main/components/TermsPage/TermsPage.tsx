@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BigButton } from 'tmw-main/components/BigButton';
+import { DocumentHead } from 'tmw-main/components/DocumentHead';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 import { Link } from 'react-router-dom';
 
@@ -8,6 +9,7 @@ import './terms-page.less';
 export const TermsPage: React.FunctionComponent = () => {
     return (
         <div className="terms-page">
+            <DocumentHead title="Terms & Conditions" />
             <div className="terms-page__header">Terms & Conditions</div>
             <div className="terms-page__content">
                 <p className="terms-page__subtitle">Welcome on Tips myWeb</p>
