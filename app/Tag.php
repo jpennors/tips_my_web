@@ -185,8 +185,9 @@ class Tag extends Model
         foreach (array_keys($reconstructed_resources) as $resource_id){
             foreach($reconstructed_resources[$resource_id] as $tag_id_key){
                 foreach($reconstructed_resources[$resource_id] as $tag_id_related){
-                    // $main_tags[$tag_id_key]['primary']
-                    if ($tag_id_key !== $tag_id_related) {
+                    if ($tag_id_key !== $tag_id_related 
+                        && array_key_exists($tag_id_related, $main_tags) 
+                        && array_key_exists($tag_id_key, $main_tags)) {
                         
                         if (array_key_exists($tag_id_related, $main_tags[$tag_id_key]['related_tags'])) {
                             $main_tags[$tag_id_key]['related_tags'][$tag_id_related]['weight'] += 1;
@@ -205,17 +206,9 @@ class Tag extends Model
 
         // Only takes values from related_tags array
         foreach ($main_tags as &$tag) {
-            // if ($tag['primary']) {
-                // $tag['related_tags'] = array_values($tag['related_tags']);
-            // }
             $tag['related_tags'] = array_values($tag['related_tags']);
         }
-
-        // Filter primary tag and take only values from main_tags array
         
         return array_values($main_tags);
-        // return array_values(array_filter($main_tags, function($tag){
-        //     return $tag['primary'];
-        // }));
     }
 }
