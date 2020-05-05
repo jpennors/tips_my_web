@@ -23,7 +23,6 @@ class CreateResourceTagsTable extends Migration
             $table->foreign('tag_id')->references('id')->on('tags');
             $table->smallInteger('belonging');
             $table->timestamps();
-            $table->softDeletes();
         });       
 
     }

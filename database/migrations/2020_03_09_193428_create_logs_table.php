@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLoggingTable extends Migration
+class CreateLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -28,6 +28,7 @@ class CreateLoggingTable extends Migration
             $table->foreign('geoip_id')->references('id')->on('log_geoips');
             $table->bigInteger('token_id')->unsigned()->nullable();
             $table->foreign('token_id')->references('id')->on('admin_token');
+            $table->text('parameters')->nullable();
             $table->timestamps();
         });
 

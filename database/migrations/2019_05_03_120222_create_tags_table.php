@@ -19,8 +19,9 @@ class CreateTagsTable extends Migration
             $table->uuid('id');
             $table->primary('id');
             $table->string('name', 40)->unique();
-            $table->uuid('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('tags');
+            $table->string('slug', 50)->unique();
+            $table->boolean('disabled')->default(false);
+            $table->boolean('primary')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
