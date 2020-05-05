@@ -55,7 +55,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
 
     return (
         <div className="search-results-page">
-            <DocumentHead title={primarySearchTag?.name || 'Search'} />
+            <DocumentHead title={mainSearchTag?.name || 'Search'} />
             {!isMobileViewport ? <div className="search-results-page__top-spacing" /> : null}
             <SearchResultsPageTitle
                 hasResults={hasResults}
