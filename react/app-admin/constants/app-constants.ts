@@ -19,6 +19,7 @@ export const RESOURCES_IMAGE_BASE_URL = '/api/resources/image/';
  * Admin app routes
  */
 export enum ADMIN_APP_ROUTES {
+    PUBLIC_APP = '/',
     MAIN = '/admin',
     LOGIN = '/admin/login',
     RESOURCES = '/admin/resources',

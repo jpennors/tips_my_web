@@ -1,45 +1,44 @@
-import { APIBasicTag } from 'tmw-admin/constants/api-types';
-import { Resource, TagsMap } from 'tmw-main/constants/app-types';
-import { APIResource, APITag } from 'tmw-main/constants/api-types';
+import { Resource, RelatedTag, MainTag, BasicTag } from 'tmw-main/constants/app-types';
+import { APIResource, APIMainTag, APIRelatedTag, APIBasicTag } from 'tmw-main/constants/api-types';
 import { LOCALES, PRICING_OPTIONS } from 'tmw-main/constants/app-constants';
 
-export const serializeTagsFromAPI = (tagsFromAPI: APIBasicTag[] | APITag[]): TagsMap => {
-    const tagsMap: TagsMap = {};
-    const secondaryTags: Array<APIBasicTag | APITag> = [];
 
-    tagsFromAPI.forEach((tag: APIBasicTag | APITag) => {
-        if (tag.id in tagsMap) {
-            console.error('Some tags have the same ID!');
-        } else if (tag.parent_id) {
-            secondaryTags.push(tag);
-        } else {
-            tagsMap[tag.id] = {
-                id: tag.id,
-                name: tag.name,
-                slug: tag.slug,
-                secondaryTags: [],
-            };
-        }
+export const serializeBasicTagsFromAPI = (tagsFromAPI: APIBasicTag[]): BasicTag[] => {
+    const tags: BasicTag[] = [];
+
+    tagsFromAPI.forEach((tag: APIBasicTag) => {
+        tags.push({
+            id: tag.id,
+            name: tag.name,
+            slug: tag.slug,
+        })
+    })
+
+    return tags;
+}
+
+export const serializeMainTagsFromAPI = (tagsFromAPI: APIMainTag[]): MainTag[] => {
+    const tags: MainTag[] = [];
+
+    tagsFromAPI.forEach((tag: APIMainTag) => {
+        const relatedTags: RelatedTag[] = [];
+        tag.related_tags.forEach((secondaryTag: APIRelatedTag) => {
+            relatedTags.push({
+                id: secondaryTag.id,
+                name: secondaryTag.name,
+                slug: secondaryTag.slug,
+                weight: secondaryTag.weight,
+            });
+        });
+        tags.push({
+            id: tag.id,
+            name: tag.name,
+            slug: tag.slug,
+            relatedTags: relatedTags,
+        });
     });
 
-    secondaryTags.forEach((tag: APIBasicTag | APITag) => {
-        const parentTagId = tag.parent_id;
-        if (parentTagId) {
-            const parentTag = 'parent' in tag ? tag.parent : tagsMap[parentTagId];
-            if (parentTag.id in tagsMap) {
-                tagsMap[parentTag.id].secondaryTags.push(tag);
-            } else {
-                tagsMap[parentTag.id] = {
-                    id: parentTag.id,
-                    name: parentTag.name,
-                    slug: parentTag.slug,
-                    secondaryTags: [tag],
-                };
-            }
-        }
-    });
-
-    return tagsMap;
+    return tags;
 };
 
 export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Resource[] => {
