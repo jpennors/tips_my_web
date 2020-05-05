@@ -121,7 +121,7 @@ export const TagsSelector: React.FunctionComponent = () => {
                             ))
                             : tags
                                 .filter(tag => tag.primary)
-                                .map((tag) => {
+                                .map(tag => {
                                     return (
                                         <Tag
                                             key={tag.id}
