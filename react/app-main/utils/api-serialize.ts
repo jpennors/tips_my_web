@@ -2,7 +2,6 @@ import { Resource, RelatedTag, MainTag, BasicTag } from 'tmw-main/constants/app-
 import { APIResource, APIMainTag, APIRelatedTag, APIBasicTag } from 'tmw-main/constants/api-types';
 import { LOCALES, PRICING_OPTIONS } from 'tmw-main/constants/app-constants';
 
-
 export const serializeBasicTagsFromAPI = (tagsFromAPI: APIBasicTag[]): BasicTag[] => {
     const tags: BasicTag[] = [];
 
@@ -11,11 +10,11 @@ export const serializeBasicTagsFromAPI = (tagsFromAPI: APIBasicTag[]): BasicTag[
             id: tag.id,
             name: tag.name,
             slug: tag.slug,
-        })
-    })
+        });
+    });
 
     return tags;
-}
+};
 
 export const serializeMainTagsFromAPI = (tagsFromAPI: APIMainTag[]): MainTag[] => {
     const tags: MainTag[] = [];

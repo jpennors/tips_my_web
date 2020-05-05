@@ -14,7 +14,7 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
     hasResults,
     isLoading,
     mainSearchTag,
-    relatedSearchTags
+    relatedSearchTags,
 }) => {
     return (
         <>

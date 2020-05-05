@@ -6,7 +6,7 @@ import { SearchResultsPageTitle } from 'tmw-main/components/SearchResultsPageTit
 import { APIResource } from 'tmw-main/constants/api-types';
 import { BasicTag, Resource } from 'tmw-main/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
-import { serializeResourcesFromAPI, serializeMainTagsFromAPI, serializeBasicTagsFromAPI } from 'tmw-main/utils/api-serialize';
+import { serializeResourcesFromAPI, serializeBasicTagsFromAPI } from 'tmw-main/utils/api-serialize';
 import { parseSearchTags } from 'tmw-main/utils/tags-search-url';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
@@ -36,7 +36,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                 const tags = serializeBasicTagsFromAPI(response.data.tags || []);
                 if (tags.length > 0) {
                     setMainSearchTag(tags[0]);
-                    setRelatedSearchTags(tags.splice(0,1));
+                    setRelatedSearchTags(tags.slice(1));
                 }
             })
             .catch(() => {
