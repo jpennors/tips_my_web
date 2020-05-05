@@ -79,14 +79,17 @@ class Tag extends Model
      */
     public function isMainTagPublic()
     {
-        if ($this->disabled)
+        if ($this->disabled) {
             return false;
+        }
 
-        if (config('app.env') != 'production')
+        if (config('app.env') != 'production') {
             return true;
+        }
 
-        if ($this->resource_tags_count && $this->resource_tags_count > $this->threshold_resource_tags_count)
+        if ($this->resource_tags_count && $this->resource_tags_count > $this->threshold_resource_tags_count) {
             return true;
+        }
         
         return false;
     }
@@ -176,8 +179,9 @@ class Tag extends Model
 
         foreach ($tags as $tag) {
 
-            if (!$tag->isMainTagPublic()) 
+            if (!$tag->isMainTagPublic()) {
                 continue;
+            }
 
             // Create new tag keys
             if (!array_key_exists($tag->id, $main_tags)) {
@@ -226,8 +230,9 @@ class Tag extends Model
         // Only takes values from related_tags array
         foreach ($main_tags as &$tag) {
             foreach ($tag['related_tags'] as $related_tag_id => $related_tag) {
-                if(!Tag::isRelatedTagPublic($related_tag['weight']))
+                if(!Tag::isRelatedTagPublic($related_tag['weight'])) {
                     unset($tag['related_tags'][$related_tag_id]);
+                }
             }
             $tag['related_tags'] = array_values($tag['related_tags']);
         }
