@@ -5,14 +5,8 @@
     display: inline-block;
     margin: 20px;
     width: 320px;
-    transition: transform .3s @app-curve-in-out-cubic;
 
     &:hover {
-        transform: translateY(-8px);
-        @media (max-width: @app-viewport-breakpoint-mobile) {
-            transform: translateY(0);
-        }
-
         .resource-tile__icon {
             opacity: 1;
         }
