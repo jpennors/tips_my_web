@@ -1,9 +1,7 @@
 import * as React from 'react';
 import * as copyTextToClipboard from 'copy-text-to-clipboard';
-import { BigButton } from 'tmw-main/components/BigButton';
+import { Button, ButtonVariant } from 'tmw-main/components/Button';
 import { useToastMessageContext } from 'tmw-main/components/ToastMessage';
-
-import './share-button.less';
 
 export const ShareButton: React.FunctionComponent = () => {
     const { openToastMessage } = useToastMessageContext();
@@ -13,5 +11,7 @@ export const ShareButton: React.FunctionComponent = () => {
         openToastMessage('URL was successfully copied in clipboard !');
     };
 
-    return <BigButton content="Share" isColored={false} onClick={onButtonClick} />;
+    return (
+        <Button content="Share" variant={ButtonVariant.WHITE_TEXT_BLACK} onClick={onButtonClick} />
+    );
 };
