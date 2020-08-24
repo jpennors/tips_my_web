@@ -1,10 +1,4 @@
 /node_modules
-/public/hot
-/public/storage
-/public/js
-/public/css
-/public/images
-/public/fonts
 /vendor
 .env
 .phpunit.result.cache
