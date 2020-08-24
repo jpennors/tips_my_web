@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Contact;
 use App\Http\Requests\ContactRequest;
+use App\Services\MailSender;
 
 class ContactController extends Controller
 {
@@ -36,6 +37,9 @@ class ContactController extends Controller
         } catch(\Exception $e) {
             abort(500, "Can't save the resource");
         }
+
+        MailSender::send_contact_request($request->message, $request->email);
+        
         return response()->json();
     }
 
