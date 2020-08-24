@@ -13,6 +13,6 @@
 	<noscript>
         You need to enable JavaScript to run this app.
     </noscript>
-	<script src="/js/app-main.js"></script>
+	<script src="{{ secure_asset('js/app-main.js') }}"></script>
 </body>
 </html>
