@@ -57,6 +57,12 @@ export const TagsSelector: React.FunctionComponent = () => {
         }
     };
 
+    React.useEffect(() => {
+        if (selectedMainTag && selectedMainTag.relatedTags.length === 0) {
+            launchSearch();
+        }
+    }, [selectedMainTag]);
+
     const launchSearch = (): void => {
         if (selectedMainTag) {
             const selectedTags = [selectedMainTag, ...selectedRelatedTags];
