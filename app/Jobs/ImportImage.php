@@ -13,7 +13,7 @@ class ImportImage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $tag;
+    protected $resource;
     protected $provided_resource;
 
     /**
@@ -21,9 +21,9 @@ class ImportImage implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($provided_resource, $tag)
+    public function __construct($provided_resource, $resource)
     {
-        $this->tag = $tag;
+        $this->resource = $resource;
         $this->provided_resource = $provided_resource;
     }
 
@@ -34,6 +34,6 @@ class ImportImage implements ShouldQueue
      */
     public function handle()
     {
-        $this->tag->uploadImageFromUrl($this->provided_resource);
+        $this->resource->uploadImageFromUrl($this->provided_resource);
     }
 }
