@@ -3,14 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Response;
 use App\Traits\Uuids;
 use App\ResourceTag;
 use App\Tag;
 use App\Jobs\ImportImage;
-use File;
-use Storage;
 use App\Services\OpenGraphUtils;
 
 class Resource extends Model
@@ -75,8 +71,6 @@ class Resource extends Model
         return $this->hasMany(ResourceTag::class);
     }
 
-    // protected $appends=['tags'];
-    // protected $hidden=['resource_tags'];
 
     public function getTagsAttribute()
     {
@@ -97,7 +91,7 @@ class Resource extends Model
         }
         return $tags;
     }
-    
+
 
     /**
     *       Mettre à null image
