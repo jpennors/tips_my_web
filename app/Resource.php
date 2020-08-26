@@ -8,6 +8,7 @@ use App\ResourceTag;
 use App\Tag;
 use App\Jobs\ImportImage;
 use App\Services\OpenGraphUtils;
+use App\Services\Files\ImageUtils;
 use App\Services\Files\ImageStorage;
 
 class Resource extends Model
@@ -166,34 +167,36 @@ class Resource extends Model
 
 
     /**
-     * Search for image extension with url
+     *  Upload file into storage 
      * 
      */
-    public static function getImageExtensionFromUrl($url)
+    protected function uploadImage($file, $fileName)
     {
-        try{
-
-            $headers = get_headers($url);
-        
-            foreach ($headers as $header) {
-                if (strpos($header, 'Content-Type') !== false) {
-                    $pos = strpos($header, 'image');
-                    if ($pos !== false) {
-                        $extension = substr($header, $pos + strlen('image') + 1);
-                        $pos = strpos($extension, ';');
-                        if ($pos !== false) {
-                            $extension = substr($extension, 0, $pos - 1);
-                        }
-            
-                        return $extension;
-                    }
-                }
-            }
-        } catch (\Throwable $th){}
-
-        return null;
+        // Remove older image
+        $this->deleteImage();
+        // Add image file in storage and in database
+        $this->setImage($file, $fileName);   
     }
 
+
+    /**
+    *  Upload Image from UploadedFile
+    *
+    */
+    public function uploadImageFromFile($file){
+        if (isset($file)) {            
+            try {
+                $fileExtension = ImageUtils::getImageExtensionFromFile($file);
+                $fileName = $this->id.$fileExtension;
+                $this->uploadImage($file->get(), $fileName);
+            } catch(\Exception $e) {
+                abort(500, 'Can\'t save the file');
+            }
+            
+            return response()->json();
+        }
+        abort(404, 'Image not found');
+    }
 
 
     /**
@@ -204,65 +207,48 @@ class Resource extends Model
     {
         ImportImage::dispatch($provided_resource, $this);
     }
-    
-
 
 
     /**
-     * Upload new image after importing resource
+     * Upload image from url after importing resource
      * 
      */
     public function uploadImageFromUrl($provided_resource)
     {
-        $new_image = null;
+        $file = null;
 
         // Image attribute is a link of image
         if (array_key_exists('image', $provided_resource) && $provided_resource['image']) {
-
             try {
-                $extension = Resource::getImageExtensionFromUrl($provided_resource['image']);
+                $extension = ImageUtils::getImageExtensionFromUrl($provided_resource['image']);
                 if ($extension) {
-                    $new_image = file_get_contents($provided_resource['image']);
-                    $filename = $this->id.".".$extension;
+                    $file = file_get_contents($provided_resource['image']);
+                    $fileName = $this->id.".".$extension;
                 }
-
             } catch (\Throwable $th){}
 
         } 
 
         // Search in website source code
-        if (!$new_image && array_key_exists('url', $provided_resource) && $provided_resource['url'])
+        if (!$file && array_key_exists('url', $provided_resource) && $provided_resource['url'])
         {
             try {
                 // Retrieve image
                 $og = new OpenGraphUtils($provided_resource['url']);
                 $image_url = $og->getImageUrl();
-                
-
                 if ($image_url) {
-                    $extension = Resource::getImageExtensionFromUrl($image_url);
+                    $extension = ImageUtils::getImageExtensionFromUrl($image_url);
                     if ($extension) {
-                        $filename = $this->id.".".$extension;
-                        $new_image = file_get_contents($image_url);
+                        $fileName = $this->id.".".$extension;
+                        $file = file_get_contents($image_url);
                     }
                 }
-
             } catch (\Throwable $th) {}
         }
 
-        if ($new_image) {
-
+        if ($file) {
             try {
-
-                // Add new one in Storage
-                Storage::put("public/resources/".$filename, $new_image);
-
-                // Delete existing one if exists
-                $this->deleteImage();
-                
-                // Save new filename
-                $this->setImage($filename);
-
+                $this->uploadImage($file, $fileName);
             } catch (\Throwable $th) {}
         }
     }    
