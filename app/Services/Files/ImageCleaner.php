@@ -65,8 +65,6 @@ class ImageCleaner
             0,
             false
         );
-
-        return $this->cleanedImage;
     }
 
 
