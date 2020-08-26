@@ -8,6 +8,7 @@ use App\ResourceTag;
 use App\Tag;
 use App\Jobs\ImportImage;
 use App\Services\OpenGraphUtils;
+use App\Services\Files\ImageStorage;
 
 class Resource extends Model
 {
@@ -122,49 +123,45 @@ class Resource extends Model
             }
         }        
     }
-
+    
 
     /**
-    *       Mettre à jour image
+    *   Update image attribute and store file
     *
     */
-    public function setImage($fileName){
+    public function setImage($file = null, $fileName = null){
 
         $this->image = $fileName;
         $this->save();
+
+        if ($fileName !== null && $file !== null) {
+            ImageStorage::storeImage($file, $fileName);
+        }
     }
 
 
     /**
-    *  Update image
+    *   Retrieve image file
     *
     */
-    public function uploadImage($file){
-
-        if (isset($file)) {
-
-            try {
-
-                // S'il existe une ancienne image, suppresion
-                $this->deleteImage();
-
-                $fileName = $this->id.'.'.$file->guessExtension();
-                Storage::putFileAs('public/resources/', $file, $fileName);
-
-                $this->setImage($fileName);
-
-            } catch(\Exception $e) {
-
-                abort(500, "Can't save the file");
-
-            }
-
-            return response()->json();
-
+    public function getImage(){
+        try {
+            return ImageStorage::getImage($this->image);
+        } catch(Exception $e){
+            abort(500, 'Can\'t find or load the image');
         }
+    }
 
-        abort(404, "Image not found");
 
+    /**
+    *  Remove image file and attribute in database
+    *
+    */
+    public function deleteImage(){
+        if ($this->image) {
+            ImageStorage::deleteImage($this->image);
+            $this->setImage();
+        }
     }
 
 
