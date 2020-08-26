@@ -2,8 +2,6 @@
 
 namespace App\Services\Files;
 
-use \Gumlet\ImageResize;
-
 class ImageUtils
 {
 
@@ -14,9 +12,7 @@ class ImageUtils
     public static function getImageExtensionFromUrl($url)
     {
         try{
-
             $headers = get_headers($url);
-        
             foreach ($headers as $header) {
                 if (strpos($header, 'Content-Type') !== false) {
                     $pos = strpos($header, 'image');
@@ -38,7 +34,7 @@ class ImageUtils
 
 
     /**
-     * Search for image extension from file
+     * Search for image extension from uploaded file
      * 
      */
     public static function getImageExtensionFromFile($file)
