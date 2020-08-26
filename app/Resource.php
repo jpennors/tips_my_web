@@ -94,14 +94,33 @@ class Resource extends Model
 
 
     /**
-    *       Mettre à null image
-    *
-    */
-    public function setImageNull(){
+     * Update resource tags of a resource
+     * Remove, update or create resource tags
+     * depending on existing one and tags provided
+     */
+    public function updateResourceTags($tags){
 
-        $this->image = null;
-        $this->save();
+        $old_resource_tags = ResourceTag::where('resource_id', $this->id)->get();
+        $new_resource_tags = $tags;
+        foreach ($old_resource_tags  as $rt) {
+            $index = array_search($rt->tag_id, array_column($new_resource_tags, 'tag_id'));
+            if ($index === FALSE) {
+                $rt->delete();
+            } else {
+                $rt->update($new_resource_tags[$index]);
+            }
+        }
+        foreach ($new_resource_tags as $rt) {
+            $index = array_search($rt['tag_id'], array_column($old_resource_tags->toArray(), 'tag_id'));
 
+            if ($index === FALSE) {
+                $new_rt = new ResourceTag();
+                $new_rt->tag_id = $rt['tag_id'];
+                $new_rt->resource_id = $this->id;
+                $new_rt->belonging = $rt['belonging'];
+                $new_rt->save();
+            }
+        }        
     }
 
 
@@ -249,79 +268,5 @@ class Resource extends Model
 
             } catch (\Throwable $th) {}
         }
-    }
-
-
-    /**
-    *  Retrieve image
-    *
-    */
-    public function getImage(){
-
-        $path = "public/resources/".$this->image;
-
-        try {
-
-            $file = Storage::get($path);
-            $type = File::mimeType(storage_path('app/'.$path));
-            $response = Response::make($file, 200);
-            $response->header("Content-Type", $type);
-
-            return $response;
-
-        } catch(Exception $e){
-
-            abort(500, "Can't find or load the image");
-
-        }
-    }
-
-
-    /**
-    *  Remove image
-    *
-    */
-    public function deleteImage(){
-
-        if ($this->image) {
-
-            $path = 'public/resources/'.$this->picture;
-
-            Storage::delete($path);
-
-            $this->setImageNull();
-
-        }
-    }
-
-
-    /**
-     * Update resource tags of a resource
-     * Remove, update or create resource tags
-     * depending on existing one and tags provided
-     */
-    public function updateResourceTags($tags){
-
-        $old_resource_tags = ResourceTag::where('resource_id', $this->id)->get();
-        $new_resource_tags = $tags;
-        foreach ($old_resource_tags  as $rt) {
-            $index = array_search($rt->tag_id, array_column($new_resource_tags, 'tag_id'));
-            if ($index === FALSE) {
-                $rt->delete();
-            } else {
-                $rt->update($new_resource_tags[$index]);
-            }
-        }
-        foreach ($new_resource_tags as $rt) {
-            $index = array_search($rt['tag_id'], array_column($old_resource_tags->toArray(), 'tag_id'));
-
-            if ($index === FALSE) {
-                $new_rt = new ResourceTag();
-                $new_rt->tag_id = $rt['tag_id'];
-                $new_rt->resource_id = $this->id;
-                $new_rt->belonging = $rt['belonging'];
-                $new_rt->save();
-            }
-        }        
-    }
+    }    
 }
