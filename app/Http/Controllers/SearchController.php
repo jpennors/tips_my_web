@@ -27,9 +27,7 @@ class SearchController extends Controller
         $resources = Resource::where(
             'name', 'LIKE', $sql_search_key
         )
-        // ->orWhere(
-        //     'description', 'LIKE', $sql_search_key
-        // )
+
         ->orWhere(
             'url', 'LIKE', $sql_search_key
         )
