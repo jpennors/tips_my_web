@@ -76,15 +76,29 @@ class SearchController extends Controller
         ->get();
 
         $results = array(
-            'resources'     =>  $resources,
-            'tags'          =>  $tags,
-            'prices'        =>  $prices,
-            'types'         =>  $types,
-            'suggestions'   =>  $suggestions,
-            'contacts'      =>  $contacts
+            $this->formateAdminSearchResult('resources', 'Resources', $resources),
+            $this->formateAdminSearchResult('tags', 'Tags', $tags),
+            $this->formateAdminSearchResult('prices', 'Prices', $prices),
+            $this->formateAdminSearchResult('types', 'Types', $types),
+            $this->formateAdminSearchResult('suggestions', 'Suggestions', $suggestions),
+            $this->formateAdminSearchResult('contacts', 'Contacts', $contacts)
         );
 
         return response()->json($results, 200);
+    }
+
+
+    /**
+     * Formate Result for GeneralAdminSeacrch
+     * 
+     */
+    protected function formateAdminSearchResult($name, $slug, $results)
+    {
+        return array(
+            'name'      =>  $name,
+            'slug'      =>  $slug,
+            'results'   =>  $results
+        );
     }
 
 }
