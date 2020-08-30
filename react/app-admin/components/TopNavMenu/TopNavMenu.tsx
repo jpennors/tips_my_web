@@ -1,62 +1,11 @@
 import * as React from 'react';
-import { Container, Image, Menu, Responsive, Icon, Search, Header } from 'semantic-ui-react';
+import { Container, Image, Menu, Responsive, Icon } from 'semantic-ui-react';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { logout } from 'tmw-admin/utils/auth-module';
-import { ajaxPost } from 'tmw-common/utils/ajax';
-import { serializeGeneralAdminSearchFromAPI } from 'tmw-admin/utils/api-serialize';
-import { GeneralAdminSearch } from 'tmw-admin/constants/app-types';
-import { getRouteFromRouteType } from 'tmw-admin/utils/route-getter';
+import { AdminSearch } from '../AdminSearch';
 
 
-export const TopNavMenu: React.FunctionComponent = () => {
-
-    const [generalAdminSearch, setGeneralAdminSearch] = React.useState<Record<string,GeneralAdminSearch>>({});
-    const [searchKey, setSearchKey] = React.useState<string>("");
-
-    const fetchGeneralAdminSearch = async (): Promise<void> => {
-
-        return ajaxPost('search/admin', {
-            key: searchKey,
-        })
-        .then(res => {
-            const adminSearch = serializeGeneralAdminSearchFromAPI(res.data);
-            setGeneralAdminSearch(adminSearch);
-        })
-    };
-
-    const onSearchKeyChange = (_: any, { value }: { value: string }): void => {
-        setSearchKey(value);
-    };
-
-    const handleResultSelect = (event: any, { result }: any) => {
-        const route = getRouteFromRouteType(result.type, result.id);
-        if (route) {
-            window.open(route);
-        }
-    }
-    
-    React.useEffect(() => {
-        if (searchKey && searchKey.length >= 3) {
-            fetchGeneralAdminSearch();
-        }
-    }, [searchKey]);
-
-    const categoryLayoutRenderer = ({ categoryContent, resultsContent }: any) => {
-        if(!resultsContent)
-            return (<Container></Container>);
-        return( 
-            <div>
-                <Header as='h4' className='name' style={{ marginLeft: 10, marginTop: 10,}}>{categoryContent}</Header>
-                <Container className='results'>
-                    {resultsContent}
-                </Container>
-            </div>);
-    }
-
-    const categoryRenderer = ( {name}: any) => <span>{name}</span>
-
-    const resultRenderer = ({title}: any) => <p>{title}</p>
-    
+export const TopNavMenu: React.FunctionComponent = () => { 
 
     return (
         <Menu inverted style={{ borderRadius: 0 }}>
@@ -72,16 +21,7 @@ export const TopNavMenu: React.FunctionComponent = () => {
                 </Menu.Item>
                 <Menu.Item position="right">
                     <Responsive minWidth={500}>
-                        <Search
-                            placeholder="Search ..."
-                            value={searchKey}
-                            onSearchChange={onSearchKeyChange}
-                            onResultSelect={handleResultSelect}
-                            category
-                            categoryLayoutRenderer={categoryLayoutRenderer}
-                            categoryRenderer={categoryRenderer}
-                            resultRenderer={resultRenderer}
-                            results={generalAdminSearch}/>
+                        <AdminSearch/>
                     </Responsive>
                 </Menu.Item>
             </Container>
