@@ -29,7 +29,7 @@ export const AdminSearch: React.FunctionComponent = () => {
     const handleResultSelect = (event: any, { result }: any) => {
         const route = getRouteFromRouteType(result.type, result.id);
         if (route) {
-            window.open(route);
+            window.location.href = route;
         }
     }
     
