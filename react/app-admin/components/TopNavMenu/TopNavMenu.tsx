@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Image, Input, Menu, Responsive, Icon, Search, Label, Header } from 'semantic-ui-react';
+import { Container, Image, Menu, Responsive, Icon, Search, Header } from 'semantic-ui-react';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { logout } from 'tmw-admin/utils/auth-module';
 import { ajaxPost } from 'tmw-common/utils/ajax';
@@ -81,8 +81,7 @@ export const TopNavMenu: React.FunctionComponent = () => {
                             categoryLayoutRenderer={categoryLayoutRenderer}
                             categoryRenderer={categoryRenderer}
                             resultRenderer={resultRenderer}
-                            results={generalAdminSearch}
-                        />
+                            results={generalAdminSearch}/>
                     </Responsive>
                 </Menu.Item>
             </Container>
