@@ -76,7 +76,7 @@ class SearchController extends Controller
      * Formate Result for GeneralAdminSeacrch
      * 
      */
-    protected function formateAdminSearchResult($name, $slug, $results)
+    protected function formateAdminSearchResult($slug, $name, $results)
     {
         return array(
             'name'      =>  $name,
