@@ -62,10 +62,10 @@ class SearchController extends Controller
         ->get();
 
         $results = array(
-            $this->formateAdminSearchResult('resources', 'Resources', $resources),
-            $this->formateAdminSearchResult('tags', 'Tags', $tags),
-            $this->formateAdminSearchResult('prices', 'Prices', $prices),
-            $this->formateAdminSearchResult('types', 'Types', $types),
+            $this->formateAdminSearchResult('resources', 'Resources', $this->mapObjectResults($resources)),
+            $this->formateAdminSearchResult('tags', 'Tags', $this->mapObjectResults($tags)),
+            $this->formateAdminSearchResult('prices', 'Prices', $this->mapObjectResults($prices)),
+            $this->formateAdminSearchResult('types', 'Types', $this->mapObjectResults($types)),
         );
 
         return response()->json($results, 200);
@@ -85,4 +85,14 @@ class SearchController extends Controller
         );
     }
 
+    protected function mapObjectResults($results){
+        return array_map(
+            function($results){
+                return array(
+                    'id'    => $results['id'],
+                    'title' => $results['name'],
+                );
+            },
+            $results->toArray());
+    }
 }
