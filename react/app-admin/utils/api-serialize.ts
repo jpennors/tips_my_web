@@ -149,10 +149,12 @@ export const serializeSearchTagsStatsFromAPI = (
 
 export const serializeGeneralAdminSearchResultFromAPI = (
     GeneralAdminSearchResultFromAPI: APIGeneralAdminSearchResult[],
+    type: string
 ): GeneralAdminSearchResult[] => {
     return GeneralAdminSearchResultFromAPI.map(adminSearchResult => ({
         id: adminSearchResult.id,
         title: adminSearchResult.title,
+        type: type
     }))
 }
 
@@ -164,7 +166,7 @@ export const serializeGeneralAdminSearchFromAPI = (
         adminSearchDictionnary[adminSearch.slug] = {
             name: adminSearch.name,
             slug: adminSearch.slug,
-            results: serializeGeneralAdminSearchResultFromAPI(adminSearch.results)
+            results: serializeGeneralAdminSearchResultFromAPI(adminSearch.results, adminSearch.slug)
     }));
     return adminSearchDictionnary;
 };

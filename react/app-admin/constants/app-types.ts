@@ -94,6 +94,7 @@ export interface SearchTagStat {
 export interface GeneralAdminSearchResult {
     id: string,
     title: string,
+    type: string,
 }
 
 export interface GeneralAdminSearch {
