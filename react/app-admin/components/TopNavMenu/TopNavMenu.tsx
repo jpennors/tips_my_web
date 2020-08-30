@@ -5,6 +5,7 @@ import { logout } from 'tmw-admin/utils/auth-module';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { serializeGeneralAdminSearchFromAPI } from 'tmw-admin/utils/api-serialize';
 import { GeneralAdminSearch } from 'tmw-admin/constants/app-types';
+import { getRouteFromRouteType } from 'tmw-admin/utils/route-getter';
 
 
 export const TopNavMenu: React.FunctionComponent = () => {
@@ -26,6 +27,13 @@ export const TopNavMenu: React.FunctionComponent = () => {
     const onSearchKeyChange = (_: any, { value }: { value: string }): void => {
         setSearchKey(value);
     };
+
+    const handleResultSelect = (event: any, { result }: any) => {
+        const route = getRouteFromRouteType(result.type, result.id);
+        if (route) {
+            window.open(route);
+        }
+    }
     
     React.useEffect(() => {
         if (searchKey && searchKey.length >= 3) {
@@ -68,6 +76,7 @@ export const TopNavMenu: React.FunctionComponent = () => {
                             placeholder="Search ..."
                             value={searchKey}
                             onSearchChange={onSearchKeyChange}
+                            onResultSelect={handleResultSelect}
                             category
                             categoryLayoutRenderer={categoryLayoutRenderer}
                             categoryRenderer={categoryRenderer}
