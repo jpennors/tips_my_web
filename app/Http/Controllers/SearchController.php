@@ -61,31 +61,11 @@ class SearchController extends Controller
         )
         ->get();
 
-        // Search for results in Suggestions
-        $suggestions = Suggestion::where(
-                'description', 'LIKE', $sql_search_key
-            )
-            ->orWhere(
-                'url', 'LIKE', $sql_search_key
-            )
-            ->get();
-
-        // Search for results in Contacts
-        $contacts = Contact::where(
-            'email', 'LIKE', $sql_search_key
-        )
-        ->orWhere(
-            'message', 'LIKE', $sql_search_key
-        )
-        ->get();
-
         $results = array(
             $this->formateAdminSearchResult('resources', 'Resources', $resources),
             $this->formateAdminSearchResult('tags', 'Tags', $tags),
             $this->formateAdminSearchResult('prices', 'Prices', $prices),
             $this->formateAdminSearchResult('types', 'Types', $types),
-            $this->formateAdminSearchResult('suggestions', 'Suggestions', $suggestions),
-            $this->formateAdminSearchResult('contacts', 'Contacts', $contacts)
         );
 
         return response()->json($results, 200);
