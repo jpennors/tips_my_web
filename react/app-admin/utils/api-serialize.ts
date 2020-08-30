@@ -12,6 +12,8 @@ import {
     APILog,
     APIVisitorStat,
     APISearchTagStat,
+    APIGeneralAdminSearchResult,
+    APIGeneralAdminSearch
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -24,6 +26,8 @@ import {
     Log,
     VisitorStat,
     SearchTagStat,
+    GeneralAdminSearchResult,
+    GeneralAdminSearch
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
 
@@ -143,6 +147,29 @@ export const serializeSearchTagsStatsFromAPI = (
     }));
 };
 
+export const serializeGeneralAdminSearchResultFromAPI = (
+    GeneralAdminSearchResultFromAPI: APIGeneralAdminSearchResult[],
+): GeneralAdminSearchResult[] => {
+    return GeneralAdminSearchResultFromAPI.map(adminSearchResult => ({
+        id: adminSearchResult.id,
+        title: adminSearchResult.title,
+    }))
+}
+
+export const serializeGeneralAdminSearchFromAPI = (
+    GeneralAdminSearchFromAPI: APIGeneralAdminSearch[],
+): Record<string,GeneralAdminSearch> => {
+    let adminSearchDictionnary: Record<string,GeneralAdminSearch> = {}
+    GeneralAdminSearchFromAPI.map(adminSearch => (
+        adminSearchDictionnary[adminSearch.slug] = {
+            name: adminSearch.name,
+            slug: adminSearch.slug,
+            results: serializeGeneralAdminSearchResultFromAPI(adminSearch.results)
+    }));
+    return adminSearchDictionnary;
+};
+
+
 /*
  * Convert data from frontend format to (partial) API format (to use with POST API)
  */
@@ -172,3 +199,4 @@ export const serializeTagToAPI = (tag: Partial<Tag>): Partial<APITag> => {
         primary: tag.primary,
     };
 };
+

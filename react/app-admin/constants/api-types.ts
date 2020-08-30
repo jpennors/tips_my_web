@@ -132,3 +132,14 @@ export interface APISearchTagStat {
     tag_id: string;
     tag: APITag;
 }
+
+export interface APIGeneralAdminSearchResult {
+    id: string,
+    title: string,
+}
+
+export interface APIGeneralAdminSearch {
+    name: string,
+    slug: string,
+    results: [APIGeneralAdminSearchResult]
+}
