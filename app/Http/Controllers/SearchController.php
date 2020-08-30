@@ -24,7 +24,8 @@ class SearchController extends Controller
         $sql_search_key = '%'.$key.'%';
 
         // Search for results in Resources
-        $resources = Resource::where(
+        $resources = Resource::select('id', 'name')
+        ->where(
             'name', 'LIKE', $sql_search_key
         )
 
@@ -34,7 +35,8 @@ class SearchController extends Controller
         ->get();
 
         // Search for results in Tags
-        $tags = Tag::where(
+        $tags = Tag::select('id', 'name')
+        ->where(
             'name', 'LIKE', $sql_search_key
         )
         ->orWhere(
@@ -43,7 +45,8 @@ class SearchController extends Controller
         ->get();
 
         // Search for results in Prices
-        $prices = Price::where(
+        $prices = Price::select('id', 'name')
+        ->where(
             'name', 'LIKE', $sql_search_key
         )
         ->orWhere(
@@ -52,7 +55,8 @@ class SearchController extends Controller
         ->get();
 
         // Search for results in Types
-        $types = Type::where(
+        $types = Type::select('id', 'name')
+        ->where(
             'name', 'LIKE', $sql_search_key
         )
         ->get();
