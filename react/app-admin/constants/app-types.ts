@@ -63,6 +63,7 @@ export interface Price {
 export interface ResourceType {
     id: string;
     name: string;
+    slug: string;
 }
 
 export interface Log {
