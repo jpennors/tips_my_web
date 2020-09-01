@@ -52,6 +52,7 @@ class Price extends Model
         return $this->hasMany(Resource::class);
     }
 
+    
      /**
      * Get the options for generating the slug.
      */
