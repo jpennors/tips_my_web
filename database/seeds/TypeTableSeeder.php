@@ -14,12 +14,12 @@ class TypeTableSeeder extends Seeder
     {
 
         $types = [
-            'website',
-            'software',
-            'application',
-            'account',
-            'video',
-            'company'
+            'Website',
+            'Software',
+            'Application',
+            'Account',
+            'Video',
+            'Company'
         ];
 
         foreach($types as $type_name)
