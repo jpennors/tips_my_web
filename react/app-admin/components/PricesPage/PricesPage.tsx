@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Icon, Label, Loader, Table } from 'semantic-ui-react';
+import { Button, Icon, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
@@ -53,9 +53,9 @@ export const PricesPage: React.FunctionComponent = () => {
     return (
         <div>
             <PageHeader
-                iconName="tags"
-                headerContent="Tags"
-                subHeaderContent="Prices proposed to search for a type of resources"
+                iconName="eur"
+                headerContent="Prices"
+                subHeaderContent="Prices be used for resources"
             />
             <Link to={ADMIN_APP_ROUTES.PRICES_ADD}>
                 <Button fluid icon>
