@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { Button, Icon, Label, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
+import { ADMIN_APP_ROUTES, MAX_CONTENT_LENGTH } from 'tmw-admin/constants/app-constants';
 import { Resource } from 'tmw-admin/constants/app-types';
 import { serializeResourcesFromAPI } from 'tmw-admin/utils/api-serialize';
+import { wrapText, wrapTagsDisplay } from 'tmw-admin/utils/content-wrapper';
+
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
 
 export const ResourcesPage: React.FunctionComponent = () => {
@@ -94,7 +96,9 @@ export const ResourcesPage: React.FunctionComponent = () => {
                         {resources.map(resource => (
                             <Table.Row key={resource.id}>
                                 <Table.Cell>{resource.name}</Table.Cell>
-                                <Table.Cell>{resource.url}</Table.Cell>
+                                <Table.Cell title={resource.url}>
+                                    {wrapText(resource.url, MAX_CONTENT_LENGTH.RESOURCES_PAGE_URL)}
+                                </Table.Cell>
                                 <Table.Cell>{resource.likes}</Table.Cell>
                                 <Table.Cell>
                                     <Label.Group style={{ marginBottom: '-0.5em' }}>

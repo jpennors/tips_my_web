@@ -13,6 +13,11 @@ export const LOCALES_NAMES = {
     [LOCALES.ENGLISH_FRENCH]: 'English / French',
 };
 
+export enum MAX_CONTENT_LENGTH {
+    RESOURCES_PAGE_URL = 20,
+    RESOURCES_PAGES_TAGS = 3,
+};
+
 export const RESOURCES_IMAGE_BASE_URL = '/api/resources/image/';
 
 /*
@@ -31,5 +36,4 @@ export enum ADMIN_APP_ROUTES {
     IMPORT = '/admin/import',
     SUGGESTIONS = '/admin/suggestions',
     CONTACT = '/admin/contact',
-    STATISTICS = '/admin/statistics'
 }
