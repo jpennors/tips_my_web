@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Icon, Label, Loader, Table } from 'semantic-ui-react';
+import { Button, Icon, Label, Loader, Table, Popup } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_ROUTES, MAX_CONTENT_LENGTH } from 'tmw-admin/constants/app-constants';
 import { Resource } from 'tmw-admin/constants/app-types';
 import { serializeResourcesFromAPI } from 'tmw-admin/utils/api-serialize';
 import { wrapText, wrapTagsDisplay } from 'tmw-admin/utils/content-wrapper';
-
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
 
 export const ResourcesPage: React.FunctionComponent = () => {
@@ -96,11 +95,43 @@ export const ResourcesPage: React.FunctionComponent = () => {
                         {resources.map(resource => (
                             <Table.Row key={resource.id}>
                                 <Table.Cell>{resource.name}</Table.Cell>
-                                <Table.Cell title={resource.url}>
-                                    {wrapText(resource.url, MAX_CONTENT_LENGTH.RESOURCES_PAGE_URL)}
-                                </Table.Cell>
+                                <Popup
+                                    content={resource.url}
+                                    trigger={
+                                        <Table.Cell>
+                                            {wrapText(
+                                                resource.url,
+                                                MAX_CONTENT_LENGTH.RESOURCES_PAGE_URL,
+                                            )}
+                                        </Table.Cell>
+                                    }
+                                />
                                 <Table.Cell>{resource.likes}</Table.Cell>
-                                <Table.Cell title={resource.tags.map(rt => rt.tag.name).join(', ')}>
+                                <Popup
+                                    content={resource.tags.map(rt => rt.tag.name).join(', ')}
+                                    trigger={
+                                        <Table.Cell
+                                            title={resource.tags.map(rt => rt.tag.name).join(', ')}
+                                        >
+                                            <Label.Group style={{ marginBottom: '-0.5em' }}>
+                                                {wrapTagsDisplay(
+                                                    resource.tags,
+                                                    MAX_CONTENT_LENGTH.RESOURCES_PAGES_TAGS,
+                                                ).map(tag => (
+                                                    <Label key={tag.tagId} size="small">
+                                                        {tag.tag.name}
+                                                    </Label>
+                                                ))}
+                                                {resource.tags.length > MAX_CONTENT_LENGTH.RESOURCES_PAGES_TAGS ? (
+                                                    <Label>..</Label>
+                                                ) : (
+                                                    ''
+                                                )}
+                                            </Label.Group>
+                                        </Table.Cell>
+                                    }
+                                />
+                                {/* <Table.Cell title={resource.tags.map(rt => rt.tag.name).join(', ')}>
                                     <Label.Group style={{ marginBottom: '-0.5em' }}>
                                         {wrapTagsDisplay(
                                             resource.tags,
@@ -116,7 +147,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                             ''
                                         )}
                                     </Label.Group>
-                                </Table.Cell>
+                                </Table.Cell> */}
                                 <Table.Cell textAlign="center">
                                     <Link
                                         to={ADMIN_APP_ROUTES.RESOURCES_EDIT.replace(
