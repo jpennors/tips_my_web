@@ -65,6 +65,21 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
             ],
         },
         {
+            name: 'Resource Types',
+            path: ADMIN_APP_ROUTES.RESOURCE_TYPES,
+            iconName: 'file',
+            subMenu: [
+                {
+                    name: 'List',
+                    path: ADMIN_APP_ROUTES.RESOURCE_TYPES,
+                },
+                {
+                    name: 'Add',
+                    path: ADMIN_APP_ROUTES.RESOURCE_TYPES_ADD,
+                },
+            ],
+        },
+        {
             name: 'Import',
             path: ADMIN_APP_ROUTES.IMPORT,
             iconName: 'plus circle',
