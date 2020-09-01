@@ -100,13 +100,21 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                     {wrapText(resource.url, MAX_CONTENT_LENGTH.RESOURCES_PAGE_URL)}
                                 </Table.Cell>
                                 <Table.Cell>{resource.likes}</Table.Cell>
-                                <Table.Cell>
+                                <Table.Cell title={resource.tags.map(rt => rt.tag.name).join(', ')}>
                                     <Label.Group style={{ marginBottom: '-0.5em' }}>
-                                        {resource.tags.map(tag => (
+                                        {wrapTagsDisplay(
+                                            resource.tags,
+                                            MAX_CONTENT_LENGTH.RESOURCES_PAGES_TAGS,
+                                        ).map(tag => (
                                             <Label key={tag.tagId} size="small">
                                                 {tag.tag.name}
                                             </Label>
                                         ))}
+                                        {resource.tags.length > MAX_CONTENT_LENGTH.RESOURCES_PAGES_TAGS ? (
+                                            <Label>..</Label>
+                                        ) : (
+                                            ''
+                                        )}
                                     </Label.Group>
                                 </Table.Cell>
                                 <Table.Cell textAlign="center">
