@@ -173,3 +173,9 @@ export const serializeTagToAPI = (tag: Partial<Tag>): Partial<APITag> => {
         primary: tag.primary,
     };
 };
+
+export const serializePriceToAPI = (price: Partial<Price>): Partial<APIPrice> => {
+    return {
+        name: price.name,
+    };
+};
