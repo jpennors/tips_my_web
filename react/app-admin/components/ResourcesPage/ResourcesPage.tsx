@@ -110,9 +110,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                 <Popup
                                     content={resource.tags.map(rt => rt.tag.name).join(', ')}
                                     trigger={
-                                        <Table.Cell
-                                            title={resource.tags.map(rt => rt.tag.name).join(', ')}
-                                        >
+                                        <Table.Cell>
                                             <Label.Group style={{ marginBottom: '-0.5em' }}>
                                                 {wrapTagsDisplay(
                                                     resource.tags,
