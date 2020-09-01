@@ -57,6 +57,7 @@ export interface Resource {
 export interface Price {
     id: string;
     name: string;
+    slug: string;
 }
 
 export interface ResourceType {

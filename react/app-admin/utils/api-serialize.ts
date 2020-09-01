@@ -96,6 +96,7 @@ export const serializePricesFromAPI = (pricesFromAPI: APIPrice[]): Price[] => {
     return pricesFromAPI.map(price => ({
         id: price.id,
         name: price.name,
+        slug: price.slug,
     }));
 };
 
