@@ -56,6 +56,7 @@ export interface APIPrice {
 export interface APIResourceType {
     id: string;
     name: string;
+    slug: string;
     created_at: Date;
     updated_at: Date | null;
 }

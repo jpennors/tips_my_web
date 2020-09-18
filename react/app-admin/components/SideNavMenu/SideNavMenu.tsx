@@ -50,6 +50,36 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
             ],
         },
         {
+            name: 'Prices',
+            path: ADMIN_APP_ROUTES.PRICES,
+            iconName: 'eur',
+            subMenu: [
+                {
+                    name: 'List',
+                    path: ADMIN_APP_ROUTES.PRICES,
+                },
+                {
+                    name: 'Add',
+                    path: ADMIN_APP_ROUTES.PRICES_ADD,
+                },
+            ],
+        },
+        {
+            name: 'Resource Types',
+            path: ADMIN_APP_ROUTES.RESOURCE_TYPES,
+            iconName: 'file',
+            subMenu: [
+                {
+                    name: 'List',
+                    path: ADMIN_APP_ROUTES.RESOURCE_TYPES,
+                },
+                {
+                    name: 'Add',
+                    path: ADMIN_APP_ROUTES.RESOURCE_TYPES_ADD,
+                },
+            ],
+        },
+        {
             name: 'Import',
             path: ADMIN_APP_ROUTES.IMPORT,
             iconName: 'plus circle',

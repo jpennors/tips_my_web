@@ -19,6 +19,7 @@ class CreateTypesTable extends Migration
             $table->uuid('id');
             $table->primary('id');
             $table->string('name', 30);
+            $table->string('slug', 50);
             $table->timestamps();
         });
     }

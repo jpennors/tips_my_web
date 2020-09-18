@@ -100,6 +100,7 @@ export const serializePricesFromAPI = (pricesFromAPI: APIPrice[]): Price[] => {
     return pricesFromAPI.map(price => ({
         id: price.id,
         name: price.name,
+        slug: price.slug,
     }));
 };
 
@@ -107,6 +108,7 @@ export const serializeResourceTypesFromAPI = (typesFromAPI: APIResourceType[]): 
     return typesFromAPI.map(type => ({
         id: type.id,
         name: type.name,
+        slug: type.slug,
     }));
 };
 
@@ -202,3 +204,14 @@ export const serializeTagToAPI = (tag: Partial<Tag>): Partial<APITag> => {
     };
 };
 
+export const serializePriceToAPI = (price: Partial<Price>): Partial<APIPrice> => {
+    return {
+        name: price.name,
+    };
+};
+
+export const serializeResourceTypeToAPI = (type: Partial<ResourceType>): Partial<ResourceType> => {
+    return {
+        name: type.name,
+    };
+};
