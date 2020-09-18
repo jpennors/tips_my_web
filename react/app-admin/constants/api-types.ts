@@ -134,12 +134,12 @@ export interface APISearchTagStat {
 }
 
 export interface APIGeneralAdminSearchResult {
-    id: string,
-    title: string,
+    id: string;
+    title: string;
 }
 
 export interface APIGeneralAdminSearch {
-    name: string,
-    slug: string,
-    results: [APIGeneralAdminSearchResult]
+    name: string;
+    slug: string;
+    results: APIGeneralAdminSearchResult[];
 }
