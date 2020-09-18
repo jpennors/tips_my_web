@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom';
 import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { TagsLaunchBar } from 'tmw-main/components/TagsLaunchBar';
 import { MAIN_APP_ROUTES, SIZES } from 'tmw-main/constants/app-constants';
+import { ArrowLeftIcon } from 'tmw-main/icons/ArrowLeftIcon';
 import { serializeMainTagsFromAPI } from 'tmw-main/utils/api-serialize';
 import { MainTag, RelatedTag } from 'tmw-main/constants/app-types';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Tag } from 'tmw-main/components/Tag';
-import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
 import { encodeSearchTags } from 'tmw-main/utils/tags-search-url';
 
 import './tags-selector.less';
@@ -96,7 +96,7 @@ export const TagsSelector: React.FunctionComponent = () => {
                                 className="tags-selector__selected-primary-tag-arrow"
                                 onClick={(): void => onMainTagClick(selectedMainTag)}
                             >
-                                <ArrowIcon width={20} />
+                                <ArrowLeftIcon width={20} />
                             </span>
                             <Tag
                                 content={selectedMainTag.name}

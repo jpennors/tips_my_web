@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'tmw-main/components/Button';
 import { DocumentHead } from 'tmw-main/components/DocumentHead';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
-import { ArrowIcon } from 'tmw-main/icons/ArrowIcon';
+import { ArrowRightIcon } from 'tmw-main/icons/ArrowRightIcon';
 
 import './not-found-error-page.less';
 
@@ -22,7 +22,7 @@ export const NotFoundErrorPage: React.FunctionComponent = () => {
             </div>
             <div className="not-found-error-page__back-button">
                 <Link to={MAIN_APP_ROUTES.HOME}>
-                    <Button content="Back to Home Page" icon={ArrowIcon} />
+                    <Button content="Back to Home Page" icon={ArrowRightIcon} />
                 </Link>
             </div>
         </div>
