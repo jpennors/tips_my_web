@@ -93,3 +93,15 @@ export interface SearchTagStat {
     primary: boolean;
 }
 
+export interface GeneralAdminSearchResult {
+    id: string,
+    title: string,
+    type: string,
+}
+
+export interface GeneralAdminSearch {
+    name: string,
+    slug: string,
+    results: GeneralAdminSearchResult[]
+}
+
