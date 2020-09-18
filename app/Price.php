@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuids;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Price extends Model
 {
     use Uuids;
+    use HasSlug;
 
     /**
      * The table associated with the model.
@@ -47,6 +50,20 @@ class Price extends Model
     public function resources()
     {
         return $this->hasMany(Resource::class);
+    }
+
+    
+     /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            ->usingSeparator('-')
+            ->doNotGenerateSlugsOnUpdate()
+            ->slugsShouldBeNoLongerThan(50);
     }
 
 
