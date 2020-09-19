@@ -187,15 +187,11 @@ class ResourceController extends Controller
 
     public function uploadImage(Request $request, $id) {
 
-        // Récupération de la ressource
+        // Retrieve Resource from id
         $resource = Resource::findOrFail($id);
 
-        if ($resource->image) {
-            $resource->deleteImage();
-        }
-
         $file = $request->file('file');
-        return $resource->uploadImage($file);
+        return $resource->uploadImageFromFile($file);
   }
 
     public function getImage(Request $r, $id) {
