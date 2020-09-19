@@ -190,7 +190,8 @@ class Resource extends Model
                 $fileName = $this->id.$fileExtension;
                 $this->uploadImage($file->get(), $fileName);
             } catch(\Exception $e) {
-                abort(500, 'Can\'t save the file');
+                abort(500, $e);
+                //abort(500, 'Can\'t save the file');
             }
             
             return response()->json();
