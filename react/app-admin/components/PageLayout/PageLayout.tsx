@@ -7,6 +7,10 @@ import { OverviewPage } from 'tmw-admin/components/OverviewPage';
 import { ContactPage } from 'tmw-admin/components/ContactPage';
 import { ResourcesEditPage } from 'tmw-admin/components/ResourcesEditPage';
 import { ResourcesPage } from 'tmw-admin/components/ResourcesPage';
+import { PricesPage } from 'tmw-admin/components/PricesPage';
+import { PricesEditPage } from 'tmw-admin/components/PricesEditPage';
+import { ResourceTypesPage } from 'tmw-admin/components/ResourceTypesPage';
+import { ResourceTypesEditPage } from 'tmw-admin/components/ResourceTypesEditPage';
 import { SideNavMenu } from 'tmw-admin/components/SideNavMenu';
 import { SuggestionsPage } from 'tmw-admin/components/SuggestionsPage';
 import { TagsEditPage } from 'tmw-admin/components/TagsEditPage';
@@ -85,6 +89,36 @@ export const PageLayout: React.FunctionComponent = () => {
                                         path={ADMIN_APP_ROUTES.RESOURCES_EDIT}
                                         exact
                                         component={ResourcesEditPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.PRICES}
+                                        exact
+                                        component={PricesPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.PRICES_ADD}
+                                        exact
+                                        component={PricesEditPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.PRICES_EDIT}
+                                        exact
+                                        component={PricesEditPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.RESOURCE_TYPES}
+                                        exact
+                                        component={ResourceTypesPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.RESOURCE_TYPES_ADD}
+                                        exact
+                                        component={ResourceTypesEditPage}
+                                    />
+                                    <ProtectedRoute
+                                        path={ADMIN_APP_ROUTES.RESOURCE_TYPES_EDIT}
+                                        exact
+                                        component={ResourceTypesEditPage}
                                     />
                                     <ProtectedRoute
                                         path={ADMIN_APP_ROUTES.STATISTICS}

@@ -39,6 +39,7 @@ Route::get('test', 'TestController@execute');
 # Artisan
 Route::get('artisan/queues', 'ArtisanController@QueueWorkCommand');
 
+Route::post('search/admin', 'SearchController@adminGeneralSearch');
 
 # Admin routes
 Route::group(['middleware' => 'admin'], function () {

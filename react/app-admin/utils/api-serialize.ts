@@ -12,6 +12,8 @@ import {
     APILog,
     APIVisitorStat,
     APISearchTagStat,
+    APIGeneralAdminSearchResult,
+    APIGeneralAdminSearch
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -24,6 +26,8 @@ import {
     Log,
     VisitorStat,
     SearchTagStat,
+    GeneralAdminSearchResult,
+    GeneralAdminSearch
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
 
@@ -96,6 +100,7 @@ export const serializePricesFromAPI = (pricesFromAPI: APIPrice[]): Price[] => {
     return pricesFromAPI.map(price => ({
         id: price.id,
         name: price.name,
+        slug: price.slug,
     }));
 };
 
@@ -103,6 +108,7 @@ export const serializeResourceTypesFromAPI = (typesFromAPI: APIResourceType[]): 
     return typesFromAPI.map(type => ({
         id: type.id,
         name: type.name,
+        slug: type.slug,
     }));
 };
 
@@ -143,6 +149,31 @@ export const serializeSearchTagsStatsFromAPI = (
     }));
 };
 
+export const serializeGeneralAdminSearchResultFromAPI = (
+    GeneralAdminSearchResultFromAPI: APIGeneralAdminSearchResult[],
+    type: string
+): GeneralAdminSearchResult[] => {
+    return GeneralAdminSearchResultFromAPI.map(adminSearchResult => ({
+        id: adminSearchResult.id,
+        title: adminSearchResult.title,
+        type: type
+    }))
+}
+
+export const serializeGeneralAdminSearchFromAPI = (
+    GeneralAdminSearchFromAPI: APIGeneralAdminSearch[],
+): Record<string,GeneralAdminSearch> => {
+    let adminSearchDictionnary: Record<string,GeneralAdminSearch> = {}
+    GeneralAdminSearchFromAPI.map(adminSearch => (
+        adminSearchDictionnary[adminSearch.slug] = {
+            name: adminSearch.name,
+            slug: adminSearch.slug,
+            results: serializeGeneralAdminSearchResultFromAPI(adminSearch.results, adminSearch.slug)
+    }));
+    return adminSearchDictionnary;
+};
+
+
 /*
  * Convert data from frontend format to (partial) API format (to use with POST API)
  */
@@ -170,5 +201,17 @@ export const serializeTagToAPI = (tag: Partial<Tag>): Partial<APITag> => {
     return {
         name: tag.name,
         primary: tag.primary,
+    };
+};
+
+export const serializePriceToAPI = (price: Partial<Price>): Partial<APIPrice> => {
+    return {
+        name: price.name,
+    };
+};
+
+export const serializeResourceTypeToAPI = (type: Partial<ResourceType>): Partial<ResourceType> => {
+    return {
+        name: type.name,
     };
 };

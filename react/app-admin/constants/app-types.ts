@@ -57,11 +57,13 @@ export interface Resource {
 export interface Price {
     id: string;
     name: string;
+    slug: string;
 }
 
 export interface ResourceType {
     id: string;
     name: string;
+    slug: string;
 }
 
 export interface Log {
@@ -89,5 +91,17 @@ export interface SearchTagStat {
     name: string;
     slug: string;
     primary: boolean;
+}
+
+export interface GeneralAdminSearchResult {
+    id: string,
+    title: string,
+    type: string,
+}
+
+export interface GeneralAdminSearch {
+    name: string,
+    slug: string,
+    results: GeneralAdminSearchResult[]
 }
 
