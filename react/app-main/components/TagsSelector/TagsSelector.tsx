@@ -109,28 +109,28 @@ export const TagsSelector: React.FunctionComponent = () => {
                     <div className="tags-selector__tag-options">
                         {selectedMainTag
                             ? selectedMainTag.relatedTags.map((tag: RelatedTag) => (
-                                <Tag
-                                    key={tag.id}
-                                    content={tag.name}
-                                    isSelected={selectedRelatedTags
-                                        .map(tag => tag.id)
-                                        .includes(tag.id)}
-                                    onClickCallback={(): void => onRelatedTagClick(tag)}
-                                    size={SIZES.MEDIUM}
-                                />
-                            ))
+                                  <Tag
+                                      key={tag.id}
+                                      content={tag.name}
+                                      isSelected={selectedRelatedTags
+                                          .map(tag => tag.id)
+                                          .includes(tag.id)}
+                                      onClickCallback={(): void => onRelatedTagClick(tag)}
+                                      size={SIZES.MEDIUM}
+                                  />
+                              ))
                             : tags
-                                .filter(tag => tag.primary)
-                                .map(tag => {
-                                    return (
-                                        <Tag
-                                            key={tag.id}
-                                            content={tag.name}
-                                            isSelected={false}
-                                            onClickCallback={(): void => onMainTagClick(tag)}
-                                            size={SIZES.MEDIUM}
-                                        />
-                                    );
+                                  .filter(tag => tag.primary)
+                                  .map(tag => {
+                                      return (
+                                          <Tag
+                                              key={tag.id}
+                                              content={tag.name}
+                                              isSelected={false}
+                                              onClickCallback={(): void => onMainTagClick(tag)}
+                                              size={SIZES.MEDIUM}
+                                          />
+                                      );
                                   })}
                     </div>
                 </div>
