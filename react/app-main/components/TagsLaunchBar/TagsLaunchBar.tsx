@@ -48,7 +48,9 @@ export const TagsLaunchBar: React.FunctionComponent<TagsLaunchBarProps> = ({
 
     return (
         <div
-            className={classNames('tags-launch-bar', { ['tags-launch-bar--initial']: isMinWidth })}
+            className={classNames('tags-launch-bar', {
+                ['tags-launch-bar--button']: !isMinWidth,
+            })}
             style={{ width: `${barWidth}px`, height: `${barHeight}px` }}
             onClick={showButton ? onClickCallback : undefined}
         >
