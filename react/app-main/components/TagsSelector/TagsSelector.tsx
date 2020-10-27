@@ -76,7 +76,7 @@ export const TagsSelector: React.FunctionComponent = () => {
     }, []);
 
     let barPercentage = 0;
-    barPercentage += selectedMainTag ? 40 : 0;
+    barPercentage += selectedMainTag ? 20 : 0;
     barPercentage += selectedRelatedTags.length * 20;
 
     return (

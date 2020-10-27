@@ -6,7 +6,8 @@ import { useViewport } from 'tmw-common/components/ViewportProvider';
 
 import './tags-launch-bar.less';
 
-const MAX_BAR_WIDTH = 600;
+const MAX_BAR_WIDTH = 500;
+const MIN_BAR_WIDTH = 200;
 const MAX_BAR_HEIGHT = 45;
 
 interface TagsLaunchBarProps {
@@ -25,31 +26,30 @@ export const TagsLaunchBar: React.FunctionComponent<TagsLaunchBarProps> = ({
     const maxBarWidth = 0.88 * width < MAX_BAR_WIDTH ? 0.88 * width : MAX_BAR_WIDTH;
     const barHeight = width < 450 ? width / 10 : MAX_BAR_HEIGHT;
 
-    let barWidth = (completionPercentage * maxBarWidth) / 100;
-    let isMinWidth = false;
+    const hasTagsSelected = completionPercentage > 0;
+    let barWidth = hasTagsSelected
+        ? MIN_BAR_WIDTH + (completionPercentage * (maxBarWidth - MIN_BAR_WIDTH)) / 100
+        : barHeight;
 
     if (barWidth > maxBarWidth) {
         barWidth = maxBarWidth;
-    } else if (barWidth <= barHeight) {
-        barWidth = barHeight;
-        isMinWidth = true;
     }
 
     const [showButton, setShowButton] = React.useState<boolean>(false);
     React.useEffect(() => {
-        if (!isMinWidth) {
+        if (hasTagsSelected) {
             setTimeout(() => setShowButton(true), 150);
         } else {
             setShowButton(false);
         }
-    }, [isMinWidth, setShowButton]);
+    }, [hasTagsSelected, setShowButton]);
 
     const resourcesCount = Math.round(3000 / barWidth); // TODO: Compute real count
 
     return (
         <div
             className={classNames('tags-launch-bar', {
-                ['tags-launch-bar--button']: !isMinWidth,
+                ['tags-launch-bar--button']: hasTagsSelected,
             })}
             style={{ width: `${barWidth}px`, height: `${barHeight}px` }}
             onClick={showButton ? onClickCallback : undefined}
