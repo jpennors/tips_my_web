@@ -17,6 +17,15 @@
     &--button {
         box-shadow: 0 1px 4px 0 rgba(50,50,50,0.5);
         cursor: pointer;
+        transition: transform 0.15s ease-in-out;
+
+        &:hover {
+            transform: scale(1.02);
+        }
+
+        &:active {
+            transform: scale(0.97);
+        }
     }
 
     &__text {
