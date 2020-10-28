@@ -15,11 +15,14 @@ interface TagsLaunchBarProps {
     completionPercentage: number;
     /* Action to call on search button click */
     onClickCallback?: () => void;
+    /* Number of resources reached with the selected tag */
+    totalResources: number;
 }
 
 export const TagsLaunchBar: React.FunctionComponent<TagsLaunchBarProps> = ({
     completionPercentage,
     onClickCallback,
+    totalResources,
 }) => {
     const { width } = useViewport();
 
@@ -44,8 +47,6 @@ export const TagsLaunchBar: React.FunctionComponent<TagsLaunchBarProps> = ({
         }
     }, [hasTagsSelected, setShowButton]);
 
-    const resourcesCount = Math.round(3000 / barWidth); // TODO: Compute real count
-
     return (
         <div
             className={classNames('tags-launch-bar', {
@@ -56,7 +57,7 @@ export const TagsLaunchBar: React.FunctionComponent<TagsLaunchBarProps> = ({
         >
             {showButton ? (
                 <div className="tags-launch-bar__text">
-                    Find {resourcesCount} resources{' '}
+                    Find {totalResources} resources{' '}
                     <FontAwesomeIcon icon={faArrowRight} className="tags-launch-bar__arrow-icon" />
                 </div>
             ) : (

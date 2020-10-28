@@ -79,9 +79,21 @@ export const TagsSelector: React.FunctionComponent = () => {
     barPercentage += selectedMainTag ? 20 : 0;
     barPercentage += selectedRelatedTags.length * 20;
 
+    // Compute the number of resources reached with these selected tags
+    const resourceRelatedTags = selectedRelatedTags.length
+        ? selectedRelatedTags
+        : selectedMainTag?.relatedTags;
+    const totalResources = resourceRelatedTags
+        ? resourceRelatedTags.reduce((sum, tag) => sum + tag.weight, 0)
+        : 0;
+
     return (
         <div className="tags-selector">
-            <TagsLaunchBar onClickCallback={launchSearch} completionPercentage={barPercentage} />
+            <TagsLaunchBar
+                onClickCallback={launchSearch}
+                completionPercentage={barPercentage}
+                totalResources={totalResources}
+            />
             {isLoading ? (
                 <div className="tags-selector__loading-spinner">
                     <LoadingSpinner />
