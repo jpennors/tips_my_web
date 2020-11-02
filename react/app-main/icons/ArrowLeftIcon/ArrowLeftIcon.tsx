@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IconProps } from 'tmw-main/icons/icon-types';
 
-export const ArrowIcon: React.FunctionComponent<IconProps> = ({
+export const ArrowLeftIcon: React.FunctionComponent<IconProps> = ({
     fill = '#ffffff',
     width = '100%',
     className = '',

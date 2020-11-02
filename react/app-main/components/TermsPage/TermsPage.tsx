@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { BigButton } from 'tmw-main/components/BigButton';
+import { Link } from 'react-router-dom';
+import { Button } from 'tmw-main/components/Button';
 import { DocumentHead } from 'tmw-main/components/DocumentHead';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
-import { Link } from 'react-router-dom';
+import { ArrowRightIcon } from 'tmw-main/icons/ArrowRightIcon';
 
 import './terms-page.less';
 
@@ -256,7 +257,7 @@ export const TermsPage: React.FunctionComponent = () => {
             </div>
             <div className="terms-page__back-button">
                 <Link to={MAIN_APP_ROUTES.HOME}>
-                    <BigButton content="Back to Home Page" isColored={false} />
+                    <Button content="Back to Home Page" icon={ArrowRightIcon} />
                 </Link>
             </div>
         </div>
