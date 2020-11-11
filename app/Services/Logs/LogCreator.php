@@ -85,11 +85,17 @@ class LogCreator
 
     public function getLogGeoipId($request)
     {
-        if (!$request || !array_key_exists('HTTP_X_FORWARDED_FOR', $request) || $request['HTTP_X_FORWARDED_FOR'] == null) {
+        if (!$request) {
             return null;
         }
 
-        $geoip = geoip($request['HTTP_X_FORWARDED_FOR']);
+        if($_SERVER['REMOTE_ADDR'] == env('PROXY_IP_ADDRESS') && false) // ToDo
+        {
+            $ip_address = "";
+        }
+        $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+
+        $geoip = geoip($ip_address);
         $log_geoip = LogGeoip::firstOrCreate([
             'continent'   => $geoip['continent'],
             'timezone'    => $geoip['timezone'],
