@@ -209,7 +209,9 @@ class Resource extends Model
      */
     public function uploadImageFromUrlJobCreation($provided_resource)
     {
-        ImportImage::dispatch($provided_resource, $this);
+        // ImportImage::dispatch($provided_resource, $this);
+        $this->uploadImageFromUrl($provided_resource);
+        // ImportImage::dispatch($provided_resource, $this);
     }
 
 
