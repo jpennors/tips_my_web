@@ -17,7 +17,6 @@ class TagController extends Controller
      */
     public function indexPublic(Request $request)
     {
-        dd($request);
         $tags = Tag::loadMainTags();
 
         return response()->json($tags, 200);
