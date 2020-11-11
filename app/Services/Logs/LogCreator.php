@@ -92,7 +92,7 @@ class LogCreator
         if ($_SERVER['REMOTE_ADDR'] == env('PROXY_IP_ADDRESS')) {
             $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
-            $ip_address = $_SERVER['REMOTE_ADDR']
+            $ip_address = $_SERVER['REMOTE_ADDR'];
         }
 
         $geoip = geoip($ip_address);
