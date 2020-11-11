@@ -85,7 +85,7 @@ class LogCreator
 
     public function getLogGeoipId($request)
     {
-        if (!$request || !array_key_exists('HTTP_X_FORWARDED_FOR', $request) || $request['HTTP_X_FORWARDED_FOR'] == null) {
+        if (!$request) {
             return null;
         }
 
