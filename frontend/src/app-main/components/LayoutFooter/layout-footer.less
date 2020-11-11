@@ -1,0 +1,45 @@
+@import '../../constants/ui-constants';
+
+.layout-footer {
+    width: 88%;
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: center;
+
+    &__left-side {
+
+        a, p {
+            font-family: @app-font-medium;
+            color: white;
+            font-size: @app-font-size-small;
+        }
+
+        p {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        a {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                color: white;
+            }
+        }
+    }
+
+    &__social-link-img {
+        width: 30px;
+        margin-left: 5px;
+        vertical-align: middle;
+    }
+}
