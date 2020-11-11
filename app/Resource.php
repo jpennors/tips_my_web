@@ -130,13 +130,16 @@ class Resource extends Model
     *   Update image attribute and store file
     *
     */
-    public function setImage($file = null, $fileName = null){
+    public function setImage($file = null, $fileName = null, $binary=false){
 
         $this->image = $fileName;
         $this->save();
 
         if ($fileName !== null && $file !== null) {
-            ImageStorage::storeImage($file, $fileName);
+            if ($binary) {
+                return ImageStorage::storeBinaryImage($file, $fileName);
+            }
+            return ImageStorage::storeImage($file, $fileName);
         }
     }
 
@@ -170,12 +173,12 @@ class Resource extends Model
      *  Upload file into storage 
      * 
      */
-    protected function uploadImage($file, $fileName)
+    protected function uploadImage($file, $fileName, $binary=false)
     {
         // Remove older image
         $this->deleteImage();
         // Add image file in storage and in database
-        $this->setImage($file, $fileName);   
+        $this->setImage($file, $fileName, $binary);   
     }
 
 
@@ -248,7 +251,7 @@ class Resource extends Model
 
         if ($file) {
             try {
-                $this->uploadImage($file, $fileName);
+                $this->uploadImage($file, $fileName, true);
             } catch (\Throwable $th) {}
         }
     }    

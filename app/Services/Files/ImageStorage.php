@@ -4,13 +4,12 @@ namespace App\Services\Files;
 
 use Storage;
 use Response;
+use Image;
 
 class ImageStorage
 {
 
     protected static $STORAGE_PATH = 'public/resources/';
-    protected static $TMP_STORAGE_PATH = 'public/tmp/';
-    protected static $FULL_TMP_STORAGE_PATH = 'app\\public\\tmp\\';
 
     protected static $MAX_WIDTH = 1280;
     protected static $MAX_HEIGHT = 720;
@@ -19,24 +18,10 @@ class ImageStorage
      * Public accessors
      * 
      */
-    public static function getTmpStorageDisk()
-    {
-        return env('TMP_STORAGE_DISK');
-    }
 
     public static function getImageStorageDisk()
     {
         return env('IMAGE_STORAGE_DISK');
-    }
-
-    public static function getFullTmpStoragePath()
-    {
-        return ImageStorage::$FULL_TMP_STORAGE_PATH;
-    }
-
-    public static function getTmpStoragePath()
-    {
-        return ImageStorage::$TMP_STORAGE_PATH;
     }
 
 
@@ -62,12 +47,31 @@ class ImageStorage
      */
     public static function storeImage($file, $fileName)
     {
-        // Clean Image
-        $imageCleaner = new ImageCleaner($file, $fileName);
-        $file = $imageCleaner->getCleanedImage();
-        // Store it
-        Storage::disk(ImageStorage::getImageStorageDisk())->putFileAs(ImageStorage::$STORAGE_PATH, $file, $fileName);
-        $imageCleaner->removeTemporaryFile();
+        $img = Image::make($file);
+        $img->mime = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $file);
+        $img->resize(ImageStorage::$MAX_WIDTH, ImageStorage::$MAX_HEIGHT, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->stream();
+        
+        Storage::disk('local')->put(ImageStorage::$STORAGE_PATH.$fileName, $img);
+    }
+
+    /**
+     * Store image in storage
+     * 
+     */
+    public static function storeBinaryImage($binaryFile, $fileName)
+    {
+        $resource = @imagecreatefromstring($binaryFile);
+        $img = Image::make($resource);
+        $img->mime = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $binaryFile);
+        $img->resize(ImageStorage::$MAX_WIDTH, ImageStorage::$MAX_HEIGHT, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->stream();
+        
+        Storage::disk(ImageStorage::getImageStorageDisk())->put(ImageStorage::$STORAGE_PATH.$fileName, $img);
     }
 
 
