@@ -193,6 +193,7 @@ class Resource extends Model
                 $fileName = $this->id.".".$fileExtension;
                 $this->uploadImage($file->get(), $fileName);
             } catch(\Exception $e) {
+                dd($e);
                 abort(500, 'Can\'t save the file');
             }
             
