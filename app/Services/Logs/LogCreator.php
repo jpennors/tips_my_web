@@ -89,8 +89,8 @@ class LogCreator
             return null;
         }
 
-        dd($request->ip());
-        $geoip = geoip($request['HTTP_X_FORWARDED_FOR']);
+        // dd($request->ip());
+        $geoip = geoip($request->ip());
         $log_geoip = LogGeoip::firstOrCreate([
             'continent'   => $geoip['continent'],
             'timezone'    => $geoip['timezone'],
@@ -98,6 +98,7 @@ class LogCreator
             'state_name'  => $geoip['state_name'],
             'city'        => $geoip['city'] 
         ],[]);
+        dd($log_geoip);
 
         return $log_geoip->id;
     }
