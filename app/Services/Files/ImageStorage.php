@@ -58,20 +58,13 @@ class ImageStorage
     }
 
     /**
-     * Store image in storage
+     * Store image in storage from binary
      * 
      */
     public static function storeBinaryImage($binaryFile, $fileName)
     {
-        $resource = @imagecreatefromstring($binaryFile);
-        $img = Image::make($resource);
-        $img->mime = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $binaryFile);
-        $img->resize(ImageStorage::$MAX_WIDTH, ImageStorage::$MAX_HEIGHT, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->stream();
-        
-        Storage::disk(ImageStorage::getImageStorageDisk())->put(ImageStorage::$STORAGE_PATH.$fileName, $img);
+        $file = @imagecreatefromstring($binaryFile);
+        ImageStorage::storeImage($file, $fileName);
     }
 
 
