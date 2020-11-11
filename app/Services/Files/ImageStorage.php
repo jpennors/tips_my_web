@@ -48,7 +48,6 @@ class ImageStorage
     public static function storeImage($file, $fileName)
     {
         $img = Image::make($file);
-        $img->mime = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $file);
         $img->resize(ImageStorage::$MAX_WIDTH, ImageStorage::$MAX_HEIGHT, function ($constraint) {
             $constraint->aspectRatio();
         });
