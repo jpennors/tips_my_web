@@ -89,7 +89,7 @@ class LogCreator
             return null;
         }
 
-        dd($request['HTTP_X_FORWARDED_FOR']);
+        dd($request->ip());
         $geoip = geoip($request['HTTP_X_FORWARDED_FOR']);
         $log_geoip = LogGeoip::firstOrCreate([
             'continent'   => $geoip['continent'],
