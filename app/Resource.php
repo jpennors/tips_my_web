@@ -175,6 +175,7 @@ class Resource extends Model
      */
     protected function uploadImage($file, $fileName, $binary=false)
     {
+        dd($file);
         // Remove older image
         $this->deleteImage();
         // Add image file in storage and in database
