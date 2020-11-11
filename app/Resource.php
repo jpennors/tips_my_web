@@ -190,7 +190,7 @@ class Resource extends Model
         if (isset($file)) {            
             try {
                 $fileExtension = ImageUtils::getImageExtensionFromFile($file);
-                $fileName = $this->id.$fileExtension;
+                $fileName = $this->id.".".$fileExtension;
                 $this->uploadImage($file->get(), $fileName);
             } catch(\Exception $e) {
                 abort(500, 'Can\'t save the file');
