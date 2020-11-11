@@ -48,13 +48,12 @@ class ImageStorage
     public static function storeImage($file, $fileName)
     {
         $img = Image::make($file);
-        $img->mime = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $file);
         $img->resize(ImageStorage::$MAX_WIDTH, ImageStorage::$MAX_HEIGHT, function ($constraint) {
             $constraint->aspectRatio();
         });
         $img->stream();
         
-        Storage::disk('local')->put(ImageStorage::$STORAGE_PATH.$fileName, $img);
+        Storage::disk(ImageStorage::getImageStorageDisk())->put(ImageStorage::$STORAGE_PATH.$fileName, $img);
     }
 
     /**
