@@ -94,7 +94,7 @@ class LogCreator
         } else {
             $ip_address = $_SERVER['REMOTE_ADDR'];
         }
-        dd($ip_address);
+        dd($request);
 
         $geoip = geoip($ip_address);
         $log_geoip = LogGeoip::firstOrCreate([
