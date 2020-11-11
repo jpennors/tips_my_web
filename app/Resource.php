@@ -134,7 +134,6 @@ class Resource extends Model
 
         $this->image = $fileName;
         $this->save();
-        dd($fileName);
 
         if ($fileName !== null && $file !== null) {
             if ($binary) {
