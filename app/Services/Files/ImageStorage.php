@@ -54,7 +54,7 @@ class ImageStorage
         });
         $img->stream();
         
-        Storage::disk('local')->put(ImageStorage::$STORAGE_PATH.$fileName, $img);
+        Storage::disk(ImageStorage::getImageStorageDisk())->put(ImageStorage::$STORAGE_PATH.$fileName, $img);
     }
 
     /**
