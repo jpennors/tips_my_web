@@ -74,7 +74,7 @@ class StatsController extends Controller
         // dd($current_date);
         $visitors = DB::table('logs')
             ->select(DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
-            //->where('created_date', $current_date)
+            ->where('created_date', $current_date)
             ->get()->first();
         dd($visitors);
         return response()->json($visitors, 200);
