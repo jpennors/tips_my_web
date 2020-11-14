@@ -20,13 +20,13 @@ class MailSender
 
     public static function send_resource_websites_availability_alert($unavailable_resources)
     {
-        $subject = 'Tips My Web - Sites Web inaccessible';
+        $subject = 'Tips My Web - Sites Web inaccessibles';
         $receiver = "josselin.pennors@hotmail.fr";
 
         Mail::send('resource_websites_availability_alert', ['unavailable_resources' => $unavailable_resources], function($message) use ($subject, $receiver) {
             $message->to($receiver);
             $message->from((env('MAIL_USERNAME')));
             $message->subject($subject);
-        })
+        });
     }
 }

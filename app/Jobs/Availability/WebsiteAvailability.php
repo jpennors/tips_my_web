@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Availability;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -38,6 +38,8 @@ class WebsiteAvailability implements ShouldQueue
         foreach ($this->resources as $resource) {
             $this->checkWebsiteAvailability($resource);
         }
+
+        $this->sendEmailAlert();
     }
 
     /**
@@ -46,23 +48,41 @@ class WebsiteAvailability implements ShouldQueue
      */
     protected function checkWebsiteAvailability(Resource $resource)
     {
-        $timeout = 10;
-        $ch = curl_init();
-        curl_setopt ($ch, CURLOPT_URL, $resource->url);
-        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt ($ch, CURLOPT_TIMEOUT, $timeout);
-        $http_response = curl_exec($ch);
-        curl_close($ch);
-        $http_response = trim(strip_tags($http_response));
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if (($http_code != "200") && ($http_code != "302")) {
-            $this->unavailable_resources = array_push(
+        try {
+            $ch = curl_init();
+
+            $options = array(
+                CURLOPT_URL            => $resource->url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HEADER         => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_ENCODING       => "",
+                CURLOPT_AUTOREFERER    => true,
+                CURLOPT_CONNECTTIMEOUT => 120,
+                CURLOPT_TIMEOUT        => 120,
+                CURLOPT_MAXREDIRS      => 10,
+            );
+            curl_setopt_array($ch, $options);
+            curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            if (($http_code != "200") && ($http_code != "302")) {
+                array_push(
+                    $this->unavailable_resources,
+                    array(
+                        'resource'  => $resource,
+                        'http_code' => $http_code 
+                    ));
+            }
+        } catch (\Throwable $th) {
+            array_push(
                 $this->unavailable_resources,
-                array([
+                array(
                     'resource'  => $resource,
-                    'http_code' => $http_code 
-                ]));
+                    'http_code' => 'Job Exception' 
+                ));
         }
+        
     }
 
     /**
