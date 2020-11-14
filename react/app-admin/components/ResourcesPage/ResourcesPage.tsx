@@ -129,23 +129,6 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                         </Table.Cell>
                                     }
                                 />
-                                {/* <Table.Cell title={resource.tags.map(rt => rt.tag.name).join(', ')}>
-                                    <Label.Group style={{ marginBottom: '-0.5em' }}>
-                                        {wrapTagsDisplay(
-                                            resource.tags,
-                                            MAX_CONTENT_LENGTH.RESOURCES_PAGES_TAGS,
-                                        ).map(tag => (
-                                            <Label key={tag.tagId} size="small">
-                                                {tag.tag.name}
-                                            </Label>
-                                        ))}
-                                        {resource.tags.length > MAX_CONTENT_LENGTH.RESOURCES_PAGES_TAGS ? (
-                                            <Label>..</Label>
-                                        ) : (
-                                            ''
-                                        )}
-                                    </Label.Group>
-                                </Table.Cell> */}
                                 <Table.Cell textAlign="center">
                                     <Link
                                         to={ADMIN_APP_ROUTES.RESOURCES_EDIT.replace(

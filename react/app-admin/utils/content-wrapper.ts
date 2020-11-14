@@ -11,7 +11,6 @@ export const wrapText = (input: string, maxLength: number): string => {
 export const wrapTagsDisplay = (input: ResourceTag[], maxLength: number): ResourceTag[] => {
     if (input && input.length > maxLength) {
         return input.slice(0, maxLength);
-        // input.push({ name: '...' });
     }
     return input;
 };
