@@ -12,7 +12,7 @@
     }
 
     &__title {
-        font-family: @app-font-medium;
+        font-family: @app-font-regular;
         text-align: center;
         font-size: @app-font-size-extra-large;
         margin-top: 0;
@@ -21,15 +21,9 @@
         @media (max-width: @app-viewport-breakpoint-mobile) {
             font-size: 6vw;
         }
-    }
 
-    &__subtitle {
-        font-family: @app-font-regular;
-        text-align: center;
-        font-size: @app-font-size-large;
-
-        @media (max-width: @app-viewport-breakpoint-mobile) {
-            font-size: 4vw
+        &--bold {
+            font-family: @app-font-semi-bold;
         }
     }
 }

@@ -1,6 +1,6 @@
 @import '../../constants/ui-constants';
 
-.big-button {
+.button {
     font-family: @app-font-medium;
     border-radius: 100px;
     padding: 0.6em 1.75em;
@@ -15,18 +15,25 @@
     -webkit-tap-highlight-color: transparent;
     overflow: hidden;
 
-    background-image: linear-gradient(-240deg, #FFFFFF, #eaeaea);
-    color: @app-color-background-red;
-
-    &--colored {
+    &--variant-colored {
         background-image: linear-gradient(-240deg, @app-color-background-red, @app-color-background-orange);
         color: white;
     }
 
-    &:hover .big-button__icon svg {
+    &--variant-white-text-colored {
+        background-image: linear-gradient(-240deg, #FFFFFF, #eaeaea);
+        color: @app-color-background-red;
+    }
+
+    &--variant-white-text-black {
+        background-image: linear-gradient(-240deg, #FFFFFF, #eaeaea);
+        color: #474747;
+    }
+
+    &:hover .button__icon svg {
         margin-right: 1em;
         opacity: 1;
-        transform: translateX(0px) rotateZ(180deg);
+        transform: translateX(0px);
     }
 
     &:active {
@@ -41,7 +48,7 @@
 
         svg {
             width: 1em;
-            transform: translateX(10px) rotateZ(180deg);
+            transform: translateX(10px);
             transition: all .2s @app-curve-in-out-cubic;
             opacity: 0;
 

@@ -56,6 +56,7 @@ export interface APIPrice {
 export interface APIResourceType {
     id: string;
     name: string;
+    slug: string;
     created_at: Date;
     updated_at: Date | null;
 }
@@ -131,4 +132,15 @@ export interface APISearchTagStat {
     count: number;
     tag_id: string;
     tag: APITag;
+}
+
+export interface APIGeneralAdminSearchResult {
+    id: string;
+    title: string;
+}
+
+export interface APIGeneralAdminSearch {
+    name: string;
+    slug: string;
+    results: APIGeneralAdminSearchResult[];
 }

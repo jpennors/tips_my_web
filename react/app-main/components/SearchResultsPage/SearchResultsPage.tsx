@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { APIBasicTag } from 'tmw-admin/constants/api-types';
 import { DocumentHead } from 'tmw-main/components/DocumentHead';
 import { SearchResultsPageTitle } from 'tmw-main/components/SearchResultsPageTitle';
+import { ShareButton } from 'tmw-main/components/ShareButton';
 import { APIResource } from 'tmw-main/constants/api-types';
 import { BasicTag, Resource } from 'tmw-main/constants/app-types';
 import { ajaxPost } from 'tmw-common/utils/ajax';
@@ -57,12 +58,15 @@ export const SearchResultsPage: React.FunctionComponent = () => {
         <div className="search-results-page">
             <DocumentHead title={mainSearchTag?.name || 'Search'} />
             {!isMobileViewport ? <div className="search-results-page__top-spacing" /> : null}
-            <SearchResultsPageTitle
-                hasResults={hasResults}
-                isLoading={isLoading}
-                mainSearchTag={mainSearchTag}
-                relatedSearchTags={relatedSearchTags}
-            />
+            <div className="search-results-page__header">
+                <SearchResultsPageTitle
+                    hasResults={hasResults}
+                    isLoading={isLoading}
+                    mainSearchTag={mainSearchTag}
+                    relatedSearchTags={relatedSearchTags}
+                />
+                <ShareButton />
+            </div>
             {isLoading || hasResults ? (
                 <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
             ) : (

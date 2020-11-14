@@ -14,23 +14,22 @@ class PriceTableSeeder extends Seeder
     {
 
         $prices = [
-            'Free'                      =>  'free',
-            'Freemium'                  =>  'freemium',
-            '$'                         =>  'cost_1',
-            '$$'                        =>  'cost_2',
-            '$$$'                       =>  'cost_3',
-            'One-time purchase'         =>  'purchase_1',
-            'Free + Freemium'           =>  'free_freemium',
-            'Free + $'                  =>  'free_cost_1',
-            'Free + $$'                 =>  'free_cost_2',
-            'Free + $$$'                =>  'free_cost_3',
-            'Free + One-time purchase'  =>  'free_purchase_1'
+            'Free',
+            'Freemium',
+            '$',
+            '$$',
+            '$$$',
+            'One-time purchase',
+            'Free + Freemium',
+            'Free + $',
+            'Free + $$',
+            'Free + $$$',
+            'Free + One-time purchase'
         ];
 
-        foreach($prices as $price_name => $price_slug) {
+        foreach($prices as $price_name) {
             $p = new Price();
             $p->name = $price_name;
-            $p->slug = $price_slug;
             $p->save();
         }
 

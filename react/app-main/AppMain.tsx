@@ -10,6 +10,7 @@ import { SearchResultsPage } from 'tmw-main/components/SearchResultsPage';
 import { SuggestionPage } from 'tmw-main/components/SuggestionPage';
 import { TermsPage } from 'tmw-main/components/TermsPage';
 import { AboutPage } from 'tmw-main/components/AboutPage';
+import { ToastMessageProvider } from 'tmw-main/components/ToastMessage';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 import { ViewportProvider } from 'tmw-common/components/ViewportProvider';
 
@@ -18,23 +19,25 @@ import './app-main.less';
 export const AppMain: React.FunctionComponent = () => (
     <CookiesProvider>
         <ViewportProvider>
-            <BrowserRouter>
-                <div className="app-main">
-                    <LayoutHeader />
-                    <Switch>
-                        <Route path={MAIN_APP_ROUTES.HOME} component={SearchPage} exact />
-                        <Route path={MAIN_APP_ROUTES.SEARCH} component={SearchPage} />
-                        <Route path={MAIN_APP_ROUTES.TERMS} component={TermsPage} />
-                        <Route path={MAIN_APP_ROUTES.ABOUT} component={AboutPage} />
-                        <Route path={MAIN_APP_ROUTES.RESULTS} component={SearchResultsPage} />
-                        <Route path={MAIN_APP_ROUTES.CONTACT} component={ContactPage} />
-                        <Route path={MAIN_APP_ROUTES.SUGGESTION} component={SuggestionPage} />
-                        <Route component={NotFoundErrorPage} />
-                        <Redirect to={MAIN_APP_ROUTES.HOME} />
-                    </Switch>
-                    <LayoutFooter />
-                </div>
-            </BrowserRouter>
+            <ToastMessageProvider>
+                <BrowserRouter>
+                    <div className="app-main">
+                        <LayoutHeader />
+                        <Switch>
+                            <Route path={MAIN_APP_ROUTES.HOME} component={SearchPage} exact />
+                            <Route path={MAIN_APP_ROUTES.SEARCH} component={SearchPage} />
+                            <Route path={MAIN_APP_ROUTES.TERMS} component={TermsPage} />
+                            <Route path={MAIN_APP_ROUTES.ABOUT} component={AboutPage} />
+                            <Route path={MAIN_APP_ROUTES.RESULTS} component={SearchResultsPage} />
+                            <Route path={MAIN_APP_ROUTES.CONTACT} component={ContactPage} />
+                            <Route path={MAIN_APP_ROUTES.SUGGESTION} component={SuggestionPage} />
+                            <Route component={NotFoundErrorPage} />
+                            <Redirect to={MAIN_APP_ROUTES.HOME} />
+                        </Switch>
+                        <LayoutFooter />
+                    </div>
+                </BrowserRouter>
+            </ToastMessageProvider>
         </ViewportProvider>
     </CookiesProvider>
 );

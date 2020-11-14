@@ -17,7 +17,7 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
     relatedSearchTags,
 }) => {
     return (
-        <>
+        <div className="search-results-page-title">
             <div className="search-results-page-title__title">
                 {isLoading || hasResults ? (
                     <>
@@ -54,6 +54,6 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
                     'Please try to broaden the scope of your search'
                 )}
             </div>
-        </>
+        </div>
     );
 };

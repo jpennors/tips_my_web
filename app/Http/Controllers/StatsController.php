@@ -70,17 +70,14 @@ class StatsController extends Controller
     #region Visitors
     public function getCurrentDayVisitor()
     {
-        $current_date = DateUtils::getCurrentDate();
-
         $visitors = DB::table('logs')
-            ->select(DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
-            ->where('created_date', $current_date)
-            ->get()->first();
+            ->distinct()
+            ->count('hashed_ip');
 
-        return response()->json($visitors, 200);
+        return response()->json(['visitors' => $visitors], 200);
     }
 
-    public function getVisitorNumberByDat(Request $request)
+    public function getVisitorNumberByDay(Request $request)
     {
         // Date formate Y-m-d
         $start_date = $request->start_date;

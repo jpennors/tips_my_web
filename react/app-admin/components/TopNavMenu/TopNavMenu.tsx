@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { Container, Image, Input, Menu, Responsive, Icon } from 'semantic-ui-react';
+import { Container, Image, Menu, Responsive, Icon } from 'semantic-ui-react';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { logout } from 'tmw-admin/utils/auth-module';
+import { AdminSearch } from '../AdminSearch';
 
-export const TopNavMenu: React.FunctionComponent = () => {
+
+export const TopNavMenu: React.FunctionComponent = () => { 
+
     return (
         <Menu inverted style={{ borderRadius: 0 }}>
             <Container>
@@ -18,7 +21,7 @@ export const TopNavMenu: React.FunctionComponent = () => {
                 </Menu.Item>
                 <Menu.Item position="right">
                     <Responsive minWidth={500}>
-                        <Input inverted className="icon" icon="search" placeholder="Search..." />
+                        <AdminSearch/>
                     </Responsive>
                 </Menu.Item>
             </Container>

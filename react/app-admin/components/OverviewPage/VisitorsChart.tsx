@@ -14,7 +14,7 @@ export const VisitorsChart: React.FunctionComponent = () => {
         const startDate = new Date();
         startDate.setMonth(startDate.getMonth()-1);
         
-        return ajaxPost('stats/visitors/period', { 
+        return ajaxPost('stats/period/visitors', { 
             start_date: getApiDateFormat(startDate),
             end_date: getApiDateFormat(endDate) 
             })
