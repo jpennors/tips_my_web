@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         'Barryvdh\Debugbar\ServiceProvider',
+        'Intervention\Image\ImageServiceProvider',
 
          /*
          * Application Service Providers...
@@ -235,7 +236,8 @@ return [
         'Validation' => App\Facades\Validation::class,
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
-        'OpenGraph' => shweshi\OpenGraph\Facades\OpenGraphFacade::class
+        'OpenGraph' => shweshi\OpenGraph\Facades\OpenGraphFacade::class,
+        'Image' => 'Intervention\Image\Facades\Image'
 
     ],
 
