@@ -7,6 +7,7 @@ use App\Resource;
 use App\Services\DateUtils;
 use DB;
 use App\StatTag;
+use App\Log;
 use App\StatResource;
 
 class StatsController extends Controller
@@ -70,6 +71,7 @@ class StatsController extends Controller
     #region Visitors
     public function getCurrentDayVisitor(Request $request)
     {
+        return response()->json(Log::get()->first(), 200);
         dd($request);
         $current_date = DateUtils::getCurrentDate();
 
