@@ -77,6 +77,7 @@ class StatsController extends Controller
             ->where('created_date', $current_date)
             ->get()->first();
 
+        dd(response()->json(['visitors' => '10'], 200));
         return response()->json(['visitors' => '10'], 200);
     }
 
