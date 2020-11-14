@@ -71,13 +71,13 @@ class StatsController extends Controller
     public function getCurrentDayVisitor()
     {
         $current_date = DateUtils::getCurrentDate();
-        // dd($current_date);
-        $visitors = DB::table('logs')
+
+        $visitors_request = DB::table('logs')
             ->select(DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
             ->where('created_date', $current_date)
             ->get()->first();
-        dd($visitors);
-        return response()->json($visitors, 200);
+
+            return response()->json(['visitors' => $visitors_request->visitors], 200);
     }
 
     public function getVisitorNumberByDat(Request $request)
