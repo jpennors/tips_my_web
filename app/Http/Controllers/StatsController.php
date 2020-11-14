@@ -71,9 +71,8 @@ class StatsController extends Controller
     public function getCurrentDayVisitor()
     {
         $visitors = DB::table('logs')
-            ->select('hashed_ip')
             ->distinct()
-            ->count();
+            ->count('hashed_ip');
 
         return response()->json(['visitors' => $visitors], 200);
     }
