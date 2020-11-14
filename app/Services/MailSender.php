@@ -18,12 +18,12 @@ class MailSender
         });
     }
 
-    public static function send_resource_website_alert($unaivalaible_resources)
+    public static function send_resource_websites_availability_alert($unavailable_resources)
     {
         $subject = 'Tips My Web - Sites Web inaccessible';
         $receiver = "josselin.pennors@hotmail.fr";
 
-        Mail::send('resource_websites_availibility_alert', ['unaivalaible_resources' => $unaivalaible_resources], function($message) use ($subject, $receiver) {
+        Mail::send('resource_websites_availability_alert', ['unavailable_resources' => $unavailable_resources], function($message) use ($subject, $receiver) {
             $message->to($receiver);
             $message->from((env('MAIL_USERNAME')));
             $message->subject($subject);

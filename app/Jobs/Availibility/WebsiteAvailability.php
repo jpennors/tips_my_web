@@ -10,12 +10,12 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Resource;
 use App\Services\MailSender;
 
-class StatResourceJob implements ShouldQueue
+class WebsiteAvailability implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $resources;
-    protected $unaivalaible_resources;
+    protected $unavailable_resources;
 
     /**
      * Create a new job instance.
@@ -25,7 +25,7 @@ class StatResourceJob implements ShouldQueue
     public function __construct()
     {
         $this->resources = Resource::all();
-        $this->unaivalaible_resources = array();
+        $this->unavailable_resources = array();
     }
 
     /**
@@ -36,7 +36,7 @@ class StatResourceJob implements ShouldQueue
     public function handle()
     {
         foreach ($this->resources as $resource) {
-            $this->checkWebsiteAvailibility($resource);
+            $this->checkWebsiteAvailability($resource);
         }
     }
 
@@ -44,7 +44,7 @@ class StatResourceJob implements ShouldQueue
      * Check if the resource website is available
      * 
      */
-    protected function checkWebsiteAvailibility(Resource $resource)
+    protected function checkWebsiteAvailability(Resource $resource)
     {
         $timeout = 10;
         $ch = curl_init();
@@ -56,8 +56,8 @@ class StatResourceJob implements ShouldQueue
         $http_response = trim(strip_tags($http_response));
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if (($http_code != "200") && ($http_code != "302")) {
-            $this->unaivalaible_resources = array_push(
-                $this->unaivalaible_resources,
+            $this->unavailable_resources = array_push(
+                $this->unavailable_resources,
                 array([
                     'resource'  => $resource,
                     'http_code' => $http_code 
@@ -71,8 +71,8 @@ class StatResourceJob implements ShouldQueue
      */
     protected function sendEmailAlert()
     {
-        if (count($this->unaivalaible_resources) > 0) {
-            MailSender::send_resource_website_alert($this->unaivalaible_resources);
+        if (count($this->unavailable_resources) > 0) {
+            MailSender::send_resource_websites_availability_alert($this->unavailable_resources);
         }
     }
 }

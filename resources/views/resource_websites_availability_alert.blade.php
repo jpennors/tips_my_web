@@ -8,7 +8,7 @@
             <div style="padding: 15px">
                 <h5>Liste :</h5>
                 <ul>
-                    @foreach ($unaivalaible_resources as $resource)
+                    @foreach ($unavailable_resources as $resource)
                         <li>{{$resource['resource']->name}}({{$resource['resource']->url}}) : Statut HTTP {{$resource['http_code']}}</li>
                     @endforeach
                 </ul>
