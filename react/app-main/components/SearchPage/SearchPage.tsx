@@ -9,8 +9,10 @@ export const SearchPage: React.FunctionComponent = () => {
         <div className="search-page">
             <DocumentHead title="Home" />
             <div className="search-page__top-spacing" />
-            <p className="search-page__title">What are your centers of interest?</p>
-            <p className="search-page__subtitle">Let’s find your most useful websites</p>
+            <p className="search-page__title">
+                Let&apos;s find the most <span className="search-page__title--bold">useful</span>{' '}
+                websites for your <span className="search-page__title--bold">workflow</span>
+            </p>
             <TagsSelector />
         </div>
     );

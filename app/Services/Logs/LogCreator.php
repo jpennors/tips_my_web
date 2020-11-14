@@ -22,6 +22,23 @@ class LogCreator
        \Log::channel('custom')->$level($message, $context);
     }
 
+    /**
+     * Retrieve hashed ip adress from request 
+     */
+    protected function getHashedIpAdress($request)
+    {
+        if (!$request) {
+            return null;
+        }
+
+        $ip_address = $this->getIpAdress($request);
+
+        if (!$ip_address) {
+            return null;
+        }
+
+        return hash("sha256", $ip_address);
+    }
 
     /**
      * Retrieve ip adress from request 
@@ -31,8 +48,18 @@ class LogCreator
         if (!$request) {
             return null;
         }
-        return hash("sha256", $request->ip());
-        // return Hash::make($request->ip());
+
+        if($_SERVER['REMOTE_ADDR'] == env('PROXY_IP_ADDRESS') && false) // ToDo
+        {
+            $ip_address = null;
+        }
+        else if (!array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
+            $ip_address = $request->ip();
+        } else {
+            $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        
+        return $ip_address;
     }
 
 
@@ -83,18 +110,11 @@ class LogCreator
     }
 
 
-    public function getLogGeoipId($request)
+    public function getLogGeoipId($ip_address)
     {
-        if (!$request) {
+        if (!$ip_address) {
             return null;
         }
-
-        if ($_SERVER['REMOTE_ADDR'] == env('PROXY_IP_ADDRESS')) {
-            $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ip_address = $_SERVER['REMOTE_ADDR'];
-        }
-        dd($request);
 
         $geoip = geoip($ip_address);
         $log_geoip = LogGeoip::firstOrCreate([
@@ -104,7 +124,6 @@ class LogCreator
             'state_name'  => $geoip['state_name'],
             'city'        => $geoip['city'] 
         ],[]);
-        dd($log_geoip);
 
         return $log_geoip->id;
     }
@@ -136,8 +155,8 @@ class LogCreator
     public function serializeLog(Request $request = null, string $token = null)
     {
         return [
-            "hashed_ip" => $this->getIpAdress($request),
-            "geoip_id"  => $this->getLogGeoipId($request),
+            "hashed_ip" => $this->getHashedIpAdress($request),
+            "geoip_id"  => $this->getLogGeoipId($this->getIpAdress($request)),
             "route_id"  => $this->getLogRouteId($request),            
             "token_id"  => $this->getAdminTokenId($token),
             "parameters"=> $this->getJsonParameters($request),
