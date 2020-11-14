@@ -18,6 +18,7 @@ export const OverviewPage: React.FunctionComponent = () => {
     const fetchVisitorNumbers = async (): Promise<void> => {
         return ajaxGet('stats/visitors/current')
             .then(res => {
+                console.log(res);
                 setVisitorNumbers(res.data.visitors);
             })
             .catch(() => {
