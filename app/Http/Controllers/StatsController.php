@@ -72,13 +72,18 @@ class StatsController extends Controller
     {
         $current_date = DateUtils::getCurrentDate();
 
-        $visitors_request = DB::table('logs')
-            ->select(DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
-            ->where('created_date', $current_date)
-            ->get()->first();
+        $visitors = DB::table('logs')
+            ->select('hashed_ip')
+            ->distinct()
+            ->count();
+        // dd($visitors_request);
+        // $visitors_request = DB::table('logs')
+        //     ->select(DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
+        //     ->where('created_date', $current_date)
+        //     ->get()->first();
 
-        dd(response()->json(['visitors' => '10'], 200));
-        return response()->json(['visitors' => '10'], 200);
+        // dd(response()->json(['visitors' => '10'], 200));
+        return response()->json(['visitors' => $visitors], 200);
     }
 
     public function getVisitorNumberByDat(Request $request)
