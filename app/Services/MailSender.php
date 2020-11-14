@@ -17,4 +17,16 @@ class MailSender
             $message->subject($subject);
         });
     }
+
+    public static function send_resource_website_alert($unaivalaible_resources)
+    {
+        $subject = 'Tips My Web - Sites Web inaccessible';
+        $receiver = "josselin.pennors@hotmail.fr";
+
+        Mail::send('resource_websites_availibility_alert', ['unaivalaible_resources' => $unaivalaible_resources], function($message) use ($subject, $receiver) {
+            $message->to($receiver);
+            $message->from((env('MAIL_USERNAME')));
+            $message->subject($subject);
+        })
+    }
 }
