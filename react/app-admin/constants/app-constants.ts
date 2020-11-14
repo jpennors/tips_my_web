@@ -16,7 +16,7 @@ export const LOCALES_NAMES = {
 export enum MAX_CONTENT_LENGTH {
     OVERVIEW_PAGE_LOG_DESCRIPTION = 25,
     RESOURCES_PAGE_URL = 20,
-    RESOURCES_PAGES_TAGS = 3,
+    RESOURCES_PAGES_TAGS = 2,
 };
 
 export const RESOURCES_IMAGE_BASE_URL = '/api/resources/image/';
