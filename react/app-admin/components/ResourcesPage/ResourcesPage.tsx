@@ -120,7 +120,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                                         {tag.tag.name}
                                                     </Label>
                                                 ))}
-                                                {resource.tags.length > MAX_CONTENT_LENGTH.RESOURCES_PAGES_TAGS ? (
+                                                {resource.tags.length > MAX_CONTENT_LENGTH.RESOURCES_INDEX_PAGES_TAGS ? (
                                                     <Label>..</Label>
                                                 ) : (
                                                     ''
