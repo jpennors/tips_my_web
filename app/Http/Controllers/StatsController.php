@@ -68,8 +68,9 @@ class StatsController extends Controller
 
 
     #region Visitors
-    public function getCurrentDayVisitor()
+    public function getCurrentDayVisitor(Request $request)
     {
+        dd($request);
         $current_date = DateUtils::getCurrentDate();
 
         $visitors = DB::table('logs')
