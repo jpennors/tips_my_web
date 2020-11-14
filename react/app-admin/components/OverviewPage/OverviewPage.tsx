@@ -3,10 +3,12 @@ import { Message, Loader, Table, Label, Popup } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { VisitorsChart } from 'tmw-admin/components/OverviewPage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { serializeLogsFromAPI, serializeVisitorStatsFromAPI } from 'tmw-admin/utils/api-serialize';
+import { serializeLogsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
 import { getApiDateFormat, getTimeFromApiDate } from 'tmw-common/utils/date';
 import { Log } from 'tmw-admin/constants/app-types';
+import { wrapText } from 'tmw-admin/utils/content-wrapper';
+import { MAX_CONTENT_LENGTH } from 'tmw-admin/constants/app-constants';
 
 export const OverviewPage: React.FunctionComponent = () => {
     const [visitorsNumber, setVisitorNumbers] = React.useState<number>(0);
@@ -98,7 +100,14 @@ export const OverviewPage: React.FunctionComponent = () => {
                             <Table.Row key={log.id}>
                                 <Popup
                                     content={log.description}
-                                    trigger={<Table.Cell>{log.description}</Table.Cell>}
+                                    trigger={
+                                        <Table.Cell>
+                                            {wrapText(
+                                                log.description,
+                                                MAX_CONTENT_LENGTH.OVERVIEW_PAGE_LOG_DESCRIPTION,
+                                            )}
+                                        </Table.Cell>
+                                    }
                                 />
                                 <Table.Cell>
                                     <Label color={getLabelColor(log.level)}>{log.level}</Label>
