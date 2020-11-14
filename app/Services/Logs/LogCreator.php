@@ -93,7 +93,11 @@ class LogCreator
         {
             $ip_address = "";
         }
-        $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if (!array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
+            $ip_address = $request->ip();
+        } else {
+            $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
 
         $geoip = geoip($ip_address);
         $log_geoip = LogGeoip::firstOrCreate([
