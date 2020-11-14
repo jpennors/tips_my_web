@@ -101,7 +101,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                         <Table.Cell>
                                             {wrapText(
                                                 resource.url,
-                                                MAX_CONTENT_LENGTH.RESOURCES_PAGE_URL,
+                                                MAX_CONTENT_LENGTH.RESOURCES_INDEX_PAGE_URL,
                                             )}
                                         </Table.Cell>
                                     }
@@ -114,7 +114,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                             <Label.Group style={{ marginBottom: '-0.5em' }}>
                                                 {wrapTagsDisplay(
                                                     resource.tags,
-                                                    MAX_CONTENT_LENGTH.RESOURCES_PAGES_TAGS,
+                                                    MAX_CONTENT_LENGTH.RESOURCES_INDEX_PAGES_TAGS,
                                                 ).map(tag => (
                                                     <Label key={tag.tagId} size="small">
                                                         {tag.tag.name}
