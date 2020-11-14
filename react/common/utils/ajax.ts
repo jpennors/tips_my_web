@@ -16,8 +16,8 @@ const buildRequestConfig = ({
     contentType = 'application/json',
 }: RequestConfigOptions): AxiosRequestConfig => ({
     headers: {
-        ...(contentType !== null && { ContentType: contentType }),
-        ...(contentLength !== null && { ContentLength: contentLength }),
+        //...(contentType !== null && { ContentType: contentType }),
+        // ...(contentLength !== null && { ContentLength: contentLength }),
         Authorization: getLocalToken() || '',
     },
 });
