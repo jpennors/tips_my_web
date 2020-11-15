@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use App\Services\Cache\CacheManager;
 use App\Resource;
 use App\ResourceTag;
 use App\Tag;
@@ -120,6 +122,10 @@ class ResourceController extends Controller
      */
     public function importResources(Request $request){
 
+        // To DO Vérification
+
+        CacheManager::cleanCache($withImage = true);
+        
         foreach ($request->data as $resource) {
 
             $r = Resource::where('name', $resource['name'])->get()->first();
@@ -127,8 +133,6 @@ class ResourceController extends Controller
             if (!$r) {
                 $r = new Resource();
             }
-
-            // To DO vérification
 
             // Create resource entity
             $r->name = $resource['name'];
@@ -153,7 +157,6 @@ class ResourceController extends Controller
                 $r->type_id = Type::all()->first()->id;
             }
             $r->save();
-            
 
             // Create resource tags entity
             $tags = [];
@@ -176,7 +179,6 @@ class ResourceController extends Controller
 
             // Add image to resource
             $r->uploadImageFromUrlJobCreation($resource);
-
         }
         return response()->json();
     }
@@ -190,6 +192,9 @@ class ResourceController extends Controller
         // Retrieve Resource from id
         $resource = Resource::findOrFail($id);
 
+        // Remove cache if exists
+        CacheManager::removeResourceImageCache($id);
+
         $file = $request->file('file');
         return $resource->uploadImageFromFile($file);
   }
@@ -199,8 +204,14 @@ class ResourceController extends Controller
         // Récupération de la ressource
         $resource = Resource::findOrFail($id);
 
-        return $resource->getImage();
-
+        $resource_image = Cache::remember(
+            CacheManager::getCachedObjectName('resources_images', $id),
+            CacheManager::getCachedObjectExpiration('resources_images'),
+            function () use ($resource) {
+                return $resource->getImage();
+            });
+        
+        return $resource_image;
     }
 
 
