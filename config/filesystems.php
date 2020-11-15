@@ -63,7 +63,10 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
         ],
-
+        'storage' => [
+            'resource' => [
+                'image' => env('RESOURCE_IMAGE_STORAGE_DISK')
+            ]
+        ]
     ],
-
 ];

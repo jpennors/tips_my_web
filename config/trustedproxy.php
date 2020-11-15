@@ -42,4 +42,6 @@ return [
     'headers' => Illuminate\Http\Request::HEADER_X_FORWARDED_ALL,
 
     
+    'proxy' => env('PROXY_IP_ADDRESS')
+
 ];
