@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use App\ResourceTag;
 use App\Resource;
 use App\StatTag;
 use App\Tag;
 use DB;
+use App\Services\Cache\CacheManager;
 
 class ResourceTagController extends Controller
 {
@@ -29,6 +31,30 @@ class ResourceTagController extends Controller
         $slugs_ordered = implode(',', 
             array_map(function($slug){return '"'.$slug.'"';}, $search_tags_slugs)
         );
+
+        $cached_research_id = implode(',', 
+            array_map(function($slug){return $slug;}, $search_tags_slugs)
+        );
+     
+        // Cache Search Values
+        $data = Cache::remember(
+            CacheManager::getCachedObjectName('public_resources_research', $cached_research_id),
+            CacheManager::getCachedObjectExpiration('public_resources_research'),
+            function () use ($search_tags_slugs, $slugs_ordered) {
+                return $this->getSearchResults($search_tags_slugs, $slugs_ordered);
+        });
+     
+        // Return ordered recommendation
+        return response()->json($data, 200);
+    }
+
+    
+    /**
+     * Get Search Results
+     * 
+     */
+    protected function getSearchResults($search_tags_slugs, $slugs_ordered)
+    {
         $search_tags = Tag::whereIn('slug', $search_tags_slugs)
             ->where([
                 ['disabled', false],
@@ -68,11 +94,9 @@ class ResourceTagController extends Controller
             ->get()
             ->toArray();
 
-        // Return ordered recommendation
-        return response()->json([
+        return array(
             "resources" => ResourceTag::getRecommendedResources($resources, $main_tag_id, $related_tag_ids),
-            "tags" => $search_tags,
-        ], 200);
+            "tags" => $search_tags);
     }
 
 }
