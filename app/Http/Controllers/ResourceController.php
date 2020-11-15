@@ -122,7 +122,7 @@ class ResourceController extends Controller
      */
     public function importResources(Request $request){
 
-        // To DO Vérification
+        // To DO Check for each resource requirements
 
         CacheManager::cleanCache($withImage = true);
         
