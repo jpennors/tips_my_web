@@ -81,6 +81,8 @@ class CacheManager
         if($withImage){
             return Cache::flush();
         }
+
+        // ToDO with MemCache, remove cached objects by Tag
         
         if (Cache::has('public_tags_index')) {
             Cache::forget('public_tags_index');
