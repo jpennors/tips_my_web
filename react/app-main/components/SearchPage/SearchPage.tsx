@@ -14,6 +14,16 @@ export const SearchPage: React.FunctionComponent = () => {
                 websites for your <span className="search-page__title--bold">workflow</span>
             </p>
             <TagsSelector />
+            <div className="search-page__help-container">
+                <div className="search-page__help-content">
+                    TipsMyWeb makes you discover new web resources to help with your day to day
+                    workflow.
+                    <br />
+                    <span className="search-page__help--small">
+                        Start by selecting tags corresponding to your subject of interest.
+                    </span>
+                </div>
+            </div>
         </div>
     );
 };
