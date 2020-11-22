@@ -1,10 +1,16 @@
-import * as React from 'react';
 import * as copyTextToClipboard from 'copy-text-to-clipboard';
+import * as React from 'react';
 import { Button, ButtonVariant } from 'tmw-main/components/Button';
+import { ButtonProps } from 'tmw-main/components/Button/Button';
 import { useToastMessageContext } from 'tmw-main/components/ToastMessage';
 import { CopyIcon } from 'tmw-main/icons/CopyIcon';
 
-export const ShareButton: React.FunctionComponent = () => {
+interface ShareButtonProps {
+    className?: ButtonProps['className'];
+    size?: ButtonProps['size'];
+}
+
+export const ShareButton: React.FunctionComponent<ShareButtonProps> = ({ className, size }) => {
     const { openToastMessage } = useToastMessageContext();
 
     const onButtonClick = (): void => {
@@ -14,6 +20,8 @@ export const ShareButton: React.FunctionComponent = () => {
 
     return (
         <Button
+            className={className}
+            size={size}
             content="Share"
             variant={ButtonVariant.WHITE_TEXT_BLACK}
             onClick={onButtonClick}

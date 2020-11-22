@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { SIZES } from 'tmw-main/constants/app-constants';
 import { Icon } from 'tmw-main/icons/icon-types';
 
 import './button.less';
@@ -10,11 +11,13 @@ export enum ButtonVariant {
     WHITE_TEXT_BLACK = 'white-text-black',
 }
 
-interface ButtonProps {
+export interface ButtonProps {
     content: string;
     onClick?: () => void;
     icon?: Icon;
     variant?: ButtonVariant;
+    className?: string;
+    size?: SIZES.SMALL | SIZES.MEDIUM;
 }
 
 export const Button: React.FunctionComponent<ButtonProps> = ({
@@ -22,6 +25,8 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
     onClick,
     icon: Icon,
     variant = ButtonVariant.WHITE_TEXT_COLORED,
+    className,
+    size = SIZES.MEDIUM,
 }) => {
     let iconColor;
     switch (variant) {
@@ -38,7 +43,15 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
     }
 
     return (
-        <span className={classNames('button', `button--variant-${variant}`)} onClick={onClick}>
+        <span
+            className={classNames(
+                className,
+                'button',
+                `button--variant-${variant}`,
+                `button--size-${size}`,
+            )}
+            onClick={onClick}
+        >
             {content}
             {Icon ? (
                 <span className="button__icon">
