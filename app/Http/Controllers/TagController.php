@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use App\Tag;
 use App\ResourceTag;
 use App\Http\Requests\TagRequest;
+use App\Services\Cache\CacheManager;
 
 class TagController extends Controller
 {
@@ -17,7 +19,12 @@ class TagController extends Controller
      */
     public function indexPublic(Request $request)
     {
-        $tags = Tag::loadMainTags();
+        $tags = Cache::remember(
+            CacheManager::getCachedObjectName('public_tags_index'),
+            CacheManager::getCachedObjectExpiration('public_tags_index'),
+            function () {
+                return Tag::loadMainTags();
+        });
 
         return response()->json($tags, 200);
     }
