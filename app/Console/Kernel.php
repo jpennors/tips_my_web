@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Jobs\Availability\WebsiteAvailability;
+use App\Cron;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,8 +26,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function () {
+                WebsiteAvailability::dispatch();
+            })
+            ->everyMinute()
+            ->when(function(){
+                return Cron::shouldIRun('website_availability', 60*24); // Execute once every day (only to test at the beginning)
+            });        
     }
 
     /**

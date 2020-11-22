@@ -49,7 +49,7 @@ class LogCreator
             return null;
         }
 
-        if($_SERVER['REMOTE_ADDR'] == env('PROXY_IP_ADDRESS') && false) // ToDo
+        if($_SERVER['REMOTE_ADDR'] == config('trustedproxy.proxy') && false) // ToDo
         {
             $ip_address = null;
         }

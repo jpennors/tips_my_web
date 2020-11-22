@@ -21,7 +21,7 @@ class ImageStorage
 
     public static function getImageStorageDisk()
     {
-        return env('IMAGE_STORAGE_DISK');
+        return config('filesystems.disks.storage.resource.image');
     }
 
 

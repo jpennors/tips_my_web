@@ -133,4 +133,18 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Email receiver
+    |--------------------------------------------------------------------------
+    |
+    | TMW Email Receiver
+    |
+    */
+
+    'reveiver' => [
+        'admin' =>  env('MAIL_ADMIN_RECEIVER')
+    ]
+
 ];
