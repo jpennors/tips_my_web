@@ -50,6 +50,11 @@
             margin-top: 10px;
             opacity: 0.5;
 
+            @media (max-width: @app-viewport-breakpoint-mobile) {
+                font-size: 12px;
+                padding: 7px 10px;
+            }
+
             &:hover {
                 padding: 8px 30px;
                 font-size: 15px;
@@ -57,6 +62,15 @@
                 opacity: 1;
 
                 transition: opacity 0.3s ease-in-out;
+
+                @media (max-width: @app-viewport-breakpoint-mobile) {
+                    font-size: 12px;
+                    padding: 8px 25px;
+                }
+
+                @media (max-width: @app-viewport-breakpoint-tablet) {
+                    border-radius: 8px;
+                }
             }
 
             &-text {
@@ -77,6 +91,10 @@
            margin-top: 5px;
            font-family: @app-font-semi-bold;
            font-size: @app-font-size-medium;
+
+           @media (max-width: @app-viewport-breakpoint-mobile) {
+               font-size: 10px;
+           }
        }
     }
 }
