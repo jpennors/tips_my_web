@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { useParams } from 'react-router';
 import { APIBasicTag } from 'tmw-admin/constants/api-types';
+import { useViewport } from 'tmw-common/components/ViewportProvider';
+import { ajaxPost } from 'tmw-common/utils/ajax';
 import { DocumentHead } from 'tmw-main/components/DocumentHead';
+import { SearchResultsList } from 'tmw-main/components/SearchResultsList';
 import { SearchResultsPageTitle } from 'tmw-main/components/SearchResultsPageTitle';
 import { ShareButton } from 'tmw-main/components/ShareButton';
 import { APIResource } from 'tmw-main/constants/api-types';
+import { SIZES, VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 import { BasicTag, Resource } from 'tmw-main/constants/app-types';
-import { ajaxPost } from 'tmw-common/utils/ajax';
-import { serializeResourcesFromAPI, serializeBasicTagsFromAPI } from 'tmw-main/utils/api-serialize';
+import { serializeBasicTagsFromAPI, serializeResourcesFromAPI } from 'tmw-main/utils/api-serialize';
 import { parseSearchTags } from 'tmw-main/utils/tags-search-url';
-import { useViewport } from 'tmw-common/components/ViewportProvider';
-import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
-import { SearchResultsList } from 'tmw-main/components/SearchResultsList';
 
 import './search-results-page.less';
 
@@ -65,7 +65,10 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                     mainSearchTag={mainSearchTag}
                     relatedSearchTags={relatedSearchTags}
                 />
-                <ShareButton className="search-results-page__button" />
+                <ShareButton
+                    size={isMobileViewport ? SIZES.SMALL : SIZES.MEDIUM}
+                    className="search-results-page__button"
+                />
             </div>
             {isLoading || hasResults ? (
                 <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
