@@ -15,6 +15,7 @@ interface ButtonProps {
     onClick?: () => void;
     icon?: Icon;
     variant?: ButtonVariant;
+    className?: string;
 }
 
 export const Button: React.FunctionComponent<ButtonProps> = ({
@@ -22,6 +23,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
     onClick,
     icon: Icon,
     variant = ButtonVariant.WHITE_TEXT_COLORED,
+    className,
 }) => {
     let iconColor;
     switch (variant) {
@@ -38,7 +40,10 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
     }
 
     return (
-        <span className={classNames('button', `button--variant-${variant}`)} onClick={onClick}>
+        <span
+            className={classNames(className, 'button', `button--variant-${variant}`)}
+            onClick={onClick}
+        >
             {content}
             {Icon ? (
                 <span className="button__icon">

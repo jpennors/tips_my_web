@@ -31,5 +31,17 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-end;
+
+        @media (max-width: @app-viewport-breakpoint-mobile) {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    &__button {
+        @media (max-width: @app-viewport-breakpoint-mobile) {
+            margin-top: 10px;
+        }
     }
 }

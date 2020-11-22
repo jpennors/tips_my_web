@@ -65,7 +65,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                     mainSearchTag={mainSearchTag}
                     relatedSearchTags={relatedSearchTags}
                 />
-                <ShareButton />
+                <ShareButton className="search-results-page__button" />
             </div>
             {isLoading || hasResults ? (
                 <SearchResultsList resultsList={resultResources} isLoading={isLoading} />

@@ -4,7 +4,11 @@ import { Button, ButtonVariant } from 'tmw-main/components/Button';
 import { useToastMessageContext } from 'tmw-main/components/ToastMessage';
 import { CopyIcon } from 'tmw-main/icons/CopyIcon';
 
-export const ShareButton: React.FunctionComponent = () => {
+interface ShareButtonProps {
+    className?: string;
+}
+
+export const ShareButton: React.FunctionComponent<ShareButtonProps> = ({ className }) => {
     const { openToastMessage } = useToastMessageContext();
 
     const onButtonClick = (): void => {
@@ -14,6 +18,7 @@ export const ShareButton: React.FunctionComponent = () => {
 
     return (
         <Button
+            className={className}
             content="Share"
             variant={ButtonVariant.WHITE_TEXT_BLACK}
             onClick={onButtonClick}
