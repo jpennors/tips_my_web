@@ -13,6 +13,6 @@
 	<noscript>
         You need to enable JavaScript to run this app.
     </noscript>
-	<script src="{{ asset('js/app-admin.js') }}"></script>
+	<script src="/js/app-admin.js"></script>
 </body>
 </html>
