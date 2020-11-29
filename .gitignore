@@ -5,6 +5,11 @@
 /api/vendor
 /api/.env
 /api/.phpunit.result.cache
+/frontend/node_modules
+/frontend/public/css
+/frontend/public/fonts
+/frontend/public/images
+/frontend/public/js
 Homestead.json
 Homestead.yaml
 npm-debug.log

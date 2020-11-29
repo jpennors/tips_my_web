@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "es6", // Target module resolution
+    "moduleResolution": "Node", // Current module resolution
+    "target": "es2020", // Target ECMA version
+    "lib": ["es2020", "dom"], // Current ECMA version
+    "baseUrl": ".",
+    "paths": {
+      "tmw-main/*": ["react/app-main/*"],
+      "tmw-admin/*": ["react/app-admin/*"],
+      "tmw-common/*": ["react/common/*"]
+    },
+    "sourceMap": true,
+    "jsx": "preserve",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true
+  },
+  "include": ["react/**/*"]
+}
