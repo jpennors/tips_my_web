@@ -12,8 +12,8 @@ module.exports = merge(common, {
         port: process.env.FRONTEND_DEV_SERVER_PORT || 3000,
         hot: true,
         historyApiFallback: true,
-        proxy: {
-            '*': process.env.BACKEND_SERVER_URL || 'http://localhost:8000',
-        },
+        // proxy: {
+        //     '*': process.env.BACKEND_SERVER_URL || 'http://localhost:8000',
+        // },
     },
 });

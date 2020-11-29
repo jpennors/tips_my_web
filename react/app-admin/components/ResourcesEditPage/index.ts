@@ -1,1 +1,0 @@
-export { ResourcesEditPage } from './ResourcesEditPage';

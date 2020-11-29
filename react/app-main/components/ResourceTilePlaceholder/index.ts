@@ -1,1 +1,0 @@
-export { ResourceTilePlaceholder } from './ResourceTilePlaceholder';

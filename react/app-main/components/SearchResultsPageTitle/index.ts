@@ -1,1 +1,0 @@
-export { SearchResultsPageTitle } from './SearchResultsPageTitle';
