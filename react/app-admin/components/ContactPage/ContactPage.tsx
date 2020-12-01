@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon, Loader, Table } from 'semantic-ui-react';
+import { Icon, Button, Loader, Table, Label } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { Contact } from 'tmw-admin/constants/app-types';
@@ -19,9 +19,34 @@ export const ContactPage: React.FunctionComponent = () => {
             .then(res => {
                 const contacts = serializeContactsFromAPI(res.data);
                 setContacts(contacts);
+                setIsLoading(false);
             })
             .catch(() => {
                 setErrorMessage('Error while fetching contacts list from API.');
+            });
+    };
+
+    const setContactAsRead = async (contactId: string, contactEmail: string): Promise<void> => {
+        return ajaxGet(`contact/read/${contactId}`)
+            .then(res => {
+                setSuccessMessage(`Message from ${contactEmail} set as read.`);
+                setIsLoading(true);
+                fetchContactMessages();
+            })
+            .catch(() => {
+                setErrorMessage('Error while setting the message as read.');
+            });
+    };
+
+    const setContactAsUnread = async (contactId: string, contactEmail: string): Promise<void> => {
+        return ajaxGet(`contact/unread/${contactId}`)
+            .then(res => {
+                setSuccessMessage(`Message from ${contactEmail} set as unread.`);
+                setIsLoading(true);
+                fetchContactMessages();
+            })
+            .catch(() => {
+                setErrorMessage('Error while setting the message as unread.');
             });
     };
 
@@ -72,15 +97,43 @@ export const ContactPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>Date</Table.HeaderCell>
                             <Table.HeaderCell>Email</Table.HeaderCell>
                             <Table.HeaderCell>Message</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="center">Read</Table.HeaderCell>
                             <Table.HeaderCell textAlign="center">Delete</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
                         {contacts.map(contact => (
                             <Table.Row key={contact.id}>
-                                <Table.Cell>{contact.createdAt}</Table.Cell>
-                                <Table.Cell>{contact.email}</Table.Cell>
-                                <Table.Cell>{contact.message}</Table.Cell>
+                                <Table.Cell style={{'fontWeight': contact.read? '': 'bold'}}>
+                                    {contact.createdAt}
+                                </Table.Cell>
+                                <Table.Cell style={{'fontWeight': contact.read? '': 'bold'}}>
+                                    {contact.email}
+                                </Table.Cell>
+                                <Table.Cell style={{'fontWeight': contact.read? '': 'bold'}}>
+                                    {contact.message}
+                                </Table.Cell>
+                                <Table.Cell textAlign="center">
+                                    {contact.read? (
+                                        <Label
+                                            as="a"
+                                            onClick={(): void => {
+                                                setContactAsUnread(contact.id, contact.email);
+                                            }}
+                                        >
+                                            Mark as unread
+                                        </Label>
+                                    ):(
+                                        <Icon
+                                            name="check circle"
+                                            color="teal"
+                                            link
+                                            onClick={(): void => {
+                                                setContactAsRead(contact.id, contact.email);
+                                            }}
+                                        />
+                                    )}
+                                </Table.Cell>
                                 <Table.Cell collapsing textAlign="center">
                                     <Icon
                                         name="trash alternate"

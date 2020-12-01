@@ -62,9 +62,13 @@ Route::group(['middleware' => 'admin'], function () {
 
     # Suggestions
     Route::apiResource('suggestions', 'SuggestionController')->only(['index', 'destroy']);
+    Route::get('suggestion/read/{id}', 'SuggestionController@suggestionRead');
+    Route::get('suggestion/unread/{id}', 'SuggestionController@suggestionUnread');
     
     # Contacts
     Route::apiResource('contacts', 'ContactController')->only(['index', 'destroy']);
+    Route::get('contact/read/{id}', 'ContactController@contactRead');
+    Route::get('contact/unread/{id}', 'ContactController@contactUnread');
 
     # Prices
     Route::apiResource('prices', 'PriceController')->only(['index', 'store', 'update', 'destroy']);

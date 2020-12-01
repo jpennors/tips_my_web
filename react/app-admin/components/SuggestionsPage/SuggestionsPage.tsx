@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon, Loader, Table } from 'semantic-ui-react';
+import { Icon, Loader, Table, Label } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { WebsiteSuggestion } from 'tmw-admin/constants/app-types';
@@ -19,9 +19,34 @@ export const SuggestionsPage: React.FunctionComponent = () => {
             .then(res => {
                 const suggestions = serializeSuggestionsFromAPI(res.data);
                 setSuggestions(suggestions);
+                setIsLoading(false);
             })
             .catch(() => {
                 setErrorMessage('Error while fetching suggestions list from API.');
+            });
+    };
+
+    const setSuggestionAsRead = async (suggestionId: string, suggestionUrl: string): Promise<void> => {
+        return ajaxGet(`suggestion/read/${suggestionId}`)
+            .then(res => {
+                setSuccessMessage(`Suggestion from ${suggestionUrl} set as read.`);
+                setIsLoading(true);
+                fetchWebsiteSuggestions();
+            })
+            .catch(() => {
+                setErrorMessage('Error while setting the suggestion as read.');
+            });
+    };
+
+    const setSuggestionAsUnread = async (suggestionId: string, suggestionUrl: string): Promise<void> => {
+        return ajaxGet(`suggestion/unread/${suggestionId}`)
+            .then(res => {
+                setSuccessMessage(`Suggestion from ${suggestionUrl} set as unread.`);
+                setIsLoading(true);
+                fetchWebsiteSuggestions();
+            })
+            .catch(() => {
+                setErrorMessage('Error while setting the suggestion as unread.');
             });
     };
 
@@ -77,6 +102,7 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>Date</Table.HeaderCell>
                             <Table.HeaderCell>URL</Table.HeaderCell>
                             <Table.HeaderCell>Description</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="center">Read</Table.HeaderCell>
                             <Table.HeaderCell collapsing textAlign="center">
                                 Delete
                             </Table.HeaderCell>
@@ -85,9 +111,36 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                     <Table.Body>
                         {suggestions.map(suggestion => (
                             <Table.Row key={suggestion.id}>
-                                <Table.Cell>{suggestion.createdAt}</Table.Cell>
-                                <Table.Cell>{suggestion.url}</Table.Cell>
-                                <Table.Cell>{suggestion.description}</Table.Cell>
+                                <Table.Cell style={{'fontWeight': suggestion.read? '': 'bold'}}>
+                                    {suggestion.createdAt}
+                                </Table.Cell>
+                                <Table.Cell style={{'fontWeight': suggestion.read? '': 'bold'}}>
+                                    <a href={suggestion.url} target="_blank">{suggestion.url}</a>
+                                </Table.Cell>
+                                <Table.Cell style={{'fontWeight': suggestion.read? '': 'bold'}}>
+                                    {suggestion.description}
+                                </Table.Cell>
+                                <Table.Cell textAlign="center">
+                                    {suggestion.read? (
+                                        <Label
+                                            as="a"
+                                            onClick={(): void => {
+                                                setSuggestionAsUnread(suggestion.id, suggestion.url);
+                                            }}
+                                        >
+                                            Mark as unread
+                                        </Label>
+                                    ):(
+                                        <Icon
+                                            name="check circle"
+                                            color="teal"
+                                            link
+                                            onClick={(): void => {
+                                                setSuggestionAsRead(suggestion.id, suggestion.url);
+                                            }}
+                                        />
+                                    )}
+                                </Table.Cell>
                                 <Table.Cell textAlign="center">
                                     <Icon
                                         name="trash alternate"

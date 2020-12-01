@@ -18,6 +18,7 @@ export interface APIContact {
     id: string;
     email: string;
     message: string;
+    read: boolean;
     created_at: Date;
     updated_at: Date;
 }
@@ -26,6 +27,7 @@ export interface APIWebsiteSuggestion {
     id: string;
     url: string;
     description: string;
+    read: boolean;
     created_at: Date;
     updated_at: Date;
 }

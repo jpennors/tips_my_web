@@ -41,6 +41,48 @@ class SuggestionController extends Controller
 
 
     /**
+     * Set suggestion as read
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function suggestionRead(Request $request, $id)
+    {
+        $suggestion = Suggestion::findOrFail($id);
+
+        // Try to save the tag
+        try {
+            $suggestion->read = true;
+            $suggestion->save();
+        } catch(\Exception $e) {
+            abort(500, "Can't complete the action on the suggestion");
+        }
+        return response()->json();
+    }
+
+
+    /**
+     * Set suggestion as unread
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function suggestionUnread(Request $request, $id)
+    {
+        $suggestion = Suggestion::findOrFail($id);
+
+        // Try to save the tag
+        try {
+            $suggestion->read = false;
+            $suggestion->save();
+        } catch(\Exception $e) {
+            abort(500, "Can't complete the action on the suggestion");
+        }
+        return response()->json();
+    }
+
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
