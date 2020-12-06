@@ -3,8 +3,8 @@ import * as React from 'react';
 const viewportContext = React.createContext<WindowSize>({
     // width: window.innerWidth,
     // height: window.innerHeight,
-    width: undefined,
-    height: undefined
+    width: 0,
+    height: 0
 });
 
 interface WindowSize {
@@ -13,8 +13,8 @@ interface WindowSize {
 }
 
 export const ViewportProvider: React.FunctionComponent = ({ children }) => {
-    const [width, setWidth] = React.useState(undefined);
-    const [height, setHeight] = React.useState(undefined);
+    const [width, setWidth] = React.useState(0);
+    const [height, setHeight] = React.useState(0);
 
     const handleWindowResize = (): void => {
         setWidth(window.innerWidth);
