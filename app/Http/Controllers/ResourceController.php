@@ -125,6 +125,9 @@ class ResourceController extends Controller
         // To DO Check for each resource requirements
 
         CacheManager::cleanCache($withImage = true);
+
+        $default_type_id = Type::all()->first()->id;
+        $default_price_id = Price::all()->first()->id;
         
         foreach ($request->data as $resource) {
 
@@ -146,7 +149,7 @@ class ResourceController extends Controller
             if ($price_entity) {
                 $r->price_id = $price_entity->id;
             } else {
-                $r->price_id = Price::all()->first()->id;
+                $r->price_id = $default_price_id;
             }
 
             // To Add when frontend will get type attribute
@@ -154,7 +157,7 @@ class ResourceController extends Controller
             if ($type_entity) {
                 $r->type_id = $type_entity->id;
             } else {
-                $r->type_id = Type::all()->first()->id;
+                $r->type_id = $default_type_id;
             }
             $r->save();
 
@@ -164,6 +167,10 @@ class ResourceController extends Controller
             foreach ($resource_tags as $resource_tag) {
                 $args = explode("|", $resource_tag);
                 $tag_name = trim($args[0]," ");
+                if (sizeof($args) == 1)
+                {
+                    dd($r->name);
+                }
                 $tag_score = trim($args[1], " ");
                 $t = Tag::withTrashed()->where('name', $tag_name)->get()->first();
                 if ($t) {
