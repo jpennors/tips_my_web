@@ -48,11 +48,13 @@ Route::group(['middleware' => 'admin'], function () {
     Route::apiResource('resources', 'ResourceController')->only(['index', 'show',
     'store', 'update', 'destroy']);
     Route::post('import/resources', 'ResourceController@importResources');
+    Route::post('import/validation/resources', 'ResourceController@validateImportedResources');
     Route::post('resources/image/{id}', 'ResourceController@uploadImage');
 
     # Tags
     Route::apiResource('tags', 'TagController')->only(['index', 'show',
     'store', 'update', 'destroy']);
+    Route::post('import/validation/tags', 'TagController@validateImportedTags');
     Route::post('import/tags', 'TagController@importTags');
     Route::get('tags/disable/{id}', 'TagController@disableTag');
     Route::get('tags/enable/{id}', 'TagController@enableTag');
