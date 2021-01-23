@@ -6,12 +6,15 @@ interface FormFooterProps {
     backButtonURL?: string;
     isSubmitDisabled: boolean;
     onSubmitClick: () => void;
+    buttonValue?: string;
 }
 
 export const FormFooter: React.FunctionComponent<FormFooterProps> = ({
     backButtonURL,
     isSubmitDisabled,
     onSubmitClick,
+    buttonValue= "Submit"
+
 }) => (
     <div style={backButtonURL ? undefined : { textAlign: 'right' }}>
         {/*
@@ -35,7 +38,7 @@ export const FormFooter: React.FunctionComponent<FormFooterProps> = ({
             disabled={isSubmitDisabled}
             floated={backButtonURL ? 'right' : undefined}
         >
-            Submit
+            {buttonValue}
             <Icon name="upload" />
         </Button>
     </div>
