@@ -35,4 +35,22 @@ class TagRequest extends FormRequest
             ]
         ];
     }
+
+    /**
+     * Get rules of Tag for import
+     * @return array
+     */
+    public static function importRules()
+    {
+        return [
+            'name'  =>  [
+                'required',
+                'string',
+                'between:3,40',
+            ],
+            'primary' => [
+                'boolean'
+            ]
+        ];
+    }
 }
