@@ -13,6 +13,7 @@ class ResourceRequest extends FormRequest
      */
     public function authorize()
     {
+        array_merge([], ResourceRequest::baseRules());
         return true;
     }
 
@@ -23,7 +24,7 @@ class ResourceRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return array_merge([
             'name' =>  [
                 'required', 
                 'unique:resources,name,'.\Request::instance()->id.',id', 
@@ -37,14 +38,32 @@ class ResourceRequest extends FormRequest
                 'string',
                 'between:2,150',
             ],
+            'image'  =>  [
+                'nullable',
+                'image',
+            ],
+            'type_id'  => [
+                'required',
+                'exists:types,id',
+            ],
+            'price_id'  =>  [
+                'required',
+                'exists:prices,id',
+            ]],
+        $this->baseRules());
+    }
+
+    /**
+     * Get base rules of Resource
+     * @return array
+     */
+    public static function baseRules()
+    {
+        return [
             'description'   =>  [
                 'nullable',
                 'string',
                 'between:0,250',
-            ],
-            'image'  =>  [
-                'nullable',
-                'image',
             ],
             'language'  => [
                 'required',
@@ -64,19 +83,40 @@ class ResourceRequest extends FormRequest
                 'min:1',
                 'max:3',
             ],
-            'type_id'  => [
-                'required',
-                'exists:types,id',
-            ],
-            'price_id'  =>  [
-                'required',
-                'exists:prices,id',
-            ],
             'like'   =>  [
                 'nullable',
                 'integer',
                 'min:0',
             ],
         ];
+    }
+
+    /**
+     * Get rules of Resource for import
+     * @return array
+     */
+    public static function importRules()
+    {
+        return array_merge([
+            'name' =>  [
+                'required',
+                'string',
+                'between:3,40',
+            ],
+            'url'  =>   [
+                'required',
+                'url',
+                'string',
+                'between:2,150',
+            ],
+            'type'  => [
+                'required',
+                'exists:types,name',
+            ],
+            'price'  =>  [
+                'required',
+                'exists:prices,name',
+            ]],
+            ResourceRequest::baseRules());
     }
 }

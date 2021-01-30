@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
-import { APIBasicTag, APIResource, APITag } from 'tmw-admin/constants/api-types';
 import { InputSelectOption } from 'tmw-admin/utils/select-options';
 import * as XLSX from 'xlsx';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { Form, Message } from 'semantic-ui-react';
-import { ajaxPost } from 'tmw-common/utils/ajax';
+import { Form, Message, List } from 'semantic-ui-react';
+import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
+import {
+    serializePricesFromAPI,
+    serializeResourceTypesFromAPI,
+    serializeTagsFromAPI,
+} from 'tmw-admin/utils/api-serialize';
 
 const importTypeOptions: InputSelectOption[] = [
     { key: 'resources', value: 'resources', text: 'Resources' },
@@ -16,12 +20,61 @@ const importTypeOptions: InputSelectOption[] = [
 export const BatchImportPage: React.FunctionComponent = () => {
     const [importType, setImportType] = React.useState<string>('');
     const [importedFile, setImportedFile] = React.useState<File>();
+    const [fileIsValidated, setFileIsValidated] = React.useState<boolean>(false);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
+    const [infoMessage, setInfoMessage] = React.useState<string>('');
+    const [validResourcePriceNames, setValidResourcePriceNames] = React.useState<string[]>([]);
+    const [validResourceTypeNames, setValidResourceTypeNames] = React.useState<string[]>([]);
+    const [validTagSlugs, setValidTagSlugs] = React.useState<string[]>([]);
     const [validationErrors, setValidationErrors] = React.useState<string[]>([]);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-    const isReadyToSubmit = importedFile !== undefined && importType.length > 0;
+    const isReadyToValidate = importedFile !== undefined && importType.length > 0;
+    const isReadyToImport = importedFile !== undefined && importType.length > 0 && fileIsValidated;
+
+    const fetchTagSlugs = async (): Promise<void> => {
+        return ajaxGet('tags')
+            .then(res => {
+                const tags = serializeTagsFromAPI(res.data);
+                setValidTagSlugs(tags.map(t => t.slug));
+            })
+            .catch(() => {
+                setErrorMessage('Error while fetching tags list from API.');
+            });
+    };
+
+    const fetchResourcePriceNames = async (): Promise<void> => {
+        return ajaxGet('prices')
+            .then(res => {
+                const prices = serializePricesFromAPI(res.data);
+                setValidResourcePriceNames(prices.map(p => p.name));
+            })
+            .catch(() => {
+                setErrorMessage('Error while fetching resource prices list from API.');
+            });
+    };
+
+    const fetchResourceTypeNames = async (): Promise<void> => {
+        return ajaxGet('types')
+            .then(res => {
+                const types = serializeResourceTypesFromAPI(res.data);
+                setValidResourceTypeNames(types.map(t => t.name));
+            })
+            .catch(() => {
+                setErrorMessage('Error while fetching resource types list from API.');
+            });
+    };
+
+    const loadValidationRules = (): void => {
+        fetchTagSlugs();
+        fetchResourcePriceNames();
+        fetchResourceTypeNames();
+    };
+
+    React.useEffect(() => {
+        loadValidationRules();
+    }, []);
 
     const onImportTypeInputChange = (_: any, { value }: { value: string }): void => {
         setImportType(value);
@@ -46,42 +99,11 @@ export const BatchImportPage: React.FunctionComponent = () => {
         setImportedFile(undefined);
     };
 
-    const checkTagsValidity = (tags: Partial<APIBasicTag>[]): string[] => {
-        const errors: string[] = [];
-        tags.forEach((tag, index) => {
-            if (!tag.name) {
-                errors.push(`Tag #${index}: "name" was not provided.`);
-            }
-        });
-        return errors;
-    };
-
-    const checkResourcesValidity = (resources: Partial<APIResource>[]): string[] => {
-        const errors: string[] = [];
-        resources.forEach((resource, index) => {
-            if (!resource.name) {
-                errors.push(`Resource #${index}: "name" was not provided.`);
-            }
-            if (!resource.url) {
-                errors.push(`Resource #${index}: "url" was not provided.`);
-            }
-            if (!resource.score) {
-                errors.push(`Resource #${index}: "score" was not provided.`);
-            } else if (!Number.isInteger(resource.score)) {
-                errors.push(`Resource #${index}: "name" should be an integer.`);
-            }
-            if (!resource.language) {
-                errors.push(`Resource #${index}: "language" was not provided.`);
-            }
-        });
-        return errors;
-    };
-
     const submitBatchData = (data: any): void => {
         setIsLoading(true);
         ajaxPost(`import/${importType}`, { data })
-            .then(() => {
-                setSuccessMessage('The file was successfully imported!');
+            .then(res => {
+                setSuccessMessage(`The file was successfully imported! \n ${res.data}`);
                 resetForm();
             })
             .catch(() => {
@@ -94,7 +116,23 @@ export const BatchImportPage: React.FunctionComponent = () => {
             });
     };
 
-    const handleFile = (): void => {
+    const validateData = (data: any): void => {
+        setIsLoading(true);
+        ajaxPost(`import/validation/${importType}`, { data })
+            .then(res => {
+                setValidationErrors(res.data);
+                setFileIsValidated(true);
+                setInfoMessage('Data have been validated.');
+            })
+            .catch(() => {
+                setErrorMessage('Error while posting the file to the API.');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+    const handleFile = (withImport = false): void => {
         /* Boilerplate to set up FileReader */
         const reader = new FileReader();
         const rABS = !!reader.readAsBinaryString;
@@ -110,17 +148,10 @@ export const BatchImportPage: React.FunctionComponent = () => {
             const data = XLSX.utils.sheet_to_json(ws);
             /* Update state */
 
-            let errors: string[] = [];
-            if (importType === 'tags') {
-                errors = checkTagsValidity(data as Partial<APITag>[]);
-            } else if (importType === 'resources') {
-                errors = checkResourcesValidity(data as Partial<APIResource>[]);
-            }
-
-            if (errors.length > 0) {
-                setValidationErrors(errors);
-            } else {
+            if (withImport) {
                 submitBatchData(data);
+            } else {
+                validateData(data);
             }
         };
 
@@ -144,10 +175,12 @@ export const BatchImportPage: React.FunctionComponent = () => {
             />
             <ActionMessage type="success" message={successMessage} />
             <ActionMessage type="error" message={errorMessage} />
+            <ActionMessage type="info" message={infoMessage} />
+
             <Message
                 attached
                 header="Import a batch file"
-                content="The resources/tags will be imported all at once"
+                content="The resources/tags will be imported all at once. Element with validation errors won't be imported."
             />
             <Form className="attached fluid segment" loading={isLoading}>
                 <Form.Group widths="equal">
@@ -169,8 +202,48 @@ export const BatchImportPage: React.FunctionComponent = () => {
                         required
                     />
                 </Form.Group>
-                <FormFooter isSubmitDisabled={!isReadyToSubmit} onSubmitClick={handleFile} />
+                <FormFooter
+                    isSubmitDisabled={!isReadyToValidate}
+                    onSubmitClick={() => handleFile(isReadyToImport)}
+                    buttonValue={isReadyToImport ? 'Submit' : 'Validation'}
+                />
             </Form>
+
+            {importType == 'resources' && (
+                <div>
+                    <Message
+                        attached
+                        header="Special validation rules"
+                        content="Some resource attributes only accept a list of values which are displayed here."
+                    />
+                    <Form className="attached fluid segment">
+                        <List bulleted>
+                            <List.Item>
+                                <strong>language</strong>: fr | en | en,fr
+                            </List.Item>
+                            <List.Item>
+                                <strong>tag</strong>:
+                                {validTagSlugs.map(tagSlug => (
+                                    <span key={tagSlug}>{tagSlug} | </span>
+                                ))}
+                            </List.Item>
+                            <List.Item>
+                                <strong>price</strong>:
+                                {validResourcePriceNames.map(priceName => (
+                                    <span key={priceName}>{priceName} | </span>
+                                ))}
+                            </List.Item>
+                            <List.Item>
+                                <strong>type</strong>:
+                                {validResourceTypeNames.map(typeName => (
+                                    <span key={typeName}>{typeName} | </span>
+                                ))}
+                            </List.Item>
+                        </List>
+                    </Form>
+                </div>
+            )}
+
             {validationErrors.length > 0 ? (
                 <Message error header="Errors found in batch file" list={validationErrors} />
             ) : null}

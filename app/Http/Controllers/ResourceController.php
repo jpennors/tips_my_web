@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ImportValidation\ResourceImportValidation;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Services\Cache\CacheManager;
@@ -122,14 +124,14 @@ class ResourceController extends Controller
      */
     public function importResources(Request $request){
 
-        // To DO Check for each resource requirements
+        // Resources validation
+        // Retrieve validated resources
+        $resourceImportValidation = new ResourceImportValidation($request->data);
+        $validatedResources = $resourceImportValidation->GetValidatedElements();
 
         CacheManager::cleanCache($withImage = true);
-
-        $default_type_id = Type::all()->first()->id;
-        $default_price_id = Price::all()->first()->id;
         
-        foreach ($request->data as $resource) {
+        foreach ($validatedResources as $resource) {
 
             $r = Resource::where('name', $resource['name'])->get()->first();
 
@@ -144,56 +146,37 @@ class ResourceController extends Controller
             $r->language = $resource['language'];
             $r->score = $resource['score'];
             $r->interface = $resource['interface'];
-            
-            $price_entity = Price::where('name', $resource['price'])->get()->first();
-            if ($price_entity) {
-                $r->price_id = $price_entity->id;
-            } else {
-                $r->price_id = $default_price_id;
-            }
-
-            // To Add when frontend will get type attribute
-            $type_entity = Type::where('name', $resource['type'])->get()->first();
-            if ($type_entity) {
-                $r->type_id = $type_entity->id;
-            } else {
-                $r->type_id = $default_type_id;
-            }
+            $r->price_id = $resource['price_id'];
+            $r->type_id = $resource['type_id'];
             $r->save();
 
             // Create resource tags entity
-            $tags = [];
-            $resource_tags = explode(",", $resource['tag']);
-            foreach ($resource_tags as $resource_tag) {
-                $args = explode("|", $resource_tag);
-                $tag_name = trim($args[0]," ");
-                if (sizeof($args) == 1)
-                {
-                    dd($r->name);
-                }
-                $tag_score = trim($args[1], " ");
-                $t = Tag::withTrashed()->where('name', $tag_name)->get()->first();
-                if ($t) {
-                    $tag_id = $t->id;
-                    $tag = array(
-                        "tag_id" => $tag_id,
-                        "belonging" =>  $tag_score
-                    );
-                    array_push($tags, $tag);
-                }
-            }
-            $r->updateResourceTags($tags);    
+            $r->updateResourceTags($resource['related_tags']);
 
             // Add image to resource
             $r->uploadImageFromUrlJobCreation($resource);
         }
-        return response()->json();
+        return response()->json(sizeof($validatedResources).' resources have been added or updated on '.
+            $resourceImportValidation->GetNumberOfImportedElements().' imported.');
     }
+
+    /**
+     * Validation of imported resources
+     * @param Request $request
+     */
+    public function validateImportedResources(Request $request)
+    {
+        $resourceImportValidation = new ResourceImportValidation($request->data);
+
+        $validationErrors = $resourceImportValidation->GetElementsErrors();
+
+        return response()->json($validationErrors);
+    }
+
 
     /**
      * Upload an image
      */
-
     public function uploadImage(Request $request, $id) {
 
         // Retrieve Resource from id
