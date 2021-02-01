@@ -194,6 +194,7 @@ class Tag extends Model
                     'name'      =>  $tag->name,
                     'slug'      =>  $tag->slug,
                     'primary'   =>  $tag->primary,
+                    'weight'    =>  $tag->resource_tags_count,
                     'related_tags'   =>  array(),
                 );
             }
