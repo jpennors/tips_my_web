@@ -223,21 +223,33 @@ export const BatchImportPage: React.FunctionComponent = () => {
                             </List.Item>
                             <List.Item>
                                 <strong>tag</strong>:
-                                {validTagSlugs.map(tagSlug => (
-                                    <span key={tagSlug}>{tagSlug} | </span>
-                                ))}
+                                {validTagSlugs
+                                    .sort((a, b) => {
+                                        return a > b ? 1 : -1;
+                                    })
+                                    .map(tagSlug => (
+                                        <span key={tagSlug}> {tagSlug} | </span>
+                                    ))}
                             </List.Item>
                             <List.Item>
                                 <strong>price</strong>:
-                                {validResourcePriceNames.map(priceName => (
-                                    <span key={priceName}>{priceName} | </span>
-                                ))}
+                                {validResourcePriceNames
+                                    .sort((a, b) => {
+                                        return a > b ? 1 : -1;
+                                    })
+                                    .map(priceName => (
+                                        <span key={priceName}> {priceName} | </span>
+                                    ))}
                             </List.Item>
                             <List.Item>
                                 <strong>type</strong>:
-                                {validResourceTypeNames.map(typeName => (
-                                    <span key={typeName}>{typeName} | </span>
-                                ))}
+                                {validResourceTypeNames
+                                    .sort((a, b) => {
+                                        return a > b ? 1 : -1;
+                                    })
+                                    .map(typeName => (
+                                        <span key={typeName}> {typeName} | </span>
+                                    ))}
                             </List.Item>
                         </List>
                     </Form>
