@@ -106,7 +106,7 @@ class Tag extends Model
             return true;
         }
 
-        if ($related_tag_weight > 2) {
+        if ($related_tag_weight >= Tag::$threshold_resource_tags_count) {
             return true;
         }
 
@@ -176,8 +176,7 @@ class Tag extends Model
         $main_tags = array();
         $tags = Tag::with('resource_tags')
             ->withCount('resource_tags')
-            ->get()
-            ->where('resource_tags_count', '>=', Tag::$threshold_resource_tags_count);
+            ->get();
 
         $reconstructed_resources = array();
 
