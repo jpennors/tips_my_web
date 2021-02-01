@@ -53,7 +53,7 @@ class Tag extends Model
      * 
      * @var int
      */
-    protected $threshold_resource_tags_count = 5;
+    protected static $threshold_resource_tags_count = 3;
     
 
 
@@ -174,7 +174,11 @@ class Tag extends Model
     {
 
         $main_tags = array();
-        $tags = Tag::with('resource_tags')->withCount('resource_tags')->get();
+        $tags = Tag::with('resource_tags')
+            ->withCount('resource_tags')
+            ->get()
+            ->where('resource_tags_count', '>=', Tag::$threshold_resource_tags_count);
+
         $reconstructed_resources = array();
 
         foreach ($tags as $tag) {
