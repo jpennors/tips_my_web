@@ -87,7 +87,7 @@ class Tag extends Model
             return true;
         }
 
-        if ($this->resource_tags_count && $this->resource_tags_count > $this->threshold_resource_tags_count) {
+        if ($this->resource_tags_count && $this->resource_tags_count > Tag::$threshold_resource_tags_count) {
             return true;
         }
         
