@@ -102,50 +102,54 @@ export const ContactPage: React.FunctionComponent = () => {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {contacts.map(contact => (
-                            <Table.Row key={contact.id}>
-                                <Table.Cell style={{'fontWeight': contact.read? '': 'bold'}}>
-                                    {contact.createdAt}
-                                </Table.Cell>
-                                <Table.Cell style={{'fontWeight': contact.read? '': 'bold'}}>
-                                    {contact.email}
-                                </Table.Cell>
-                                <Table.Cell style={{'fontWeight': contact.read? '': 'bold'}}>
-                                    {contact.message}
-                                </Table.Cell>
-                                <Table.Cell textAlign="center">
-                                    {contact.read? (
-                                        <Label
-                                            as="a"
-                                            onClick={(): void => {
-                                                setContactAsUnread(contact.id, contact.email);
-                                            }}
-                                        >
-                                            Mark as unread
-                                        </Label>
-                                    ):(
+                        {contacts
+                            .sort((a, b) => {
+                                return b.read && !a.read ? -1 : 1;
+                            })
+                            .map(contact => (
+                                <Table.Row key={contact.id}>
+                                    <Table.Cell style={{ fontWeight: contact.read ? '' : 'bold' }}>
+                                        {contact.createdAt}
+                                    </Table.Cell>
+                                    <Table.Cell style={{ fontWeight: contact.read ? '' : 'bold' }}>
+                                        {contact.email}
+                                    </Table.Cell>
+                                    <Table.Cell style={{ fontWeight: contact.read ? '' : 'bold' }}>
+                                        {contact.message}
+                                    </Table.Cell>
+                                    <Table.Cell textAlign="center">
+                                        {contact.read ? (
+                                            <Label
+                                                as="a"
+                                                onClick={(): void => {
+                                                    setContactAsUnread(contact.id, contact.email);
+                                                }}
+                                            >
+                                                Mark as unread
+                                            </Label>
+                                        ) : (
+                                            <Icon
+                                                name="check circle"
+                                                color="teal"
+                                                link
+                                                onClick={(): void => {
+                                                    setContactAsRead(contact.id, contact.email);
+                                                }}
+                                            />
+                                        )}
+                                    </Table.Cell>
+                                    <Table.Cell collapsing textAlign="center">
                                         <Icon
-                                            name="check circle"
-                                            color="teal"
+                                            name="trash alternate"
+                                            color="red"
                                             link
                                             onClick={(): void => {
-                                                setContactAsRead(contact.id, contact.email);
+                                                deleteContact(contact.id);
                                             }}
                                         />
-                                    )}
-                                </Table.Cell>
-                                <Table.Cell collapsing textAlign="center">
-                                    <Icon
-                                        name="trash alternate"
-                                        color="red"
-                                        link
-                                        onClick={(): void => {
-                                            deleteContact(contact.id);
-                                        }}
-                                    />
-                                </Table.Cell>
-                            </Table.Row>
-                        ))}
+                                    </Table.Cell>
+                                </Table.Row>
+                            ))}
                     </Table.Body>
                 </Table>
             )}
