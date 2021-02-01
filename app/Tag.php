@@ -53,7 +53,7 @@ class Tag extends Model
      * 
      * @var int
      */
-    protected $threshold_resource_tags_count = 5;
+    protected static $threshold_resource_tags_count = 3;
     
 
 
@@ -106,7 +106,7 @@ class Tag extends Model
             return true;
         }
 
-        if ($related_tag_weight > 2) {
+        if ($related_tag_weight >= Tag::$threshold_resource_tags_count) {
             return true;
         }
 
@@ -174,7 +174,10 @@ class Tag extends Model
     {
 
         $main_tags = array();
-        $tags = Tag::with('resource_tags')->withCount('resource_tags')->get();
+        $tags = Tag::with('resource_tags')
+            ->withCount('resource_tags')
+            ->get();
+
         $reconstructed_resources = array();
 
         foreach ($tags as $tag) {
@@ -190,6 +193,7 @@ class Tag extends Model
                     'name'      =>  $tag->name,
                     'slug'      =>  $tag->slug,
                     'primary'   =>  $tag->primary,
+                    'weight'    =>  $tag->resource_tags_count,
                     'related_tags'   =>  array(),
                 );
             }

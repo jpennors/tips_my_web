@@ -18,6 +18,7 @@ export interface APIRelatedTag extends APIBasicTag {
 
 export interface APIMainTag extends APIBasicTag {
     primary: boolean;
+    weight: number;
     related_tags: APIRelatedTag[];
 }
 

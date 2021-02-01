@@ -86,12 +86,12 @@ export const TagsSelector: React.FunctionComponent = () => {
     barPercentage += selectedRelatedTags.length * 20;
 
     // Compute the number of resources reached with these selected tags
-    const resourceRelatedTags = selectedRelatedTags.length
-        ? selectedRelatedTags
-        : selectedMainTag?.relatedTags;
-    const totalResources = resourceRelatedTags
-        ? resourceRelatedTags.reduce((sum, tag) => sum + tag.weight, 0)
-        : 0;
+    const totalResources =
+        selectedRelatedTags.length > 0
+            ? selectedRelatedTags.reduce((sum, tag) => sum + tag.weight, 0)
+            : selectedMainTag
+            ? selectedMainTag.weight
+            : 0;
 
     return (
         <div className="tags-selector">
