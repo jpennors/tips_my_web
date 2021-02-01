@@ -34,6 +34,7 @@ export const serializeMainTagsFromAPI = (tagsFromAPI: APIMainTag[]): MainTag[] =
             name: tag.name,
             slug: tag.slug,
             primary: tag.primary,
+            weight: tag.weight,
             relatedTags: relatedTags,
         });
     });
