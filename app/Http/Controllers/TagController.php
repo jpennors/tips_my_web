@@ -151,7 +151,8 @@ class TagController extends Controller
             }
 
             $t->name = $tag['name'];
-            $t->primary = $tag['primary'];
+            if(array_key_exists('primary', $tag))
+                $t->primary = $tag['primary'];
             $t->save();
         }
 
