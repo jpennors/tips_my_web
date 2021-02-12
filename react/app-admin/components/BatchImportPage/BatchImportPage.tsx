@@ -26,7 +26,7 @@ export const BatchImportPage: React.FunctionComponent = () => {
     const [infoMessage, setInfoMessage] = React.useState<string>('');
     const [validResourcePriceNames, setValidResourcePriceNames] = React.useState<string[]>([]);
     const [validResourceTypeNames, setValidResourceTypeNames] = React.useState<string[]>([]);
-    const [validTagSlugs, setValidTagSlugs] = React.useState<string[]>([]);
+    const [validTagNames, setValidTagNames] = React.useState<string[]>([]);
     const [validationErrors, setValidationErrors] = React.useState<string[]>([]);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -37,7 +37,7 @@ export const BatchImportPage: React.FunctionComponent = () => {
         return ajaxGet('tags')
             .then(res => {
                 const tags = serializeTagsFromAPI(res.data);
-                setValidTagSlugs(tags.map(t => t.slug));
+                setValidTagNames(tags.map(t => t.name));
             })
             .catch(() => {
                 setErrorMessage('Error while fetching tags list from API.');
@@ -223,7 +223,7 @@ export const BatchImportPage: React.FunctionComponent = () => {
                             </List.Item>
                             <List.Item>
                                 <strong>tag</strong>:
-                                {validTagSlugs
+                                {validTagNames
                                     .sort((a, b) => {
                                         return a > b ? 1 : -1;
                                     })

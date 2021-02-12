@@ -26,7 +26,7 @@ class ResourceImportValidation extends ImportValidationBase
             return [strtolower($item['name']) => $item['id']];
         })->toArray();
         $this->tagsMappingDictionary = Tag::withTrashed()->get()->mapToDictionary(function($item) {
-            return [strtolower($item['slug']) => $item['id']];
+            return [strtolower($item['name']) => $item['id']];
         })->toArray();
         $this->resourcesMappingDictionary = Resource::all()->mapToDictionary(function($item) {
             return [strtolower($item['url']) => $item['name']];
