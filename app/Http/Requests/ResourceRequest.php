@@ -72,13 +72,11 @@ class ResourceRequest extends FormRequest
                 'between:0,5',
             ],
             'score'   =>  [
-                'required',
                 'integer',
                 'min:1',
                 'max:10',
             ],
             'interface'  => [
-                'required',
                 'integer',
                 'min:1',
                 'max:3',
