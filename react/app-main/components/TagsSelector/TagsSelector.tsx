@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { LoadingSpinner } from 'tmw-main/components/LoadingSpinner';
 import { TagsLaunchBar } from 'tmw-main/components/TagsLaunchBar';
 import { MAIN_APP_ROUTES, SIZES } from 'tmw-main/constants/app-constants';
@@ -19,12 +20,29 @@ export const TagsSelector: React.FunctionComponent = () => {
     const [selectedMainTag, setSelectedMainTag] = React.useState<MainTag>();
 
     const history = useHistory();
+    const querySelectedTag = new URLSearchParams(useLocation().search);
+
+    const preselectTags = (tags: MainTag[]): void => {
+        if (querySelectedTag != null && querySelectedTag.get('main')) {
+            const mainSlugTag = querySelectedTag.get('main');
+            const mainTag = tags.find(t => t.primary && t.slug == mainSlugTag);
+            if (mainTag != null) {
+                setSelectedMainTag(mainTag);
+                const relatedSlugTag = querySelectedTag.get('related');
+                const relatedTag = mainTag.relatedTags.find(t => t.slug == relatedSlugTag);
+                if (relatedTag != null) {
+                    setSelectedRelatedTags([relatedTag]);
+                }
+            }
+        }
+    };
 
     const fetchTagOptions = (): Promise<void> => {
         return ajaxGet('main/tags')
             .then(res => {
                 const newTags = serializeMainTagsFromAPI(res.data || []);
                 setTags(newTags);
+                preselectTags(newTags);
             })
             .catch(() => {
                 // TODO: Handle errors / no tags
