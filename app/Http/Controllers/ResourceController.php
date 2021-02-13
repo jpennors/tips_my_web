@@ -149,7 +149,6 @@ class ResourceController extends Controller
             if(array_key_exists('score', $resource)){
                 $r->interface = $resource['score'];
             }
-            $r->score = $resource['score'];
             if(array_key_exists('interface', $resource)){
                 $r->interface = $resource['interface'];
             }
