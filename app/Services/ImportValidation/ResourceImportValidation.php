@@ -47,28 +47,32 @@ class ResourceImportValidation extends ImportValidationBase
         // Check Tags Format
         // Right format should be tag_name|tag_belonging, ...
         $related_tags = array();
-        foreach (explode(",", $element['tag']) as $resource_tag) {
-            $args = explode("|", trim($resource_tag, " "));
-            if (sizeof($args) != 2){
-                $this->setElementErrorMessage($index, 'tags',
-                    'Wrong format. It should be `tag_name`|`tag_belonging`, ...');
-                return;
+        if(!array_key_exists('tag', $element)){
+            $this->setElementErrorMessage($index, 'tags', 'No related tags ...');
+        } else {
+            foreach (explode(",", $element['tag']) as $resource_tag) {
+                $args = explode("|", trim($resource_tag, " "));
+                if (sizeof($args) != 2){
+                    $this->setElementErrorMessage($index, 'tags',
+                        'Wrong format. It should be `tag_name`|`tag_belonging`, ...');
+                    return;
+                }
+                $tag_name = strtolower(trim($args[0]," "));
+                $tag_score = trim($args[1], " ");
+
+                if (!array_key_exists($tag_name, $this->tagsMappingDictionary)){
+                    $this->setElementErrorMessage($index, 'tags',
+                        'Tag '.$tag_name.' does not exist');
+                    return;
+                }
+
+                $related_tag = array(
+                    "tag_id" => $this->tagsMappingDictionary[$tag_name][0],
+                    "belonging" =>  $tag_score
+                );
+
+                array_push($related_tags, $related_tag);
             }
-            $tag_name = strtolower(trim($args[0]," "));
-            $tag_score = trim($args[1], " ");
-
-            if (!array_key_exists($tag_name, $this->tagsMappingDictionary)){
-                $this->setElementErrorMessage($index, 'tags',
-                    'Tag '.$tag_name.' does not exist');
-                return;
-            }
-
-            $related_tag = array(
-                "tag_id" => $this->tagsMappingDictionary[$tag_name][0],
-                "belonging" =>  $tag_score
-            );
-
-            array_push($related_tags, $related_tag);
         }
 
         // If all tests have been passed
