@@ -46,7 +46,7 @@ class TagRequest extends FormRequest
             'name'  =>  [
                 'required',
                 'string',
-                'between:3,40',
+                'between:2,40',
             ],
             'primary' => [
                 'boolean'
