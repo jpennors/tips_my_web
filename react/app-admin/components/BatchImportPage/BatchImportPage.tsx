@@ -219,7 +219,7 @@ export const BatchImportPage: React.FunctionComponent = () => {
                     <Form className="attached fluid segment">
                         <List bulleted>
                             <List.Item>
-                                <strong>language</strong>: fr | en | en,fr
+                                <strong>language</strong>: fr | en | en,fr | es | fr,es | en,es | en,fr,es
                             </List.Item>
                             <List.Item>
                                 <strong>tag</strong>:
