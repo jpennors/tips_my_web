@@ -142,12 +142,12 @@ class ResourceController extends Controller
             // Create resource entity
             $r->name = $resource['name'];
             if(array_key_exists('description', $resource)){
-                $r->interface = $resource['description'];
+                $r->description = $resource['description'];
             }
             $r->url = $resource['url'];
             $r->language = $resource['language'];
             if(array_key_exists('score', $resource)){
-                $r->interface = $resource['score'];
+                $r->score = $resource['score'];
             }
             if(array_key_exists('interface', $resource)){
                 $r->interface = $resource['interface'];
