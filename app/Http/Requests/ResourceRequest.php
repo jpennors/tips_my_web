@@ -68,7 +68,7 @@ class ResourceRequest extends FormRequest
             'language'  => [
                 'required',
                 'string',
-                'in:fr,en,"en,fr"',
+                'in:fr,en,"en,fr",es,"en,es","fr,es","en,fr,es"',
                 'between:0,5',
             ],
             'score'   =>  [
