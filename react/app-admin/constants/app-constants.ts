@@ -5,6 +5,10 @@ export enum LOCALES {
     FRENCH = 'fr',
     ENGLISH = 'en',
     ENGLISH_FRENCH = 'en,fr',
+    SPANISH = 'es',
+    FRENCH_SPANISH = 'fr,es',
+    ENGLISH_SPANISH = 'en,es',
+    ENGLISH_FRENCH_SPANISH = 'en,fr,es'
 }
 
 export const LOCALES_NAMES = {
