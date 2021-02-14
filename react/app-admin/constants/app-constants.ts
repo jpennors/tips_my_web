@@ -15,6 +15,10 @@ export const LOCALES_NAMES = {
     [LOCALES.FRENCH]: 'French',
     [LOCALES.ENGLISH]: 'English',
     [LOCALES.ENGLISH_FRENCH]: 'English / French',
+    [LOCALES.SPANISH]: 'Spanish',
+    [LOCALES.FRENCH_SPANISH]: 'French / Spanish',
+    [LOCALES.ENGLISH_SPANISH]: 'English / Spanish',
+    [LOCALES.ENGLISH_FRENCH_SPANISH]: 'English / French / Spanish',
 };
 
 export enum MAX_CONTENT_LENGTH {
