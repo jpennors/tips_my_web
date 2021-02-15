@@ -12,7 +12,7 @@
         manifest.json provides metadata used when your web app is installed on a
         user s mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="pwa_manifest.json">
+    <link rel="manifest" href="site.webmanifest">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97827898-2"></script>
