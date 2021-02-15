@@ -13,12 +13,14 @@ export const LayoutHeader: React.FunctionComponent = () => {
     const { width } = useViewport();
     const isMobileViewport = width < VIEWPORT_BREAKPOINTS.MOBILE;
 
+    const newSearchLink = `${MAIN_APP_ROUTES.HOME}?new=1`;
+
     const links = [
         {
             id: 'new-search',
             title: 'New search',
             icon: <MagnifyingGlassIcon />,
-            link: MAIN_APP_ROUTES.SEARCH,
+            link: newSearchLink,
         },
         {
             id: 'share-website',
@@ -37,7 +39,7 @@ export const LayoutHeader: React.FunctionComponent = () => {
     return (
         <div className="layout-header">
             {!isMobileViewport ? (
-                <Link to={MAIN_APP_ROUTES.HOME}>
+                <Link to={newSearchLink}>
                     <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
                 </Link>
             ) : (

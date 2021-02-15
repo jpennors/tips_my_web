@@ -81,6 +81,15 @@ export const TagsSelector: React.FunctionComponent = () => {
         }
     }, [selectedMainTag]);
 
+    React.useEffect(() => {
+        history.listen(location => {
+            if (location.search != null && location.search.includes('new')) {
+                setSelectedMainTag(undefined);
+                setSelectedRelatedTags([]);
+            }
+        });
+    }, [history]);
+
     const launchSearch = (): void => {
         if (selectedMainTag) {
             const selectedTags = [selectedMainTag, ...selectedRelatedTags];
