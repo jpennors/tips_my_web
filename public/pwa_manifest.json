@@ -41,6 +41,11 @@
       "src": "/images/logo.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/images/logo.png",
+      "sizes": "2084x2084",
+      "type": "image/png"
     }
   ],
   "start_url": "./",
