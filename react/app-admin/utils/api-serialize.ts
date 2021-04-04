@@ -13,7 +13,7 @@ import {
     APIVisitorStat,
     APISearchTagStat,
     APIGeneralAdminSearchResult,
-    APIGeneralAdminSearch
+    APIGeneralAdminSearch, APIStatTag, APIStatRelatedTag, APIStatTagBaseStructure, APIStatTagBaseDateStructure
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -27,7 +27,7 @@ import {
     VisitorStat,
     SearchTagStat,
     GeneralAdminSearchResult,
-    GeneralAdminSearch
+    GeneralAdminSearch, StatTag, StatRelatedTag, StatTagBaseDateStructure, StatTagBaseStructure
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
 
@@ -148,6 +148,50 @@ export const serializeSearchTagsStatsFromAPI = (
         name: searchTag.tag.name,
         slug: searchTag.tag.slug,
         primary: searchTag.tag.primary
+    }));
+};
+
+export const serializeStatsBaseDateStructureFromAPI = (
+    statsTagsBaseDateStructure: APIStatTagBaseDateStructure[],
+): StatTagBaseDateStructure[] => {
+    return statsTagsBaseDateStructure.map(statTagBaseDateStructure => ({
+        count: statTagBaseDateStructure.count,
+        date: statTagBaseDateStructure.date
+    }));
+};
+
+export const serializeStatsBaseStructureFromAPI = (
+    statTagBaseStructure: APIStatTagBaseStructure,
+): StatTagBaseStructure => {
+    return ({
+        totalCount: statTagBaseStructure.total_count,
+        detailedCount: serializeStatsBaseDateStructureFromAPI(statTagBaseStructure.detailed_count)
+    });
+};
+
+export const serializeStatsRelatedTagsFromAPI = (
+    statsRelatedTagsFromAPI: APIStatRelatedTag[],
+): StatRelatedTag[] => {
+    return statsRelatedTagsFromAPI.map(statRelatedTag => ({
+        id : statRelatedTag.id,
+        name: statRelatedTag.name,
+        slug: statRelatedTag.slug,
+        weight : statRelatedTag.weight,
+        stats: serializeStatsBaseStructureFromAPI(statRelatedTag.stats)
+    }));
+};
+
+export const serializeStatsTagsFromAPI = (
+    TagsStatsFromAPI: APIStatTag[],
+): StatTag[] => {
+    return TagsStatsFromAPI.map(statTag => ({
+        id : statTag.id,
+        name: statTag.name,
+        slug: statTag.slug,
+        primary: statTag.primary,
+        weight : statTag.weight,
+        relatedTags: serializeStatsRelatedTagsFromAPI(statTag.related_tags),
+        stats: serializeStatsBaseStructureFromAPI(statTag.stats)
     }));
 };
 

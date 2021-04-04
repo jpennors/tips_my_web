@@ -130,6 +130,34 @@ export interface APIVisitorStat {
     visitors: number;
 }
 
+export interface APIStatTagBaseDateStructure {
+    date: Date;
+    count: number;
+}
+
+export interface APIStatTagBaseStructure {
+    total_count: number;
+    detailed_count : APIStatTagBaseDateStructure[];
+}
+
+export interface APIStatRelatedTag {
+    id: string;
+    name: string;
+    slug: string;
+    weight: number;
+    stats: APIStatTagBaseStructure;
+}
+
+export interface APIStatTag {
+    id: string;
+    name: string;
+    slug: string;
+    weight: number;
+    primary: boolean;
+    related_tags: APIStatRelatedTag[];
+    stats: APIStatTagBaseStructure;
+}
+
 export interface APISearchTagStat {
     count: number;
     tag_id: string;
