@@ -6,6 +6,7 @@ import { getApiDateFormat } from 'tmw-common/utils/date';
 import { Chart } from 'chart.js';
 import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
 import { StatTag } from 'tmw-admin/constants/app-types';
+import {ActionMessage} from "tmw-admin/components/ActionMessage";
 
 export const StatsTagsChart: React.FunctionComponent = () => {
     const [selectedTagOption, setSelectedTagOption] = React.useState<string>('primaries');
@@ -186,7 +187,7 @@ export const StatsTagsChart: React.FunctionComponent = () => {
                 );
             })
             .catch(() => {
-                setErrorMessage('Error while fetching visitor stats from API.');
+                setErrorMessage('Error while fetching Stats Tags from API.');
             });
     };
 
@@ -196,6 +197,7 @@ export const StatsTagsChart: React.FunctionComponent = () => {
 
     return (
         <div style={{ marginTop: 20 }}>
+            <ActionMessage type="error" message={errorMessage} />
             <Form>
                 <Form.Select
                     fluid
