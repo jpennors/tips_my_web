@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Form } from 'semantic-ui-react';
-import { serializeStatsTagsFromAPI } from 'tmw-admin/utils/api-serialize';
+import { serializeDateRangesToAPI, serializeStatsTagsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { Chart } from 'chart.js';
 import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
@@ -13,7 +13,7 @@ import {
     isSemanticCalendarValueValue,
     serializeSemanticCalendarValueToCurrentDate,
 } from 'tmw-admin/utils/semantic-calendar';
-import {getNewBarChart} from "tmw-admin/utils/charts";
+import { getNewBarChart } from 'tmw-admin/utils/charts';
 
 export const StatsTagsChart: React.FunctionComponent = () => {
     const [selectedTagOption, setSelectedTagOption] = React.useState<string>('primaries');
@@ -107,8 +107,8 @@ export const StatsTagsChart: React.FunctionComponent = () => {
     };
 
     const updateChartData = (selectedTagOption: string): void => {
-        let labels: string[] = [];
-        let data: number[] = [];
+        let labels: string[];
+        let data: number[];
         switch (selectedTagOption) {
             case 'primaries':
                 labels = selectDefaultLabels();
@@ -135,12 +135,29 @@ export const StatsTagsChart: React.FunctionComponent = () => {
         updateChartData(value);
     };
 
-    const handleDateRangesInputChange = (_: any, { name, value }: { name: string; value: string }): void => {
+    const fetchStatTags = async (startDate: Date, endDate: Date): Promise<void> => {
+        const apiDateRanges = serializeDateRangesToAPI(startDate, endDate);
+        return ajaxPost('stats/tags/search', apiDateRanges)
+            .then(res => {
+                const statsTagsResults = serializeStatsTagsFromAPI(res.data).sort((a, b) => {
+                    return a.stats.totalCount > b.stats.totalCount ? -1 : 1;
+                });
+                setStatsTags(statsTagsResults);
+
+                const labels = statsTagsResults.filter(t => t.primary).map(t => t.name);
+                const data = statsTagsResults.filter(t => t.primary).map(t => t.stats.totalCount);
+                updateChart(labels, data);
+            })
+            .catch(() => {
+                setErrorMessage('Error while fetching Stats Tags from API.');
+            });
+    };
+
+    const handleDateRangesInputChange = (_: any, { value }: { value: string }): void => {
         setStatsTimeRange(value);
 
         // If Semantic Calendar Value has a StartDate & a EndDate
-        if (isSemanticCalendarValueValue(value))
-        {
+        if (isSemanticCalendarValueValue(value)) {
             const apiStartDate = getApiFormatStartDateFromSemanticCalendarValue(value);
             const apiEndDate = getApiFormatEndDateFromSemanticCalendarValue(value);
 
@@ -157,27 +174,6 @@ export const StatsTagsChart: React.FunctionComponent = () => {
         const apiEndDate = getApiFormatEndDateFromSemanticCalendarValue(semanticCalendarValue);
 
         fetchStatTags(apiStartDate, apiEndDate);
-    };
-
-    const fetchStatTags = async (apiStartDate: string, apiEndDate: string): Promise<void> => {
-
-        return ajaxPost('stats/tags/search', {
-            start_date: apiStartDate,
-            end_date: apiEndDate
-        })
-            .then(res => {
-                const statsTagsResults = serializeStatsTagsFromAPI(res.data).sort((a, b) => {
-                    return a.stats.totalCount > b.stats.totalCount ? -1 : 1;
-                });
-                setStatsTags(statsTagsResults);
-
-                const labels = statsTagsResults.filter(t => t.primary).map(t => t.name);
-                const data = statsTagsResults.filter(t => t.primary).map(t => t.stats.totalCount);
-                updateChart(labels, data);
-            })
-            .catch(() => {
-                setErrorMessage('Error while fetching Stats Tags from API.');
-            });
     };
 
     React.useEffect(() => {

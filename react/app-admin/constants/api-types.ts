@@ -137,7 +137,7 @@ export interface APIStatTagBaseDateStructure {
 
 export interface APIStatTagBaseStructure {
     total_count: number;
-    detailed_count : APIStatTagBaseDateStructure[];
+    detailed_count: APIStatTagBaseDateStructure[];
 }
 
 export interface APIStatRelatedTag {
@@ -173,4 +173,9 @@ export interface APIGeneralAdminSearch {
     name: string;
     slug: string;
     results: APIGeneralAdminSearchResult[];
+}
+
+export interface APIDateRanges {
+    start_date: string;
+    end_date: string;
 }

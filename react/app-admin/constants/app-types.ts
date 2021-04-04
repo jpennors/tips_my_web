@@ -94,7 +94,7 @@ export interface StatTagBaseDateStructure {
 
 export interface StatTagBaseStructure {
     totalCount: number;
-    detailedCount : StatTagBaseDateStructure[];
+    detailedCount: StatTagBaseDateStructure[];
 }
 
 export interface StatRelatedTag {
@@ -124,14 +124,13 @@ export interface SearchTagStat {
 }
 
 export interface GeneralAdminSearchResult {
-    id: string,
-    title: string,
-    type: string,
+    id: string;
+    title: string;
+    type: string;
 }
 
 export interface GeneralAdminSearch {
-    name: string,
-    slug: string,
-    results: GeneralAdminSearchResult[]
+    name: string;
+    slug: string;
+    results: GeneralAdminSearchResult[];
 }
-

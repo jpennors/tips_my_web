@@ -1,5 +1,3 @@
-import {getApiDateFormat} from "tmw-common/utils/date";
-
 export const getSemanticCalendarDateFormat = (date: Date): string => {
     const day = ('0' + date.getDate()).slice(-2);
     const monthNumber = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -26,16 +24,16 @@ export const getDateFromSemanticCalendarFormat = (strDate: string): Date => {
     const year = Number(splittedStrDate[2]);
 
     return new Date(year, month - 1, day);
-}
-
-export const getApiFormatStartDateFromSemanticCalendarValue = (calendarValue: string): string => {
-    // Expected Format "dd-MM-YYYY - dd-MM-YYYY"
-    return getApiDateFormat(getDateFromSemanticCalendarFormat(calendarValue.substring(0, 10)));
 };
 
-export const getApiFormatEndDateFromSemanticCalendarValue = (calendarValue: string): string => {
+export const getApiFormatStartDateFromSemanticCalendarValue = (calendarValue: string): Date => {
     // Expected Format "dd-MM-YYYY - dd-MM-YYYY"
-    return getApiDateFormat(getDateFromSemanticCalendarFormat(calendarValue.substring(13, 23)));
+    return getDateFromSemanticCalendarFormat(calendarValue.substring(0, 10));
+};
+
+export const getApiFormatEndDateFromSemanticCalendarValue = (calendarValue: string): Date => {
+    // Expected Format "dd-MM-YYYY - dd-MM-YYYY"
+    return getDateFromSemanticCalendarFormat(calendarValue.substring(13, 23));
 };
 
 export const isSemanticCalendarValueValue = (calendarValue: string): boolean => {
