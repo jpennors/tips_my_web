@@ -1,17 +1,16 @@
 import * as React from 'react';
-import { Form, Select } from 'semantic-ui-react';
-import { serializeSearchTagsStatsFromAPI } from 'tmw-admin/utils/api-serialize';
+import { Form } from 'semantic-ui-react';
+import { serializeStatsTagsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { getApiDateFormat } from 'tmw-common/utils/date';
 import { Chart } from 'chart.js';
 import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
-import { SearchTagStat } from 'tmw-admin/constants/app-types';
+import { StatTag } from 'tmw-admin/constants/app-types';
 
-export const SearchTagsChart: React.FunctionComponent = () => {
-    const [parentTagOptions, setParentTagOptions] = React.useState<InputSelectOption[]>([]);
-    const [selectedTagOption, setselectedTagOption] = React.useState<string>('primaries');
+export const StatsTagsChart: React.FunctionComponent = () => {
+    const [selectedTagOption, setSelectedTagOption] = React.useState<string>('primaries');
     const [errorMessage, setErrorMessage] = React.useState<string>('');
-    const [searchTagsStats, setSearchTagsStats] = React.useState<SearchTagStat[]>([]);
+    const [statsTags, setStatsTags] = React.useState<StatTag[]>([]);
     const [chart, setChart] = React.useState<Chart>();
 
     const getParentTagOptions = (): InputSelectOption[] => {
@@ -19,13 +18,23 @@ export const SearchTagsChart: React.FunctionComponent = () => {
             {
                 key: 'primaries',
                 value: 'primaries',
-                text: 'Tags principaux',
+                text: 'Main Tags',
+            },
+            {
+                key: 'best_primaries',
+                value: 'best_primaries',
+                text: 'Best Main Tags',
+            },
+            {
+                key: 'best_secondaries',
+                value: 'best_secondaries',
+                text: 'Best Secondary Tags',
             },
         ];
 
         options = options.concat(
             convertToSelectOptions(
-                searchTagsStats.filter(t => t.primary),
+                statsTags.filter(t => t.primary),
                 'id',
                 'name',
             ),
@@ -34,38 +43,47 @@ export const SearchTagsChart: React.FunctionComponent = () => {
         return options;
     };
 
-    const onTagOptionInputChange = (_: any, { value }: { value: string }): void => {
-        setselectedTagOption(value);
-        updateChartData(value);
+    const getBestTags = (primary: boolean, quantity = 10): StatTag[] => {
+        return statsTags
+            .filter(t => t.primary == primary)
+            .sort((a, b) => {
+                return a.stats.totalCount > b.stats.totalCount ? -1 : 1;
+            })
+            .slice(0, quantity);
     };
 
-    const updateChartData = (selectedTagOption: string): void => {
-        let labels: string[] = [];
-        let data: number[] = [];
-        if (selectedTagOption === 'primaries') {
-            labels = selectDefaultLabels();
-            data = selectDefaultData();
-        } else {
-            labels = selectLabels(selectedTagOption);
-            data = selectData(selectedTagOption);
-        }
-        updateChart(labels, data);
-    };
+    const selectLabels = (tagId: string): string[] => {
+        const selectedMainTag = statsTags.find(t => t.id === tagId);
 
-    const selectLabels = (tag_id: string): string[] => {
-        return searchTagsStats.filter(t => t.id === tag_id).map(t => t.name);
+        if (selectedMainTag == null) return [];
+
+        return [selectedMainTag.name].concat(selectedMainTag.relatedTags.map(rt => rt.name));
     };
 
     const selectDefaultLabels = (): string[] => {
-        return searchTagsStats.filter(t => t.primary).map(t => t.name);
+        return statsTags.filter(t => t.primary).map(t => t.name);
     };
 
-    const selectData = (tag_id: string): number[] => {
-        return searchTagsStats.filter(t => t.id === tag_id).map(t => t.count);
+    const selectBestLabels = (primary: boolean, quantity = 10): string[] => {
+        return getBestTags(primary, quantity).map(t => t.name);
+    };
+
+    const selectData = (tagId: string): number[] => {
+        const selectedMainTag = statsTags.find(t => t.id === tagId);
+
+        if (selectedMainTag == null) return [];
+
+        return [selectedMainTag.stats.totalCount].concat(
+            selectedMainTag.relatedTags.map(rt => rt.stats.totalCount),
+        );
     };
 
     const selectDefaultData = (): number[] => {
-        return searchTagsStats.filter(t => t.primary).map(t => t.count);
+        return statsTags.filter(t => t.primary).map(t => t.stats.totalCount);
+    };
+
+    const selectBestData = (primary: boolean, quantity = 10): number[] => {
+        return getBestTags(primary, quantity).map(t => t.stats.totalCount);
     };
 
     const updateChart = (labels: string[], data: number[]): void => {
@@ -79,7 +97,36 @@ export const SearchTagsChart: React.FunctionComponent = () => {
         chart?.update();
     };
 
-    const fetchSearchTags = async (): Promise<void> => {
+    const updateChartData = (selectedTagOption: string): void => {
+        let labels: string[] = [];
+        let data: number[] = [];
+        switch (selectedTagOption) {
+            case 'primaries':
+                labels = selectDefaultLabels();
+                data = selectDefaultData();
+                break;
+            case 'best_primaries':
+                labels = selectBestLabels(true);
+                data = selectBestData(true);
+                break;
+            case 'best_secondaries':
+                labels = selectBestLabels(false);
+                data = selectBestData(false);
+                break;
+            default:
+                labels = selectLabels(selectedTagOption);
+                data = selectData(selectedTagOption);
+        }
+
+        updateChart(labels, data);
+    };
+
+    const onTagOptionInputChange = (_: any, { value }: { value: string }): void => {
+        setSelectedTagOption(value);
+        updateChartData(value);
+    };
+
+    const fetchStatTags = async (): Promise<void> => {
         const endDate = new Date();
         const startDate = new Date();
         startDate.setMonth(startDate.getMonth() - 1);
@@ -89,10 +136,12 @@ export const SearchTagsChart: React.FunctionComponent = () => {
             end_date: getApiDateFormat(endDate),
         })
             .then(res => {
-                const searchTagsStatsResults = serializeSearchTagsStatsFromAPI(res.data);
-                setSearchTagsStats(searchTagsStatsResults);
-                const labels = searchTagsStatsResults.filter(t => t.primary).map(t => t.name);
-                const data = searchTagsStatsResults.filter(t => t.primary).map(t => t.count);
+                const statsTagsResults = serializeStatsTagsFromAPI(res.data).sort((a, b) => {
+                    return a.stats.totalCount > b.stats.totalCount ? -1 : 1;
+                });
+                setStatsTags(statsTagsResults);
+                const labels = statsTagsResults.filter(t => t.primary).map(t => t.name);
+                const data = statsTagsResults.filter(t => t.primary).map(t => t.stats.totalCount);
                 setChart(
                     new Chart('search_tags', {
                         type: 'bar',
@@ -142,11 +191,11 @@ export const SearchTagsChart: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        fetchSearchTags();
+        fetchStatTags();
     }, []);
 
     return (
-        <div>
+        <div style={{ marginTop: 20 }}>
             <Form>
                 <Form.Select
                     fluid
@@ -156,7 +205,7 @@ export const SearchTagsChart: React.FunctionComponent = () => {
                     onChange={onTagOptionInputChange}
                 />
             </Form>
-            <canvas id="search_tags"></canvas>
+            <canvas id="search_tags" />
         </div>
     );
 };

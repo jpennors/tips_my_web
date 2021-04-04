@@ -1,2 +1,2 @@
 export { Statistics } from './Statistics';
-import { SearchTagsChart } from './SearchTagsChart'
+import { StatsTagsChart } from './StatsTagsChart'
