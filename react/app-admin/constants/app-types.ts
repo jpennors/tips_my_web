@@ -87,6 +87,34 @@ export interface VisitorStat {
     visitors: number;
 }
 
+export interface StatTagBaseDateStructure {
+    date: Date;
+    count: number;
+}
+
+export interface StatTagBaseStructure {
+    totalCount: number;
+    detailedCount: StatTagBaseDateStructure[];
+}
+
+export interface StatRelatedTag {
+    id: string;
+    name: string;
+    slug: string;
+    weight: number;
+    stats: StatTagBaseStructure;
+}
+
+export interface StatTag {
+    id: string;
+    name: string;
+    slug: string;
+    weight: number;
+    primary: boolean;
+    relatedTags: StatRelatedTag[];
+    stats: StatTagBaseStructure;
+}
+
 export interface SearchTagStat {
     count: number;
     id: string;
@@ -96,14 +124,13 @@ export interface SearchTagStat {
 }
 
 export interface GeneralAdminSearchResult {
-    id: string,
-    title: string,
-    type: string,
+    id: string;
+    title: string;
+    type: string;
 }
 
 export interface GeneralAdminSearch {
-    name: string,
-    slug: string,
-    results: GeneralAdminSearchResult[]
+    name: string;
+    slug: string;
+    results: GeneralAdminSearchResult[];
 }
-

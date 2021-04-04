@@ -13,13 +13,13 @@ class StatsController extends Controller
 {
  
     #region Tags
-    public function countSearchTags(Request $request)
+    public function statsTags(Request $request)
     {
         // Date formate Y-m-d
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        $search_tag_count = StatTag::getMostRecurrentTagsByAction($start_date, $end_date, 'search');
+        $search_tag_count = StatTag::getStatsTags($start_date, $end_date);
 
         return response()->json($search_tag_count, 200);
     }

@@ -13,7 +13,12 @@ import {
     APIVisitorStat,
     APISearchTagStat,
     APIGeneralAdminSearchResult,
-    APIGeneralAdminSearch
+    APIGeneralAdminSearch,
+    APIStatTag,
+    APIStatRelatedTag,
+    APIStatTagBaseStructure,
+    APIStatTagBaseDateStructure,
+    APIDateRanges,
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -27,9 +32,14 @@ import {
     VisitorStat,
     SearchTagStat,
     GeneralAdminSearchResult,
-    GeneralAdminSearch
+    GeneralAdminSearch,
+    StatTag,
+    StatRelatedTag,
+    StatTagBaseDateStructure,
+    StatTagBaseStructure,
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
+import { getApiDateFormat } from 'tmw-common/utils/date';
 
 /*
  * Convert data from API format to frontend format
@@ -147,34 +157,80 @@ export const serializeSearchTagsStatsFromAPI = (
         id: searchTag.tag.id,
         name: searchTag.tag.name,
         slug: searchTag.tag.slug,
-        primary: searchTag.tag.primary
+        primary: searchTag.tag.primary,
+    }));
+};
+
+export const serializeStatsBaseDateStructureFromAPI = (
+    statsTagsBaseDateStructure: APIStatTagBaseDateStructure[],
+): StatTagBaseDateStructure[] => {
+    return statsTagsBaseDateStructure.map(statTagBaseDateStructure => ({
+        count: statTagBaseDateStructure.count,
+        date: statTagBaseDateStructure.date,
+    }));
+};
+
+export const serializeStatsBaseStructureFromAPI = (
+    statTagBaseStructure: APIStatTagBaseStructure,
+): StatTagBaseStructure => {
+    return {
+        totalCount: statTagBaseStructure.total_count,
+        detailedCount: serializeStatsBaseDateStructureFromAPI(statTagBaseStructure.detailed_count),
+    };
+};
+
+export const serializeStatsRelatedTagsFromAPI = (
+    statsRelatedTagsFromAPI: APIStatRelatedTag[],
+): StatRelatedTag[] => {
+    return statsRelatedTagsFromAPI.map(statRelatedTag => ({
+        id: statRelatedTag.id,
+        name: statRelatedTag.name,
+        slug: statRelatedTag.slug,
+        weight: statRelatedTag.weight,
+        stats: serializeStatsBaseStructureFromAPI(statRelatedTag.stats),
+    }));
+};
+
+export const serializeStatsTagsFromAPI = (TagsStatsFromAPI: APIStatTag[]): StatTag[] => {
+    return TagsStatsFromAPI.map(statTag => ({
+        id: statTag.id,
+        name: statTag.name,
+        slug: statTag.slug,
+        primary: statTag.primary,
+        weight: statTag.weight,
+        relatedTags: serializeStatsRelatedTagsFromAPI(statTag.related_tags),
+        stats: serializeStatsBaseStructureFromAPI(statTag.stats),
     }));
 };
 
 export const serializeGeneralAdminSearchResultFromAPI = (
     GeneralAdminSearchResultFromAPI: APIGeneralAdminSearchResult[],
-    type: string
+    type: string,
 ): GeneralAdminSearchResult[] => {
     return GeneralAdminSearchResultFromAPI.map(adminSearchResult => ({
         id: adminSearchResult.id,
         title: adminSearchResult.title,
-        type: type
-    }))
-}
+        type: type,
+    }));
+};
 
 export const serializeGeneralAdminSearchFromAPI = (
     GeneralAdminSearchFromAPI: APIGeneralAdminSearch[],
-): Record<string,GeneralAdminSearch> => {
-    let adminSearchDictionnary: Record<string,GeneralAdminSearch> = {}
-    GeneralAdminSearchFromAPI.map(adminSearch => (
-        adminSearchDictionnary[adminSearch.slug] = {
-            name: adminSearch.name,
-            slug: adminSearch.slug,
-            results: serializeGeneralAdminSearchResultFromAPI(adminSearch.results, adminSearch.slug)
-    }));
+): Record<string, GeneralAdminSearch> => {
+    const adminSearchDictionnary: Record<string, GeneralAdminSearch> = {};
+    GeneralAdminSearchFromAPI.map(
+        adminSearch =>
+            (adminSearchDictionnary[adminSearch.slug] = {
+                name: adminSearch.name,
+                slug: adminSearch.slug,
+                results: serializeGeneralAdminSearchResultFromAPI(
+                    adminSearch.results,
+                    adminSearch.slug,
+                ),
+            }),
+    );
     return adminSearchDictionnary;
 };
-
 
 /*
  * Convert data from frontend format to (partial) API format (to use with POST API)
@@ -192,8 +248,8 @@ export const serializeResourceToAPI = (resource: Partial<Resource>): Partial<API
         type_id: resource.typeId,
         tags: resource.tags
             ? resource.tags.map(tag => ({
-                tag_id: tag.tagId,
-                belonging: tag.belonging,
+                  tag_id: tag.tagId,
+                  belonging: tag.belonging,
               }))
             : [],
     };
@@ -215,5 +271,12 @@ export const serializePriceToAPI = (price: Partial<Price>): Partial<APIPrice> =>
 export const serializeResourceTypeToAPI = (type: Partial<ResourceType>): Partial<ResourceType> => {
     return {
         name: type.name,
+    };
+};
+
+export const serializeDateRangesToAPI = (startDate: Date, endDate: Date): APIDateRanges => {
+    return {
+        start_date: getApiDateFormat(startDate),
+        end_date: getApiDateFormat(endDate),
     };
 };
