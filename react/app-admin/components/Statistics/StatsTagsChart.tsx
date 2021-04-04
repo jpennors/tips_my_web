@@ -2,15 +2,22 @@ import * as React from 'react';
 import { Form } from 'semantic-ui-react';
 import { serializeStatsTagsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxPost } from 'tmw-common/utils/ajax';
-import { getApiDateFormat } from 'tmw-common/utils/date';
 import { Chart } from 'chart.js';
 import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
 import { StatTag } from 'tmw-admin/constants/app-types';
-import {ActionMessage} from "tmw-admin/components/ActionMessage";
+import { ActionMessage } from 'tmw-admin/components/ActionMessage';
+import { DatesRangeInput } from 'semantic-ui-calendar-react';
+import {
+    getApiFormatEndDateFromSemanticCalendarValue,
+    getApiFormatStartDateFromSemanticCalendarValue,
+    isSemanticCalendarValueValue,
+    serializeSemanticCalendarValueToCurrentDate,
+} from 'tmw-admin/utils/semantic-calendar';
 
 export const StatsTagsChart: React.FunctionComponent = () => {
     const [selectedTagOption, setSelectedTagOption] = React.useState<string>('primaries');
     const [errorMessage, setErrorMessage] = React.useState<string>('');
+    const [statsTimeRange, setStatsTimeRange] = React.useState<string>('');
     const [statsTags, setStatsTags] = React.useState<StatTag[]>([]);
     const [chart, setChart] = React.useState<Chart>();
 
@@ -127,14 +134,35 @@ export const StatsTagsChart: React.FunctionComponent = () => {
         updateChartData(value);
     };
 
-    const fetchStatTags = async (): Promise<void> => {
-        const endDate = new Date();
-        const startDate = new Date();
-        startDate.setMonth(startDate.getMonth() - 1);
+    const handleDateRangesInputChange = (_: any, { name, value }: { name: string; value: string }): void => {
+        setStatsTimeRange(value);
+
+        // If Semantic Calendar Value has a StartDate & a EndDate
+        if (isSemanticCalendarValueValue(value))
+        {
+            const apiStartDate = getApiFormatStartDateFromSemanticCalendarValue(value);
+            const apiEndDate = getApiFormatEndDateFromSemanticCalendarValue(value);
+
+            fetchStatTags(apiStartDate, apiEndDate);
+        }
+    };
+
+    const initStatTags = async (): Promise<void> => {
+        const semanticCalendarValue = serializeSemanticCalendarValueToCurrentDate(30);
+        isSemanticCalendarValueValue(semanticCalendarValue);
+        setStatsTimeRange(semanticCalendarValue);
+
+        const apiStartDate = getApiFormatStartDateFromSemanticCalendarValue(semanticCalendarValue);
+        const apiEndDate = getApiFormatEndDateFromSemanticCalendarValue(semanticCalendarValue);
+
+        fetchStatTags(apiStartDate, apiEndDate);
+    };
+
+    const fetchStatTags = async (apiStartDate: string, apiEndDate: string): Promise<void> => {
 
         return ajaxPost('stats/tags/search', {
-            start_date: getApiDateFormat(startDate),
-            end_date: getApiDateFormat(endDate),
+            start_date: apiStartDate,
+            end_date: apiEndDate
         })
             .then(res => {
                 const statsTagsResults = serializeStatsTagsFromAPI(res.data).sort((a, b) => {
@@ -199,6 +227,7 @@ export const StatsTagsChart: React.FunctionComponent = () => {
         <div style={{ marginTop: 20 }}>
             <ActionMessage type="error" message={errorMessage} />
             <Form>
+                <DatesRangeInput onChange={handleDateRangesInputChange} value={statsTimeRange} />
                 <Form.Select
                     fluid
                     placeholder="Select primary tag"
