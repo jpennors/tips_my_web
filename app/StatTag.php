@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Services\Stats\SearchTagsStatsService;
+use App\Services\Stats\StatsTagsService;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\DateUtils;
 use App\Jobs\Stats\StatTagJob;
@@ -83,18 +85,17 @@ class StatTag extends Model
      * Get most recurrent tags based on specific action
      * 
      */
-    public static function getMostRecurrentTagsByAction($start_date, $end_date, $action)
+    public static function getStatsTags($start_date, $end_date)
     {
-        return StatTag::with('tag')
+        StatTag::all();
+        $raw_stats_tags = StatTag::with('tag')
             ->where([
                 ['created_date', '>=', $start_date],
-                ['created_date', '<=', $end_date],
-                ['action', $action]])
-            ->select('tag_id', DB::raw('count(*) as count'))
-            ->groupBy('tag_id')
-            ->orderBy('count', 'DESC')
-            ->get()
-            ->toArray();
-    }
+                ['created_date', '<=', $end_date]])
+            ->get();
 
+        $tags_relation_graph = Tag::loadMainTags();
+
+        return StatsTagsService::CombineTagsStats($raw_stats_tags, $tags_relation_graph);
+    }
 }
