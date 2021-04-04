@@ -13,6 +13,7 @@ import {
     isSemanticCalendarValueValue,
     serializeSemanticCalendarValueToCurrentDate,
 } from 'tmw-admin/utils/semantic-calendar';
+import {getNewBarChart} from "tmw-admin/utils/charts";
 
 export const StatsTagsChart: React.FunctionComponent = () => {
     const [selectedTagOption, setSelectedTagOption] = React.useState<string>('primaries');
@@ -169,50 +170,10 @@ export const StatsTagsChart: React.FunctionComponent = () => {
                     return a.stats.totalCount > b.stats.totalCount ? -1 : 1;
                 });
                 setStatsTags(statsTagsResults);
+
                 const labels = statsTagsResults.filter(t => t.primary).map(t => t.name);
                 const data = statsTagsResults.filter(t => t.primary).map(t => t.stats.totalCount);
-                setChart(
-                    new Chart('search_tags', {
-                        type: 'bar',
-                        data: {
-                            labels: labels,
-                            datasets: [
-                                {
-                                    data: data,
-                                    label: 'Visitors',
-                                    fill: false,
-                                    lineTension: 0.1,
-                                    backgroundColor: 'rgba(153, 102, 255, 0.4)',
-                                    borderColor: 'rgba(153, 102, 255, 1)',
-                                    borderCapStyle: 'butt',
-                                    borderDash: [],
-                                    borderDashOffset: 0.0,
-                                    borderJoinStyle: 'miter',
-                                    pointBorderColor: 'rgba(75,192,192,1)',
-                                    pointBackgroundColor: '#fff',
-                                    pointBorderWidth: 1,
-                                    pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                                    pointHoverBorderWidth: 2,
-                                    pointRadius: 1,
-                                    pointHitRadius: 10,
-                                },
-                            ],
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [
-                                    {
-                                        ticks: {
-                                            beginAtZero: true,
-                                        },
-                                    },
-                                ],
-                            },
-                        },
-                    }),
-                );
+                updateChart(labels, data);
             })
             .catch(() => {
                 setErrorMessage('Error while fetching Stats Tags from API.');
@@ -220,8 +181,12 @@ export const StatsTagsChart: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        fetchStatTags();
+        setChart(getNewBarChart());
     }, []);
+
+    React.useEffect(() => {
+        initStatTags();
+    }, [chart]);
 
     return (
         <div style={{ marginTop: 20 }}>
