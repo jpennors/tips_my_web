@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Services\DateUtils;
-use App\Tag;
-use App\Jobs\StatTagJob;
-use DB; 
+use App\Jobs\Stats\StatTagJob;
+use DB;
 
 class StatTag extends Model
 {
