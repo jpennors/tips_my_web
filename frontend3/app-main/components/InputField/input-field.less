@@ -1,0 +1,72 @@
+//@import '../../constants/ui-constants';
+
+.input-field {
+    margin-bottom: 15px;
+
+    &__textarea, &__input {
+        //font-size: @app-font-size-medium;
+        //font-family: @app-font-light;
+        padding: 10px;
+        background-color: #f8f8f8;
+        box-sizing: border-box;
+        border-radius: 10px;
+        border: 0;
+        outline: none;
+        margin-bottom: 0;
+        transition: background-color 0.2s ease-in-out;
+
+        &:focus {
+            background-color: white;
+        }
+    }
+
+    &__textarea {
+        resize: none;
+        margin-bottom: -3px;
+    }
+
+    &__input {
+        height: 40px;
+    }
+
+    &--full-width {
+        width: 100%;
+    }
+
+    &--disabled {
+        background-color: #f1f1f1;
+        color: #666666;
+    }
+
+    &--invalid {
+        //border: 1px solid @app-color-background-red;
+    }
+
+    &__validation {
+        margin-top: 4px;
+        margin-left: 3px;
+        margin-right: 3px;
+        position: relative;
+
+        //font-size: @app-font-size-small;
+        //font-family: @app-font-medium;
+    }
+
+    &__validation-message {
+        //color: @app-color-background-red;
+        text-align: left;
+        padding-right: 30px;
+    }
+
+    &__characters-counter {
+        color: #7e7e7e;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transition: color 0.2s ease-in-out;
+
+        &--error {
+            //color: @app-color-background-red;
+        }
+    }
+}

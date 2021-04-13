@@ -1,0 +1,43 @@
+//@import '../../constants/ui-constants';
+
+.tag {
+    //font-family: @app-font-regular;
+    border: white 2px solid;
+    background: transparent;
+    color: white;
+    display: inline-block;
+    text-decoration: none;
+    user-select: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &--clickable {
+        cursor: pointer;
+
+        &:hover, &:active {
+            background: rgba(255, 255, 255, 0.8);
+            color: #f46e7a;
+        }
+
+        &.tag--selected, &.tag--selected:hover {
+            background: white;
+            color: #f46e7a;
+        }
+    }
+
+    &--medium {
+        //font-family: @app-font-regular;
+        //border-radius: 100px;
+        //font-size: @app-font-size-medium;
+        padding: 0.4em 1.3em;
+        margin: 5px;
+    }
+
+    &--large {
+        //font-family: @app-font-medium;
+        //border-radius: 120px;
+        //font-size: @app-font-size-large;
+        padding: 0.4em 1.3em;
+        margin: 7px;
+    }
+}
