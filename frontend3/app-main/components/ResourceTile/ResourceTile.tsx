@@ -11,6 +11,8 @@ import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { ArrowRightIcon } from 'tmw-main/icons/ArrowRightIcon';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
+import heartIcon from 'tmw-main/assets/images/heart.svg';
+import heartFullIcon from 'tmw-main/assets/images/heart-full.svg';
 
 import styles from './ResourceTile.module.scss';
 
@@ -73,7 +75,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                         <ResourcePricingPill pricing={resource.pricing} />
                         <span className={styles.likeResourceButton}>
                             <img
-                                src={isLiked ? '/images/heart-full.svg' : '/images/heart.svg'}
+                                src={isLiked ? heartFullIcon : heartIcon}
                                 alt={isLiked ? 'Unlike' : 'Like'}
                                 height="15px"
                                 onClick={likeResource}

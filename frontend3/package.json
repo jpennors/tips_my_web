@@ -25,6 +25,7 @@
     "dotenv": "^8.2.0",
     "less": "^2.7.3",
     "next": "10.0.5",
+    "next-images": "^1.7.0",
     "react": "^17.0.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^17.0.1",

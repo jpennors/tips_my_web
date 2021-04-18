@@ -5,8 +5,9 @@ import { ResourceTilePlaceholder } from 'tmw-main/components/ResourceTilePlaceho
 import { Resource } from 'tmw-main/constants/app-types';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
+import chevronDownIcon from 'tmw-main/assets/images/chevron-down.svg';
 
-import styles from 'app-main/components/SearchResultsList/SearchResultsList.module.scss';
+import styles from './SearchResultsList.module.scss';
 
 interface SearchResultsListProps {
     resultsList: Resource[];
@@ -74,7 +75,7 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
                     {showLeftArrow ? (
                         <div className={classNames(styles.scrollArrow, styles.scrollArrowLeft)}>
                             <img
-                                src="/images/chevron-down.svg"
+                                src={chevronDownIcon}
                                 alt="Scroll left"
                                 className={styles.scrollArrowLeftIcon}
                                 onClick={onLeftArrowClick}
@@ -85,7 +86,7 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
                     {showRightArrow ? (
                         <div className={classNames(styles.scrollArrow, styles.scrollArrowRight)}>
                             <img
-                                src="/images/chevron-down.svg"
+                                src={chevronDownIcon}
                                 alt="Scroll right"
                                 className={styles.scrollArrowRightIcon}
                                 onClick={onRightArrowClick}

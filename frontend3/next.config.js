@@ -1,4 +1,5 @@
-module.exports = {
+const withImages = require('next-images');
+module.exports = withImages({
     webpack: (config) => {
         const rules = config.module.rules
             .find((rule) => typeof rule.oneOf === 'object')
@@ -23,4 +24,4 @@ module.exports = {
 
         return config;
     },
-};
+});

@@ -12,6 +12,7 @@ import { SIZES, VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 import { BasicTag, Resource } from 'tmw-main/constants/app-types';
 import { serializeBasicTagsFromAPI, serializeResourcesFromAPI } from 'tmw-main/utils/api-serialize';
 import { parseSearchTags } from 'tmw-main/utils/tags-search-url';
+import noResultsImage from 'tmw-main/assets/images/no-results-error.svg';
 
 import styles from './SearchResultsPage.module.scss';
 
@@ -74,11 +75,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                 <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
             ) : (
                 <div className={styles.noResults}>
-                    <img
-                        src="/images/no-results-error.svg"
-                        alt="Not Found"
-                        className={styles.noResultsImage}
-                    />
+                    <img src={noResultsImage} alt="Not Found" className={styles.noResultsImage} />
                 </div>
             )}
         </div>

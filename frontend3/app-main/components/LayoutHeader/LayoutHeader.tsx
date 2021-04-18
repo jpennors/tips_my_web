@@ -6,6 +6,7 @@ import { SuggestionForm } from 'tmw-main/components/SuggestionForm';
 import { MAIN_APP_ROUTES, VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { MagnifyingGlassIcon } from 'tmw-main/icons/MagnifyingGlassIcon';
+import logo from 'tmw-common/images/logo.svg';
 
 import styles from './LayoutHeader.module.scss';
 
@@ -38,13 +39,13 @@ export const LayoutHeader: React.FunctionComponent = () => {
         <div className={styles.layoutHeader}>
             {!isMobileViewport ? (
                 <Link href={MAIN_APP_ROUTES.HOME}>
-                    <img src="/images/logo.svg" alt="logo" className={styles.logo} />
+                    <img src={logo} alt="logo" className={styles.logo} />
                 </Link>
             ) : (
                 <p className={styles.logoName}>
                     <Link href={MAIN_APP_ROUTES.HOME}>
                         <a>
-                            <img src="/images/logo.svg" alt="logo" className={styles.logo} />
+                            <img src={logo} alt="logo" className={styles.logo} />
                             TipsMyWeb
                         </a>
                     </Link>
