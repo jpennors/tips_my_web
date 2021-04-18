@@ -1,4 +1,11 @@
-@use 'constants/ui-constants' as ui;
+@use 'app-main/constants/ui-constants' as ui;
+
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
 
 .app-main {
     background-image: linear-gradient(-240deg, ui.$app-color-background-red, ui.$app-color-background-orange);
