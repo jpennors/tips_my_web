@@ -1,5 +1,8 @@
+@use 'constants/ui-constants' as ui;
+
 .app-main {
-    background-image: linear-gradient(-240deg, var(--app-color-background-red), var(--app-color-background-orange));
+    background-image: linear-gradient(-240deg, ui.$app-color-background-red, ui.$app-color-background-orange);
+    background-color: red;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -11,6 +14,6 @@
     width: 100%;
     min-width: 355px;
 
-    font-family: var(--app-font-medium);
+    font-family: ui.$app-font-medium;
     color: white;
 }

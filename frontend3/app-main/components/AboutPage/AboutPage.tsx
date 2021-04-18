@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { DocumentHead } from 'tmw-main/components/DocumentHead';
 
-import './about-page.less';
+import styles from './AboutPage.module.scss';
 
 export const AboutPage: React.FunctionComponent = () => {
     return (
-        <div className="about-page">
+        <div className={styles.aboutPage}>
             <DocumentHead title="About" />
-            <div className="about-page__header">About us</div>
-            <div className="about-page__content">
+            <div className={styles.header}>About us</div>
+            <div className={styles.content}>
                 <p>
                     TipsMyWeb is giving you the best resources in a specific field. These websites
                     that you normally discover after 2 years in a specific domain.

@@ -3,13 +3,24 @@ import classNames from 'classnames';
 import { SIZES } from 'tmw-main/constants/app-constants';
 import { Icon } from 'tmw-main/icons/icon-types';
 
-import './button.less';
+import styles from './Button.module.scss';
 
 export enum ButtonVariant {
     COLORED = 'colored',
     WHITE_TEXT_COLORED = 'white-text-colored',
     WHITE_TEXT_BLACK = 'white-text-black',
 }
+
+const BUTTON_SIZES_STYLES: Record<ButtonProps['size'], string> = {
+    [SIZES.SMALL]: styles.sizeSmall,
+    [SIZES.MEDIUM]: styles.sizeMedium,
+};
+
+const BUTTON_VARIANTS_STYLES: Record<ButtonProps['variant'], string> = {
+    [ButtonVariant.COLORED]: styles.variantColored,
+    [ButtonVariant.WHITE_TEXT_BLACK]: styles.variantWhiteTextBlack,
+    [ButtonVariant.WHITE_TEXT_COLORED]: styles.variantWhiteTextColored,
+};
 
 export interface ButtonProps {
     content: string;
@@ -46,15 +57,15 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
         <span
             className={classNames(
                 className,
-                'button',
-                `button--variant-${variant}`,
-                `button--size-${size}`,
+                styles.button,
+                BUTTON_VARIANTS_STYLES[variant],
+                BUTTON_SIZES_STYLES[size],
             )}
             onClick={onClick}
         >
             {content}
             {Icon ? (
-                <span className="button__icon">
+                <span className={styles.icon}>
                     <Icon fill={iconColor} />
                 </span>
             ) : null}

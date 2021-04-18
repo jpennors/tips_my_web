@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BasicTag } from 'tmw-main/constants/app-types';
 
-import './search-results-page-title.less';
+import styles from './SearchResultsPageTitle.module.scss';
 
 interface SearchResultsPageTitleProps {
     hasResults: boolean;
@@ -17,36 +17,27 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
     relatedSearchTags,
 }) => {
     return (
-        <div className="search-results-page-title">
-            <div className="search-results-page-title__title">
+        <div>
+            <div className={styles.title}>
                 {isLoading || hasResults ? (
                     <>
-                        Level-up your{' '}
-                        <span className="search-results-page-title__title-emphasis">workflow!</span>
+                        Level-up your <span className={styles.titleEmphasis}>workflow!</span>
                     </>
                 ) : (
                     <>{"We didn't find any resource for these tags..."}</>
                 )}
             </div>
-            <div className="search-results-page-title__subtitle">
+            <div className={styles.subtitle}>
                 {isLoading ? (
                     'Looking for great resources...'
                 ) : hasResults && mainSearchTag ? (
                     <>
-                        <span className="search-results-page-title__primary-search-tag-separator">
-                            /
-                        </span>
-                        <span className="search-results-page-title__primary-search-tag">
-                            {mainSearchTag.name}
-                        </span>
+                        <span className={styles.primarySearchTagSeparator}>/</span>
+                        <span className={styles.primarySearchTag}>{mainSearchTag.name}</span>
                         {relatedSearchTags.map(tag => (
                             <React.Fragment key={tag.id}>
-                                <span className="search-results-page-title__secondary-search-tag-separator">
-                                    /
-                                </span>
-                                <span className="search-results-page-title__secondary-search-tag">
-                                    {tag.name}
-                                </span>
+                                <span className={styles.secondarySearchTagSeparator}>/</span>
+                                <span className={styles.secondarySearchTag}>{tag.name}</span>
                             </React.Fragment>
                         ))}
                     </>

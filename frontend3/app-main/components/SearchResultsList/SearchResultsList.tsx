@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { ResourceTile } from 'tmw-main/components/ResourceTile';
 import { ResourceTilePlaceholder } from 'tmw-main/components/ResourceTilePlaceholder';
@@ -5,7 +6,7 @@ import { Resource } from 'tmw-main/constants/app-types';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 
-import './search-results-list.less';
+import styles from 'app-main/components/SearchResultsList/SearchResultsList.module.scss';
 
 interface SearchResultsListProps {
     resultsList: Resource[];
@@ -67,26 +68,26 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
     }, [isLoading]);
 
     return (
-        <div className="search-results-list">
+        <div>
             {!isMobileViewport && !isLoading ? (
                 <>
                     {showLeftArrow ? (
-                        <div className="search-results-list__scroll-arrow search-results-list__scroll-arrow-left ">
+                        <div className={classNames(styles.scrollArrow, styles.scrollArrowLeft)}>
                             <img
                                 src="/images/chevron-down.svg"
                                 alt="Scroll left"
-                                className="search-results-list__scroll-arrow-left-icon"
+                                className={styles.scrollArrowLeftIcon}
                                 onClick={onLeftArrowClick}
                             />
                         </div>
                     ) : null}
 
                     {showRightArrow ? (
-                        <div className="search-results-list__scroll-arrow search-results-list__scroll-arrow-right">
+                        <div className={classNames(styles.scrollArrow, styles.scrollArrowRight)}>
                             <img
                                 src="/images/chevron-down.svg"
                                 alt="Scroll right"
-                                className="search-results-list__scroll-arrow-right-icon"
+                                className={styles.scrollArrowRightIcon}
                                 onClick={onRightArrowClick}
                             />
                         </div>
@@ -96,7 +97,7 @@ export const SearchResultsList: React.FunctionComponent<SearchResultsListProps> 
             <div
                 ref={resultsListElement}
                 onScroll={onResultsListScroll}
-                className="search-results-list__results-list"
+                className={styles.resultsList}
             >
                 {isLoading ? (
                     <>

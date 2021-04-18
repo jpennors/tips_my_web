@@ -5,7 +5,7 @@ import { SubmitButton } from 'tmw-main/components/SubmitButton';
 import { VALIDATION } from 'tmw-main/constants/app-constants';
 import { isValidEmail } from 'tmw-main/utils/form-validation';
 
-import './contact-form.less';
+import styles from './ContactForm.module.scss';
 
 const getContactValidationMessages = (
     email: string,
@@ -96,17 +96,17 @@ export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
     };
 
     return (
-        <div className="contact-form">
-            <div className="contact-form__title">Contact</div>
-            <div className="contact-form__subtitle">
+        <div className={styles.contactForm}>
+            <div className={styles.title}>Contact</div>
+            <div className={styles.subtitle}>
                 {!hasSubmitSuccess
                     ? 'Give us your feedback!'
                     : 'Your message was successfully submitted'}
             </div>
-            <div className="contact-form__body">
-                <form className="contact-form__form" autoComplete="off">
+            <div className={styles.body}>
+                <form autoComplete="off">
                     <InputField
-                        className="contact-form__email-input"
+                        className={styles.emailInput}
                         type="email"
                         placeholder="Your email"
                         name="email-input"
@@ -119,7 +119,7 @@ export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
                     />
                     <InputField
                         type="textarea"
-                        className="contact-form__message-input"
+                        className={styles.messageInput}
                         placeholder="Tell us what you think"
                         name="messageInput"
                         value={messageInputValue}
@@ -132,7 +132,7 @@ export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
                     />
                 </form>
             </div>
-            <div className="contact-form__buttons">
+            <div className={styles.buttons}>
                 <SubmitButton
                     onClick={submitContactForm}
                     isValid={hasSubmitSuccess}
@@ -142,7 +142,7 @@ export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
                 />
             </div>
             {hasSubmitError ? (
-                <div className="contact-form__submit-error">
+                <div className={styles.submitError}>
                     We&apos;re having trouble submitting your message, please try again!
                 </div>
             ) : null}

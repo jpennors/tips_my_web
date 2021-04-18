@@ -1,28 +1,29 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 
-import './resource-tile-placeholder.less';
+import styles from './ResourceTilePlaceholder.module.scss';
 
 export const ResourceTilePlaceholder: React.FunctionComponent = () => {
     const { width } = useViewport();
     const isMobileViewport = width < VIEWPORT_BREAKPOINTS.MOBILE;
 
     return (
-        <div className="resource-tile-placeholder">
+        <div className={styles.resourceTilePlaceholder}>
             {!isMobileViewport ? (
-                <div className="resource-tile-placeholder__header">
-                    <span className="resource-tile-placeholder__header-dot" />
-                    <span className="resource-tile-placeholder__header-dot" />
-                    <span className="resource-tile-placeholder__header-dot" />
+                <div className={styles.header}>
+                    <span className={styles.headerDot} />
+                    <span className={styles.headerDot} />
+                    <span className={styles.headerDot} />
                 </div>
             ) : null}
-            <div className="resource-tile-placeholder__icon resource-tile-placeholder__loading" />
-            <div className="resource-tile-placeholder__content">
-                <div className="resource-tile-placeholder__title resource-tile-placeholder__loading" />
-                <div className="resource-tile-placeholder__description-1 resource-tile-placeholder__loading" />
-                <div className="resource-tile-placeholder__description-2 resource-tile-placeholder__loading" />
-                <div className="resource-tile-placeholder__description-3 resource-tile-placeholder__loading" />
+            <div className={classNames(styles.icon, styles.loading)} />
+            <div className={styles.content}>
+                <div className={classNames(styles.title, styles.loading)} />
+                <div className={classNames(styles.description1, styles.loading)} />
+                <div className={classNames(styles.description2, styles.loading)} />
+                <div className={classNames(styles.description3, styles.loading)} />
             </div>
         </div>
     );

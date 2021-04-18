@@ -4,7 +4,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 
-import './tags-launch-bar.less';
+import styles from './TagsLaunchBar.module.scss';
 
 const MAX_BAR_WIDTH = 500;
 const MIN_BAR_WIDTH = 200;
@@ -49,16 +49,16 @@ export const TagsLaunchBar: React.FunctionComponent<TagsLaunchBarProps> = ({
 
     return (
         <div
-            className={classNames('tags-launch-bar', {
-                ['tags-launch-bar--button']: hasTagsSelected,
+            className={classNames(styles.tagsLaunchBar, {
+                [styles.button]: hasTagsSelected,
             })}
             style={{ width: `${barWidth}px`, height: `${barHeight}px` }}
             onClick={showButton ? onClickCallback : undefined}
         >
             {showButton ? (
-                <div className="tags-launch-bar__text">
+                <div className={styles.text}>
                     Find {totalResources} resources{' '}
-                    <FontAwesomeIcon icon={faArrowRight} className="tags-launch-bar__arrow-icon" />
+                    <FontAwesomeIcon icon={faArrowRight} className={styles.arrowIcon} />
                 </div>
             ) : (
                 <FontAwesomeIcon icon={faChevronDown} />

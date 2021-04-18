@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { SIZES } from 'tmw-main/constants/app-constants';
 
-import './tag.less';
+import styles from './Tag.module.scss';
 
 interface TagProps {
     content: string;
@@ -21,11 +21,11 @@ export const Tag: React.FunctionComponent<TagProps> = ({
 }) => (
     <div onClick={onClickCallback}>
         <button
-            className={classNames('tag', {
-                'tag--selected': isSelected,
-                'tag--medium': size === SIZES.MEDIUM,
-                'tag--large': size === SIZES.LARGE,
-                'tag--clickable': clickable,
+            className={classNames(styles.tag, {
+                [styles.selected]: isSelected,
+                [styles.medium]: size === SIZES.MEDIUM,
+                [styles.large]: size === SIZES.LARGE,
+                [styles.clickable]: clickable,
             })}
         >
             {content}

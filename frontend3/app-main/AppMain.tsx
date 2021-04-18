@@ -13,7 +13,7 @@ import { ToastMessageProvider } from 'tmw-main/components/ToastMessage';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 import { ViewportProvider } from 'tmw-common/components/ViewportProvider';
 
-import styles from './AppMain.module.css';
+import styles from './AppMain.module.scss';
 
 export const AppMain: React.FunctionComponent = () => (
     <CookiesProvider>

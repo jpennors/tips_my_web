@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { ToastMessage } from './ToastMessage';
 
-import './toast-message.less';
+import styles from 'tmw-main/components/ToastMessage/ToastMessage.module.scss';
 
 const TOAST_MESSAGE_DURATION = 3000;
 

@@ -4,29 +4,29 @@ import * as React from 'react';
 import { DocumentHead } from 'tmw-main/components/DocumentHead';
 import { TagsSelector } from 'tmw-main/components/TagsSelector';
 
-import './search-page.less';
+import styles from './SearchPage.module.scss';
 
 export const SearchPage: React.FunctionComponent = () => {
     return (
-        <div className="search-page">
+        <div className={styles.searchPage}>
             <DocumentHead title="Home" />
-            <div className="search-page__top-spacing" />
-            <p className="search-page__title">
-                Let&apos;s find the most <span className="search-page__title--bold">useful</span>{' '}
-                websites for your <span className="search-page__title--bold">workflow</span>
+            <div className={styles.topSpacing} />
+            <p className={styles.title}>
+                Let&apos;s find the most <span className={styles.titleBold}>useful</span> websites
+                for your <span className={styles.titleBold}>workflow</span>
             </p>
             <TagsSelector />
-            <div className="search-page__help-container">
-                <div className="search-page__help-content">
-                    <span className="search-page__help-content-text">
+            <div className={styles.helpContainer}>
+                <div className={styles.helpContent}>
+                    <span className={styles.helpContentText}>
                         TipsMyWeb makes you discover new web resources to help with your day to day
                         workflow.
                         <br />
-                        <span className="search-page__help--small">
+                        <span className={styles.helpSmall}>
                             Start by selecting tags corresponding to your subject of interest.
                         </span>
                     </span>
-                    <FontAwesomeIcon className="search-page__help-content-icon" icon={faQuestion} />
+                    <FontAwesomeIcon className={styles.helpContentIcon} icon={faQuestion} />
                 </div>
             </div>
         </div>

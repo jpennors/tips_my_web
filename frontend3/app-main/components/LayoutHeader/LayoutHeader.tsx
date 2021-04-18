@@ -7,7 +7,7 @@ import { MAIN_APP_ROUTES, VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-co
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { MagnifyingGlassIcon } from 'tmw-main/icons/MagnifyingGlassIcon';
 
-import './layout-header.less';
+import styles from './LayoutHeader.module.scss';
 
 export const LayoutHeader: React.FunctionComponent = () => {
     const { width } = useViewport();
@@ -35,31 +35,27 @@ export const LayoutHeader: React.FunctionComponent = () => {
     ];
 
     return (
-        <div className="layout-header">
+        <div className={styles.layoutHeader}>
             {!isMobileViewport ? (
                 <Link href={MAIN_APP_ROUTES.HOME}>
-                    <img src="/images/logo.svg" alt="logo" className="layout-header__logo" />
+                    <img src="/images/logo.svg" alt="logo" className={styles.logo} />
                 </Link>
             ) : (
-                <p className="layout-header__logo-name">
+                <p className={styles.logoName}>
                     <Link href={MAIN_APP_ROUTES.HOME}>
                         <a>
-                            <img
-                                src="/images/logo.svg"
-                                alt="logo"
-                                className="layout-header__logo"
-                            />
+                            <img src="/images/logo.svg" alt="logo" className={styles.logo} />
                             TipsMyWeb
                         </a>
                     </Link>
                 </p>
             )}
-            <div className="layout-header__links">
+            <div className={styles.links}>
                 {links.map(({ title, modalContent: ModalContent, link, id, icon }) => {
                     const linkItem = (
                         <>
-                            {icon ? <span className="layout-header__link-icon">{icon}</span> : null}
-                            <span className="layout-header__link--underline-effect">{title}</span>
+                            {icon ? <span className={styles.linkIcon}>{icon}</span> : null}
+                            <span className={styles.underlineEffect}>{title}</span>
                         </>
                     );
 
@@ -67,7 +63,7 @@ export const LayoutHeader: React.FunctionComponent = () => {
                         return (
                             <HeaderModal
                                 key={id}
-                                target={<a className="layout-header__link">{linkItem}</a>}
+                                target={<a className={styles.link}>{linkItem}</a>}
                             >
                                 {(closeModalAction): React.ReactNode => (
                                     <ModalContent
@@ -80,7 +76,7 @@ export const LayoutHeader: React.FunctionComponent = () => {
                     } else if (link) {
                         return (
                             <Link key={id} href={link}>
-                                <a className="layout-header__link">{linkItem}</a>
+                                <a className={styles.link}>{linkItem}</a>
                             </Link>
                         );
                     }

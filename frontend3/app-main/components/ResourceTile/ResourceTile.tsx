@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { ResourcePricingPill } from 'tmw-main/components/ResourcePricingPill';
@@ -11,7 +12,7 @@ import { ArrowRightIcon } from 'tmw-main/icons/ArrowRightIcon';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 
-import './resource-tile.less';
+import styles from './ResourceTile.module.scss';
 
 interface ResourceTileProps {
     resource: Resource;
@@ -52,25 +53,25 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
     };
 
     return (
-        <div className="resource-tile">
-            <div className="resource-tile__container">
+        <div className={styles.resourceTile}>
+            <div className={styles.container}>
                 {!isMobileViewport ? (
-                    <div className="resource-tile__header">
-                        <span className="resource-tile__header-dot resource-tile__header-dot--red" />
-                        <span className="resource-tile__header-dot resource-tile__header-dot--yellow" />
-                        <span className="resource-tile__header-dot resource-tile__header-dot--green" />
+                    <div className={styles.header}>
+                        <span className={classNames(styles.headerDot, styles.headerDotRed)} />
+                        <span className={classNames(styles.headerDot, styles.headerDotYellow)} />
+                        <span className={classNames(styles.headerDot, styles.headerDotGreen)} />
                     </div>
                 ) : null}
                 <img
                     src={iconUrl}
                     alt={resource.name}
-                    className="resource-tile__icon"
+                    className={styles.icon}
                     onError={onImageLoadingFailed}
                 />
-                <div className="resource-tile__content">
-                    <div className="resource-tile__title-float-right">
+                <div className={styles.content}>
+                    <div className={styles.titleFloatRight}>
                         <ResourcePricingPill pricing={resource.pricing} />
-                        <span className="resource-tile__like-resource-button">
+                        <span className={styles.likeResourceButton}>
                             <img
                                 src={isLiked ? '/images/heart-full.svg' : '/images/heart.svg'}
                                 alt={isLiked ? 'Unlike' : 'Like'}
@@ -79,8 +80,8 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                             />
                         </span>
                     </div>
-                    <p className="resource-tile__title">{resource.name}</p>
-                    <p className="resource-tile__description">{resource.description}</p>
+                    <p className={styles.title}>{resource.name}</p>
+                    <p className={styles.description}>{resource.description}</p>
                 </div>
             </div>
             <a
@@ -88,10 +89,10 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
                 onClick={(): Promise<void> => visitWebsite(resource.id)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="resource-tile__visit-resource-button"
+                className={styles.visitResourceButton}
             >
                 Open website
-                <span className="resource-tile__visit-resource-button-icon">
+                <span className={styles.visitResourceButtonIcon}>
                     <ArrowRightIcon fill="#434343" />
                 </span>
             </a>

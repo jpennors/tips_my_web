@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 
-import './toast-message.less';
+import styles from './ToastMessage.module.scss';
 
 interface ToastMessageProps {
     message: string;
@@ -10,8 +10,6 @@ interface ToastMessageProps {
 
 export const ToastMessage: React.FunctionComponent<ToastMessageProps> = ({ message, isOpen }) => {
     return (
-        <div className={classNames('toast-message', { ['toast-message--open']: isOpen })}>
-            {message}
-        </div>
+        <div className={classNames(styles.toastMessage, { [styles.open]: isOpen })}>{message}</div>
     );
 };

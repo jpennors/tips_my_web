@@ -10,7 +10,7 @@ import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Tag } from 'tmw-main/components/Tag';
 import { encodeSearchTags } from 'tmw-main/utils/tags-search-url';
 
-import './tags-selector.less';
+import styles from './TagsSelector.module.scss';
 
 export const TagsSelector: React.FunctionComponent = () => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -94,24 +94,24 @@ export const TagsSelector: React.FunctionComponent = () => {
         : 0;
 
     return (
-        <div className="tags-selector">
+        <div>
             <TagsLaunchBar
                 onClickCallback={launchSearch}
                 completionPercentage={barPercentage}
                 totalResources={totalResources}
             />
             {isLoading ? (
-                <div className="tags-selector__loading-spinner">
+                <div className={styles.loadingSpinner}>
                     <LoadingSpinner />
                     <br />
                     Loading Tags
                 </div>
             ) : (
-                <div className="tags-selector__container">
+                <div className={styles.container}>
                     {selectedMainTag && (
-                        <div className="tags-selector__selected-primary-tag">
+                        <div className={styles.selectedPrimaryTag}>
                             <span
-                                className="tags-selector__selected-primary-tag-arrow"
+                                className={styles.selectedPrimaryTagArrow}
                                 onClick={(): void => onMainTagClick(selectedMainTag)}
                             >
                                 <ArrowLeftIcon width={20} />
@@ -124,7 +124,7 @@ export const TagsSelector: React.FunctionComponent = () => {
                             />
                         </div>
                     )}
-                    <div className="tags-selector__tag-options">
+                    <div className={styles.tagOptions}>
                         {selectedMainTag
                             ? selectedMainTag.relatedTags.map((tag: RelatedTag) => (
                                   <Tag

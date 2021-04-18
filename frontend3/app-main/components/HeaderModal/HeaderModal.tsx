@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Manager, Reference, Popper } from 'react-popper';
 
-import './header-modal.less';
+import styles from './HeaderModal.module.scss';
 
 interface HeaderModalProps {
     children: (closeModalAction: () => void) => React.ReactNode;
@@ -46,15 +46,15 @@ export const HeaderModal: React.FunctionComponent<HeaderModalProps> = ({ childre
                             ref={ref}
                             style={style}
                             data-placement={placement}
-                            className="header-modal"
+                            className={styles.headerModal}
                         >
-                            <div ref={modalRef} className="header-modal__container">
+                            <div ref={modalRef} className={styles.container}>
                                 {children((): void => setIsOpen(false))}
                             </div>
                             <div
                                 ref={arrowProps.ref}
                                 style={arrowProps.style}
-                                className="header-modal__arrow"
+                                className={styles.arrow}
                             />
                         </div>
                     )}

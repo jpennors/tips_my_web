@@ -13,7 +13,7 @@ import { BasicTag, Resource } from 'tmw-main/constants/app-types';
 import { serializeBasicTagsFromAPI, serializeResourcesFromAPI } from 'tmw-main/utils/api-serialize';
 import { parseSearchTags } from 'tmw-main/utils/tags-search-url';
 
-import './search-results-page.less';
+import styles from './SearchResultsPage.module.scss';
 
 export const SearchResultsPage: React.FunctionComponent = () => {
     const { width } = useViewport();
@@ -55,10 +55,10 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     const hasResults = resultResources.length > 0;
 
     return (
-        <div className="search-results-page">
+        <div className={styles.searchResultsPage}>
             <DocumentHead title={mainSearchTag?.name || 'Search'} />
-            {!isMobileViewport ? <div className="search-results-page__top-spacing" /> : null}
-            <div className="search-results-page__header">
+            {!isMobileViewport ? <div className={styles.topSpacing} /> : null}
+            <div className={styles.header}>
                 <SearchResultsPageTitle
                     hasResults={hasResults}
                     isLoading={isLoading}
@@ -67,17 +67,17 @@ export const SearchResultsPage: React.FunctionComponent = () => {
                 />
                 <ShareButton
                     size={isMobileViewport ? SIZES.SMALL : SIZES.MEDIUM}
-                    className="search-results-page__button"
+                    className={styles.button}
                 />
             </div>
             {isLoading || hasResults ? (
                 <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
             ) : (
-                <div className="search-results-page__no-results">
+                <div className={styles.noResults}>
                     <img
                         src="/images/no-results-error.svg"
                         alt="Not Found"
-                        className="search-results-page__no-results-image"
+                        className={styles.noResultsImage}
                     />
                 </div>
             )}

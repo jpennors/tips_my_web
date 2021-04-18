@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 
-import './input-field.less';
+import styles from './InputField.module.scss';
 
 interface InputFieldProps {
     type: 'text' | 'number' | 'email' | 'textarea';
@@ -33,16 +33,16 @@ export const InputField: React.FunctionComponent<InputFieldProps> = ({
     charactersCounter,
 }) => {
     const isTextarea = type === 'textarea';
-    const finalClassName = classNames('input-field', className, {
-        'input-field__textarea': isTextarea,
-        'input-field__input': !isTextarea,
-        'input-field--full-width': isFullWidth,
-        'input-field--invalid': isInvalid,
-        'input-field--disabled': isDisabled,
+    const finalClassName = classNames(styles.inputField, className, {
+        [styles.textarea]: isTextarea,
+        [styles.input]: !isTextarea,
+        [styles.fullWidth]: isFullWidth,
+        [styles.invalid]: isInvalid,
+        [styles.disabled]: isDisabled,
     });
 
     return (
-        <div className="input-field">
+        <div className={styles.inputField}>
             {isTextarea ? (
                 <textarea
                     className={finalClassName}
@@ -66,15 +66,14 @@ export const InputField: React.FunctionComponent<InputFieldProps> = ({
                 />
             )}
             {validationMessage || charactersCounter ? (
-                <div className="input-field__validation">
+                <div className={styles.validation}>
                     {validationMessage ? (
-                        <div className="input-field__validation-message">{validationMessage}</div>
+                        <div className={styles.validationMessage}>{validationMessage}</div>
                     ) : null}
                     {charactersCounter !== undefined && value.length > 0 ? (
                         <div
-                            className={classNames('input-field__characters-counter', {
-                                ['input-field__characters-counter--error']:
-                                    value.length > charactersCounter,
+                            className={classNames(styles.charactersCounter, {
+                                [styles.charactersCounterError]: value.length > charactersCounter,
                             })}
                         >
                             {value.length}/{charactersCounter}

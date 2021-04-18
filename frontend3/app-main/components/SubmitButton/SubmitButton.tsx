@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import './submit-button.less';
+import styles from './SubmitButton.module.scss';
 import { TickIcon } from 'tmw-main/icons/TickIcon';
 
 interface SubmitButtonProps {
@@ -33,15 +33,15 @@ export const SubmitButton: React.FunctionComponent<SubmitButtonProps> = ({
 
     return (
         <div
-            className={classNames('submit-button', {
-                'submit-button--waiting': !isPending && !isValid,
-                'submit-button--pending': isPending,
-                'submit-button--valid': !isPending && isValid,
-                'submit-button--finished': isFinished,
+            className={classNames(styles.submitButton, {
+                [styles.waiting]: !isPending && !isValid,
+                [styles.pending]: isPending,
+                [styles.valid]: !isPending && isValid,
+                [styles.finished]: isFinished,
             })}
             onClick={isValid || isPending ? undefined : onClick}
         >
-            <span className="submit-button__text" onClick={isFinished ? finishedAction : undefined}>
+            <span className={styles.text} onClick={isFinished ? finishedAction : undefined}>
                 {buttonLabel}
             </span>
         </div>

@@ -5,7 +5,7 @@ import { addHttpPrefix, isValidUrl } from 'tmw-main/utils/form-validation';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { InputField } from 'tmw-main/components/InputField';
 
-import './suggestion-form.less';
+import styles from './SuggestionForm.module.scss';
 
 const getSuggestionValidationMessages = (
     address: string,
@@ -104,17 +104,17 @@ export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps
     };
 
     return (
-        <div className="suggestion-form">
-            <div className="suggestion-form__title">Share a website</div>
-            <div className="suggestion-form__subtitle">
+        <div className={styles.suggestionForm}>
+            <div className={styles.title}>Share a website</div>
+            <div className={styles.subtitle}>
                 {!hasSubmitSuccess
                     ? 'Share your favorite resources with the community'
                     : 'Your suggestion was successfully submitted'}
             </div>
-            <div className="suggestion-form__body">
-                <form className="suggestion-form__form" autoComplete="off">
+            <div className={styles.body}>
+                <form autoComplete="off">
                     <InputField
-                        className="suggestion-form__address-input"
+                        className={styles.addressInput}
                         type="text"
                         placeholder="The website's address"
                         name="address-input"
@@ -127,7 +127,7 @@ export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps
                     />
                     <InputField
                         type="textarea"
-                        className="suggestion-form__description-input"
+                        className={styles.descriptionInput}
                         placeholder="A short description"
                         name="description-input"
                         value={descriptionInputValue}
@@ -140,7 +140,7 @@ export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps
                     />
                 </form>
             </div>
-            <div className="suggestion-form__buttons">
+            <div className={styles.buttons}>
                 <SubmitButton
                     onClick={submitSuggestionForm}
                     isValid={hasSubmitSuccess}
@@ -150,7 +150,7 @@ export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps
                 />
             </div>
             {hasSubmitError ? (
-                <div className="contact-modal-content__submit-error">
+                <div className={styles.submitError}>
                     We&apos;re having trouble submitting your suggestion, please try again!
                 </div>
             ) : null}

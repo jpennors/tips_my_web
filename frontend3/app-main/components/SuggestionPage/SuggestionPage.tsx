@@ -4,14 +4,14 @@ import { DocumentHead } from 'tmw-main/components/DocumentHead';
 import { SuggestionForm } from 'tmw-main/components/SuggestionForm';
 import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 
-import './suggestion-page.less';
+import styles from './SuggestionPage.module.scss';
 
 export const SuggestionPage: React.FunctionComponent = () => {
     const router = useRouter();
     return (
-        <div className="suggestion-page">
+        <div>
             <DocumentHead title="Share a website" />
-            <div className="suggestion-page__container">
+            <div className={styles.container}>
                 <SuggestionForm
                     finishedLabel="BACK HOME"
                     finishedAction={() => router.push(MAIN_APP_ROUTES.HOME)}
