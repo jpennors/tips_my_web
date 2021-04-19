@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useParams } from 'react-router';
+import { useRouter } from 'next/router';
 import { APIBasicTag } from 'tmw-admin/constants/api-types';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { ajaxPost } from 'tmw-common/utils/ajax';
@@ -25,7 +25,8 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     const [mainSearchTag, setMainSearchTag] = React.useState<BasicTag>();
     const [relatedSearchTags, setRelatedSearchTags] = React.useState<BasicTag[]>([]);
 
-    const { searchTags } = useParams();
+    const router = useRouter();
+    const { searchTags } = router.query;
 
     const fetchSearchResults = (selectedTags: string[]): Promise<void> => {
         setIsLoading(true);
@@ -47,7 +48,8 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        const parsedSearchTags = searchTags ? parseSearchTags(searchTags) : [];
+        const parsedSearchTags =
+            searchTags && typeof searchTags === 'string' ? parseSearchTags(searchTags) : [];
         fetchSearchResults(parsedSearchTags).finally(() => {
             setIsLoading(false);
         });
