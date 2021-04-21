@@ -21,7 +21,6 @@
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "classnames": "^2.2.6",
-    "copy-text-to-clipboard": "^3.0.1",
     "dotenv": "^8.2.0",
     "less": "^2.7.3",
     "next": "10.0.5",
