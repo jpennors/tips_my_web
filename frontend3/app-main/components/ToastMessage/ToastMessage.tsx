@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
+import { createPortal } from 'react-dom';
 
 import styles from './ToastMessage.module.scss';
 
@@ -12,4 +13,11 @@ export const ToastMessage: React.FunctionComponent<ToastMessageProps> = ({ messa
     return (
         <div className={classNames(styles.toastMessage, { [styles.open]: isOpen })}>{message}</div>
     );
+};
+
+export const ToastMessageWithPortal: React.FunctionComponent<ToastMessageProps> = ({
+    message,
+    isOpen,
+}) => {
+    return createPortal(<ToastMessage message={message} isOpen={isOpen} />, document?.body);
 };

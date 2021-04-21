@@ -1,8 +1,5 @@
+import dynamic from 'next/dynamic';
 import * as React from 'react';
-import { createPortal } from 'react-dom';
-import { ToastMessage } from './ToastMessage';
-
-import styles from 'tmw-main/components/ToastMessage/ToastMessage.module.scss';
 
 const TOAST_MESSAGE_DURATION = 3000;
 
@@ -48,6 +45,13 @@ interface ToastContext {
 
 const ToastMessageContext = React.createContext<ToastContext | null>(null);
 
+export const DynamicToastMessageWithPortal = dynamic(
+    () => import('./ToastMessage').then(mod => mod.ToastMessageWithPortal),
+    {
+        ssr: false,
+    },
+);
+
 export const ToastMessageProvider: React.FunctionComponent = ({ children }) => {
     const [state, dispatch] = React.useReducer(toastMessageReducer, toastMessageInitialState);
 
@@ -64,10 +68,7 @@ export const ToastMessageProvider: React.FunctionComponent = ({ children }) => {
     return (
         <ToastMessageContext.Provider value={toastContextValue}>
             {children}
-            {/*{createPortal(*/}
-            {/*    <ToastMessage message={state.message} isOpen={state.isOpen} />,*/}
-            {/*    document.body,*/}
-            {/*)}*/}
+            <DynamicToastMessageWithPortal message={state.message} isOpen={state.isOpen} />
         </ToastMessageContext.Provider>
     );
 };
