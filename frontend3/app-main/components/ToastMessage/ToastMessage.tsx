@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import { createPortal } from 'react-dom';
 
 import styles from './ToastMessage.module.scss';
