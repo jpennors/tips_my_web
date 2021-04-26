@@ -2,9 +2,6 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { APIAuthenticationErrors } from 'tmw-admin/constants/api-types';
 import { getLocalToken, logout } from 'tmw-admin/utils/auth-module';
 
-
-const API_SERVER_URL = process.env.API_SERVER_URL;
-
 interface RequestConfigOptions {
     contentType?: string | null;
     contentLength?: string | null;
@@ -45,27 +42,27 @@ axios.interceptors.response.use(response => response, catchAuthError);
 
 export const ajaxGet = (path: string): Promise<any> => {
     const config = buildRequestConfig({});
-    return axios.get(`${API_SERVER_URL}/api/${path}`, config);
+    return axios.get(`/api/${path}`, config);
 };
 
 export const ajaxPost = (path: string, data: object): Promise<any> => {
     const config = buildRequestConfig({});
-    return axios.post(`${API_SERVER_URL}/api/${path}`, data, config);
+    return axios.post(`/api/${path}`, data, config);
 };
 
 export const ajaxPut = (path: string, data: object): Promise<any> => {
     const config = buildRequestConfig({});
-    return axios.put(`${API_SERVER_URL}/api/${path}`, data, config);
+    return axios.put(`/api/${path}`, data, config);
 };
 
 export const ajaxDelete = (path: string): Promise<any> => {
     const config = buildRequestConfig({});
-    return axios.delete(`${API_SERVER_URL}/api/${path}`, config);
+    return axios.delete(`/api/${path}`, config);
 };
 
 export const ajaxPostImage = (path: string, data: object): Promise<any> => {
     const config = buildRequestConfig({ contentType: null });
-    return axios.post(`${API_SERVER_URL}/api/${path}`, data, config);
+    return axios.post(`/api/${path}`, data, config);
 };
 
 /*
