@@ -4,6 +4,7 @@ import { APIBasicTag } from 'tmw-admin/constants/api-types';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { DocumentHead } from 'tmw-main/components/DocumentHead';
+import { PageLayout } from 'tmw-main/components/PageLayout';
 import { SearchResultsList } from 'tmw-main/components/SearchResultsList';
 import { SearchResultsPageTitle } from 'tmw-main/components/SearchResultsPageTitle';
 import { ShareButton } from 'tmw-main/components/ShareButton';
@@ -58,28 +59,34 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     const hasResults = resultResources.length > 0;
 
     return (
-        <div className={styles.searchResultsPage}>
-            <DocumentHead title={mainSearchTag?.name || 'Search'} />
-            {!isMobileViewport ? <div className={styles.topSpacing} /> : null}
-            <div className={styles.header}>
-                <SearchResultsPageTitle
-                    hasResults={hasResults}
-                    isLoading={isLoading}
-                    mainSearchTag={mainSearchTag}
-                    relatedSearchTags={relatedSearchTags}
-                />
-                <ShareButton
-                    size={isMobileViewport ? SIZES.SMALL : SIZES.MEDIUM}
-                    className={styles.button}
-                />
-            </div>
-            {isLoading || hasResults ? (
-                <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
-            ) : (
-                <div className={styles.noResults}>
-                    <img src={noResultsImage} alt="Not Found" className={styles.noResultsImage} />
+        <PageLayout>
+            <div className={styles.searchResultsPage}>
+                <DocumentHead title={mainSearchTag?.name || 'Search'} />
+                {!isMobileViewport ? <div className={styles.topSpacing} /> : null}
+                <div className={styles.header}>
+                    <SearchResultsPageTitle
+                        hasResults={hasResults}
+                        isLoading={isLoading}
+                        mainSearchTag={mainSearchTag}
+                        relatedSearchTags={relatedSearchTags}
+                    />
+                    <ShareButton
+                        size={isMobileViewport ? SIZES.SMALL : SIZES.MEDIUM}
+                        className={styles.button}
+                    />
                 </div>
-            )}
-        </div>
+                {isLoading || hasResults ? (
+                    <SearchResultsList resultsList={resultResources} isLoading={isLoading} />
+                ) : (
+                    <div className={styles.noResults}>
+                        <img
+                            src={noResultsImage}
+                            alt="Not Found"
+                            className={styles.noResultsImage}
+                        />
+                    </div>
+                )}
+            </div>
+        </PageLayout>
     );
 };
