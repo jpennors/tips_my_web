@@ -1,1 +1,0 @@
-export { TagsSelector } from './TagsSelector';

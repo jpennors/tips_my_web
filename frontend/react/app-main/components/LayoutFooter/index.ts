@@ -1,1 +1,0 @@
-export { LayoutFooter } from './LayoutFooter';

@@ -1,1 +1,0 @@
-export { ResourceTile } from './ResourceTile';

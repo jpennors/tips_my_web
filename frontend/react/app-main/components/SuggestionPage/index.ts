@@ -1,1 +1,0 @@
-export { SuggestionPage } from './SuggestionPage';

@@ -1,1 +1,0 @@
-export { TickIcon } from './TickIcon';

@@ -1,1 +1,0 @@
-export { TagsLaunchBar } from './TagsLaunchBar';

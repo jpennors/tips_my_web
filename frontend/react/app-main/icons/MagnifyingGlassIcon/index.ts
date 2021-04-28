@@ -1,1 +1,0 @@
-export { MagnifyingGlassIcon } from './MagnifyingGlassIcon';

@@ -1,1 +1,0 @@
-export { SideNavMenu } from './SideNavMenu';

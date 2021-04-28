@@ -1,1 +1,0 @@
-export { ResourcePricingPill } from './ResourcePricingPill';
