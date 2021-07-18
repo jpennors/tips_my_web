@@ -87,7 +87,6 @@ class StatTag extends Model
      */
     public static function getStatsTags($start_date, $end_date)
     {
-        StatTag::all();
         $raw_stats_tags = StatTag::with('tag')
             ->where([
                 ['created_date', '>=', $start_date],
