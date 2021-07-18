@@ -20,20 +20,6 @@
         "ecmaVersion": 2020,
         "sourceType": "module"
     },
-    "settings": {
-        "import/resolver":{
-            "alias": {
-                "map": [
-                    ["tmw-main", "./app-main"],
-                    ["tmw-admin", "./app-admin"],
-                    ["tmw-common", "./common"]
-                ],
-                "extensions": [
-                    ".ts", ".js", ".jsx", ".tsx", ".css", ".less"
-                ]
-            }
-        }
-    },
     "plugins": ["react"],
     "rules": {
         // Custom Rules

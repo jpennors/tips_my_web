@@ -1,6 +1,16 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { APIAuthenticationErrors } from 'tmw-admin/constants/api-types';
-import { getLocalToken, logout } from 'tmw-admin/utils/auth-module';
+
+// WARNING This is duplicated in tmw-admin
+enum APIAuthenticationErrors {
+    EXPIRED_TOKEN = 'expired_token',
+    UNKNOWN_TOKEN = 'unknown_token',
+    UNDEFINED_TOKEN = 'undefined_token',
+}
+
+// TODO This is a temporary hack to replace these two functions that are
+// in tmw-admin/utils/auth-module and shouldn't be imported here!
+const getLocalToken = () => '';
+const logout = () => null;
 
 interface RequestConfigOptions {
     contentType?: string | null;

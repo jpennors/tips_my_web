@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { AppProps } from 'next/app';
-import '../global-styles-main.scss';
+import 'tmw-main/styles/global-styles.scss';
 require('tmw-common/config/config');
 
 function MyApp({ Component, pageProps }: AppProps) {

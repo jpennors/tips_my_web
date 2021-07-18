@@ -1,4 +1,4 @@
-@use 'app-main/constants/ui-constants' as ui;
+@use 'constants/ui-constants' as ui;
 
 .page-layout {
     background-image: linear-gradient(-240deg, ui.$app-color-background-red, ui.$app-color-background-orange);
