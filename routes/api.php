@@ -85,9 +85,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('logs', 'LogController@getLogs');
 
     # Stat Controller
-    Route::get('stats/current/visitors', 'StatsController@getCurrentDayVisitor');
-    Route::post('stats/period/visitors', 'StatsController@getVisitorNumberByDay');
-    Route::post('stats/tags/search', 'StatsController@statsTags');
+    Route::post('stats/tags/search', 'StatsController@getStatsTags');
+    Route::post('stats/visitors/search', 'StatsController@getStatsVisitors');
+    Route::post('stats/visitors/current', 'StatsController@getStatsVisitorsCurrentDay');
     Route::post('stats/resources/trend', 'StatsController@getTopTrendyResources');
     Route::get('stats/resources/alltime', 'StatsController@getTopAllTimeResources');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
 use Illuminate\Http\Request;
 use App\Resource;
 use App\Services\DateUtils;
@@ -13,7 +14,7 @@ class StatsController extends Controller
 {
  
     #region Tags
-    public function statsTags(Request $request)
+    public function getStatsTags(Request $request)
     {
         // Date formate Y-m-d
         $start_date = $request->start_date;
@@ -23,8 +24,8 @@ class StatsController extends Controller
 
         return response()->json($search_tag_count, 200);
     }
-    #endregion
 
+    #endregion
 
     #region Resources
     public function getTopTrendyResources(Request $request)
@@ -68,41 +69,26 @@ class StatsController extends Controller
 
 
     #region Visitors
-    public function getCurrentDayVisitor()
-    {
-        $visitors = DB::table('logs')
-            ->where('created_date', DateUtils::getCurrentDate())
-            ->distinct()
-            ->count('hashed_ip');
 
-        return response()->json(['visitors' => $visitors], 200);
-    }
-
-    public function getVisitorNumberByDay(Request $request)
+    public function getStatsVisitors(Request $request)
     {
         // Date formate Y-m-d
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-        $visits_date_range = DateUtils::getCustomDataRange($start_date, $end_date, array(
-            "visitors" => 0
-        ));
 
-        $visitors_stat = DB::table('logs')
-            ->select('created_date', DB::raw('COUNT(DISTINCT(hashed_ip)) as visitors'))
-            ->where([
-                ['created_date', '>=', $start_date],
-                ['created_date', '<=', $end_date]
-            ])
-            ->groupBy('created_date')
-            ->get();
+        $stats_visitors = Log::getStatsVisitors($start_date, $end_date);
 
-        foreach ($visitors_stat as $stat) {
-            if (array_key_exists($stat->created_date, $visits_date_range)) {
-                $visits_date_range[$stat->created_date]["visitors"] = $stat->visitors;
-            }
-        }
+        return response()->json($stats_visitors, 200);
+    }
 
-        return response()->json(array_values($visits_date_range), 200);
+    public function getStatsVisitorsCurrentDay()
+    {
+        $start_date = DateUtils::getCurrentDate();
+        $end_date = DateUtils::getCurrentDate();
+
+        $stats_visitors = Log::getStatsVisitors($start_date, $end_date);
+
+        return response()->json($stats_visitors, 200);
     }
     #endregion
 }
