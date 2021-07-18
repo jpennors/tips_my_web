@@ -2,8 +2,6 @@
 
 namespace App\Services\Stats;
 
-use App\StatTag;
-use App\Tag;
 use Illuminate\Database\Eloquent\Collection;
 
 class StatsTagsService
