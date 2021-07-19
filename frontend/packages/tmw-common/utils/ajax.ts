@@ -1,16 +1,36 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
-// WARNING This is duplicated in tmw-admin
-enum APIAuthenticationErrors {
-    EXPIRED_TOKEN = 'expired_token',
-    UNKNOWN_TOKEN = 'unknown_token',
-    UNDEFINED_TOKEN = 'undefined_token',
+// WARNING: The equivalent constant in the backend should be the same value !
+export const TOKEN_VALIDITY_TIME = 2 * 3600 * 1000;
+
+export interface AuthToken {
+    token: string;
+    expiration: number;
 }
 
-// TODO This is a temporary hack to replace these two functions that are
-// in tmw-admin/utils/auth-module and shouldn't be imported here!
-const getLocalToken = () => '';
-const logout = () => null;
+export const emptyLocalStorage = (): void => localStorage.clear();
+
+export const removeLocalToken = (): void => localStorage.removeItem('token');
+
+export const getLocalToken = (): string | null => {
+    const rawAuthToken = localStorage.getItem('token');
+    if (rawAuthToken) {
+        try {
+            const authToken: AuthToken = JSON.parse(rawAuthToken);
+            if (
+                authToken.expiration > Date.now() &&
+                authToken.expiration <= Date.now() + TOKEN_VALIDITY_TIME
+            ) {
+                return authToken.token;
+            }
+        } catch {
+            removeLocalToken();
+        }
+    }
+    // Remove token if it's not valid anymore or if parsing failed
+    removeLocalToken();
+    return null;
+};
 
 interface RequestConfigOptions {
     contentType?: string | null;
@@ -31,24 +51,6 @@ const buildRequestConfig = ({
         Authorization: getLocalToken() || '',
     },
 });
-
-/*
- * Intercept all axios error and redirect users to the login page
- * if they try to access an api that requires to be logged in.
- */
-const catchAuthError = (error: AxiosError): Promise<AxiosError> => {
-    if (error.response) {
-        const response = error.response;
-        if (response.status == 403 || response.status == 401) {
-            if (Object.values(APIAuthenticationErrors).includes(response.data.message)) {
-                logout();
-            }
-        }
-    }
-    return Promise.reject(error);
-};
-
-axios.interceptors.response.use(response => response, catchAuthError);
 
 export const ajaxGet = (path: string): Promise<any> => {
     const config = buildRequestConfig({});

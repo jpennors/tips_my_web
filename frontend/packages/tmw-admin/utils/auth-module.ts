@@ -1,31 +1,14 @@
-import { LoginAPIResponse } from 'tmw-admin/constants/api-types';
-import { ADMIN_APP_ROUTES, TOKEN_VALIDITY_TIME } from 'tmw-admin/constants/app-constants';
-import { AuthToken } from 'tmw-admin/constants/app-types';
-import { ajaxPost } from 'tmw-common/utils/ajax';
-
-export const emptyLocalStorage = (): void => localStorage.clear();
-
-export const removeLocalToken = (): void => localStorage.removeItem('token');
-
-export const getLocalToken = (): string | null => {
-    const rawAuthToken = localStorage.getItem('token');
-    if (rawAuthToken) {
-        try {
-            const authToken: AuthToken = JSON.parse(rawAuthToken);
-            if (
-                authToken.expiration > Date.now() &&
-                authToken.expiration <= Date.now() + TOKEN_VALIDITY_TIME
-            ) {
-                return authToken.token;
-            }
-        } catch {
-            removeLocalToken();
-        }
-    }
-    // Remove token if it's not valid anymore or if parsing failed
-    removeLocalToken();
-    return null;
-};
+import { APIAuthenticationErrors, LoginAPIResponse } from 'tmw-admin/constants/api-types';
+import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
+import {
+    ajaxPost,
+    AuthToken,
+    emptyLocalStorage,
+    getLocalToken,
+    removeLocalToken,
+    TOKEN_VALIDITY_TIME,
+} from 'tmw-common/utils/ajax';
+import axios, { AxiosError } from 'axios';
 
 export const setLocalToken = (token: string): void => {
     const authToken: AuthToken = {
@@ -57,3 +40,21 @@ export const logout = (): void => {
     removeLocalToken();
     redirectUser();
 };
+
+/*
+ * Intercept all axios error and redirect users to the login page
+ * if they try to access an api that requires to be logged in.
+ */
+const catchAuthError = (error: AxiosError): Promise<AxiosError> => {
+    if (error.response) {
+        const response = error.response;
+        if (response.status == 403 || response.status == 401) {
+            if (Object.values(APIAuthenticationErrors).includes(response.data.message)) {
+                logout();
+            }
+        }
+    }
+    return Promise.reject(error);
+};
+
+axios.interceptors.response.use(response => response, catchAuthError);
