@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TagsEditPage } from 'tmw-admin/components/TagsEditPage';
+import { ResourcesEditPage } from 'tmw-admin/components/ResourcesEditPage';
 import { ProtectedPage } from 'tmw-admin/components/ProtectedPage';
-const Page: React.FunctionComponent = () => <ProtectedPage component={TagsEditPage} />;
+const Page: React.FunctionComponent = () => <ProtectedPage component={ResourcesEditPage} />;
 export default Page;
