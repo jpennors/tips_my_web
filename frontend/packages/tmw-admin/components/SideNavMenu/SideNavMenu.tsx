@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
 import * as React from 'react';
+import { useRouter } from 'next/router';
 import { Icon, Menu, MenuProps } from 'semantic-ui-react';
 import { SemanticWIDTHS } from 'semantic-ui-react/dist/commonjs/generic';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
@@ -11,7 +11,6 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
     horizontalDisplay = false,
 }) => {
     const router = useRouter();
-    const activePath = window.location.pathname;
 
     const navItems = [
         {
@@ -126,7 +125,7 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
                     <Menu.Item
                         name={item.name}
                         key={item.path}
-                        active={allPaths.includes(activePath)}
+                        active={allPaths.includes(router.pathname)}
                         onClick={onClick}
                     >
                         <Icon className={item.iconName} />
@@ -137,7 +136,7 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
                                     <Menu.Item
                                         name={subItem.name}
                                         key={subItem.path}
-                                        active={activePath === subItem.path}
+                                        active={router.pathname === subItem.path}
                                         onClick={() => router.push(subItem.path)}
                                     >
                                         {subItem.name}

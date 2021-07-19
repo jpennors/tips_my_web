@@ -1,4 +1,4 @@
-.page-layout__content-container {
+.content-container {
     width: 100%;
 
     display: flex;
@@ -9,7 +9,7 @@
     align-items: flex-start;
 }
 
-.page-layout__main-content {
+.main-content {
     flex-grow: 1;
     width: 100%;
     min-width: 1px;

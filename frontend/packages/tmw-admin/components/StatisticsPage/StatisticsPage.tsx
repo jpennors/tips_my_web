@@ -3,11 +3,7 @@ import { Message } from 'semantic-ui-react';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { SearchTagsChart } from './SearchTagsChart';
 
-
-export const Statistics: React.FunctionComponent = () => {
-
-    React.useEffect(() => {}, []);
-
+export const StatisticsPage: React.FunctionComponent = () => {
     return (
         <div>
             <PageHeader
@@ -18,9 +14,8 @@ export const Statistics: React.FunctionComponent = () => {
 
             <Message info>
                 <Message.Header>Search tags</Message.Header>
-                <SearchTagsChart/>
+                <SearchTagsChart />
             </Message>
-            
         </div>
     );
 };

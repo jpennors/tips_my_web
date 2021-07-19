@@ -1,12 +1,15 @@
+import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useParams } from 'react-router';
 import { Form, Message } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { ResourceType } from 'tmw-admin/constants/app-types';
-import { serializeResourceTypesFromAPI, serializeResourceTypeToAPI } from 'tmw-admin/utils/api-serialize';
+import {
+    serializeResourceTypesFromAPI,
+    serializeResourceTypeToAPI,
+} from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/ajax';
 
 export const ResourceTypesEditPage: React.FunctionComponent = () => {
@@ -18,7 +21,8 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
-    const { id: editedTypeId } = useParams();
+    const router = useRouter();
+    const { id: editedTypeId } = router.query;
 
     const fetchResourceType = async (): Promise<void> => {
         return ajaxGet('types')
@@ -59,7 +63,9 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
         if (editedTypeId) {
             ajaxPut(`types/${editedTypeId}`, newType)
                 .then(() => {
-                    setSuccessMessage('Your resource type "' + type.name + '" was successfully edited.');
+                    setSuccessMessage(
+                        'Your resource type "' + type.name + '" was successfully edited.',
+                    );
                 })
                 .catch(() => {
                     setErrorMessage(
@@ -72,7 +78,9 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
         } else {
             ajaxPost('types', newType)
                 .then(() => {
-                    setSuccessMessage('Your new resource type "' + type.name + '" was successfully saved.');
+                    setSuccessMessage(
+                        'Your new resource type "' + type.name + '" was successfully saved.',
+                    );
                     resetForm();
                 })
                 .catch(() => {
@@ -110,7 +118,9 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
                     <Message
                         attached
                         header={
-                            editedTypeId ? 'Edit an existing resource type' : 'Add a type to be used for resources'
+                            editedTypeId
+                                ? 'Edit an existing resource type'
+                                : 'Add a type to be used for resources'
                         }
                     />
                     <Form className="attached fluid segment" loading={isLoading}>
