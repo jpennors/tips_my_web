@@ -24,18 +24,18 @@ class ResourceTagController extends Controller
         $search_tags_slugs = $request->tags;
 
         if (sizeof($search_tags_slugs) == 0) {
-            return response()->json(array("error" => "There is no search tag."), 409); 
+            return response()->json(array("error" => "There is no search tag."), 409);
         }
 
         // Get associated & ordered tags objects
-        $slugs_ordered = implode(',', 
+        $slugs_ordered = implode(',',
             array_map(function($slug){return '"'.$slug.'"';}, $search_tags_slugs)
         );
 
-        $cached_research_id = implode(',', 
+        $cached_research_id = implode(',',
             array_map(function($slug){return $slug;}, $search_tags_slugs)
         );
-     
+
         // Cache Search Values
         $data = Cache::remember(
             CacheManager::getCachedObjectName('public_resources_research', $cached_research_id),
@@ -43,15 +43,15 @@ class ResourceTagController extends Controller
             function () use ($search_tags_slugs, $slugs_ordered) {
                 return $this->getSearchResults($search_tags_slugs, $slugs_ordered);
         });
-     
+
         // Return ordered recommendation
         return response()->json($data, 200);
     }
 
-    
+
     /**
      * Get Search Results
-     * 
+     *
      */
     protected function getSearchResults($search_tags_slugs, $slugs_ordered)
     {
@@ -68,12 +68,13 @@ class ResourceTagController extends Controller
         $tag_ids = array_map(function($t){return $t['id'];}, $search_tags);
 
         if (sizeof($tag_ids) == 0) {
-            return response()->json(array("error" => "There is no valid search tag."), 409); 
+            return response()->json(array("error" => "There is no valid search tag."), 409);
         }
 
         // Stats, search tags
         foreach ($tag_ids as $tag_id) {
-            StatTag::launchStatTagJob($tag_id, 'search');
+            // TODO This line was making the app crash. This should be fixed
+            // StatTag::launchStatTagJob($tag_id, 'search');
         }
 
         // Split tags into main and related ones

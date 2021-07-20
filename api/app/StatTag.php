@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Services\DateUtils;
 use App\Tag;
 use App\Jobs\StatTagJob;
-use DB; 
+use DB;
 
 class StatTag extends Model
 {
-    
+
     /**
      * The table associated with the model.
      *
@@ -41,11 +41,11 @@ class StatTag extends Model
     {
         return $this->belongsTo('App\Tag');
     }
-    
+
 
     /**
      * Action possibilities
-     * 
+     *
      */
     protected static $actions = [
         'search',
@@ -54,7 +54,7 @@ class StatTag extends Model
 
     /**
      * Launch Stat Resource Job
-     * 
+     *
      */
     public static function launchStatTagJob($tag_id, $action)
     {
@@ -64,7 +64,7 @@ class StatTag extends Model
 
     /**
      * Method to save specific action on Resource
-     * 
+     *
      */
     public static function saveAction($tag_id, $action)
     {
@@ -82,7 +82,7 @@ class StatTag extends Model
 
     /**
      * Get most recurrent tags based on specific action
-     * 
+     *
      */
     public static function getMostRecurrentTagsByAction($start_date, $end_date, $action)
     {
