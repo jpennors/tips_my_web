@@ -18,12 +18,12 @@ export enum MAX_CONTENT_LENGTH {
 
 export const RESOURCES_IMAGE_BASE_URL =
     process.env.NEXT_PUBLIC_API_HOST_URL + '/api/resources/image/';
+export const MAIN_APP_URL = process.env.NEXT_PUBLIC_MAIN_APP_URL;
 
 /*
  * Admin app routes
  */
 export enum ADMIN_APP_ROUTES {
-    PUBLIC_APP = '/',
     MAIN = '/',
     LOGIN = '/login',
     RESOURCES = '/resources',
