@@ -16,7 +16,8 @@ export enum MAX_CONTENT_LENGTH {
     RESOURCES_INDEX_PAGES_TAGS = 2,
 }
 
-export const RESOURCES_IMAGE_BASE_URL = '/api/resources/image/';
+export const RESOURCES_IMAGE_BASE_URL =
+    process.env.NEXT_PUBLIC_API_HOST_URL + '/api/resources/image/';
 
 /*
  * Admin app routes

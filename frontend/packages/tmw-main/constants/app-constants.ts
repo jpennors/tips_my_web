@@ -18,8 +18,7 @@ export enum LOCALES {
     FRENCH = 'fr',
 }
 
-export const RESOURCES_BASE_URL = '/api/resources/image/';
-export const DEFAULT_RESOURCE_URL = '/images/default-resource-img.svg';
+export const RESOURCES_BASE_URL = process.env.NEXT_PUBLIC_API_HOST_URL + '/api/resources/image/';
 
 export enum MAIN_APP_ROUTES {
     HOME = '/',

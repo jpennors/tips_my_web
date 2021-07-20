@@ -2,17 +2,14 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { ResourcePricingPill } from 'tmw-main/components/ResourcePricingPill';
-import {
-    DEFAULT_RESOURCE_URL,
-    RESOURCES_BASE_URL,
-    VIEWPORT_BREAKPOINTS,
-} from 'tmw-main/constants/app-constants';
+import { RESOURCES_BASE_URL, VIEWPORT_BREAKPOINTS } from 'tmw-main/constants/app-constants';
 import { useViewport } from 'tmw-common/components/ViewportProvider';
 import { ArrowRightIcon } from 'tmw-main/icons/ArrowRightIcon';
 import { ajaxGet } from 'tmw-common/utils/ajax';
 import { Resource } from 'tmw-main/constants/app-types';
 import heartIcon from 'tmw-main/assets/images/heart.svg';
 import heartFullIcon from 'tmw-main/assets/images/heart-full.svg';
+import defaultResourceImage from 'tmw-main/assets/images/default-resource-img.svg';
 
 import styles from './ResourceTile.module.scss';
 
@@ -46,7 +43,7 @@ export const ResourceTile: React.FunctionComponent<ResourceTileProps> = ({ resou
     const iconUrl =
         resource.iconFilename && !isImageLinkBroken
             ? RESOURCES_BASE_URL + resource.id
-            : DEFAULT_RESOURCE_URL;
+            : defaultResourceImage;
 
     const onImageLoadingFailed = (): void => {
         if (!isImageLinkBroken) {
