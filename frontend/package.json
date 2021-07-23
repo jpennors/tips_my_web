@@ -5,6 +5,10 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "main-dev": "yarn workspace tmw-main dev",
+    "admin-dev": "yarn workspace tmw-admin dev"
+  },
   "license": "MIT",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.3",
@@ -20,6 +24,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "typescript": "4.3.5"
   }
 }
