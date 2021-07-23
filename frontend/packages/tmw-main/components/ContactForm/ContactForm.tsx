@@ -112,7 +112,7 @@ export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
                         name="email-input"
                         value={emailInputValue}
                         isRequired
-                        onChange={handleEmailInputChange}
+                        onChange={handleEmailInputChange as (event: React.ChangeEvent) => void}
                         validationMessage={emailValidationMessage}
                         isInvalid={emailValidationMessage.length > 0}
                         isDisabled={isSubmitPending || hasSubmitSuccess}
@@ -124,7 +124,7 @@ export const ContactForm: React.FunctionComponent<ContactFormProps> = ({
                         name="messageInput"
                         value={messageInputValue}
                         isRequired
-                        onChange={handleMessageInputChange}
+                        onChange={handleMessageInputChange as (event: React.ChangeEvent) => void}
                         validationMessage={messageValidationMessage}
                         isInvalid={messageValidationMessage.length > 0}
                         isDisabled={isSubmitPending || hasSubmitSuccess}

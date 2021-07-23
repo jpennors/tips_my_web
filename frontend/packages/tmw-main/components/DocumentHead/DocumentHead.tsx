@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { Helmet } from 'react-helmet';
+import Head from 'next/head';
 
 interface TagProps {
-    title?: string;
+    title: string;
     description?: string;
 }
 
 export const DocumentHead: React.FunctionComponent<TagProps> = ({ title, description }) => (
-    <Helmet>
-        {title && <title>{`TipsMyWeb | ${title}`}</title>}
+    <Head>
+        <title>{`TipsMyWeb | ${title}`}</title>
         {description && <meta name="description" content={description} />}
-    </Helmet>
+    </Head>
 );

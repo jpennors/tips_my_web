@@ -11,12 +11,14 @@ export enum ButtonVariant {
     WHITE_TEXT_BLACK = 'white-text-black',
 }
 
-const BUTTON_SIZES_STYLES: Record<ButtonProps['size'], string> = {
+type ButtonSize = SIZES.SMALL | SIZES.MEDIUM;
+
+const BUTTON_SIZES_STYLES: Record<ButtonSize, string> = {
     [SIZES.SMALL]: styles.sizeSmall,
     [SIZES.MEDIUM]: styles.sizeMedium,
 };
 
-const BUTTON_VARIANTS_STYLES: Record<ButtonProps['variant'], string> = {
+const BUTTON_VARIANTS_STYLES: Record<ButtonVariant, string> = {
     [ButtonVariant.COLORED]: styles.variantColored,
     [ButtonVariant.WHITE_TEXT_BLACK]: styles.variantWhiteTextBlack,
     [ButtonVariant.WHITE_TEXT_COLORED]: styles.variantWhiteTextColored,
@@ -28,7 +30,7 @@ export interface ButtonProps {
     icon?: Icon;
     variant?: ButtonVariant;
     className?: string;
-    size?: SIZES.SMALL | SIZES.MEDIUM;
+    size?: ButtonSize;
 }
 
 export const Button: React.FunctionComponent<ButtonProps> = ({

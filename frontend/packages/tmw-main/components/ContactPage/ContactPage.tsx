@@ -16,7 +16,7 @@ export const ContactPage: React.FunctionComponent = () => {
                 <div className={styles.container}>
                     <ContactForm
                         finishedLabel="BACK HOME"
-                        finishedAction={(): void => router.push(MAIN_APP_ROUTES.HOME)}
+                        finishedAction={() => router.push(MAIN_APP_ROUTES.HOME)}
                     />
                 </div>
             </div>
