@@ -24,10 +24,10 @@ class Tag extends Model
 
 
     /**
-    * The attributes that are mass assignable.
-    *
-    * @var array
-    */
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['name', 'primary'];
 
 
@@ -41,7 +41,7 @@ class Tag extends Model
 
     /**
      * Define hidden attributes
-     * 
+     *
      * @var array
      */
     protected $hidden = ['resource_tags_count'];
@@ -50,11 +50,11 @@ class Tag extends Model
     /**
      * Define threshold tags
      * need to appear in ResourceTag
-     * 
+     *
      * @var int
      */
-    protected $threshold_resource_tags_count = 5;
-    
+    protected static $threshold_resource_tags_count = 3;
+
 
 
     /**
@@ -75,7 +75,7 @@ class Tag extends Model
      * Function to check if tag may be in main app
      * Tag may be disabled
      * Tag may have too few linked Resources
-     * 
+     *
      */
     public function isMainTagPublic()
     {
@@ -87,10 +87,10 @@ class Tag extends Model
             return true;
         }
 
-        if ($this->resource_tags_count && $this->resource_tags_count > $this->threshold_resource_tags_count) {
+        if ($this->resource_tags_count && $this->resource_tags_count > Tag::$threshold_resource_tags_count) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -98,7 +98,7 @@ class Tag extends Model
     /**
      * Function that check if related tag may
      * be in main app
-     * 
+     *
      */
     public static function isRelatedTagPublic($related_tag_weight)
     {
@@ -106,7 +106,7 @@ class Tag extends Model
             return true;
         }
 
-        if ($related_tag_weight > 2) {
+        if ($related_tag_weight >= Tag::$threshold_resource_tags_count) {
             return true;
         }
 
@@ -174,7 +174,10 @@ class Tag extends Model
     {
 
         $main_tags = array();
-        $tags = Tag::with('resource_tags')->withCount('resource_tags')->get();
+        $tags = Tag::with('resource_tags')
+            ->withCount('resource_tags')
+            ->get();
+
         $reconstructed_resources = array();
 
         foreach ($tags as $tag) {
@@ -190,6 +193,7 @@ class Tag extends Model
                     'name'      =>  $tag->name,
                     'slug'      =>  $tag->slug,
                     'primary'   =>  $tag->primary,
+                    'weight'    =>  $tag->resource_tags_count,
                     'related_tags'   =>  array(),
                 );
             }
@@ -208,10 +212,10 @@ class Tag extends Model
         foreach (array_keys($reconstructed_resources) as $resource_id){
             foreach($reconstructed_resources[$resource_id] as $tag_id_key){
                 foreach($reconstructed_resources[$resource_id] as $tag_id_related){
-                    if ($tag_id_key !== $tag_id_related 
-                        && array_key_exists($tag_id_related, $main_tags) 
+                    if ($tag_id_key !== $tag_id_related
+                        && array_key_exists($tag_id_related, $main_tags)
                         && array_key_exists($tag_id_key, $main_tags)) {
-                        
+
                         if (array_key_exists($tag_id_related, $main_tags[$tag_id_key]['related_tags'])) {
                             $main_tags[$tag_id_key]['related_tags'][$tag_id_related]['weight'] += 1;
                         } else {
@@ -236,7 +240,7 @@ class Tag extends Model
             }
             $tag['related_tags'] = array_values($tag['related_tags']);
         }
-        
+
         return array_values($main_tags);
     }
 }

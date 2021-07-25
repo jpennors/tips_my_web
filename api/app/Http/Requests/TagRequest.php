@@ -27,8 +27,26 @@ class TagRequest extends FormRequest
             'name'  =>  [
                 'required',
                 'string',
-                'between:3,40',
+                'between:2,40',
                 'unique:tags,name,'.\Request::instance()->id.',id',
+            ],
+            'primary' => [
+                'boolean'
+            ]
+        ];
+    }
+
+    /**
+     * Get rules of Tag for import
+     * @return array
+     */
+    public static function importRules()
+    {
+        return [
+            'name'  =>  [
+                'required',
+                'string',
+                'between:2,40',
             ],
             'primary' => [
                 'boolean'

@@ -19,7 +19,9 @@ class TypeTableSeeder extends Seeder
             'Application',
             'Account',
             'Video',
-            'Company'
+            'Company',
+            'Extension',
+            'Library'
         ];
 
         foreach($types as $type_name)
@@ -27,7 +29,7 @@ class TypeTableSeeder extends Seeder
             $t = new Type();
             $t->name = $type_name;
             $t->save();
-        }        
+        }
 
     }
 }

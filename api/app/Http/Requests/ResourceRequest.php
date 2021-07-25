@@ -13,6 +13,7 @@ class ResourceRequest extends FormRequest
      */
     public function authorize()
     {
+        array_merge([], ResourceRequest::baseRules());
         return true;
     }
 
@@ -23,11 +24,11 @@ class ResourceRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return array_merge([
             'name' =>  [
-                'required', 
-                'unique:resources,name,'.\Request::instance()->id.',id', 
-                'string', 
+                'required',
+                'unique:resources,name,'.\Request::instance()->id.',id',
+                'string',
                 'between:3,40',
             ],
             'url'  =>   [
@@ -37,32 +38,9 @@ class ResourceRequest extends FormRequest
                 'string',
                 'between:2,150',
             ],
-            'description'   =>  [
-                'nullable',
-                'string',
-                'between:0,250',
-            ],
             'image'  =>  [
                 'nullable',
                 'image',
-            ],
-            'language'  => [
-                'required',
-                'string',
-                'in:fr,en,"en,fr"',
-                'between:0,5',
-            ],
-            'score'   =>  [
-                'required',
-                'integer',
-                'min:1',
-                'max:10',
-            ],
-            'interface'  => [
-                'required',
-                'integer',
-                'min:1',
-                'max:3',
             ],
             'type_id'  => [
                 'required',
@@ -71,6 +49,36 @@ class ResourceRequest extends FormRequest
             'price_id'  =>  [
                 'required',
                 'exists:prices,id',
+            ]],
+            $this->baseRules());
+    }
+
+    /**
+     * Get base rules of Resource
+     * @return array
+     */
+    public static function baseRules()
+    {
+        return [
+            'description'   =>  [
+                'nullable',
+                'string',
+                'between:0,250',
+            ],
+            'language'  => [
+                'required',
+                'string',
+                'in:fr,en,"en,fr",es,"en,es","fr,es","en,fr,es"'
+            ],
+            'score'   =>  [
+                'integer',
+                'min:1',
+                'max:10',
+            ],
+            'interface'  => [
+                'integer',
+                'min:1',
+                'max:3',
             ],
             'like'   =>  [
                 'nullable',
@@ -78,5 +86,34 @@ class ResourceRequest extends FormRequest
                 'min:0',
             ],
         ];
+    }
+
+    /**
+     * Get rules of Resource for import
+     * @return array
+     */
+    public static function importRules()
+    {
+        return array_merge([
+            'name' =>  [
+                'required',
+                'string',
+                'between:3,40',
+            ],
+            'url'  =>   [
+                'required',
+                'url',
+                'string',
+                'between:2,150',
+            ],
+            'type'  => [
+                'required',
+                'exists:types,name',
+            ],
+            'price'  =>  [
+                'required',
+                'exists:prices,name',
+            ]],
+            ResourceRequest::baseRules());
     }
 }
