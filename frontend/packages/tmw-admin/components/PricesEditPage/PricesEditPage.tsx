@@ -19,7 +19,7 @@ export const PricesEditPage: React.FunctionComponent = () => {
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
     const router = useRouter();
-    const { id: editedPriceId } = router.query;
+    const editedPriceId = router.query?.toString();
 
     const fetchPrice = async (): Promise<void> => {
         return ajaxGet('prices')

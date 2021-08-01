@@ -5,7 +5,7 @@ import { APIBasicTag, APIResource, APITag } from 'tmw-admin/constants/api-types'
 import { InputSelectOption } from 'tmw-admin/utils/select-options';
 import * as XLSX from 'xlsx';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { Form, Message } from 'semantic-ui-react';
+import { DropdownProps, Form, Message } from 'semantic-ui-react';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 
 const importTypeOptions: InputSelectOption[] = [
@@ -23,8 +23,11 @@ export const BatchImportPage: React.FunctionComponent = () => {
 
     const isReadyToSubmit = importedFile !== undefined && importType.length > 0;
 
-    const onImportTypeInputChange = (_: any, { value }: { value: string }): void => {
-        setImportType(value);
+    const onImportTypeInputChange = (
+        _: React.SyntheticEvent<HTMLElement>,
+        data: DropdownProps,
+    ): void => {
+        setImportType(data.searchQuery ?? '');
     };
 
     const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {

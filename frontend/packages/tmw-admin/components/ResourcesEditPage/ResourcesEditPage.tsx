@@ -10,6 +10,8 @@ import {
     Grid,
     Image,
     Label,
+    TextAreaProps,
+    DropdownProps,
 } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
@@ -64,7 +66,7 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
     const router = useRouter();
-    const { id: editedResourceId } = router.query;
+    const editedResourceId = router.query?.toString();
 
     const fetchResource = async (): Promise<void> => {
         return ajaxGet('resources')
@@ -159,20 +161,32 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
         }
     };
 
-    const onResourceTypeIdInputChange = (_: any, { value }: { value: string }): void => {
-        setResource({ ...resource, typeId: value });
+    const onResourceTypeIdInputChange = (
+        _: React.SyntheticEvent<HTMLElement>,
+        data: DropdownProps,
+    ): void => {
+        setResource({ ...resource, typeId: data.searchQuery });
     };
 
-    const onResourceLanguageInputChange = (_: any, { value }: { value: string }): void => {
-        setResource({ ...resource, locale: value });
+    const onResourceLanguageInputChange = (
+        _: React.SyntheticEvent<HTMLElement>,
+        data: DropdownProps,
+    ): void => {
+        setResource({ ...resource, locale: data.searchQuery });
     };
 
-    const onResourcePriceIdInputChange = (_: any, { value }: { value: string }): void => {
-        setResource({ ...resource, priceId: value });
+    const onResourcePriceIdInputChange = (
+        _: React.SyntheticEvent<HTMLElement>,
+        data: DropdownProps,
+    ): void => {
+        setResource({ ...resource, priceId: data.searchQuery });
     };
 
-    const onResourceDescriptionInputChange = (_: any, { value }: { value: string }): void => {
-        setResource({ ...resource, description: value });
+    const onResourceDescriptionInputChange = (
+        _: React.ChangeEvent<HTMLTextAreaElement>,
+        data: TextAreaProps,
+    ): void => {
+        setResource({ ...resource, description: data.value?.toString() });
     };
 
     const onResourceScoreInputChange = (_: any, { value }: { value: string }): void => {

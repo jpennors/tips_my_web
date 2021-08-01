@@ -22,7 +22,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
     const router = useRouter();
-    const { id: editedTagId } = router.query;
+    const editedTagId = router.query.toString();
 
     const fetchTagOptions = async (): Promise<void> => {
         return ajaxGet('tags')

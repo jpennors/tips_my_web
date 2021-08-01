@@ -46,7 +46,7 @@ export const OverviewPage: React.FunctionComponent = () => {
         fetchLogs();
     }, []);
 
-    const getLabelColor = function(logLevel: string) {
+    const getLabelColor = function (logLevel: string) {
         if (logLevel == 'warning') {
             return 'yellow';
         } else if (logLevel == 'error') {

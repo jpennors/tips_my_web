@@ -5,7 +5,6 @@ import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { WebsiteSuggestion } from 'tmw-admin/constants/app-types';
 import { serializeSuggestionsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxDelete } from 'tmw-common/utils/ajax';
-import { PageLayout } from 'tmw-main/components/PageLayout';
 
 export const SuggestionsPage: React.FunctionComponent = () => {
     const [suggestions, setSuggestions] = React.useState<WebsiteSuggestion[]>([]);
@@ -55,57 +54,55 @@ export const SuggestionsPage: React.FunctionComponent = () => {
     }, []);
 
     return (
-        <PageLayout>
-            <div>
-                <PageHeader
-                    iconName="lightbulb"
-                    headerContent="Resources Suggestions"
-                    subHeaderContent='Websites suggestions sent through the "Share a website" form'
+        <div>
+            <PageHeader
+                iconName="lightbulb"
+                headerContent="Resources Suggestions"
+                subHeaderContent='Websites suggestions sent through the "Share a website" form'
+            />
+            <ActionMessage type="success" message={successMessage} />
+            <ActionMessage type="error" message={errorMessage} />
+            {isLoading ? (
+                <Loader active inline="centered" />
+            ) : hasError ? null : isEmpty ? (
+                <ActionMessage
+                    type="warning"
+                    message="Be patient!"
+                    messageHeader="No suggestions for now..."
                 />
-                <ActionMessage type="success" message={successMessage} />
-                <ActionMessage type="error" message={errorMessage} />
-                {isLoading ? (
-                    <Loader active inline="centered" />
-                ) : hasError ? null : isEmpty ? (
-                    <ActionMessage
-                        type="warning"
-                        message="Be patient!"
-                        messageHeader="No suggestions for now..."
-                    />
-                ) : (
-                    <Table celled striped selectable unstackable>
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell>Date</Table.HeaderCell>
-                                <Table.HeaderCell>URL</Table.HeaderCell>
-                                <Table.HeaderCell>Description</Table.HeaderCell>
-                                <Table.HeaderCell collapsing textAlign="center">
-                                    Delete
-                                </Table.HeaderCell>
+            ) : (
+                <Table celled striped selectable unstackable>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Date</Table.HeaderCell>
+                            <Table.HeaderCell>URL</Table.HeaderCell>
+                            <Table.HeaderCell>Description</Table.HeaderCell>
+                            <Table.HeaderCell collapsing textAlign="center">
+                                Delete
+                            </Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {suggestions.map(suggestion => (
+                            <Table.Row key={suggestion.id}>
+                                <Table.Cell>{suggestion.createdAt}</Table.Cell>
+                                <Table.Cell>{suggestion.url}</Table.Cell>
+                                <Table.Cell>{suggestion.description}</Table.Cell>
+                                <Table.Cell textAlign="center">
+                                    <Icon
+                                        name="trash alternate"
+                                        color="red"
+                                        link
+                                        onClick={(): void => {
+                                            deleteSuggestion(suggestion.id, suggestion.url);
+                                        }}
+                                    />
+                                </Table.Cell>
                             </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                            {suggestions.map(suggestion => (
-                                <Table.Row key={suggestion.id}>
-                                    <Table.Cell>{suggestion.createdAt}</Table.Cell>
-                                    <Table.Cell>{suggestion.url}</Table.Cell>
-                                    <Table.Cell>{suggestion.description}</Table.Cell>
-                                    <Table.Cell textAlign="center">
-                                        <Icon
-                                            name="trash alternate"
-                                            color="red"
-                                            link
-                                            onClick={(): void => {
-                                                deleteSuggestion(suggestion.id, suggestion.url);
-                                            }}
-                                        />
-                                    </Table.Cell>
-                                </Table.Row>
-                            ))}
-                        </Table.Body>
-                    </Table>
-                )}
-            </div>
-        </PageLayout>
+                        ))}
+                    </Table.Body>
+                </Table>
+            )}
+        </div>
     );
 };

@@ -22,7 +22,7 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
     const router = useRouter();
-    const { id: editedTypeId } = router.query;
+    const editedTypeId = router.query?.toString();
 
     const fetchResourceType = async (): Promise<void> => {
         return ajaxGet('types')

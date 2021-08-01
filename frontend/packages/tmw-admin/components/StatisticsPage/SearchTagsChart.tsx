@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Select } from 'semantic-ui-react';
+import { DropdownProps, Form, Select } from 'semantic-ui-react';
 import { serializeSearchTagsStatsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { getApiDateFormat } from 'tmw-common/utils/date';
@@ -34,9 +34,9 @@ export const SearchTagsChart: React.FunctionComponent = () => {
         return options;
     };
 
-    const onTagOptionInputChange = (_: any, { value }: { value: string }): void => {
-        setselectedTagOption(value);
-        updateChartData(value);
+    const onTagOptionInputChange = (_: React.SyntheticEvent, data: DropdownProps): void => {
+        setselectedTagOption(data.searchQuery ?? '');
+        updateChartData(data.searchQuery ?? '');
     };
 
     const updateChartData = (selectedTagOption: string): void => {
@@ -102,35 +102,35 @@ export const SearchTagsChart: React.FunctionComponent = () => {
                                 {
                                     data: data,
                                     label: 'Visitors',
-                                    fill: false,
-                                    lineTension: 0.1,
+                                    //fill: false,
+                                    //lineTension: 0.1,
                                     backgroundColor: 'rgba(153, 102, 255, 0.4)',
                                     borderColor: 'rgba(153, 102, 255, 1)',
-                                    borderCapStyle: 'butt',
-                                    borderDash: [],
-                                    borderDashOffset: 0.0,
-                                    borderJoinStyle: 'miter',
-                                    pointBorderColor: 'rgba(75,192,192,1)',
-                                    pointBackgroundColor: '#fff',
-                                    pointBorderWidth: 1,
-                                    pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                                    pointHoverBorderWidth: 2,
-                                    pointRadius: 1,
-                                    pointHitRadius: 10,
+                                    //borderCapStyle: 'butt',
+                                    //borderDash: [],
+                                    //borderDashOffset: 0.0,
+                                    //borderJoinStyle: 'miter',
+                                    //pointBorderColor: 'rgba(75,192,192,1)',
+                                    //pointBackgroundColor: '#fff',
+                                    //pointBorderWidth: 1,
+                                    //pointHoverRadius: 5,
+                                    //pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                                    //pointHoverBorderColor: 'rgba(220,220,220,1)',
+                                    //pointHoverBorderWidth: 2,
+                                    //pointRadius: 1,
+                                    //pointHitRadius: 10,
                                 },
                             ],
                         },
                         options: {
                             scales: {
-                                yAxes: [
+                                /*yAxes: [
                                     {
                                         ticks: {
                                             beginAtZero: true,
                                         },
                                     },
-                                ],
+                                ],*/
                             },
                         },
                     }),
