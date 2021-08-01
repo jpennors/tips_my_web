@@ -48,9 +48,8 @@ export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps
     const [addressInputValue, setAddressInputValue] = React.useState<string>('');
     const [descriptionInputValue, setDescriptionInputValue] = React.useState<string>('');
     const [addressValidationMessage, setAddressValidationMessage] = React.useState<string>('');
-    const [descriptionValidationMessage, setDescriptionValidationMessage] = React.useState<string>(
-        '',
-    );
+    const [descriptionValidationMessage, setDescriptionValidationMessage] =
+        React.useState<string>('');
 
     const [hasSubmitError, setHasSubmitError] = React.useState<boolean>(false);
     const [hasSubmitSuccess, setHasSubmitSuccess] = React.useState<boolean>(false);
@@ -120,7 +119,7 @@ export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps
                         name="address-input"
                         value={addressInputValue}
                         isRequired
-                        onChange={handleAddressInputChange}
+                        onChange={handleAddressInputChange as (event: React.ChangeEvent) => void}
                         validationMessage={addressValidationMessage}
                         isInvalid={addressValidationMessage.length > 0}
                         isDisabled={isSubmitPending || hasSubmitSuccess}
@@ -132,7 +131,9 @@ export const SuggestionForm: React.FunctionComponent<SuggestionModalContentProps
                         name="description-input"
                         value={descriptionInputValue}
                         isRequired
-                        onChange={handleDescriptionInputChange}
+                        onChange={
+                            handleDescriptionInputChange as (event: React.ChangeEvent) => void
+                        }
                         validationMessage={descriptionValidationMessage}
                         isInvalid={descriptionValidationMessage.length > 0}
                         isDisabled={isSubmitPending || hasSubmitSuccess}

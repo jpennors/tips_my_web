@@ -1,5 +1,7 @@
 import dynamic from 'next/dynamic';
 import * as React from 'react';
+import { ToastMessage } from './ToastMessage';
+type ToastMessageType = typeof ToastMessage;
 
 const TOAST_MESSAGE_DURATION = 3000;
 
@@ -46,7 +48,10 @@ interface ToastContext {
 const ToastMessageContext = React.createContext<ToastContext | null>(null);
 
 export const DynamicToastMessageWithPortal = dynamic(
-    () => import('./ToastMessage').then(mod => mod.ToastMessageWithPortal),
+    () =>
+        import('./ToastMessage').then(
+            mod => mod.ToastMessageWithPortal,
+        ) as Promise<ToastMessageType>,
     {
         ssr: false,
     },
