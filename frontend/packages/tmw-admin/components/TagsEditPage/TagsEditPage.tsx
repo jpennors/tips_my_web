@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
 import * as React from 'react';
+import { useParams } from 'react-router';
 import { Form, Message, StrictDropdownItemProps } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
@@ -21,8 +21,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
-    const router = useRouter();
-    const { id: editedTagId } = router.query;
+    const { id: editedTagId } = useParams();
 
     const fetchTagOptions = async (): Promise<void> => {
         return ajaxGet('tags')

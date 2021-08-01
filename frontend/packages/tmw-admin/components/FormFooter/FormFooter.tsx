@@ -1,17 +1,20 @@
 import * as React from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react';
 
 interface FormFooterProps {
     backButtonURL?: string;
     isSubmitDisabled: boolean;
     onSubmitClick: () => void;
+    buttonValue?: string;
 }
 
 export const FormFooter: React.FunctionComponent<FormFooterProps> = ({
     backButtonURL,
     isSubmitDisabled,
     onSubmitClick,
+    buttonValue= "Submit"
+
 }) => (
     <div style={backButtonURL ? undefined : { textAlign: 'right' }}>
         {/*
@@ -20,7 +23,7 @@ export const FormFooter: React.FunctionComponent<FormFooterProps> = ({
          * in the div).
          */}
         {backButtonURL ? (
-            <Link href={backButtonURL}>
+            <Link to={backButtonURL}>
                 <Button icon labelPosition="left">
                     <Icon name="arrow left" />
                     Back
@@ -35,7 +38,7 @@ export const FormFooter: React.FunctionComponent<FormFooterProps> = ({
             disabled={isSubmitDisabled}
             floated={backButtonURL ? 'right' : undefined}
         >
-            Submit
+            {buttonValue}
             <Icon name="upload" />
         </Button>
     </div>

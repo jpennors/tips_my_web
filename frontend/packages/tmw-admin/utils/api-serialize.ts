@@ -40,6 +40,7 @@ export const serializeContactsFromAPI = (contactsFromAPI: APIContact[]): Contact
         id: contact.id,
         email: contact.email,
         message: contact.message,
+        read: contact.read,
         createdAt: contact.created_at,
     }));
 };
@@ -51,6 +52,7 @@ export const serializeSuggestionsFromAPI = (
         id: suggestion.id,
         url: suggestion.url,
         description: suggestion.description,
+        read: suggestion.read,
         createdAt: suggestion.created_at,
     }));
 };

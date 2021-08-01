@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
 import * as React from 'react';
+import { useParams } from 'react-router';
 import { Form, Message } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
@@ -18,8 +18,7 @@ export const PricesEditPage: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
-    const router = useRouter();
-    const { id: editedPriceId } = router.query;
+    const { id: editedPriceId } = useParams();
 
     const fetchPrice = async (): Promise<void> => {
         return ajaxGet('prices')
@@ -73,9 +72,7 @@ export const PricesEditPage: React.FunctionComponent = () => {
         } else {
             ajaxPost('prices', newPrice)
                 .then(() => {
-                    setSuccessMessage(
-                        'Your new price "' + price.name + '" was successfully saved.',
-                    );
+                    setSuccessMessage('Your new price "' + price.name + '" was successfully saved.');
                     resetForm();
                 })
                 .catch(() => {

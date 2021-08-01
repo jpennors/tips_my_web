@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRouter } from 'next/router';
+import { useHistory } from 'react-router-dom';
 import { Icon, Menu, MenuProps } from 'semantic-ui-react';
 import { SemanticWIDTHS } from 'semantic-ui-react/dist/commonjs/generic';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
@@ -10,7 +10,8 @@ interface SideNavMenuProps {
 export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
     horizontalDisplay = false,
 }) => {
-    const router = useRouter();
+    const history = useHistory();
+    const activePath = window.location.pathname;
 
     const navItems = [
         {
@@ -96,8 +97,8 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
         {
             name: 'Statistics',
             path: ADMIN_APP_ROUTES.STATISTICS,
-            iconName: 'chart bar',
-        },
+            iconName: 'chart bar'
+        }
     ];
 
     const horizontalDisplayProps: MenuProps = {
@@ -116,7 +117,9 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
         <Menu {...(horizontalDisplay ? horizontalDisplayProps : verticalDisplayProps)}>
             {navItems.map(item => {
                 const onClick =
-                    !item.subMenu || horizontalDisplay ? () => router.push(item.path) : undefined;
+                    !item.subMenu || horizontalDisplay
+                        ? (): void => history.push(item.path)
+                        : undefined;
                 const allPaths: string[] = !item.subMenu
                     ? [item.path]
                     : item.subMenu.map(subItem => subItem.path);
@@ -125,7 +128,7 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
                     <Menu.Item
                         name={item.name}
                         key={item.path}
-                        active={allPaths.includes(router.pathname)}
+                        active={allPaths.includes(activePath)}
                         onClick={onClick}
                     >
                         <Icon className={item.iconName} />
@@ -136,8 +139,8 @@ export const SideNavMenu: React.FunctionComponent<SideNavMenuProps> = ({
                                     <Menu.Item
                                         name={subItem.name}
                                         key={subItem.path}
-                                        active={router.pathname === subItem.path}
-                                        onClick={() => router.push(subItem.path)}
+                                        active={activePath === subItem.path}
+                                        onClick={(): void => history.push(subItem.path)}
                                     >
                                         {subItem.name}
                                     </Menu.Item>

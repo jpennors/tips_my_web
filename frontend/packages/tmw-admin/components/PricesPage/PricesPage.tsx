@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { Button, Icon, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
@@ -57,7 +57,7 @@ export const PricesPage: React.FunctionComponent = () => {
                 headerContent="Prices"
                 subHeaderContent="Prices be used for resources"
             />
-            <Link href={ADMIN_APP_ROUTES.PRICES_ADD}>
+            <Link to={ADMIN_APP_ROUTES.PRICES_ADD}>
                 <Button fluid icon>
                     Add Price
                 </Button>
@@ -90,9 +90,7 @@ export const PricesPage: React.FunctionComponent = () => {
                             <Table.Row key={price.id}>
                                 <Table.Cell>{price.name}</Table.Cell>
                                 <Table.Cell textAlign="center">
-                                    <Link
-                                        href={ADMIN_APP_ROUTES.PRICES_EDIT.replace(':id', price.id)}
-                                    >
+                                    <Link to={ADMIN_APP_ROUTES.PRICES_EDIT.replace(':id', price.id)}>
                                         <Icon name="edit" color="blue" link />
                                     </Link>
                                 </Table.Cell>

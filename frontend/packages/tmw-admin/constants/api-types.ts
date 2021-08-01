@@ -4,7 +4,6 @@ export interface LoginAPIResponse {
     token: string;
 }
 
-// WARNING This is duplicated in tmw-common
 export enum APIAuthenticationErrors {
     EXPIRED_TOKEN = 'expired_token',
     UNKNOWN_TOKEN = 'unknown_token',
@@ -19,6 +18,7 @@ export interface APIContact {
     id: string;
     email: string;
     message: string;
+    read: boolean;
     created_at: Date;
     updated_at: Date;
 }
@@ -27,6 +27,7 @@ export interface APIWebsiteSuggestion {
     id: string;
     url: string;
     description: string;
+    read: boolean;
     created_at: Date;
     updated_at: Date;
 }

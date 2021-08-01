@@ -12,3 +12,4 @@ composer.phar
 .env.prod
 /.metals
 deploy.env.ini
+/frontend/packages/tmw-admin/public/js/*

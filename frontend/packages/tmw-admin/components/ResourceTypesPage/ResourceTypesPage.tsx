@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { Button, Icon, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
@@ -37,9 +37,7 @@ export const ResourceTypesPage: React.FunctionComponent = () => {
                 return fetchResourceTypes();
             })
             .catch(() => {
-                setErrorMessage(
-                    'Error while trying to delete the resource type "' + typeName + '".',
-                );
+                setErrorMessage('Error while trying to delete the resource type "' + typeName + '".');
             })
             .finally(() => {
                 setIsLoading(false);
@@ -59,7 +57,7 @@ export const ResourceTypesPage: React.FunctionComponent = () => {
                 headerContent="Resource Types"
                 subHeaderContent="Types to be used for resources"
             />
-            <Link href={ADMIN_APP_ROUTES.RESOURCE_TYPES_ADD}>
+            <Link to={ADMIN_APP_ROUTES.RESOURCE_TYPES_ADD}>
                 <Button fluid icon>
                     Add Resource Type
                 </Button>
@@ -92,12 +90,7 @@ export const ResourceTypesPage: React.FunctionComponent = () => {
                             <Table.Row key={type.id}>
                                 <Table.Cell>{type.name}</Table.Cell>
                                 <Table.Cell textAlign="center">
-                                    <Link
-                                        href={ADMIN_APP_ROUTES.RESOURCE_TYPES_EDIT.replace(
-                                            ':id',
-                                            type.id,
-                                        )}
-                                    >
+                                    <Link to={ADMIN_APP_ROUTES.RESOURCE_TYPES_EDIT.replace(':id', type.id)}>
                                         <Icon name="edit" color="blue" link />
                                     </Link>
                                 </Table.Cell>

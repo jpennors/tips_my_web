@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { Button, Icon, Label, Loader, Table, Popup } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
@@ -60,7 +60,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                 headerContent="Resources"
                 subHeaderContent="Resources that can be searched through TipsMyWeb"
             />
-            <Link href={ADMIN_APP_ROUTES.RESOURCES_ADD}>
+            <Link to={ADMIN_APP_ROUTES.RESOURCES_ADD}>
                 <Button fluid icon>
                     Add Resource
                 </Button>
@@ -120,8 +120,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                                         {tag.tag.name}
                                                     </Label>
                                                 ))}
-                                                {resource.tags.length >
-                                                MAX_CONTENT_LENGTH.RESOURCES_INDEX_PAGES_TAGS ? (
+                                                {resource.tags.length > MAX_CONTENT_LENGTH.RESOURCES_INDEX_PAGES_TAGS ? (
                                                     <Label>..</Label>
                                                 ) : (
                                                     ''
@@ -132,7 +131,7 @@ export const ResourcesPage: React.FunctionComponent = () => {
                                 />
                                 <Table.Cell textAlign="center">
                                     <Link
-                                        href={ADMIN_APP_ROUTES.RESOURCES_EDIT.replace(
+                                        to={ADMIN_APP_ROUTES.RESOURCES_EDIT.replace(
                                             ':id',
                                             resource.id,
                                         )}

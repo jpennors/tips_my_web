@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { Button, Icon, Label, Loader, Table } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
@@ -144,7 +144,7 @@ export const TagsPage: React.FunctionComponent = () => {
                 headerContent="Tags"
                 subHeaderContent="Tags proposed to search for a type of resources"
             />
-            <Link href={ADMIN_APP_ROUTES.TAGS_ADD}>
+            <Link to={ADMIN_APP_ROUTES.TAGS_ADD}>
                 <Button fluid icon>
                     Add Tag
                 </Button>
@@ -232,7 +232,7 @@ export const TagsPage: React.FunctionComponent = () => {
                                         ''
                                     ) : (
                                         <Link
-                                            href={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}
+                                            to={ADMIN_APP_ROUTES.TAGS_EDIT.replace(':id', tag.id)}
                                         >
                                             <Icon name="edit" color="blue" link />
                                         </Link>

@@ -3,7 +3,6 @@ import { AxiosError } from 'axios';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
 import { APILoginErrors } from 'tmw-admin/constants/api-types';
 import { login } from 'tmw-admin/utils/auth-module';
-import logoIcon from 'tmw-common/images/logo-icon.svg';
 
 export const LoginPage: React.FunctionComponent = () => {
     const [username, setUsername] = React.useState<string>('');
@@ -34,7 +33,7 @@ export const LoginPage: React.FunctionComponent = () => {
     return (
         <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
             <Grid.Column style={{ maxWidth: 450 }}>
-                <Image size="tiny" centered src={logoIcon} />
+                <Image size="tiny" centered src="/images/logo-icon.svg" />
                 <Header as="h2" color="orange" textAlign="center">
                     TipsMyWeb Admin
                 </Header>

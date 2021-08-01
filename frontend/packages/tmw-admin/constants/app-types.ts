@@ -1,7 +1,13 @@
+export interface AuthToken {
+    token: string;
+    expiration: number;
+}
+
 export interface Contact {
     id: string;
     email: string;
     message: string;
+    read: boolean;
     createdAt: Date;
 }
 
@@ -9,6 +15,7 @@ export interface WebsiteSuggestion {
     id: string;
     url: string;
     description: string;
+    read: boolean;
     createdAt: Date;
 }
 
@@ -89,13 +96,14 @@ export interface SearchTagStat {
 }
 
 export interface GeneralAdminSearchResult {
-    id: string;
-    title: string;
-    type: string;
+    id: string,
+    title: string,
+    type: string,
 }
 
 export interface GeneralAdminSearch {
-    name: string;
-    slug: string;
-    results: GeneralAdminSearchResult[];
+    name: string,
+    slug: string,
+    results: GeneralAdminSearchResult[]
 }
+
