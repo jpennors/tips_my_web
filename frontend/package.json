@@ -7,7 +7,8 @@
   ],
   "scripts": {
     "main-dev": "yarn workspace tmw-main dev",
-    "admin-dev": "yarn workspace tmw-admin dev"
+    "admin-dev": "yarn workspace tmw-admin dev",
+    "admin-build": "yarn workspace tmw-admin build"
   },
   "license": "MIT",
   "dependencies": {
