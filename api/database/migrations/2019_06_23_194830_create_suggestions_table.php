@@ -20,6 +20,7 @@ class CreateSuggestionsTable extends Migration
             $table->primary('id');
             $table->string('url', 150);
             $table->text('description')->nullable();
+            $table->boolean('read')->default(false);
             $table->timestamps();
         });
     }

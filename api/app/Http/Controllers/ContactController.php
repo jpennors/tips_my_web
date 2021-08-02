@@ -45,6 +45,48 @@ class ContactController extends Controller
 
 
     /**
+     * Set contact as read
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function contactRead(Request $request, $id)
+    {
+        $contact = Contact::findOrFail($id);
+
+        // Try to save the tag
+        try {
+            $contact->read = true;
+            $contact->save();
+        } catch(\Exception $e) {
+            abort(500, "Can't complete the action on the contact");
+        }
+        return response()->json();
+    }
+
+
+    /**
+     * Set contact as unread
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function contactUnread(Request $request, $id)
+    {
+        $contact = Contact::findOrFail($id);
+
+        // Try to save the tag
+        try {
+            $contact->read = false;
+            $contact->save();
+        } catch(\Exception $e) {
+            abort(500, "Can't complete the action on the contact");
+        }
+        return response()->json();
+    }
+
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

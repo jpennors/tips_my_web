@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ImportValidation\TagImportValidation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Tag;
@@ -132,11 +133,14 @@ class TagController extends Controller
 
     public function importTags(Request $request){
 
-        foreach ($request->data as $tag) {
+        // Tag validation
+        // Retrieve validated tags
+        $tagImportValidation = new TagImportValidation($request->data);
+        $validatedTags = $tagImportValidation->GetValidatedElements();
+
+        foreach ($validatedTags as $tag) {
 
             $t = Tag::withTrashed()->where('name', $tag['name'])->get()->first();
-
-            // To DO vérification
 
             if (!$t) {
                 $t = new Tag();
@@ -147,13 +151,26 @@ class TagController extends Controller
             }
 
             $t->name = $tag['name'];
-            if (array_key_exists('primary',$tag)) {
+            if(array_key_exists('primary', $tag))
                 $t->primary = $tag['primary'];
-            }
             $t->save();
         }
 
-        return response()->json();
+        return response()->json(sizeof($validatedTags).' tags have been added or updated on '.
+            $tagImportValidation->GetNumberOfImportedElements().' imported.');
+    }
+
+    /**
+     * Validation of imported tags
+     * @param Request $request
+     */
+    public function validateImportedTags(Request $request)
+    {
+        $resourceImportValidation = new TagImportValidation($request->data);
+
+        $validationErrors = $resourceImportValidation->GetElementsErrors();
+
+        return response()->json($validationErrors);
     }
 
 
