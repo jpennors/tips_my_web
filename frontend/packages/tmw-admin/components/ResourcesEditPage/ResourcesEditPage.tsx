@@ -66,7 +66,7 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
     const router = useRouter();
-    const editedResourceId = router.query?.toString();
+    const { id: editedResourceId } = router.query;
 
     const fetchResource = async (): Promise<void> => {
         return ajaxGet('resources')
@@ -263,12 +263,12 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
         setErrorMessage('');
         setIsLoading(true);
         const newResource = serializeResourceToAPI(resource);
-        newResource.id = editedResourceId;
+        newResource.id = editedResourceId?.toString();
 
         if (editedResourceId) {
             ajaxPut(`resources/${editedResourceId}`, newResource)
                 .then(() => {
-                    return saveImage(resourceImageFile, editedResourceId)
+                    return saveImage(resourceImageFile, editedResourceId?.toString())
                         .then(() => {
                             setSuccessMessage(
                                 'Your resource "' + resource.name + '" was successfully edited.',
@@ -318,15 +318,20 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        Promise.all([
+        if (!router.isReady) return;
+
+        const promises: Promise<void>[] = [
             fetchPricesOptions(),
             fetchTypesOptions(),
             fetchTagOptions(),
-            fetchResource(),
-        ]).then(() => {
+        ];
+
+        if (editedResourceId != null) promises.push(fetchResource());
+
+        Promise.all(promises).then(() => {
             setIsLoading(false);
         });
-    }, []);
+    }, [router.isReady]);
 
     const displayedTagOptions = tagOptions.filter(
         tag =>
@@ -542,7 +547,9 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
                         />
                     </Form>
                 </>
-            ) : null}
+            ) : (
+                <div />
+            )}
         </div>
     );
 };

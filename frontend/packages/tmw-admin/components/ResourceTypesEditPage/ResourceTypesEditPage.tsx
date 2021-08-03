@@ -22,7 +22,7 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
     const router = useRouter();
-    const editedTypeId = router.query?.toString();
+    const { id: editedTypeId } = router.query;
 
     const fetchResourceType = async (): Promise<void> => {
         return ajaxGet('types')
@@ -58,7 +58,7 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
         setErrorMessage('');
         setIsLoading(true);
         const newType = serializeResourceTypeToAPI(type);
-        newType.id = editedTypeId;
+        newType.id = editedTypeId?.toString();
 
         if (editedTypeId) {
             ajaxPut(`types/${editedTypeId}`, newType)
@@ -95,10 +95,12 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
+        if (!router.isReady) return;
+
         fetchResourceType().finally(() => {
             setIsLoading(false);
         });
-    }, []);
+    }, [router.isReady]);
 
     return (
         <div>

@@ -19,7 +19,7 @@ export const PricesEditPage: React.FunctionComponent = () => {
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
     const router = useRouter();
-    const editedPriceId = router.query?.toString();
+    const { id: editedPriceId } = router.query;
 
     const fetchPrice = async (): Promise<void> => {
         return ajaxGet('prices')
@@ -55,7 +55,7 @@ export const PricesEditPage: React.FunctionComponent = () => {
         setErrorMessage('');
         setIsLoading(true);
         const newPrice = serializePriceToAPI(price);
-        newPrice.id = editedPriceId;
+        newPrice.id = editedPriceId?.toString();
 
         if (editedPriceId) {
             ajaxPut(`prices/${editedPriceId}`, newPrice)
@@ -90,10 +90,12 @@ export const PricesEditPage: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
+        if (!router.isReady) return;
+
         fetchPrice().finally(() => {
             setIsLoading(false);
         });
-    }, []);
+    }, [router.isReady]);
 
     return (
         <div>

@@ -7,7 +7,6 @@ import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
 import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
-import { convertToSelectOptions } from 'tmw-admin/utils/select-options';
 import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/ajax';
 
 export const TagsEditPage: React.FunctionComponent = () => {
@@ -22,7 +21,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
     const [successMessage, setSuccessMessage] = React.useState<string>('');
 
     const router = useRouter();
-    const editedTagId = router.query.toString();
+    const { id: editedTagId } = router.query;
 
     const fetchTagOptions = async (): Promise<void> => {
         return ajaxGet('tags')
@@ -58,7 +57,7 @@ export const TagsEditPage: React.FunctionComponent = () => {
         setErrorMessage('');
         setIsLoading(true);
         const newTag = serializeTagToAPI(tag);
-        newTag.id = editedTagId;
+        newTag.id = editedTagId?.toString();
 
         if (editedTagId) {
             ajaxPut(`tags/${editedTagId}`, newTag)
@@ -91,10 +90,12 @@ export const TagsEditPage: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
+        if (!router.isReady) return;
+
         fetchTagOptions().finally(() => {
             setIsLoading(false);
         });
-    }, []);
+    }, [router.isReady]);
 
     return (
         <div>

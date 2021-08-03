@@ -34,16 +34,15 @@ export const TagsSelector: React.FunctionComponent = () => {
         }
     };
 
-    const fetchTagOptions = (): Promise<MainTag[]> => {
+    const fetchTagOptions = (): Promise<void> => {
         return ajaxGet('main/tags')
             .then(res => {
                 const newTags = serializeMainTagsFromAPI(res.data || []);
                 setTags(newTags);
-                return newTags;
+                preselectTags(newTags);
             })
             .catch(() => {
                 // TODO: Handle errors / no tags
-                return [];
             });
     };
 
@@ -92,11 +91,12 @@ export const TagsSelector: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        fetchTagOptions().then(mainTags => {
+        if (!router.isReady) return;
+
+        fetchTagOptions().then(() => {
             setIsLoading(false);
-            preselectTags(mainTags);
         });
-    }, []);
+    }, [router.isReady]);
 
     React.useEffect(() => {
         const handleRouteChange = (url: string) => {
