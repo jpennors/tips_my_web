@@ -59,6 +59,9 @@ export const SuggestionsPage: React.FunctionComponent = () => {
             })
             .catch(() => {
                 setErrorMessage('Error while setting the suggestion as read.');
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     };
 
@@ -74,6 +77,9 @@ export const SuggestionsPage: React.FunctionComponent = () => {
             })
             .catch(() => {
                 setErrorMessage('Error while setting the suggestion as unread.');
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     };
 

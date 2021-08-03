@@ -57,15 +57,19 @@ export const serializeSuggestionsFromAPI = (
     }));
 };
 
+export const serializeTagFromAPI = (tagFromAPI: APITag | APIBasicTag): Tag => {
+    return {
+        id: tagFromAPI.id,
+        name: tagFromAPI.name,
+        slug: tagFromAPI.slug,
+        primary: tagFromAPI.primary,
+        disabled: tagFromAPI.disabled,
+        deletedAt: tagFromAPI.deleted_at,
+    };
+};
+
 export const serializeTagsFromAPI = (tagsFromAPI: Array<APITag | APIBasicTag>): Tag[] => {
-    return tagsFromAPI.map(tag => ({
-        id: tag.id,
-        name: tag.name,
-        slug: tag.slug,
-        primary: tag.primary,
-        disabled: tag.disabled,
-        deletedAt: tag.deleted_at,
-    }));
+    return tagsFromAPI.map(tag => serializeTagFromAPI(tag));
 };
 
 export const serializeResourceTagsFromAPI = (
@@ -78,40 +82,52 @@ export const serializeResourceTagsFromAPI = (
     }));
 };
 
+export const serializeResourceFromAPI = (resourceFromAPI: APIResource): Resource => {
+    return {
+        id: resourceFromAPI.id,
+        name: resourceFromAPI.name,
+        description: resourceFromAPI.description,
+        url: resourceFromAPI.url,
+        iconFilename: resourceFromAPI.image,
+        locale: resourceFromAPI.language as LOCALES,
+        score: resourceFromAPI.score,
+        interfaceScore: resourceFromAPI.interface,
+        likes: resourceFromAPI.like,
+        priceId: resourceFromAPI.price_id,
+        typeId: resourceFromAPI.type_id,
+        priceName: resourceFromAPI.price.name,
+        typeName: resourceFromAPI.type.name,
+        createdAt: resourceFromAPI.created_at,
+        tags: serializeResourceTagsFromAPI(resourceFromAPI.resource_tags),
+    };
+};
+
 export const serializeResourcesFromAPI = (resourcesFromAPI: APIResource[]): Resource[] => {
-    return resourcesFromAPI.map(resource => ({
-        id: resource.id,
-        name: resource.name,
-        description: resource.description,
-        url: resource.url,
-        iconFilename: resource.image,
-        locale: resource.language as LOCALES,
-        score: resource.score,
-        interfaceScore: resource.interface,
-        likes: resource.like,
-        priceId: resource.price_id,
-        typeId: resource.type_id,
-        priceName: resource.price.name,
-        typeName: resource.type.name,
-        createdAt: resource.created_at,
-        tags: serializeResourceTagsFromAPI(resource.resource_tags),
-    }));
+    return resourcesFromAPI.map(resource => serializeResourceFromAPI(resource));
+};
+
+export const serializePriceFromAPI = (priceFromAPI: APIPrice): Price => {
+    return {
+        id: priceFromAPI.id,
+        name: priceFromAPI.name,
+        slug: priceFromAPI.slug,
+    };
 };
 
 export const serializePricesFromAPI = (pricesFromAPI: APIPrice[]): Price[] => {
-    return pricesFromAPI.map(price => ({
-        id: price.id,
-        name: price.name,
-        slug: price.slug,
-    }));
+    return pricesFromAPI.map(price => serializePriceFromAPI(price));
+};
+
+export const serializeResourceTypeFromAPI = (typeFromAPI: APIResourceType): ResourceType => {
+    return {
+        id: typeFromAPI.id,
+        name: typeFromAPI.name,
+        slug: typeFromAPI.slug,
+    };
 };
 
 export const serializeResourceTypesFromAPI = (typesFromAPI: APIResourceType[]): ResourceType[] => {
-    return typesFromAPI.map(type => ({
-        id: type.id,
-        name: type.name,
-        slug: type.slug,
-    }));
+    return typesFromAPI.map(type => serializeResourceTypeFromAPI(type));
 };
 
 export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {

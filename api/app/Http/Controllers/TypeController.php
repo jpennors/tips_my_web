@@ -44,6 +44,19 @@ class TypeController extends Controller
 
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $type = Type::findOrFail($id);
+        return response()->json($type, 200);
+    }
+
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

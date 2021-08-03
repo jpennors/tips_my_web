@@ -6,14 +6,12 @@ import { FormFooter } from 'tmw-admin/components/FormFooter';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { Price } from 'tmw-admin/constants/app-types';
-import { serializePricesFromAPI, serializePriceToAPI } from 'tmw-admin/utils/api-serialize';
+import { serializePriceFromAPI, serializePriceToAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/ajax';
 
 export const PricesEditPage: React.FunctionComponent = () => {
     const [price, setPrice] = React.useState<Partial<Price>>({});
-    const isReadyToSubmit = price.name && price.name.length > 0;
-
-    const [isLoading, setIsLoading] = React.useState<boolean>(true);
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [canEdit, setCanEdit] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
@@ -21,20 +19,13 @@ export const PricesEditPage: React.FunctionComponent = () => {
     const router = useRouter();
     const { id: editedPriceId } = router.query;
 
-    const fetchPrice = async (): Promise<void> => {
-        return ajaxGet('prices')
-            .then(res => {
-                const prices = serializePricesFromAPI(res.data);
+    const isReadyToSubmit = price.name && price.name.length > 0;
 
-                if (editedPriceId) {
-                    const editedPrice = prices.find(price => price.id === editedPriceId);
-                    if (editedPrice) {
-                        setPrice(editedPrice);
-                    } else {
-                        setErrorMessage('No matching price was found for this ID.');
-                        setCanEdit(false);
-                    }
-                }
+    const fetchPrice = async (): Promise<void> => {
+        return ajaxGet(`prices/${editedPriceId}`)
+            .then(res => {
+                const price = serializePriceFromAPI(res.data);
+                setPrice(price);
             })
             .catch(() => {
                 setErrorMessage('Error while trying to fetch price data from the API.');
@@ -92,9 +83,12 @@ export const PricesEditPage: React.FunctionComponent = () => {
     React.useEffect(() => {
         if (!router.isReady) return;
 
-        fetchPrice().finally(() => {
-            setIsLoading(false);
-        });
+        if (editedPriceId) {
+            setIsLoading(true);
+            fetchPrice().finally(() => {
+                setIsLoading(false);
+            });
+        }
     }, [router.isReady]);
 
     return (

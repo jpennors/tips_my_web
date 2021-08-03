@@ -7,7 +7,7 @@ import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { ResourceType } from 'tmw-admin/constants/app-types';
 import {
-    serializeResourceTypesFromAPI,
+    serializeResourceTypeFromAPI,
     serializeResourceTypeToAPI,
 } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/ajax';
@@ -16,7 +16,7 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
     const [type, setType] = React.useState<Partial<ResourceType>>({});
     const isReadyToSubmit = type.name && type.name.length > 0;
 
-    const [isLoading, setIsLoading] = React.useState<boolean>(true);
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [canEdit, setCanEdit] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
@@ -25,19 +25,10 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
     const { id: editedTypeId } = router.query;
 
     const fetchResourceType = async (): Promise<void> => {
-        return ajaxGet('types')
+        return ajaxGet(`types/${editedTypeId}`)
             .then(res => {
-                const types = serializeResourceTypesFromAPI(res.data);
-
-                if (editedTypeId) {
-                    const editedType = types.find(type => type.id === editedTypeId);
-                    if (editedType) {
-                        setType(editedType);
-                    } else {
-                        setErrorMessage('No matching resource type was found for this ID.');
-                        setCanEdit(false);
-                    }
-                }
+                const type = serializeResourceTypeFromAPI(res.data);
+                setType(type);
             })
             .catch(() => {
                 setErrorMessage('Error while trying to fetch resource type data from the API.');
@@ -97,9 +88,12 @@ export const ResourceTypesEditPage: React.FunctionComponent = () => {
     React.useEffect(() => {
         if (!router.isReady) return;
 
-        fetchResourceType().finally(() => {
-            setIsLoading(false);
-        });
+        if (editedTypeId) {
+            setIsLoading(true);
+            fetchResourceType().finally(() => {
+                setIsLoading(false);
+            });
+        }
     }, [router.isReady]);
 
     return (

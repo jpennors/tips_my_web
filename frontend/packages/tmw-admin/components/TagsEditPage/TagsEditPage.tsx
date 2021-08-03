@@ -1,21 +1,19 @@
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { Form, Message, StrictDropdownItemProps } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { ADMIN_APP_ROUTES } from 'tmw-admin/constants/app-constants';
 import { Tag } from 'tmw-admin/constants/app-types';
-import { serializeTagsFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
+import { serializeTagFromAPI, serializeTagToAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost, ajaxPut } from 'tmw-common/utils/ajax';
 
 export const TagsEditPage: React.FunctionComponent = () => {
     const [tag, setTag] = React.useState<Partial<Tag>>({});
-    const [tagOptions, setTagOptions] = React.useState<StrictDropdownItemProps[]>([]);
-    const isTagOptionsEmpty = tagOptions.length == 0;
     const isReadyToSubmit = tag.name && tag.name.length > 0;
 
-    const [isLoading, setIsLoading] = React.useState<boolean>(true);
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [canEdit, setCanEdit] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const [successMessage, setSuccessMessage] = React.useState<string>('');
@@ -23,20 +21,11 @@ export const TagsEditPage: React.FunctionComponent = () => {
     const router = useRouter();
     const { id: editedTagId } = router.query;
 
-    const fetchTagOptions = async (): Promise<void> => {
-        return ajaxGet('tags')
+    const fetchTag = async (): Promise<void> => {
+        return ajaxGet(`tags/${editedTagId}`)
             .then(res => {
-                const tags = serializeTagsFromAPI(res.data);
-
-                if (editedTagId) {
-                    const editedTag = tags.find(tag => tag.id === editedTagId);
-                    if (editedTag) {
-                        setTag(editedTag);
-                    } else {
-                        setErrorMessage('No matching tag was found for this ID.');
-                        setCanEdit(false);
-                    }
-                }
+                const tag = serializeTagFromAPI(res.data);
+                setTag(tag);
             })
             .catch(() => {
                 setErrorMessage('Error while trying to fetch tag data from the API.');
@@ -92,9 +81,12 @@ export const TagsEditPage: React.FunctionComponent = () => {
     React.useEffect(() => {
         if (!router.isReady) return;
 
-        fetchTagOptions().finally(() => {
-            setIsLoading(false);
-        });
+        if (editedTagId) {
+            setIsLoading(true);
+            fetchTag().finally(() => {
+                setIsLoading(false);
+            });
+        }
     }, [router.isReady]);
 
     return (

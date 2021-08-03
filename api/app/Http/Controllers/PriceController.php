@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Price;
 use App\Http\Requests\PriceRequest;
-use App\Resource;
 
 class PriceController extends Controller
 {
@@ -41,6 +39,18 @@ class PriceController extends Controller
         }
 
         return response()->json($price, 201);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $price = Price::findOrFail($id);
+        return response()->json($price, 200);
     }
 
 

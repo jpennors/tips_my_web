@@ -60,7 +60,9 @@ class ResourceController extends Controller
      */
     public function show($id)
     {
-        $r = Resource::findOrFail($id)->with('resource_tags', 'price')->get();
+        $r = Resource::where('id', $id)
+            ->with('resource_tags', 'price', 'type')
+            ->first();
         return response()->json($r, 200);
     }
 
@@ -85,7 +87,7 @@ class ResourceController extends Controller
 
         // Update resource tags
         try {
-            $r->updateResourceTags($request->tags);    
+            $r->updateResourceTags($request->tags);
         } catch (\Exception $e) {
             abort(500, "Can't update the resource tags");
         }

@@ -16,16 +16,11 @@ import {
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { FormFooter } from 'tmw-admin/components/FormFooter';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import {
-    ADMIN_APP_ROUTES,
-    LOCALES,
-    LOCALES_NAMES,
-    RESOURCES_IMAGE_BASE_URL,
-} from 'tmw-admin/constants/app-constants';
+import { ADMIN_APP_ROUTES, LOCALES, LOCALES_NAMES } from 'tmw-admin/constants/app-constants';
 import { Resource, TagsMap } from 'tmw-admin/constants/app-types';
 import {
     serializePricesFromAPI,
-    serializeResourcesFromAPI,
+    serializeResourceFromAPI,
     serializeResourceToAPI,
     serializeResourceTypesFromAPI,
     serializeTagsFromAPI,
@@ -69,24 +64,10 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
     const { id: editedResourceId } = router.query;
 
     const fetchResource = async (): Promise<void> => {
-        return ajaxGet('resources')
+        return ajaxGet(`resources/${editedResourceId}`)
             .then(res => {
-                const resources = serializeResourcesFromAPI(res.data);
-
-                if (editedResourceId) {
-                    const editedResource = resources.find(
-                        resource => resource.id === editedResourceId,
-                    );
-                    if (editedResource) {
-                        setResource(editedResource);
-                        if (editedResource.iconFilename) {
-                            setResourceImageTempURL(RESOURCES_IMAGE_BASE_URL + editedResourceId);
-                        }
-                    } else {
-                        setErrorMessage('No matching resource was found for this ID.');
-                        setCanEdit(false);
-                    }
-                }
+                const resource = serializeResourceFromAPI(res.data);
+                setResource(resource);
             })
             .catch(() => {
                 setErrorMessage('Error while fetching resource from the API.');
