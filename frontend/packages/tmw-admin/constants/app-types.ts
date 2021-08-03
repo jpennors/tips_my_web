@@ -2,6 +2,7 @@ export interface Contact {
     id: string;
     email: string;
     message: string;
+    read: boolean;
     createdAt: Date;
 }
 
@@ -9,6 +10,7 @@ export interface WebsiteSuggestion {
     id: string;
     url: string;
     description: string;
+    read: boolean;
     createdAt: Date;
 }
 

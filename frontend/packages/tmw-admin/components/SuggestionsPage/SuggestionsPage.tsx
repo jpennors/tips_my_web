@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon, Loader, Table } from 'semantic-ui-react';
+import { Icon, Loader, Table, Label } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
 import { WebsiteSuggestion } from 'tmw-admin/constants/app-types';
@@ -47,6 +47,36 @@ export const SuggestionsPage: React.FunctionComponent = () => {
             });
     };
 
+    const setSuggestionAsRead = async (
+        suggestionId: string,
+        suggestionUrl: string,
+    ): Promise<void> => {
+        return ajaxGet(`suggestion/read/${suggestionId}`)
+            .then(() => {
+                setSuccessMessage(`Suggestion from ${suggestionUrl} set as read.`);
+                setIsLoading(true);
+                fetchWebsiteSuggestions();
+            })
+            .catch(() => {
+                setErrorMessage('Error while setting the suggestion as read.');
+            });
+    };
+
+    const setSuggestionAsUnread = async (
+        suggestionId: string,
+        suggestionUrl: string,
+    ): Promise<void> => {
+        return ajaxGet(`suggestion/unread/${suggestionId}`)
+            .then(() => {
+                setSuccessMessage(`Suggestion from ${suggestionUrl} set as unread.`);
+                setIsLoading(true);
+                fetchWebsiteSuggestions();
+            })
+            .catch(() => {
+                setErrorMessage('Error while setting the suggestion as unread.');
+            });
+    };
+
     React.useEffect(() => {
         fetchWebsiteSuggestions().finally(() => {
             setIsLoading(false);
@@ -77,29 +107,75 @@ export const SuggestionsPage: React.FunctionComponent = () => {
                             <Table.HeaderCell>Date</Table.HeaderCell>
                             <Table.HeaderCell>URL</Table.HeaderCell>
                             <Table.HeaderCell>Description</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="center">Read</Table.HeaderCell>
                             <Table.HeaderCell collapsing textAlign="center">
                                 Delete
                             </Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {suggestions.map(suggestion => (
-                            <Table.Row key={suggestion.id}>
-                                <Table.Cell>{suggestion.createdAt}</Table.Cell>
-                                <Table.Cell>{suggestion.url}</Table.Cell>
-                                <Table.Cell>{suggestion.description}</Table.Cell>
-                                <Table.Cell textAlign="center">
-                                    <Icon
-                                        name="trash alternate"
-                                        color="red"
-                                        link
-                                        onClick={(): void => {
-                                            deleteSuggestion(suggestion.id, suggestion.url);
-                                        }}
-                                    />
-                                </Table.Cell>
-                            </Table.Row>
-                        ))}
+                        {suggestions
+                            .sort((a, b) => {
+                                return b.read && !a.read ? -1 : 1;
+                            })
+                            .map(suggestion => (
+                                <Table.Row key={suggestion.id}>
+                                    <Table.Cell
+                                        style={{ fontWeight: suggestion.read ? '' : 'bold' }}
+                                    >
+                                        {suggestion.createdAt}
+                                    </Table.Cell>
+                                    <Table.Cell
+                                        style={{ fontWeight: suggestion.read ? '' : 'bold' }}
+                                    >
+                                        <a href={suggestion.url} target="_blank" rel="noreferrer">
+                                            {suggestion.url}
+                                        </a>
+                                    </Table.Cell>
+                                    <Table.Cell
+                                        style={{ fontWeight: suggestion.read ? '' : 'bold' }}
+                                    >
+                                        {suggestion.description}
+                                    </Table.Cell>
+                                    <Table.Cell textAlign="center">
+                                        {suggestion.read ? (
+                                            <Label
+                                                as="a"
+                                                onClick={(): void => {
+                                                    setSuggestionAsUnread(
+                                                        suggestion.id,
+                                                        suggestion.url,
+                                                    );
+                                                }}
+                                            >
+                                                Mark as unread
+                                            </Label>
+                                        ) : (
+                                            <Icon
+                                                name="check circle"
+                                                color="teal"
+                                                link
+                                                onClick={(): void => {
+                                                    setSuggestionAsRead(
+                                                        suggestion.id,
+                                                        suggestion.url,
+                                                    );
+                                                }}
+                                            />
+                                        )}
+                                    </Table.Cell>
+                                    <Table.Cell textAlign="center">
+                                        <Icon
+                                            name="trash alternate"
+                                            color="red"
+                                            link
+                                            onClick={(): void => {
+                                                deleteSuggestion(suggestion.id, suggestion.url);
+                                            }}
+                                        />
+                                    </Table.Cell>
+                                </Table.Row>
+                            ))}
                     </Table.Body>
                 </Table>
             )}

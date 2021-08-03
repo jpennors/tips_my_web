@@ -3,7 +3,7 @@ import { Message } from 'semantic-ui-react';
 
 interface ActionMessageProps {
     message: string;
-    type: 'success' | 'error' | 'warning';
+    type: 'success' | 'error' | 'warning' | 'info';
     messageHeader?: string;
 }
 
@@ -28,6 +28,10 @@ export const ActionMessage: React.FunctionComponent<ActionMessageProps> = ({
             iconName = 'warning sign';
             header = 'Warning!';
             break;
+        case 'info':
+            iconName = 'info';
+            header = 'Information!';
+            break;
         default:
             iconName = 'warning';
             header = 'Message';
@@ -40,6 +44,7 @@ export const ActionMessage: React.FunctionComponent<ActionMessageProps> = ({
                 negative={type === 'error'}
                 positive={type === 'success'}
                 warning={type === 'warning'}
+                info={type === 'info'}
                 icon={iconName}
                 header={messageHeader || header}
                 content={message}

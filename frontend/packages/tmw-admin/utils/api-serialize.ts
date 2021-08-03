@@ -13,7 +13,7 @@ import {
     APIVisitorStat,
     APISearchTagStat,
     APIGeneralAdminSearchResult,
-    APIGeneralAdminSearch
+    APIGeneralAdminSearch,
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -27,7 +27,7 @@ import {
     VisitorStat,
     SearchTagStat,
     GeneralAdminSearchResult,
-    GeneralAdminSearch
+    GeneralAdminSearch,
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
 
@@ -40,6 +40,7 @@ export const serializeContactsFromAPI = (contactsFromAPI: APIContact[]): Contact
         id: contact.id,
         email: contact.email,
         message: contact.message,
+        read: contact.read,
         createdAt: contact.created_at,
     }));
 };
@@ -51,6 +52,7 @@ export const serializeSuggestionsFromAPI = (
         id: suggestion.id,
         url: suggestion.url,
         description: suggestion.description,
+        read: suggestion.read,
         createdAt: suggestion.created_at,
     }));
 };
@@ -145,34 +147,38 @@ export const serializeSearchTagsStatsFromAPI = (
         id: searchTag.tag.id,
         name: searchTag.tag.name,
         slug: searchTag.tag.slug,
-        primary: searchTag.tag.primary
+        primary: searchTag.tag.primary,
     }));
 };
 
 export const serializeGeneralAdminSearchResultFromAPI = (
     GeneralAdminSearchResultFromAPI: APIGeneralAdminSearchResult[],
-    type: string
+    type: string,
 ): GeneralAdminSearchResult[] => {
     return GeneralAdminSearchResultFromAPI.map(adminSearchResult => ({
         id: adminSearchResult.id,
         title: adminSearchResult.title,
-        type: type
-    }))
-}
+        type: type,
+    }));
+};
 
 export const serializeGeneralAdminSearchFromAPI = (
     GeneralAdminSearchFromAPI: APIGeneralAdminSearch[],
-): Record<string,GeneralAdminSearch> => {
-    let adminSearchDictionnary: Record<string,GeneralAdminSearch> = {}
-    GeneralAdminSearchFromAPI.map(adminSearch => (
-        adminSearchDictionnary[adminSearch.slug] = {
-            name: adminSearch.name,
-            slug: adminSearch.slug,
-            results: serializeGeneralAdminSearchResultFromAPI(adminSearch.results, adminSearch.slug)
-    }));
+): Record<string, GeneralAdminSearch> => {
+    const adminSearchDictionnary: Record<string, GeneralAdminSearch> = {};
+    GeneralAdminSearchFromAPI.map(
+        adminSearch =>
+            (adminSearchDictionnary[adminSearch.slug] = {
+                name: adminSearch.name,
+                slug: adminSearch.slug,
+                results: serializeGeneralAdminSearchResultFromAPI(
+                    adminSearch.results,
+                    adminSearch.slug,
+                ),
+            }),
+    );
     return adminSearchDictionnary;
 };
-
 
 /*
  * Convert data from frontend format to (partial) API format (to use with POST API)
@@ -190,8 +196,8 @@ export const serializeResourceToAPI = (resource: Partial<Resource>): Partial<API
         type_id: resource.typeId,
         tags: resource.tags
             ? resource.tags.map(tag => ({
-                tag_id: tag.tagId,
-                belonging: tag.belonging,
+                  tag_id: tag.tagId,
+                  belonging: tag.belonging,
               }))
             : [],
     };
