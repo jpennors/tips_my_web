@@ -31,13 +31,9 @@ Route::get('resources/image/{id}', 'ResourceController@getImage');
 Route::get('resources/like/add/{id}', 'ResourceController@addLike');
 Route::get('resources/like/remove/{id}', 'ResourceController@removeLike');
 Route::get('resources/visit/{id}', 'ResourceController@addVisit');
-Route::get('stats', 'StatsController@getTopResources');
 
 # Test
 Route::get('test', 'TestController@execute');
-
-# Artisan
-Route::get('artisan/queues', 'ArtisanController@QueueWorkCommand');
 
 Route::post('search/admin', 'SearchController@adminGeneralSearch');
 
@@ -90,12 +86,4 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('stats/tags/search', 'StatsController@countSearchTags');
     Route::post('stats/resources/trend', 'StatsController@getTopTrendyResources');
     Route::get('stats/resources/alltime', 'StatsController@getTopAllTimeResources');
-
-
-    # Artisan
-    Route::get('artisan/migration', 'ArtisanController@DatabaseMigrationCommand');
-    Route::get('artisan/seeds', 'ArtisanController@DatabaseSeedingCommand');
-    Route::get('artisan/config', 'ArtisanController@ConfigClearCommand');
-    Route::get('artisan/cache', 'ArtisanController@CacheClearCommand');
-
 });
