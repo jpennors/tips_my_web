@@ -14,18 +14,25 @@ export const ProtectedPage: React.FunctionComponent<ProtectedPageProps> = ({
     shouldBeLoggedOut,
     redirection = ADMIN_APP_ROUTES.LOGIN,
 }) => {
+    const [shouldDisplayComponent, setShouldDisplayComponent] = React.useState(false);
+
     const router = useRouter();
-    // checks whether we are on client / browser or server.
-    if (typeof window !== 'undefined') {
-        const isAuthenticated = checkAuthentication();
 
-        if ((isAuthenticated && !shouldBeLoggedOut) || (!isAuthenticated && shouldBeLoggedOut)) {
-            return <Component />;
+    React.useEffect(() => {
+        // checks whether we are on client / browser or server.
+        if (typeof window !== 'undefined') {
+            const isAuthenticated = checkAuthentication();
+
+            if (
+                (isAuthenticated && !shouldBeLoggedOut) ||
+                (!isAuthenticated && shouldBeLoggedOut)
+            ) {
+                setShouldDisplayComponent(true);
+                return;
+            }
+            router.replace(redirection);
         }
+    }, [router.isReady]);
 
-        router.replace(redirection);
-        return null;
-    }
-    // If we are on server, return null
-    return null;
+    return shouldDisplayComponent ? <Component /> : null;
 };
