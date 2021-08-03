@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { BasicTag } from 'tmw-main/constants/app-types';
+import { MAIN_APP_ROUTES } from 'tmw-main/constants/app-constants';
 
 import styles from './SearchResultsPageTitle.module.scss';
+import { useRouter } from 'next/router';
 
 interface SearchResultsPageTitleProps {
     hasResults: boolean;
@@ -16,6 +18,13 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
     mainSearchTag,
     relatedSearchTags,
 }) => {
+    const router = useRouter();
+    const loadSearchPage = (mainTagSlug: string, relatedTagSlug?: string): void => {
+        const relatedTagParameter = relatedTagSlug ? `&related=${relatedTagSlug}` : ``;
+        const searchRoute = `${MAIN_APP_ROUTES.SEARCH}?main=${mainTagSlug}${relatedTagParameter}`;
+        router.push(searchRoute);
+    };
+
     return (
         <div>
             <div className={styles.title}>
@@ -33,11 +42,23 @@ export const SearchResultsPageTitle: React.FunctionComponent<SearchResultsPageTi
                 ) : hasResults && mainSearchTag ? (
                     <>
                         <span className={styles.primarySearchTagSeparator}>/</span>
-                        <span className={styles.primarySearchTag}>{mainSearchTag.name}</span>
+                        <span
+                            className={styles.primarySearchTag}
+                            onClick={(): void => loadSearchPage(mainSearchTag?.slug)}
+                        >
+                            {mainSearchTag.name}
+                        </span>
                         {relatedSearchTags.map(tag => (
                             <React.Fragment key={tag.id}>
                                 <span className={styles.secondarySearchTagSeparator}>/</span>
-                                <span className={styles.secondarySearchTag}>{tag.name}</span>
+                                <span
+                                    className={styles.secondarySearchTag}
+                                    onClick={(): void =>
+                                        loadSearchPage(mainSearchTag?.slug, tag.slug)
+                                    }
+                                >
+                                    {tag.name}
+                                </span>
                             </React.Fragment>
                         ))}
                     </>

@@ -20,14 +20,30 @@ export const TagsSelector: React.FunctionComponent = () => {
 
     const router = useRouter();
 
-    const fetchTagOptions = (): Promise<void> => {
+    const preselectTags = (tags: MainTag[]): void => {
+        const { main: mainSlugTag, related: relatedSlugTag } = router.query;
+        if (mainSlugTag != null) {
+            const mainTag = tags.find(t => t.primary && t.slug == mainSlugTag);
+            if (mainTag != null) {
+                setSelectedMainTag(mainTag);
+                const relatedTag = mainTag.relatedTags.find(t => t.slug == relatedSlugTag);
+                if (relatedTag != null) {
+                    setSelectedRelatedTags([relatedTag]);
+                }
+            }
+        }
+    };
+
+    const fetchTagOptions = (): Promise<MainTag[]> => {
         return ajaxGet('main/tags')
             .then(res => {
                 const newTags = serializeMainTagsFromAPI(res.data || []);
                 setTags(newTags);
+                return newTags;
             })
             .catch(() => {
                 // TODO: Handle errors / no tags
+                return [];
             });
     };
 
@@ -76,9 +92,20 @@ export const TagsSelector: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        fetchTagOptions().finally(() => {
+        fetchTagOptions().then(mainTags => {
             setIsLoading(false);
+            preselectTags(mainTags);
         });
+    }, []);
+
+    React.useEffect(() => {
+        const handleRouteChange = (url: string) => {
+            if (url != null && url.includes('new')) {
+                setSelectedMainTag(undefined);
+                setSelectedRelatedTags([]);
+            }
+        };
+        router.events.on('routeChangeStart', handleRouteChange);
     }, []);
 
     let barPercentage = 0;
@@ -86,12 +113,12 @@ export const TagsSelector: React.FunctionComponent = () => {
     barPercentage += selectedRelatedTags.length * 20;
 
     // Compute the number of resources reached with these selected tags
-    const resourceRelatedTags = selectedRelatedTags.length
-        ? selectedRelatedTags
-        : selectedMainTag?.relatedTags;
-    const totalResources = resourceRelatedTags
-        ? resourceRelatedTags.reduce((sum, tag) => sum + tag.weight, 0)
-        : 0;
+    const totalResources =
+        selectedRelatedTags.length > 0
+            ? selectedRelatedTags.reduce((sum, tag) => sum + tag.weight, 0)
+            : selectedMainTag
+            ? selectedMainTag.weight
+            : 0;
 
     return (
         <div>
