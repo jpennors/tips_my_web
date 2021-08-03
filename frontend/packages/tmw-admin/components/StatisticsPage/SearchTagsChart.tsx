@@ -3,7 +3,7 @@ import { DropdownProps, Form, Select } from 'semantic-ui-react';
 import { serializeSearchTagsStatsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { getApiDateFormat } from 'tmw-common/utils/date';
-import { Chart } from 'chart.js';
+import { Chart } from 'chart.js/auto';
 import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
 import { SearchTagStat } from 'tmw-admin/constants/app-types';
 

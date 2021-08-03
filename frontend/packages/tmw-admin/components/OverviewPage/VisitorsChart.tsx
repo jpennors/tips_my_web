@@ -2,7 +2,7 @@ import * as React from 'react';
 import { serializeVisitorStatsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxPost } from 'tmw-common/utils/ajax';
 import { getApiDateFormat } from 'tmw-common/utils/date';
-import { Chart } from 'chart.js';
+import { Chart } from 'chart.js/auto';
 
 export const VisitorsChart: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
