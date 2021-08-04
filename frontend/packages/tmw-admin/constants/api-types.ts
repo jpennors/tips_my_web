@@ -84,6 +84,7 @@ export interface APIResource {
     language: string; // locale ('fr')
     score: number;
     interface: number;
+    renown: number;
     price_id: string;
     type_id: string;
     like: number;

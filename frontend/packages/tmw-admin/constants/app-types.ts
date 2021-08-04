@@ -42,6 +42,7 @@ export interface Resource {
     locale: string;
     score: number;
     interfaceScore: number;
+    renown: number;
     priceId: string;
     typeId: string;
     likes: number;

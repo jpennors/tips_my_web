@@ -91,6 +91,7 @@ export const serializeResourceFromAPI = (resourceFromAPI: APIResource): Resource
         iconFilename: resourceFromAPI.image,
         locale: resourceFromAPI.language as LOCALES,
         score: resourceFromAPI.score,
+        renown: resourceFromAPI.renown,
         interfaceScore: resourceFromAPI.interface,
         likes: resourceFromAPI.like,
         priceId: resourceFromAPI.price_id,
