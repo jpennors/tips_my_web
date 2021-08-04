@@ -19,7 +19,8 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
     "tmw-common": "*",
-    "xlsx": "^0.15.5"
+    "xlsx": "^0.15.5",
+    "semantic-ui-calendar-react": "^0.15.3"
   },
   "devDependencies": {
     "@types/react": "17.0.14",
