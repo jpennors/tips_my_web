@@ -9,7 +9,8 @@
     "main-dev": "yarn workspace tmw-main dev",
     "main-build": "yarn workspace tmw-main build",
     "admin-dev": "yarn workspace tmw-admin dev",
-    "admin-build": "yarn workspace tmw-admin build"
+    "admin-build": "yarn workspace tmw-admin build",
+    "start": "yarn workspace tmw-main start"
   },
   "license": "MIT",
   "dependencies": {
