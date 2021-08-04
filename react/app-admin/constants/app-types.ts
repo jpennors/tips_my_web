@@ -84,7 +84,8 @@ export interface Log {
 
 export interface VisitorStat {
     date: Date;
-    visitors: number;
+    visitors_count: number;
+    new_visitors_count: number;
 }
 
 export interface StatTagBaseDateStructure {

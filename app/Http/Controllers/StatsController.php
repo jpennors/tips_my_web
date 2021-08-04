@@ -83,12 +83,20 @@ class StatsController extends Controller
 
     public function getStatsVisitorsCurrentDay()
     {
-        $start_date = DateUtils::getCurrentDate();
-        $end_date = DateUtils::getCurrentDate();
+        $current_date = DateUtils::getCurrentDate();
+        $start_date = $current_date;
+        $end_date = $current_date;
 
         $stats_visitors = Log::getStatsVisitors($start_date, $end_date);
 
-        return response()->json($stats_visitors, 200);
+        if (sizeof($stats_visitors) == 0)
+            $stats_visitors = array(
+                'date' => $current_date,
+                'visitors_count' => 0,
+                'new_visitors_count' => 0
+            );
+
+        return response()->json($stats_visitors[0], 200);
     }
     #endregion
 }

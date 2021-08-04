@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Form } from 'semantic-ui-react';
 import { serializeDateRangesToAPI, serializeStatsTagsFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxPost } from 'tmw-common/utils/ajax';
-import { Chart } from 'chart.js';
 import { convertToSelectOptions, InputSelectOption } from 'tmw-admin/utils/select-options';
 import { StatTag } from 'tmw-admin/constants/app-types';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
@@ -13,7 +12,7 @@ import {
     isSemanticCalendarValueValue,
     serializeSemanticCalendarValueToCurrentDate,
 } from 'tmw-admin/utils/semantic-calendar';
-import { getNewBarChart } from 'tmw-admin/utils/charts';
+import { getSearchTagsStatsChart } from 'tmw-admin/utils/charts';
 
 export const StatsTagsChart: React.FunctionComponent = () => {
     const [selectedTagOption, setSelectedTagOption] = React.useState<string>('primaries');
@@ -177,7 +176,7 @@ export const StatsTagsChart: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        setChart(getNewBarChart());
+        setChart(getSearchTagsStatsChart());
     }, []);
 
     React.useEffect(() => {

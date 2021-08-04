@@ -143,10 +143,18 @@ export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
 export const serializeVisitorStatsFromAPI = (
     VisitorStatsFromAPI: APIVisitorStat[],
 ): VisitorStat[] => {
-    return VisitorStatsFromAPI.map(stat => ({
-        date: stat.date,
-        visitors: stat.visitors,
-    }));
+    return VisitorStatsFromAPI.map(stat =>
+        (serializeVisitorStatFromAPI(stat)));
+};
+
+export const serializeVisitorStatFromAPI = (
+    VisitorStatFromAPI: APIVisitorStat,
+): VisitorStat => {
+    return {
+        date: VisitorStatFromAPI.date,
+        visitors_count: VisitorStatFromAPI.visitors_count,
+        new_visitors_count: VisitorStatFromAPI.new_visitors_count,
+    };
 };
 
 export const serializeSearchTagsStatsFromAPI = (

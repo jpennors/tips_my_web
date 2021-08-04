@@ -3,24 +3,24 @@ import { Message, Loader, Table, Label, Popup } from 'semantic-ui-react';
 import { ActionMessage } from 'tmw-admin/components/ActionMessage';
 import { VisitorsChart } from 'tmw-admin/components/OverviewPage';
 import { PageHeader } from 'tmw-admin/components/PageHeader';
-import { serializeLogsFromAPI } from 'tmw-admin/utils/api-serialize';
+import { serializeLogsFromAPI, serializeVisitorStatFromAPI } from 'tmw-admin/utils/api-serialize';
 import { ajaxGet, ajaxPost } from 'tmw-common/utils/ajax';
 import { getApiDateFormat, getTimeFromApiDate } from 'tmw-common/utils/date';
-import { Log } from 'tmw-admin/constants/app-types';
+import { Log, VisitorStat } from 'tmw-admin/constants/app-types';
 import { wrapText } from 'tmw-admin/utils/content-wrapper';
 import { MAX_CONTENT_LENGTH } from 'tmw-admin/constants/app-constants';
 
 export const OverviewPage: React.FunctionComponent = () => {
-    const [visitorsNumber, setVisitorNumbers] = React.useState<number>(0);
+    const [visitorsStat, setVisitorStat] = React.useState<VisitorStat>(Object);
     const [logs, setLogs] = React.useState<Log[]>([]);
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>('');
     const hasError = errorMessage.length > 0;
 
     const fetchVisitorNumbers = async (): Promise<void> => {
-        return ajaxGet('stats/current/visitors')
+        return ajaxGet('stats/visitors/current')
             .then(res => {
-                setVisitorNumbers(res.data.visitors);
+                setVisitorStat(serializeVisitorStatFromAPI(res.data));
             })
             .catch(() => {
                 setErrorMessage('Error while fetching visitors number from API.');
@@ -75,7 +75,9 @@ export const OverviewPage: React.FunctionComponent = () => {
                 <Message info>
                     <Message.Header>Stats</Message.Header>
                     <p>
-                        Number of visitors today : <strong>{visitorsNumber}</strong>
+                        Number of visitors today : <strong>{visitorsStat.visitors_count}</strong>
+                        <br/>
+                        Number of new visitors today : <strong>{visitorsStat.new_visitors_count}</strong>
                     </p>
                     <VisitorsChart />
                 </Message>
