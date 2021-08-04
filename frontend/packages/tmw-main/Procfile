@@ -1,1 +1,1 @@
-web: yarn workspace tmw-main
+web: yarn workspace tmw-main start
