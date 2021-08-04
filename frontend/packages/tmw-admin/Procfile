@@ -1,1 +1,1 @@
-main: yarn workspace tmw-admin start
+web: yarn workspace tmw-admin start
