@@ -10,7 +10,6 @@
     "main-build": "yarn workspace tmw-main build",
     "admin-dev": "yarn workspace tmw-admin dev",
     "admin-build": "yarn workspace tmw-admin build",
-    "heroku-postbuild": "yarn workspaces run build"
   },
   "license": "MIT",
   "dependencies": {
