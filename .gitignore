@@ -1,11 +1,11 @@
-/node_modules
 /vendor
 .env
 .phpunit.result.cache
+/api/vendor
+/api/.env
+/api/.phpunit.result.cache
 Homestead.json
 Homestead.yaml
-npm-debug.log
-yarn-error.log
 composer.phar
 .idea
 .env.local
