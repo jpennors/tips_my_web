@@ -26,6 +26,7 @@ class CreateResourcesTable extends Migration
             $table->string('language', 30);
             $table->smallInteger('score')->default(1);
             $table->smallInteger('interface')->default(1);
+            $table->smallInteger('renown')->default(1);
             $table->uuid('price_id');
             $table->foreign('price_id')->references('id')->on('prices');
             $table->uuid('type_id');

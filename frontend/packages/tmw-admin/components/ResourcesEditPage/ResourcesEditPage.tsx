@@ -178,6 +178,10 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
         setResource({ ...resource, interfaceScore: parseInt(value) });
     };
 
+    const onResourceRenownScoreInputChange = (_: any, { value }: { value: string }): void => {
+        setResource({ ...resource, renown: parseInt(value) });
+    };
+
     const addSelectedTag = (tagId: string): void => {
         const newTag = {
             tagId,
@@ -449,6 +453,15 @@ export const ResourcesEditPage: React.FunctionComponent = () => {
                                 type="number"
                                 value={resource.interfaceScore || ''}
                                 onChange={onResourceInterfaceScoreInputChange}
+                                required
+                            />
+                            <Form.Input
+                                fluid
+                                label="Renommée"
+                                placeholder="Renommée"
+                                type="number"
+                                value={resource.renown || ''}
+                                onChange={onResourceRenownScoreInputChange}
                                 required
                             />
                         </Form.Group>

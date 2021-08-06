@@ -154,6 +154,9 @@ class ResourceController extends Controller
             if(array_key_exists('interface', $resource)){
                 $r->interface = $resource['interface'];
             }
+            if(array_key_exists('renown', $resource)){
+                $r->renown = $resource['renown'];
+            }
             $r->price_id = $resource['price_id'];
             $r->type_id = $resource['type_id'];
             $r->save();
