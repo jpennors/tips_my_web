@@ -129,7 +129,8 @@ export interface APILog {
 
 export interface APIVisitorStat {
     date: Date;
-    visitors: number;
+    visitors_count: number;
+    new_visitors_count: number;
 }
 
 export interface APISearchTagStat {
@@ -147,4 +148,37 @@ export interface APIGeneralAdminSearch {
     name: string;
     slug: string;
     results: APIGeneralAdminSearchResult[];
+}
+
+export interface APIStatTagBaseDateStructure {
+    date: Date;
+    count: number;
+}
+
+export interface APIStatTagBaseStructure {
+    total_count: number;
+    detailed_count: APIStatTagBaseDateStructure[];
+}
+
+export interface APIStatRelatedTag {
+    id: string;
+    name: string;
+    slug: string;
+    weight: number;
+    stats: APIStatTagBaseStructure;
+}
+
+export interface APIStatTag {
+    id: string;
+    name: string;
+    slug: string;
+    weight: number;
+    primary: boolean;
+    related_tags: APIStatRelatedTag[];
+    stats: APIStatTagBaseStructure;
+}
+
+export interface APIDateRanges {
+    start_date: string;
+    end_date: string;
 }

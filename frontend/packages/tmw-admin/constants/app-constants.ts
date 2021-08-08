@@ -51,3 +51,18 @@ export enum ADMIN_APP_ROUTES {
     CONTACT = '/contact',
     STATISTICS = '/statistics',
 }
+
+export enum STATS_CHART_NAMES {
+    OVERVIEW_TAB_VISITORS = 'overview_visitors',
+    STATISTICS_TAB_VISITORS = 'statistics_visitors',
+    STATISTICS_TAB_SEARCH_TAGS = 'statistics_search_tags',
+}
+
+/**
+ * Statistics Default Period
+ */
+export enum STATS_DEFAULT_PERIOD_DAYS {
+    OVERVIEW_TAB_VISITORS = 30,
+    STATISTICS_TAB_VISITORS = 30 * 6,
+    STATISTICS_TAB_SEARCH_TAGS = 30 * 6,
+}

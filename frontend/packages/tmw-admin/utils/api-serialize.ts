@@ -14,6 +14,11 @@ import {
     APISearchTagStat,
     APIGeneralAdminSearchResult,
     APIGeneralAdminSearch,
+    APIStatRelatedTag,
+    APIStatTagBaseStructure,
+    APIStatTagBaseDateStructure,
+    APIStatTag,
+    APIDateRanges,
 } from 'tmw-admin/constants/api-types';
 import {
     Contact,
@@ -28,8 +33,13 @@ import {
     SearchTagStat,
     GeneralAdminSearchResult,
     GeneralAdminSearch,
+    StatRelatedTag,
+    StatTag,
+    StatTagBaseDateStructure,
+    StatTagBaseStructure,
 } from 'tmw-admin/constants/app-types';
 import { LOCALES } from 'tmw-admin/constants/app-constants';
+import { getApiDateFormat } from 'tmw-common/utils/date';
 
 /*
  * Convert data from API format to frontend format
@@ -150,10 +160,15 @@ export const serializeLogsFromAPI = (logsFromAPI: APILog[]): Log[] => {
 export const serializeVisitorStatsFromAPI = (
     VisitorStatsFromAPI: APIVisitorStat[],
 ): VisitorStat[] => {
-    return VisitorStatsFromAPI.map(stat => ({
-        date: stat.date,
-        visitors: stat.visitors,
-    }));
+    return VisitorStatsFromAPI.map(stat => serializeVisitorStatFromAPI(stat));
+};
+
+export const serializeVisitorStatFromAPI = (VisitorStatFromAPI: APIVisitorStat): VisitorStat => {
+    return {
+        date: VisitorStatFromAPI.date,
+        visitors_count: VisitorStatFromAPI.visitors_count,
+        new_visitors_count: VisitorStatFromAPI.new_visitors_count,
+    };
 };
 
 export const serializeSearchTagsStatsFromAPI = (
@@ -236,5 +251,54 @@ export const serializePriceToAPI = (price: Partial<Price>): Partial<APIPrice> =>
 export const serializeResourceTypeToAPI = (type: Partial<ResourceType>): Partial<ResourceType> => {
     return {
         name: type.name,
+    };
+};
+
+export const serializeStatsBaseDateStructureFromAPI = (
+    statsTagsBaseDateStructure: APIStatTagBaseDateStructure[],
+): StatTagBaseDateStructure[] => {
+    return statsTagsBaseDateStructure.map(statTagBaseDateStructure => ({
+        count: statTagBaseDateStructure.count,
+        date: statTagBaseDateStructure.date,
+    }));
+};
+
+export const serializeStatsBaseStructureFromAPI = (
+    statTagBaseStructure: APIStatTagBaseStructure,
+): StatTagBaseStructure => {
+    return {
+        totalCount: statTagBaseStructure.total_count,
+        detailedCount: serializeStatsBaseDateStructureFromAPI(statTagBaseStructure.detailed_count),
+    };
+};
+
+export const serializeStatsRelatedTagsFromAPI = (
+    statsRelatedTagsFromAPI: APIStatRelatedTag[],
+): StatRelatedTag[] => {
+    return statsRelatedTagsFromAPI.map(statRelatedTag => ({
+        id: statRelatedTag.id,
+        name: statRelatedTag.name,
+        slug: statRelatedTag.slug,
+        weight: statRelatedTag.weight,
+        stats: serializeStatsBaseStructureFromAPI(statRelatedTag.stats),
+    }));
+};
+
+export const serializeStatsTagsFromAPI = (TagsStatsFromAPI: APIStatTag[]): StatTag[] => {
+    return TagsStatsFromAPI.map(statTag => ({
+        id: statTag.id,
+        name: statTag.name,
+        slug: statTag.slug,
+        primary: statTag.primary,
+        weight: statTag.weight,
+        relatedTags: serializeStatsRelatedTagsFromAPI(statTag.related_tags),
+        stats: serializeStatsBaseStructureFromAPI(statTag.stats),
+    }));
+};
+
+export const serializeDateRangesToAPI = (startDate: Date, endDate: Date): APIDateRanges => {
+    return {
+        start_date: getApiDateFormat(startDate),
+        end_date: getApiDateFormat(endDate),
     };
 };
