@@ -4,10 +4,11 @@ import { ajaxPost } from 'tmw-common/utils/ajax';
 import { getApiDateFormat } from 'tmw-common/utils/date';
 import { Chart } from 'chart.js';
 import {
-    getVisitorsStatsChart,
+    getOverviewTabVisitorsChart,
     visitorsChartNewVisitorsLabelName,
     visitorsChartVisitorsLabelName,
 } from 'tmw-admin/utils/chart';
+import { STATS_CHART_NAMES, STATS_DEFAULT_PERIOD_DAYS } from '../../constants/app-constants';
 
 export const VisitorsChart: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
@@ -18,9 +19,7 @@ export const VisitorsChart: React.FunctionComponent = () => {
             chart.data.labels.pop();
         }
         labels.forEach(l => chart?.data.labels?.push(l));
-        console.log(chart?.data);
         chart?.data.datasets?.forEach(dataset => {
-            console.log(dataset.label);
             if (dataset.label == visitorsChartVisitorsLabelName) dataset.data = visitors;
             else if (dataset.label == visitorsChartNewVisitorsLabelName) dataset.data = newVisitors;
         });
@@ -30,7 +29,7 @@ export const VisitorsChart: React.FunctionComponent = () => {
     const fetchVisitorStats = async (): Promise<void> => {
         const endDate = new Date();
         const startDate = new Date();
-        startDate.setMonth(startDate.getMonth() - 1);
+        startDate.setDate(startDate.getDate() - STATS_DEFAULT_PERIOD_DAYS.OVERVIEW_TAB_VISITORS);
 
         return ajaxPost('stats/visitors/search', {
             start_date: getApiDateFormat(startDate),
@@ -50,7 +49,7 @@ export const VisitorsChart: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        setChart(getVisitorsStatsChart());
+        setChart(getOverviewTabVisitorsChart());
     }, []);
 
     React.useEffect(() => {
@@ -59,7 +58,7 @@ export const VisitorsChart: React.FunctionComponent = () => {
 
     return (
         <div>
-            <canvas id="visitors" />
+            <canvas id={STATS_CHART_NAMES.OVERVIEW_TAB_VISITORS} />
         </div>
     );
 };

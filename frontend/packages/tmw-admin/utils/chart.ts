@@ -1,4 +1,5 @@
 import Chart, { ChartDataset, ChartType, ChartTypeRegistry } from 'chart.js/auto';
+import { STATS_CHART_NAMES } from '../constants/app-constants';
 
 export const primaryChartColor = 'rgba(153, 102, 255, 0.4)';
 export const secondaryChartColor = 'rgba(153, 22, 35, 0.4)';
@@ -48,19 +49,23 @@ export const getNewChartDataset = (datasetName: string, chartColor: string): Cha
     };
 };
 
-export const getSearchTagsStatsChart = (): Chart => {
+export const getStatisticsTabSearchTagsChart = (): Chart => {
     const datasets = [getNewChartDataset(searchTagsChartLabelName, primaryChartColor)];
-    return getNewChart(searchTagsChartName, 'bar', datasets);
+    return getNewChart(STATS_CHART_NAMES.STATISTICS_TAB_SEARCH_TAGS, 'bar', datasets);
 };
 
-export const getVisitorsStatsChart = (): Chart => {
+export const getOverviewTabVisitorsChart = (): Chart => {
     const datasets = [
         getNewChartDataset(visitorsChartVisitorsLabelName, primaryChartColor),
         getNewChartDataset(visitorsChartNewVisitorsLabelName, secondaryChartColor),
     ];
-    return getNewChart(visitorsChartName, 'line', datasets);
+    return getNewChart(STATS_CHART_NAMES.OVERVIEW_TAB_VISITORS, 'line', datasets);
 };
 
-export const getNewVisitorsStatsChart = (): Chart => {
-    return getNewChart(visitorsChartName, 'line', []);
+export const getStatisticsTabVisitorsChart = (): Chart => {
+    const datasets = [
+        getNewChartDataset(visitorsChartVisitorsLabelName, primaryChartColor),
+        getNewChartDataset(visitorsChartNewVisitorsLabelName, secondaryChartColor),
+    ];
+    return getNewChart(STATS_CHART_NAMES.STATISTICS_TAB_VISITORS, 'line', datasets);
 };

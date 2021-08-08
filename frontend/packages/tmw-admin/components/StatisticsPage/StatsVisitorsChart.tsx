@@ -15,11 +15,12 @@ import {
     serializeSemanticCalendarValueToCurrentDate,
 } from 'tmw-admin/utils/semantic-calendar';
 import {
-    getVisitorsStatsChart,
+    getStatisticsTabVisitorsChart,
     visitorsChartNewVisitorsLabelName,
     visitorsChartVisitorsLabelName,
 } from 'tmw-admin/utils/chart';
 import { Chart } from 'chart.js';
+import { STATS_CHART_NAMES, STATS_DEFAULT_PERIOD_DAYS } from '../../constants/app-constants';
 
 export const StatsVisitorsChart: React.FunctionComponent = () => {
     const [errorMessage, setErrorMessage] = React.useState<string>('');
@@ -31,9 +32,7 @@ export const StatsVisitorsChart: React.FunctionComponent = () => {
             chart.data.labels.pop();
         }
         labels.forEach(l => chart?.data.labels?.push(l));
-        console.log(chart?.data);
         chart?.data.datasets?.forEach(dataset => {
-            console.log(dataset.label);
             if (dataset.label == visitorsChartVisitorsLabelName) dataset.data = visitors;
             else if (dataset.label == visitorsChartNewVisitorsLabelName) dataset.data = newVisitors;
         });
@@ -69,7 +68,9 @@ export const StatsVisitorsChart: React.FunctionComponent = () => {
     };
 
     const initStatVisitors = async (): Promise<void> => {
-        const semanticCalendarValue = serializeSemanticCalendarValueToCurrentDate(30);
+        const semanticCalendarValue = serializeSemanticCalendarValueToCurrentDate(
+            STATS_DEFAULT_PERIOD_DAYS.STATISTICS_TAB_VISITORS,
+        );
         isSemanticCalendarValueValue(semanticCalendarValue);
         setStatsTimeRange(semanticCalendarValue);
 
@@ -80,7 +81,7 @@ export const StatsVisitorsChart: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        setChart(getVisitorsStatsChart());
+        setChart(getStatisticsTabVisitorsChart());
     }, []);
 
     React.useEffect(() => {
@@ -93,7 +94,7 @@ export const StatsVisitorsChart: React.FunctionComponent = () => {
             <Form>
                 <DatesRangeInput onChange={handleDateRangesInputChange} value={statsTimeRange} />
             </Form>
-            <canvas id="visitors" />
+            <canvas id={STATS_CHART_NAMES.STATISTICS_TAB_VISITORS} />
         </div>
     );
 };

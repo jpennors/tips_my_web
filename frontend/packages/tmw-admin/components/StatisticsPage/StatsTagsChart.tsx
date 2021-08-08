@@ -12,8 +12,9 @@ import {
     isSemanticCalendarValueValue,
     serializeSemanticCalendarValueToCurrentDate,
 } from 'tmw-admin/utils/semantic-calendar';
-import { getSearchTagsStatsChart } from 'tmw-admin/utils/chart';
+import { getStatisticsTabSearchTagsChart } from 'tmw-admin/utils/chart';
 import { Chart } from 'chart.js/auto';
+import { STATS_CHART_NAMES, STATS_DEFAULT_PERIOD_DAYS } from '../../constants/app-constants';
 
 export const StatsTagsChart: React.FunctionComponent = () => {
     const [selectedTagOption, setSelectedTagOption] = React.useState<string>('primaries');
@@ -169,7 +170,9 @@ export const StatsTagsChart: React.FunctionComponent = () => {
     };
 
     const initStatTags = async (): Promise<void> => {
-        const semanticCalendarValue = serializeSemanticCalendarValueToCurrentDate(30);
+        const semanticCalendarValue = serializeSemanticCalendarValueToCurrentDate(
+            STATS_DEFAULT_PERIOD_DAYS.STATISTICS_TAB_SEARCH_TAGS,
+        );
         isSemanticCalendarValueValue(semanticCalendarValue);
         setStatsTimeRange(semanticCalendarValue);
 
@@ -180,7 +183,7 @@ export const StatsTagsChart: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        setChart(getSearchTagsStatsChart());
+        setChart(getStatisticsTabSearchTagsChart());
     }, []);
 
     React.useEffect(() => {
@@ -200,7 +203,7 @@ export const StatsTagsChart: React.FunctionComponent = () => {
                     onChange={onTagOptionInputChange}
                 />
             </Form>
-            <canvas id="search_tags" />
+            <canvas id={STATS_CHART_NAMES.STATISTICS_TAB_SEARCH_TAGS} />
         </div>
     );
 };
