@@ -14,7 +14,7 @@ return [
 
     'paths' => ['api/*'],
     'supports_credentials' => true,
-    'allowed_origins' => ['http://localhost:3000', 'http://localhost:3005'],
+    'allowed_origins' => [env('MAIN_APP_URL', 'http://localhost:3000'), env('ADMIN_APP_URL', 'http://localhost:3005')],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'allowed_methods' => ['*'],
