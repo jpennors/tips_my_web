@@ -1,1 +1,0 @@
-export { DocumentHead } from './DocumentHead';
